@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper	namespace="com.dapao.mapper.EntMapper">
+	
+		<insert id="entJoin">
+			insert into ent(own_id,own_name,own_pw,own_tel,own_email,ent_name,ent_cate,ent_addr,ent_mo,ent_file) 
+			values(#{own_id},#{own_name},#{own_pw},#{own_tel},#{own_email},#{ent_name},#{ent_cate},#{ent_addr},#{ent_mo},#{ent_file})
+		</insert>
+		
+		<select id="entLogin" resultType="EntVO">
+			select * from ent 
+			where own_id=#{own_id} and own_pw=#{own_pw}
+		</select>
+
+</mapper>

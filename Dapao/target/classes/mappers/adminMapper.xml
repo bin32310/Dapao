@@ -5,7 +5,19 @@
   
  <mapper  namespace="com.dapao.mapper.AdminMapper">
  	
- 	<select id="getAllOwner">
- 		select * from enterprise
+ 	<!-- 모든사업자정보출력 -->
+ 	<select id="ownerList" resultType="EntVO">
+ 		select * from ent
  	</select>
+ 	
+ 	<!-- 모든회원정보출력 -->
+	<select id="getAllUser" resultType="UserVO">
+		select * from user
+	</select>
+	
+	<!-- 개인회원정보출력 -->
+	<select id="userInfo" resultType="UserVO">
+		select * from user where us_id=#{us_id}
+	</select>
+
  </mapper> 

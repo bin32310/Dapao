@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- UserMapper.xml -->
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.dapao.mapper.UserMapper">
+  
+  <!-- 현재 시스템 시간 -->
+   <select id="getTime" resultType="string">
+  	 select now()
+  </select>
+  
+  <!-- 메인 -->
+  	<!-- 인기 가게(광고) -->
+  	<select id="adList" resultType="AdVO">
+   	  select ad.*, ent.* from ad join ent 
+   	  on ad.own_id = ent.own_id 
+   	  where  ad.ad_state=1 and date_format(ad.ad_upload, '%y/%m/%d') >= date_format(now(), '%y/%m/%d')
+   	</select>
+   
+  
+  	<!-- 중고거래 목록(메인) -->
+    <select id="itemList" resultType="ItemVO">
+   	  select * from item
+   	</select>
+   
+  
+  	<!-- 찜 목록 -->
+    <select id="loveList" resultType="LoveVO">
+   	  select love.* , user.* from love join user 
+   	  on love.us_id = user.us_id 
+   	  where us_id=#{us_id}
+   	</select>
+   
+  
+  
+  
+  
+  
+  
+  		 <!-- 회원가입 -->
+  
+    <insert id="userJoin"> 
+   	   insert into user(us_id,us_pw,us_name,us_email,us_tel,us_addr,us_nickname) 
+   	   values(#{us_id},#{us_pw},#{us_name},#{us_email},#{us_tel},#{us_addr},#{us_nickname})   
+   </insert>
+   
+   
+   
+          <!-- 로그인 -->
+          
+   <select id="userLogin" resultType="com.dapao.domain.UserVO">
+   	  select * from user 
+   	  where us_id=#{us_id} and us_pw=#{us_pw}
+   </select>
+   
+   
+   
+   <!-- 회원정보 조회 -->
+   <select id="userInfo" resultType="UserVO">
+   	  select * from user
+   	  where us_id=#{us_id}
+   </select>
+   
+   
+           <!-- 회원정보 수정 -->
+   
+   <update id="userUpdate">
+      update user set us_id=#{us_id},us_ps=#{us_pw},us_name=#{us_name},us_email=#{us_email},us_tel=#{us_tel},us_addr=#{us_addr},us#{us_nickname} 
+	  where us_pw=#{us_pw} 
+   </update>
+   
+   
+   
+          <!-- 회원탈퇴 -->
+          
+   <update id="userDelete">
+      update user set us_state = "2" 
+      where us_id=#{us_id} and us_pw=#{us_pw}  
+   </update>  
+   
+   
+  
+  
+  
+  </mapper>
+
+
+

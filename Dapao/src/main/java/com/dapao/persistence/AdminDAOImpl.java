@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.dapao.domain.EntVO;
+import com.dapao.domain.UserVO;
 
 @Service
 public class AdminDAOImpl implements AdminDAO {
@@ -30,11 +31,22 @@ public class AdminDAOImpl implements AdminDAO {
 			="com.dapao.mapper.AdminMapper";
 
 		@Override
-		public List<EntVO> getAllOwner() {
-			logger.debug(" DAOImpl : getAllOwner() 호출");
+		public List<EntVO> ownerList() throws Exception{
+			logger.debug(" DAOImpl : ownerList() 호출");
 			
-			return sqlSession.selectList(NAMESPACE+".getAllOwner");
+			return sqlSession.selectList(NAMESPACE+".ownerList");
 		}
 		
+		@Override
+		public List<UserVO> getAllUser() throws Exception {
+			logger.debug("Service의호출로 DAO호출");
+			return sqlSession.selectList(NAMESPACE+".getAllUser");
+		}
+		
+		@Override
+		public UserVO userInfo(String us_id) throws Exception {
+			logger.debug("Service의호출로 DAO호출");
+			return sqlSession.selectOne(NAMESPACE+".userInfo", us_id);
+		}
 		
 }
