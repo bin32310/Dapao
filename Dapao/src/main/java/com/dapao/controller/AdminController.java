@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dapao.domain.EntVO;
 import com.dapao.service.AdminService;
@@ -56,13 +57,14 @@ public class AdminController {
 		model.addAttribute("vo", aService.ownerList());
 	}
 	
-//	@RequestMapping("/AllOwnerInfo")
-//	public String getAllOwnerPOST(@RequestParam String own_id) {
-//		logger.debug("getAllOwnerPOST() 호출");
-//		
-//		return "";
-//		
-//	}
+	@RequestMapping("/ownerInfo")
+	@ResponseBody //ajax(JSON 데이터 넘겨줄때 사용)
+	public EntVO ownerInfoGET(@RequestParam("own_id") String own_id) throws Exception{
+		logger.debug("ownerInfoGET() 호출");
+		logger.debug("aService.ownerInfo(own_id) : "+aService.ownerInfo(own_id));
+		return aService.ownerInfo(own_id);
+		
+	}
 	
 
 }

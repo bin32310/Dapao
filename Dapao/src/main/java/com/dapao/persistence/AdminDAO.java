@@ -15,4 +15,7 @@ public interface AdminDAO {
 	
 	// 회원관리 - 개인유저정보 출력
 	public UserVO userInfo(String us_id) throws Exception;
+	
+	// 사업자 정보 출력
+	public EntVO ownerInfo(String own_id) throws Exception;
 }

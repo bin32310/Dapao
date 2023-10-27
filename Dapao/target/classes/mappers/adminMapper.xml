@@ -19,5 +19,10 @@
 	<select id="userInfo" resultType="UserVO">
 		select * from user where us_id=#{us_id}
 	</select>
+	
+	<!-- 사업자정보출력 -->
+	<select id="ownerInfo" resultType="EntVO">
+		select * from ent where own_id=#{own_id}
+	</select>
 
  </mapper> 

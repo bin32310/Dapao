@@ -32,7 +32,7 @@ public class AdminDAOImpl implements AdminDAO {
 
 		@Override
 		public List<EntVO> ownerList() throws Exception{
-			logger.debug(" DAOImpl : ownerList() 호출");
+			logger.debug(" DAO : ownerList() 호출");
 			
 			return sqlSession.selectList(NAMESPACE+".ownerList");
 		}
@@ -47,6 +47,12 @@ public class AdminDAOImpl implements AdminDAO {
 		public UserVO userInfo(String us_id) throws Exception {
 			logger.debug("Service의호출로 DAO호출");
 			return sqlSession.selectOne(NAMESPACE+".userInfo", us_id);
+		}
+		
+		@Override
+		public EntVO ownerInfo(String own_id) throws Exception {
+			logger.debug("DAO : ownerInfo(String own_id) 호출");
+			return sqlSession.selectOne(NAMESPACE+".ownerInfo",own_id);
 		}
 		
 }

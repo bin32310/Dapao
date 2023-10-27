@@ -22,7 +22,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public List<EntVO> ownerList() throws Exception{
-		logger.debug("service : allOwnerInfo() 호출");
+		logger.debug("service : ownerList() 호출");
 		return adao.ownerList();
 	}
 	
@@ -38,5 +38,10 @@ public class AdminServiceImpl implements AdminService{
 		return adao.userInfo(us_id);
 	}
 	
+	@Override
+	public EntVO ownerInfo(String own_id) throws Exception {
+		logger.debug("service : ownerInfo(String own_id) 호출 ");
+		return adao.ownerInfo(own_id);
+	}
 	
 }

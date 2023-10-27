@@ -15,4 +15,7 @@ public interface AdminService {
 	
 	// 2. 회원관리 - 개인유저정보 출력
 	public UserVO userInfo(String us_id) throws Exception;
+	
+	// 사업저정보 출력
+	public EntVO ownerInfo(String own_id) throws Exception;
 }
