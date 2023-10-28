@@ -7,6 +7,40 @@
   
   <mapper namespace="com.dapao.mapper.UserMapper">
   
+  <resultMap type="com.dapao.domain.AdVO" id="adMap">
+  	<id property="ad_no" column="ad_no"/>
+  	<result property="own_id" column="own_id"/>
+  	<result property="ad_board" column="ad_board"/>
+  	<result property="ad_state" column="ad_state"/>
+  	<result property="ad_view" column="ad_view"/>
+  	<result property="ad_regdate" column="ad_regdate"/>
+  	<result property="ad_update" column="ad_update"/>
+  	<result property="ad_upload" column="ad_upload"/>
+  	<collection property="entList" resultMap="entMap"></collection>
+  </resultMap>
+  
+  
+  <resultMap type="com.dapao.domain.EntVO" id="entMap">
+  	<result property="own_id" column="own_id"/> 
+  	<result property="own_name" column="own_name"/> 
+  	<result property="own_pw" column="own_pw"/> 
+  	<result property="own_tel" column="own_tel"/> 
+  	<result property="own_email" column="own_email"/> 
+  	<result property="own_state" column="own_state"/> 
+  	<result property="ent_name" column="ent_name"/> 
+  	<result property="ent_cate" column="ent_cate"/> 
+  	<result property="ent_addr" column="ent_addr"/> 
+  	<result property="ent_mo" column="ent_mo"/> 
+  	<result property="ent_file" column="ent_file"/> 
+  	<result property="ent_of" column="ent_of"/> 
+  	<result property="ent_notice" column="ent_notice"/> 
+  	<result property="ent_info" column="ent_info"/> 
+  	<result property="ent_img" column="ent_img"/> 
+  	<result property="ent_time" column="ent_time"/> 
+  	<result property="ent_account" column="ent_account"/> 
+  	<result property="ent_stop" column="ent_stop"/> 
+  </resultMap>
+  
   <!-- 현재 시스템 시간 -->
    <select id="getTime" resultType="string">
   	 select now()
@@ -17,7 +51,7 @@
   	<select id="adList" resultType="AdVO">
    	  select ad.*, ent.* from ad join ent 
    	  on ad.own_id = ent.own_id 
-   	  where  ad.ad_state=1 and date_format(ad.ad_upload, '%y/%m/%d') >= date_format(now(), '%y/%m/%d')
+   	  where  (ad.ad_state=1) and (date_format(ad.ad_upload, '%y/%m/%d') >= date_format(now(), '%y/%m/%d'))
    	</select>
    
   
@@ -39,7 +73,7 @@
   
   
   
-  
+  <!-- 유저 -->
   		 <!-- 회원가입 -->
   
     <insert id="userJoin"> 
