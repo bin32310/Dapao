@@ -5,8 +5,37 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   
-  <mapper namespace="com.Dapao.mapper.ProdMapper">
- 	<select id="searchProd" resultType="prodVO">
- 		selelct * prod where #{prod.name},#{prod.cate},#{prod.state}
+  <mapper namespace="com.dapao.mapper.ProdMapper">
+ 	<select id="searchProd" resultType="ProdVO">
+ 		select * from product 
+ 		<where>
+        <if test='prod_name != null and prod_name != ""'>
+            AND prod_name = #{prod_name} 
+        </if>
+        <if test='prod_cate != null and prod_cate != ""'>
+            AND prod_cate = #{prod_cate} 
+        </if>
+        <if test='prod_con != null and prod_con != ""'>
+            AND prod_con = #{prod_con} 
+        </if>
+    </where>
+
  	</select>
+ 	<select id="listProd" resultType="ProdVO">
+ 		select * from product 
+ 		where own_id = ${own_id}
+ 	</select>
+ 	
+ 	<update id="updateProd">
+ 		update product 
+ 		set prod_name = #{prod_name}, prod_price = #{prod_price}, prod_con = #{prod_con}, 
+ 			prod_content = #{prod_content}, prod_cate = #{prod_cate}, prod_img = #{prod_img}   
+ 		where prod_no = #{prod_no} 
+ 	</update>
+ 	
+ 	<insert id="insertProd">
+ 		insert into product(prod_name, prod_price, prod_con, prod_content, prod_cate, prod_img, own_id) 
+ 		values(#{prod_name}, #{prod_price}, #{prod_con}, #{prod_content}, 
+ 			   #{prod_cate}, #{prod_img}, #{own_id}) 
+ 	</insert>
  </mapper>
