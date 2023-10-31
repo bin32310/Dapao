@@ -1,7 +1,5 @@
 package com.dapao.persistence;
 
-import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +12,11 @@ import com.dapao.domain.EntVO;
 public class EntDAOImpl implements EntDAO {
 	
 	private static final Logger logger = LoggerFactory.getLogger(EntDAOImpl.class);
+	
+	// 디비 접속(Mybatis, mapper, 자원해제)
 	@Autowired
 	private SqlSession sqlSession;
+	// 사용하는 mapper의 이름
 	private static final String NAMESPACE = "com.dapao.mapper.EntMapper";
 	@Override
 	public void entJoin(EntVO vo) throws Exception {
@@ -29,15 +30,5 @@ public class EntDAOImpl implements EntDAO {
 		
 		return sqlSession.selectOne(NAMESPACE+".entLogin",vo);
 	}
-	@Override
-	public void entUpdate(EntVO vo) {
-		logger.debug(" DAO -> EntUpdate(EntVO vo) 호출 ");
-		sqlSession.update(NAMESPACE+".entUpdate",vo );
-	}
-	@Override
-	public List<EntVO> listEnt(EntVO vo) {
-		logger.debug(" DAO listEnt(String own_id) 호출 ");
-		return sqlSession.selectList(NAMESPACE+".listEnt", vo);
-	}
-	
+		
 }

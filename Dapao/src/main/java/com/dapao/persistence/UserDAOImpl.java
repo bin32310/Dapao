@@ -34,7 +34,7 @@ public class UserDAOImpl implements UserDAO {
 	//==> 디비연결정보 있음(연결 , 해제 자동)
 	
 	private static final String NAMESPACE
-	= "com.dapao.mapper.userMapper";
+	= "com.dapao.mapper.UserMapper";
 	
 	
 	
@@ -112,26 +112,26 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 
-	@Override
-	public AdVO adList() {
-		logger.debug("adList() 호출");
-		
-		return sqlSession.selectOne(NAMESPACE + ".adList");
-	}
-	
-	@Override
-	public ItemVO itemList() {
-		logger.debug("itemList() 호출");
-		
-		return sqlSession.selectOne(NAMESPACE + ".itemList");
-	}
-	
-	@Override
-	public LoveVO loveList(String us_id) {
-		logger.debug("loveList(String us_id) 호출");
-		
-		return sqlSession.selectOne(NAMESPACE + ".loveList",us_id);
-	}
+//	@Override
+//	public AdVO adList() {
+//		logger.debug("adList() 호출");
+//		
+//		return sqlSession.selectOne(NAMESPACE + ".adList");
+//	}
+//	
+//	@Override
+//	public ItemVO itemList() {
+//		logger.debug("itemList() 호출");
+//		
+//		return sqlSession.selectOne(NAMESPACE + ".itemList");
+//	}
+//	
+//	@Override
+//	public LoveVO loveList(String us_id) {
+//		logger.debug("loveList(String us_id) 호출");
+//		
+//		return sqlSession.selectOne(NAMESPACE + ".loveList",us_id);
+//	}
 
 	
 	

@@ -1,38 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="../include/header.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>사업메인페이지(shopMain)</h1>
 	<div class="ent_container">
 		<div class="img_container">
-<!-- 			<div class="ent_img"> -->
-<%-- 				<img src="${ent[0].img}"> --%>
-<!-- 			</div> -->
-<!-- 			<div> -->
-<%-- 				<img src="${plist.img }"> --%>
-<!-- 			</div> -->
+			<div class="ent_img">
+				<img src="${ent.img}">
+			</div>
+			<div>
+				<img src="${prod.img }">
+			</div>
 		</div>
-		<div class="notice_container">${ent[0].ent_notice}</div>
+		<div class="notice_container">${ent.notice}</div>
 		<div id="map" style="width: 500px; height: 400px;"></div>
 		<div class="menu_container">
 			<table>
-				<c:forEach items="${plist }" var="prod">
+				<c:forEach items="${prod }" var="prod">
 					<tr class="prod_name">
-						<td>${prod.prod_name }</td>
+						<td>${prod.name }</td>
 					</tr>
 					<tr class="prod_content">
-						<td>${prod.prod_content }</td>
+						<td>${prod.content }</td>
 					</tr>
 				</c:forEach>
 			</table>
 		</div>
-<!-- 		<div class="review_container"> -->
-<%-- 			<c:forEach items="${review }" var="rv"> --%>
-<!-- 				<tr class="review"> -->
-<%-- 					<td class="reviewer">${rv.buy }</td> --%>
-<%-- 					<td class="review_content">${rv.content }</td> --%>
-<!-- 				</tr> -->
-<%-- 			</c:forEach> --%>
-<!-- 		</div> -->
+		<div class="review_container">
+			<c:forEach items="${review }" var="rv">
+				<tr class="review">
+					<td class="reviewer">${rv.buy }</td>
+					<td class="review_content">${rv.content }</td>
+				</tr>
+			</c:forEach>
+		</div>
 	</div>
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a41c6623d85b187520b3d92f4b708850&libraries=services"></script>
@@ -50,7 +57,7 @@
 	var geocoder = new kakao.maps.services.Geocoder();
 
 	// 주소로 좌표를 검색합니다
-// 	geocoder.addressSearch(${ent[0].ent_addr}, function(result, status) {
+// 	geocoder.addressSearch(${ent.addr}, function(result, status) {
 	geocoder.addressSearch('부산시 영도구 영선대로 34', function(result, status) {
 
 		// 정상적으로 검색이 완료됐으면 
@@ -66,7 +73,7 @@
 
 		// 인포윈도우로 장소에 대한 설명을 표시합니다
 		var infowindow = new kakao.maps.InfoWindow({
-// 			content: '<div style="width:150px;text-align:center;padding:6px 0;">${ent[0].ent_name}</div>'
+// 			content: '<div style="width:150px;text-align:center;padding:6px 0;">${ent.bname}</div>'
 			content: '<div style="width:150px;text-align:center;padding:6px 0;">검색한 위치</div>'
 		});
 		infowindow.open(map, marker);
@@ -77,5 +84,7 @@
 	});
 
 	</script>
-<%@ include file="../include/footer.jsp"%>
 
+	
+</body>
+</html>

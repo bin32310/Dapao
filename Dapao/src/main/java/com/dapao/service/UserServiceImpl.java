@@ -73,26 +73,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 
-	@Override
-	public AdVO adList() {
-		logger.debug("adList() 호출");
-		
-		return udao.adList();
-	}
-	
-	@Override
-	public ItemVO itemList() {
-		logger.debug("itemList() 호출");
-		
-		return udao.itemList();
-	}
-	
-	@Override
-	public LoveVO loveList(String us_id) {
-		logger.debug("loveList(String us_id) 호출");
-		
-		return udao.loveList(us_id);
-	}
+//	@Override
+//	public AdVO adList() {
+//		logger.debug("adList() 호출");
+//		
+//		return udao.adList();
+//	}
+//	
+//	@Override
+//	public ItemVO itemList() {
+//		logger.debug("itemList() 호출");
+//		
+//		return udao.itemList();
+//	}
+//	
+//	@Override
+//	public LoveVO loveList(String us_id) {
+//		logger.debug("loveList(String us_id) 호출");
+//		
+//		return udao.loveList(us_id);
+//	}
 	
 	
 

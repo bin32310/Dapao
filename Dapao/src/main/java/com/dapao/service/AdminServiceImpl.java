@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.UserVO;
 import com.dapao.persistence.AdminDAO;
@@ -44,4 +45,33 @@ public class AdminServiceImpl implements AdminService{
 		return adao.ownerInfo(own_id);
 	}
 	
+	@Override
+	public void ownerInfoDelete(String own_id) throws Exception {
+		logger.debug("service : ownerInfoDelete(String own_id) 호출");
+		adao.ownerInfoDelete(own_id);
+	}
+	
+	@Override
+	public List<CsVO> FAQList() throws Exception {
+		logger.debug("service : FAQList() 호출");
+		return adao.FAQList();
+	}
+	
+	@Override
+	public CsVO FAQInfo(Integer cs_no) throws Exception {
+		logger.debug("service : FAQInfo(Integer cs_no) 호출");
+		return adao.FAQInfo(cs_no);
+	}
+	
+	@Override
+	public void FAQWrite() throws Exception {
+		logger.debug("service : FAQWrite() 호출");
+		adao.FAQWrite();
+	}
+	
+	@Override
+	public int FAQInfoUpdate(CsVO vo) throws Exception {
+		logger.debug("service : FAQInfoUpdate(CsVO vo) 호출");
+		return adao.FAQInfoUpdate(vo);
+	}
 }

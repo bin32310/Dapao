@@ -48,15 +48,15 @@ public class UserController {
 			String us_id = (String)session.getAttribute("us_id");
 			
 			// 찜목록 불러오기
-			if(us_id != null) {
-				model.addAttribute("loveList", uService.loveList(us_id));
-			}
+			//if(us_id != null) {
+			//	model.addAttribute("loveList", uService.loveList(us_id));
+			//}
 			
 			// 인기가게(광고) 목록 불러오기
-			model.addAttribute("adList", uService.adList());
+			//model.addAttribute("adList", uService.adList());
 			
 			// 중고거래 목록 불러오기
-			model.addAttribute("itemList", uService.itemList());
+			//model.addAttribute("itemList", uService.itemList());
 			
 			return "/user/userMain";
 		}

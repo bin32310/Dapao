@@ -24,5 +24,33 @@
 	<select id="ownerInfo" resultType="EntVO">
 		select * from ent where own_id=#{own_id}
 	</select>
-
+	
+	<!-- 사업자 탈퇴 -->
+	<update id="ownerInfoDelete">
+		update ent set own_state=2 
+		where own_id=#{own_id}
+	</update>
+	
+	<!-- FAQ 리스트 -->
+	<select id="FAQList" resultType="CsVO">
+		select * from cs where cs_board = 1
+	</select>
+	
+	<!-- FAQ 1개 정보 -->
+	<select id="FAQInfo" resultType="CsVO">
+		select * from cs where cs_no = #{cs_no}
+	</select>
+	
+	<!-- FAQ 글쓰기 -->
+	<insert id="">
+	
+	</insert>
+	
+	<!-- FAQ정보 수정 -->
+	<update id="FAQInfoUpdate">
+		update cs 
+		set cs_title=#{cs_title}, cs_content=#{cs_content},cs_group=#{cs_group},cs_board=#{cs_board},cs_state=#{cs_state},cs_view=#{cs_view},cs_regdate=now(),cs_update=now() 
+		where cs_no=#{cs_no} 
+	</update>
+	
  </mapper> 

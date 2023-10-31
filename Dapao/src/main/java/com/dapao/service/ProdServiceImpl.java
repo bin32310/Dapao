@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dapao.domain.EntVO;
 import com.dapao.domain.ProdVO;
 import com.dapao.persistence.ProdDAO;
 
@@ -21,21 +20,6 @@ public class ProdServiceImpl implements ProdService{
 	public List<ProdVO> searchProd(ProdVO vo) throws Exception{
 		
 		return pdao.searchProd(vo);
-	}
-	@Override
-	public List<ProdVO> listProd(EntVO vo) {
-		return pdao.listProd(vo);
-	}
-
-	@Override
-	public void updateProd(ProdVO vo) throws Exception {
-		logger.debug(" updatePord(ProdVO vo) 호출 ");
-		pdao.updateProd(vo);
-	}
-	@Override
-	public void insertProd(ProdVO vo) throws Exception {
-		logger.debug(" insertPord(ProdVO vo) 호출 ");
-		pdao.insertProd(vo);
 	}
 
 }

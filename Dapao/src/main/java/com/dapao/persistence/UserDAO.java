@@ -17,13 +17,13 @@ public interface UserDAO {
 	
 	// 메인
 		// 인기가게 목록
-		public AdVO adList();
+		//public AdVO adList();
 		
 		// 중고거래 목록
-		public ItemVO itemList();
+		//public ItemVO itemList();
 		
 		// 찜 목록 조회
-		public LoveVO loveList(String us_id);
+		//public LoveVO loveList(String us_id);
 			
 			
 	// 회원가입 및 로그인	

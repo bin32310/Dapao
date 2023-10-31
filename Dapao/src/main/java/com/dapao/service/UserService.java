@@ -11,16 +11,6 @@ import com.dapao.domain.UserVO;
 public interface UserService {
 
 		
-		// 메인
-			// 인기가게 목록
-			public AdVO adList();
-			
-			// 중고거래 목록
-			public ItemVO itemList();
-			
-			// 찜 목록 조회
-			public LoveVO loveList(String us_id);
-	
 		
 		// 회원가입 및 로그인
 			// 회원가입 동작 실행

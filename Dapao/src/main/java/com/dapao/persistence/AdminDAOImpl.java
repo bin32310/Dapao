@@ -1,6 +1,8 @@
 package com.dapao.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -10,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.UserVO;
 
@@ -55,4 +58,33 @@ public class AdminDAOImpl implements AdminDAO {
 			return sqlSession.selectOne(NAMESPACE+".ownerInfo",own_id);
 		}
 		
+		@Override
+		public void ownerInfoDelete(String own_id) throws Exception {
+			logger.debug("DAO : ownerInfoDelete(String own_id) 호출");
+			sqlSession.update(NAMESPACE+".ownerInfoDelete",own_id);
+		}
+		
+		@Override
+		public List<CsVO> FAQList() throws Exception {
+			logger.debug("DAO : FAQList() 호출");
+			return sqlSession.selectList(NAMESPACE+".FAQList");
+		}
+		
+		@Override
+		public CsVO FAQInfo(Integer cs_no) throws Exception {
+			logger.debug("DAO : FAQInfo(Integer cs_no)  호출");
+			return sqlSession.selectOne(NAMESPACE+".FAQInfo", cs_no);
+		}
+		
+		@Override
+		public void FAQWrite() throws Exception {
+			logger.debug("DAO : FAQWrite()  호출");	
+			sqlSession.insert(NAMESPACE+".FAQWrite");
+		}
+		
+		@Override
+		public int FAQInfoUpdate(CsVO vo) throws Exception {
+			logger.debug("DAO : FAQInfoUpdate(CsVO vo)  호출");
+			return sqlSession.update(NAMESPACE+".FAQInfoUpdate", vo);
+		}
 }
