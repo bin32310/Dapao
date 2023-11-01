@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.UserVO;
@@ -20,24 +21,53 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Inject
 	private AdminDAO adao;
-
-	@Override
-	public List<EntVO> ownerList() throws Exception{
-		logger.debug("service : ownerList() 호출");
-		return adao.ownerList();
-	}
 	
 	@Override
 	public List<UserVO> getAllUser() throws Exception {
-		logger.debug("컨트롤러의 호출로 Service호출");
+		logger.debug("service : getAllUser() 호출 ");
 		return adao.getAllUser();
 	}
 	
 	@Override
 	public UserVO userInfo(String us_id) throws Exception {
-		logger.debug("컨트롤러의 호출로 Service호출");
+		logger.debug("service : userInfo(String us_id) 호출 ");
 		return adao.userInfo(us_id);
 	}
+	
+	@Override
+	public int userStop(UserVO vo) throws Exception {
+		logger.debug("service : userStop(UserVO vo) 호출 ");
+		return adao.userStop(vo);
+	}
+	
+	@Override
+	public void userStateUpdate(String us_id) throws Exception {
+		logger.debug("service : userStateUpdate(String us_id) 호출");
+		adao.userStateUpdate(us_id);
+	}
+	
+	@Override
+	public int userDelete(String us_id) throws Exception {
+		logger.debug("service : userDelete(String us_id) 호출");
+		return adao.userDelete(us_id);
+	}
+	
+	@Override
+	public List<UserVO> getUserList(Criteria cri) throws Exception {
+		return adao.getUserList(cri);
+	}
+	
+	@Override
+	public int getUserCount() throws Exception {
+		return adao.getUserCount();
+	}
+	
+	@Override
+	public List<EntVO> ownerList() throws Exception{
+		logger.debug("service : ownerList() 호출");
+		return adao.ownerList();
+	}
+
 	
 	@Override
 	public EntVO ownerInfo(String own_id) throws Exception {
