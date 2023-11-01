@@ -4,17 +4,20 @@
 <%@include file="../include/header.jsp" %>
 <h1>/admin/ownerList.jsp</h1>
 
-<div class="row">
-	<div class="col-sm-12">
-		<table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+<div class="box">
+	<div class="box-header with-board">
+		<h3 class="box-title">사업자 관리</h3>
+	</div>
+	<div class="box-body">
+		<table class="table table-bordered">
 			<thead>
 				<tr role="row">
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >사업자 아이디</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >사업자 이름</th>
-					<th class="sorting_desc" tabindex="0" rowspan="1" colspan="1" >주소</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >전화번호</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >신고 누적</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >사업자 상태</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">사업자 아이디</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">사업자 이름</th>
+					<th class="sorting_desc" tabindex="0" rowspan="1" colspan="1">주소</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">전화번호</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">신고 누적</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">사업자 상태</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -43,9 +46,24 @@
 				</c:forEach>
 			</tbody>
 			<tfoot>
-				
 			</tfoot>
 		</table>
+	</div>
+	<div class="box-footer clearfix">
+		<ul class="pagination pagination-sm no-margin pull-right">
+
+			<c:if test="${pageVO.prev }">
+				<li><a href="/admin/ownerList?page=${pageVO.startPage-1 } ">←</a></li>
+			</c:if>
+
+			<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+				<li ${pageVO.cri.page == i? 'class="active"':'' }><a href="/admin/ownerList?page=${i }">${i }</a></li>
+			</c:forEach>
+
+			<c:if test="${pageVO.next }">
+				<li><a href="/admin/ownerList?page=${pageVO.endPage+1 }">→</a></li>
+			</c:if>
+		</ul>
 	</div>
 </div>
 
@@ -59,7 +77,7 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">사업자 정보</h4>
 			</div>
-			<div class="modal-body" id="ownInfo">
+			<div class="modal-body">
 				<div class="form-group">
 					<label class="col-sm-2 control-label">사업자 아이디</label>
 					<div class="col-sm-10">
@@ -177,6 +195,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
+				<button type="button" name="update" class="update">승인</button>
 				<button type="button" name="delete" class="delete">탈퇴</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
@@ -199,37 +218,52 @@
 						dataType : "json",
 						success : function(data) {
 							console.log(data)
-							$('input[name=own_id]').attr('value', data.own_id)
-							$('input[name=own_name]').attr('value',data.own_name)
-							$('input[name=own_pw]').attr('value', data.own_pw)
-							$('input[name=own_tel]').attr('value', data.own_tel)
-							$('input[name=own_email]').attr('value',data.own_email)
-							$('input[name=own_state]').attr('value',data.own_state)
-							$('input[name=ent_name]').attr('value',data.ent_name)
-							$('input[name=ent_cate]').attr('value',data.ent_cate)
-							$('input[name=ent_addr]').attr('value',data.ent_addr)
-							$('input[name=ent_mo]').attr('value', data.ent_mo)
-							$('input[name=ent_file]').attr('value',data.ent_file)
-							$('input[name=ent_of]').attr('value', data.ent_of)
-							$('input[name=ent_notice]').attr('value',data.ent_notice)
-							$('input[name=ent_info]').attr('value',data.ent_info)
-							$('input[name=ent_img]').attr('value', data.ent_img)
-							$('input[name=ent_ot]').attr('value', data.ent_ot)
-							$('input[name=ent_ct]').attr('value', data.ent_ct)
-							$('input[name=ent_account]').attr('value',data.ent_account)
-							$('input[name=ent_stop]').attr('value',data.ent_stop)
+							$('input[name=own_id]').val(data.own_id)
+							$('input[name=own_name]').val(data.own_name)
+							$('input[name=own_pw]').val(data.own_pw)
+							$('input[name=own_tel]').val(data.own_tel)
+							$('input[name=own_email]').val(data.own_email)
+							$('input[name=own_state]').val(data.own_state)
+							$('input[name=ent_name]').val(data.ent_name)
+							$('input[name=ent_cate]').val(data.ent_cate)
+							$('input[name=ent_addr]').val(data.ent_addr)
+							$('input[name=ent_mo]').val(data.ent_mo)
+							$('input[name=ent_file]').val(data.ent_file)
+							$('input[name=ent_of]').val(data.ent_of)
+							$('input[name=ent_notice]').val(data.ent_notice)
+							$('input[name=ent_info]').val(data.ent_info)
+							$('input[name=ent_img]').val(data.ent_img)
+							$('input[name=ent_ot]').val(data.ent_ot)
+							$('input[name=ent_ct]').val(data.ent_ct)
+							$('input[name=ent_account]').val(data.ent_account)
+							$('input[name=ent_stop]').val(data.ent_stop)
 
 						},
 						error : function() {
 							console.log("오류");
 						}
-
 					});// ownInfo click ajax
+					$(".update").click(function(){
+						$.ajax({
+							url : "/admin/ownerApprove",
+							data : {
+								"own_id" : $('input[name=own_id]').val()
+							},
+							dataType : "json",
+							success : function(data){
+								console.log(data)
+								alert("승인완료")
+							},
+							error : function() {
+								console.log("오류");
+							}
+						});//update click ajax
+					});//update click
 					$(".delete").click(function() {
 						$.ajax({
 							url : "/admin/ownerInfoDelete",
 							data : {
-								"own_id" : $('input[name=own_id]').val(),
+								"own_id" : $('input[name=own_id]').val()
 							},
 							dataType : "json",
 							success : function(data) {
@@ -239,8 +273,6 @@
 							},
 							error : function() {
 								console.log("오류");
-								alert("탈퇴완료");
-								location.replace("/admin/ownerList");
 							}
 						});//delete click ajax
 					});// delete click

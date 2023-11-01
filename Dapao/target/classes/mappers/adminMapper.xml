@@ -7,8 +7,18 @@
  	
  	<!-- 모든사업자정보출력 -->
  	<select id="ownerList" resultType="EntVO">
- 		select * from ent
+ 		select * from ent 
+ 		order by own_state
+		limit #{pageStart},#{pageSize}
  	</select>
+ 	
+ 	<!-- 사업자 총 개수 조회 -->
+	<select id="ownerCount" resultType="int">
+		<![CDATA[
+		select count(*) from ent
+		where own_id > 0
+		]]>
+	</select>
  	
  	<!-- 모든회원정보출력 -->
 	<select id="getAllUser" resultType="UserVO">
@@ -25,6 +35,12 @@
 		select * from ent where own_id=#{own_id}
 	</select>
 	
+	<!-- 사업자 승인 -->
+	<update id="ownerApprove">
+		update ent set own_state=0 
+		where own_id=#{own_id}
+	</update>
+	
 	<!-- 사업자 탈퇴 -->
 	<update id="ownerInfoDelete">
 		update ent set own_state=2 
@@ -33,7 +49,10 @@
 	
 	<!-- FAQ 리스트 -->
 	<select id="FAQList" resultType="CsVO">
-		select * from cs where cs_board = 1
+		select * from cs 
+		where cs_board = 1 
+		order by cs_no, cs_regdate 
+		limit #{pageStart},#{pageSize}
 	</select>
 	
 	<!-- FAQ 1개 정보 -->
@@ -42,15 +61,21 @@
 	</select>
 	
 	<!-- FAQ 글쓰기 -->
-	<insert id="">
-	
+	<insert id="FAQWrite">
+		insert into cs (cs_title,cs_content,cs_board,cs_group) 
+		values(#{cs_title},#{cs_content},1,#{cs_group})
 	</insert>
 	
 	<!-- FAQ정보 수정 -->
 	<update id="FAQInfoUpdate">
 		update cs 
-		set cs_title=#{cs_title}, cs_content=#{cs_content},cs_group=#{cs_group},cs_board=#{cs_board},cs_state=#{cs_state},cs_view=#{cs_view},cs_regdate=now(),cs_update=now() 
+		set cs_title=#{cs_title}, cs_content=#{cs_content},cs_update=now() 
 		where cs_no=#{cs_no} 
 	</update>
+	
+	<!-- FAQ 글 총 개수 조회 -->
+	<select id="FAQCount" resultType="int">
+		select count(*) from cs where cs_board=1
+	</select>
 	
  </mapper> 
