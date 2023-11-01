@@ -2,10 +2,50 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.dapao.mapper.AdminMapper">
+
+
+	<!-- 회원관리 - 개인회원정보출력 -->
+	<select id="userInfo" resultType="UserVO">
+		select * from us where 
+		us_id=#{us_id}
+
   
  <mapper  namespace="com.dapao.mapper.AdminMapper">
  	
- 	<!-- 모든사업자정보출력 -->
+
+
+	<!-- 회원관리 - 회원정지부여 -->
+	<update id="userStop">
+		update us set us_stopdate=date_add(now(), interval 
+		#{us_stopdate} day) where us_id=#{us_id};
+	</update>
+
+	<!-- 회원관리 - 회원정지(회원상태변경) -->
+	<update id="userStateUpdate">
+		update us set us_state=1 where us_id=#{us_id}
+	</update>
+
+	<!-- 회원관리 - 회원탈퇴(회원상태변경) -->
+	<update id="userDelete">
+		update us set us_state=2 where us_id=#{us_id}
+	</update>
+	
+	<!-- 회원관리 - 페이징처리 후 회원리스트 조회 -->
+	<select id="userListCri" resultType="UserVO">
+		select * from us 
+		where us_id!='admin' order by us_id 
+		limit #{pageStart},#{pageSize}
+	</select>
+
+	<!-- 회원관리 - 전체회원수 조회 -->
+	<select id="userCount" resultType="int">
+		select count(*) from us
+	</select>
+  	
+	<!-- 사업자관리 - 모든사업자정보출력 -->
  	<select id="ownerList" resultType="EntVO">
  		select * from ent 
  		order by own_state
@@ -19,21 +59,13 @@
 		where own_id > 0
 		]]>
 	</select>
- 	
- 	<!-- 모든회원정보출력 -->
-	<select id="getAllUser" resultType="UserVO">
-		select * from user
-	</select>
-	
-	<!-- 개인회원정보출력 -->
-	<select id="userInfo" resultType="UserVO">
-		select * from user where us_id=#{us_id}
-	</select>
-	
-	<!-- 사업자정보출력 -->
+
+	<!-- 사업자관리 - 사업자정보출력 -->
 	<select id="ownerInfo" resultType="EntVO">
-		select * from ent where own_id=#{own_id}
+		select * from ent where
+		own_id=#{own_id}
 	</select>
+
 	
 	<!-- 사업자 승인 -->
 	<update id="ownerApprove">
@@ -43,21 +75,22 @@
 	
 	<!-- 사업자 탈퇴 -->
 	<update id="ownerInfoDelete">
-		update ent set own_state=2 
+		update ent set own_state=2
 		where own_id=#{own_id}
 	</update>
-	
-	<!-- FAQ 리스트 -->
+
+	<!-- FAQ&공지 관리 - FAQ 리스트 -->
 	<select id="FAQList" resultType="CsVO">
 		select * from cs 
 		where cs_board = 1 
 		order by cs_no, cs_regdate 
 		limit #{pageStart},#{pageSize}
 	</select>
-	
-	<!-- FAQ 1개 정보 -->
+
+	<!-- FAQ&공지 관리 - FAQ 1개 정보 -->
 	<select id="FAQInfo" resultType="CsVO">
-		select * from cs where cs_no = #{cs_no}
+		select * from cs where cs_no =
+		#{cs_no}
 	</select>
 	
 	<!-- FAQ 글쓰기 -->
@@ -65,8 +98,8 @@
 		insert into cs (cs_title,cs_content,cs_board,cs_group) 
 		values(#{cs_title},#{cs_content},1,#{cs_group})
 	</insert>
-	
-	<!-- FAQ정보 수정 -->
+
+	<!-- FAQ&공지 관리 - FAQ정보 수정 -->
 	<update id="FAQInfoUpdate">
 		update cs 
 		set cs_title=#{cs_title}, cs_content=#{cs_content},cs_update=now() 

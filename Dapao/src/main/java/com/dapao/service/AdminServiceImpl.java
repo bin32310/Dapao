@@ -23,33 +23,62 @@ public class AdminServiceImpl implements AdminService{
 	private AdminDAO adao;
 
 	@Override
-	public List<EntVO> ownerList(Criteria cri) throws Exception{
-		logger.debug("service : ownerList() 호출");
-		return adao.ownerList(cri);
-	}
-	
-	@Override
-	public int ownerCount(Integer own_id) throws Exception {
-		logger.debug("service : ownerCount() 호출 ");
-		return adao.ownerCount(own_id);
-	}
-	
-	@Override
 	public List<UserVO> getAllUser() throws Exception {
-		logger.debug("컨트롤러의 호출로 Service호출");
+		logger.debug("service : getAllUser() 호출 ");
 		return adao.getAllUser();
 	}
 	
 	@Override
 	public UserVO userInfo(String us_id) throws Exception {
-		logger.debug("컨트롤러의 호출로 Service호출");
+		logger.debug("service : userInfo(String us_id) 호출 ");
 		return adao.userInfo(us_id);
 	}
+	
+	@Override
+	public int userStop(UserVO vo) throws Exception {
+		logger.debug("service : userStop(UserVO vo) 호출 ");
+		return adao.userStop(vo);
+	}
+	
+	@Override
+	public void userStateUpdate(String us_id) throws Exception {
+		logger.debug("service : userStateUpdate(String us_id) 호출");
+		adao.userStateUpdate(us_id);
+	}
+	
+	@Override
+	public int userDelete(String us_id) throws Exception {
+		logger.debug("service : userDelete(String us_id) 호출");
+		return adao.userDelete(us_id);
+	}
+	
+	@Override
+	public List<UserVO> getUserList(Criteria cri) throws Exception {
+		return adao.getUserList(cri);
+	}
+	
+	@Override
+	public int getUserCount() throws Exception {
+		return adao.getUserCount();
+	}
+	
+	@Override
+	public List<EntVO> ownerList(Criteria cri) throws Exception{
+		logger.debug("service : ownerList() 호출");
+		return adao.ownerList(cri);
+	}
+
 	
 	@Override
 	public EntVO ownerInfo(String own_id) throws Exception {
 		logger.debug("service : ownerInfo(String own_id) 호출 ");
 		return adao.ownerInfo(own_id);
+	}
+  
+  	@Override
+	public int ownerCount(Integer own_id) throws Exception {
+		logger.debug("service : ownerCount() 호출 ");
+		return adao.ownerCount(own_id);
 	}
 	
 	@Override
