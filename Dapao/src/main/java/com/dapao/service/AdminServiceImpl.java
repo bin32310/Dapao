@@ -80,6 +80,12 @@ public class AdminServiceImpl implements AdminService{
 		logger.debug("service : ownerCount() 호출 ");
 		return adao.ownerCount(own_id);
 	}
+  	
+  	@Override
+  	public int ownerStop(EntVO vo) throws Exception {
+  		logger.debug("service : ownerStop(EntVO vo) 호출 ");
+  		return adao.ownerStop(vo);
+  	}
 	
 	@Override
 	public int ownerApprove(String own_id) throws Exception {

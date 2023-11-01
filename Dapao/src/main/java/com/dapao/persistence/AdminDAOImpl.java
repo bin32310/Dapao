@@ -1,8 +1,6 @@
 package com.dapao.persistence;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -92,6 +90,12 @@ public class AdminDAOImpl implements AdminDAO {
 		public EntVO ownerInfo(String own_id) throws Exception {
 			logger.debug("DAO : ownerInfo(String own_id) 호출");
 			return sqlSession.selectOne(NAMESPACE+".ownerInfo",own_id);
+		}
+		
+		@Override
+		public int ownerStop(EntVO vo) throws Exception {
+			logger.debug("DAO : ownerStop(EntVO vo) 호출");
+			return sqlSession.update(NAMESPACE+".ownerStop", vo);
 		}
 		
 		@Override

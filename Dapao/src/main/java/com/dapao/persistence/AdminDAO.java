@@ -9,11 +9,6 @@ import com.dapao.domain.UserVO;
 
 public interface AdminDAO {
 	
-	// 사업자 정보 리스트
-	public List<EntVO> ownerList(Criteria cri) throws  Exception;
-	
-	// 사업자 총개수 조회
-	public int ownerCount(Integer own_id) throws Exception;
 	
 	// 회원관리 - 모든유저정보 출력
 	public List<UserVO> getAllUser() throws Exception;
@@ -37,27 +32,36 @@ public interface AdminDAO {
 	public int getUserCount() throws Exception;
 
 	
-	// 사업자 정보 출력
+	// 사업자 관리 - 사업자정보 리스트
+	public List<EntVO> ownerList(Criteria cri) throws  Exception;
+	
+	// 사업자 관리 - 사업자 총개수 조회
+	public int ownerCount(Integer own_id) throws Exception;
+	
+	// 사업자 관리 - 사업자 정보 출력
 	public EntVO ownerInfo(String own_id) throws Exception;
 	
-	// 사업자 승인
+	// 사업자 관리 - 사업자 정지
+	public int ownerStop(EntVO vo) throws Exception;
+	
+	// 사업자 관리 - 사업자 승인
 	public int ownerApprove(String own_id) throws Exception;
 	
-	// 사업자 탈퇴
+	// 사업자 관리 - 사업자 탈퇴
 	public int ownerInfoDelete(String own_id) throws Exception;
 	
-	// FAQ 리스트
+	// FAQ&공지 관리 - FAQ 리스트
 	public List<CsVO> FAQList(Criteria cri) throws Exception;
 	
-	// FAQ 1개정보 출력
+	// FAQ&공지 관리 - FAQ 1개정보 출력
 	public CsVO FAQInfo(Integer cs_no) throws Exception;
 	
-	//FAQ 글쓰기
+	// FAQ&공지 관리 - FAQ 글쓰기
 	public void FAQWrite(CsVO vo) throws Exception;
 	
-	// FAQ 정보 수정
+	// FAQ&공지 관리 - FAQ 정보 수정
 	public int FAQInfoUpdate(CsVO vo) throws Exception;
 	
-	// FAQ 총 글개수 조회
+	// FAQ&공지 관리 - FAQ 총 글개수 조회
 	public int FAQCount() throws Exception;
 }

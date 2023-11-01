@@ -131,6 +131,13 @@ public class AdminController {
 		return aService.ownerInfo(own_id);
 	}
 
+	// 사업자 정지부여
+	@ResponseBody
+	@RequestMapping(value = "/ownerStop")
+	public int ownerStop(EntVO vo) throws Exception {
+		logger.debug("ownerStop() 호출");
+		return aService.ownerStop(vo);
+	}
 	
 	// 사업자 승인
 	@RequestMapping("/ownerApprove")
