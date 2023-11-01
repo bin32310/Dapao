@@ -7,67 +7,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<script type="text/javascript">
-
-	$(function() {
-		$('.cs_no').click(function() {
-			$('#myLargeModal').modal("show");
-
-			$.ajax({
-				url : "/admin/FAQInfo",
-				data : {
-					"cs_no" : $(this).text()
-				},
-				dataType : "json",
-				success : function(data) {
-					console.log(data)
-					$('input[name=cs_no]').attr('value',data.cs_no)
-					$('input[name=cs_title]').attr('value',data.cs_title)
-					$('input[name=cs_content]').attr('value',data.cs_content)
-					$('input[name=cs_group]').attr('value',data.cs_group)
-					$('input[name=cs_board]').attr('value',data.cs_board)
-					$('input[name=cs_state]').attr('value',data.cs_state)
-					$('input[name=cs_view]').attr('value',data.cs_view)
-					$('input[name=cs_regdate]').attr('value',data.cs_regdate)
-					$('input[name=cs_update]').attr('value',data.cs_update)
-				},
-				error : function() {
-					console.log("오류");
-				}
-			});// cs_no click ajax
-			
-			$('#update').click(function(){
-				alert("@@@@@@@@@@@");
-				$.ajax({
-					url : "/admin/FAQInfoUpdate",
-					data : {
-						"cs_no" : $('input[name=cs_no]').val(),
-						"cs_title" : $('input[name=cs_title]').val(),
-						"cs_content" : $('input[name=cs_content]').val(),
-						"cs_group" : $('input[name=cs_group]').val(),
-						"cs_board" : $('input[name=cs_board]').val(),
-						"cs_state" : $('input[name=cs_state]').val,
-						"cs_view" : $('input[name=cs_view]').val(),
-						"cs_regdate" : $('input[name=cs_regdate]').val(),
-						"cs_update" : $('input[name=cs_update]').val()
-					},
-					success : function(data){
-						console.log(data)
-					},
-					error : function() {
-						console.log("오류");
-					}
-				})//update click ajax
-			})//update click
-		});// cs_no click
-	});//ready
-</script>
 
 <h1>/admin/FAQList.jsp</h1>
 
-<div class="row">
-	<div class="col-sm-12">
-		<table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+<div class="box">
+	<div class="box-header with-board">
+		<h3 class="box-title">FAQ 목록</h3>
+	</div>
+	<div class="box-body">
+		<table class="table table-bordered">
 			<thead>
 				<tr role="row">
 					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >글 번호</th>
@@ -91,6 +39,22 @@
 			</tfoot>
 		</table>
 	</div>
+	<div class="box-footer clearfix">
+		<ul class="pagination pagination-sm no-margin pull-right">
+
+			<c:if test="${pageVO.prev }">
+				<li><a href="/admin/FAQList?page=${pageVO.startPage-1 } ">←</a></li>
+			</c:if>
+
+			<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+				<li ${pageVO.cri.page == i? 'class="active"':'' }><a href="/admin/FAQList?page=${i }">${i }</a></li>
+			</c:forEach>
+
+			<c:if test="${pageVO.next }">
+				<li><a href="/admin/FAQList?page=${pageVO.endPage+1 }">→</a></li>
+			</c:if>
+		</ul>
+	</div>
 </div>
 
 <!-- Modal -->
@@ -103,69 +67,122 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">FAQ</h4>
 			</div>
-			<div class="modal-body" id="ownInfo">
+			<div class="modal-body">
 				<div class="form-group">
 					<label class="col-sm-2 control-label">글번호</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_no" readonly>
+						<input type="text" class="form-control" name="cs_no" readonly><br>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">제목</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_title">
+						<input type="text" class="form-control" name="cs_title"><br>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">내용</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_content">
+						<input type="text" class="form-control" name="cs_content"><br>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">등록형태</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_group">
+						<input type="text" class="form-control" name="cs_group"><br>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">cs종류</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_board">
+						<input type="text" class="form-control" name="cs_board"><br>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">등록상태</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_state">
+						<input type="text" class="form-control" name="cs_state"><br>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">조회수</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_view">
+						<input type="text" class="form-control" name="cs_view"><br>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">게시일</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_regdate">
+						<input type="text" class="form-control" name="cs_regdate"><br>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">수정일</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_update">
+						<input type="text" class="form-control" name="cs_update"><br>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" name="update" id="update">수정</button>
+				<button type="button" name="update" class="update">수정</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
-
 	</div>
 </div>
+
+<script type="text/javascript">
+
+	$(function() {
+		$('.cs_no').click(function() {
+			$('#myLargeModal').modal("show");
+
+			$.ajax({
+				url : "/admin/FAQInfo",
+				data : {
+					"cs_no" : $(this).text()
+				},
+				dataType : "json",
+				success : function(data) {
+					console.log(data)
+					$('input[name=cs_no]').val(data.cs_no)
+					$('input[name=cs_title]').val(data.cs_title)
+					$('input[name=cs_content]').val(data.cs_content)
+					$('input[name=cs_group]').val(data.cs_group)
+					$('input[name=cs_board]').val(data.cs_board)
+					$('input[name=cs_state]').val(data.cs_state)
+					$('input[name=cs_view]').val(data.cs_view)
+					$('input[name=cs_regdate]').val(data.cs_regdate)
+					$('input[name=cs_update]').val(data.cs_update)
+				},
+				error : function() {
+					console.log("오류");
+				}
+			});// cs_no click ajax
+			
+			$('.update').click(function(){
+				alert("@@@@");
+				$.ajax({
+					url : "/admin/FAQInfoUpdate",
+					data : {
+						"cs_no" : $('input[name=cs_no]').val(),
+						"cs_title" : $('input[name=cs_title]').val(),
+						"cs_content" : $('input[name=cs_content]').val(),
+					},
+					dataType : "json",
+					success : function(data) {
+						console.log(data)
+						alert("수정완료");
+						location.replace("/admin/FAQList");
+					},
+					error : function() {
+						console.log("오류");
+					}
+				});//update click ajax
+			});//update click
+		});// cs_no click
+	});//ready
+</script>
+
 
 <%@include file="../include/footer.jsp"%>

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.UserVO;
@@ -22,9 +23,15 @@ public class AdminServiceImpl implements AdminService{
 	private AdminDAO adao;
 
 	@Override
-	public List<EntVO> ownerList() throws Exception{
+	public List<EntVO> ownerList(Criteria cri) throws Exception{
 		logger.debug("service : ownerList() 호출");
-		return adao.ownerList();
+		return adao.ownerList(cri);
+	}
+	
+	@Override
+	public int ownerCount(Integer own_id) throws Exception {
+		logger.debug("service : ownerCount() 호출 ");
+		return adao.ownerCount(own_id);
 	}
 	
 	@Override
@@ -46,15 +53,21 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public void ownerInfoDelete(String own_id) throws Exception {
-		logger.debug("service : ownerInfoDelete(String own_id) 호출");
-		adao.ownerInfoDelete(own_id);
+	public int ownerApprove(String own_id) throws Exception {
+		logger.debug("service : ownerApprove(String own_id) 호출");
+		return adao.ownerApprove(own_id);
 	}
 	
 	@Override
-	public List<CsVO> FAQList() throws Exception {
+	public int ownerInfoDelete(String own_id) throws Exception {
+		logger.debug("service : ownerInfoDelete(String own_id) 호출");
+		return adao.ownerInfoDelete(own_id);
+	}
+	
+	@Override
+	public List<CsVO> FAQList(Criteria cri) throws Exception {
 		logger.debug("service : FAQList() 호출");
-		return adao.FAQList();
+		return adao.FAQList(cri);
 	}
 	
 	@Override
@@ -64,14 +77,20 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public void FAQWrite() throws Exception {
+	public void FAQWrite(CsVO vo) throws Exception {
 		logger.debug("service : FAQWrite() 호출");
-		adao.FAQWrite();
+		adao.FAQWrite(vo);
 	}
 	
 	@Override
 	public int FAQInfoUpdate(CsVO vo) throws Exception {
 		logger.debug("service : FAQInfoUpdate(CsVO vo) 호출");
 		return adao.FAQInfoUpdate(vo);
+	}
+	
+	@Override
+	public int FAQCount() throws Exception {
+		logger.debug("service : FAQCount(Integer cs_no) 호출");
+		return adao.FAQCount();
 	}
 }

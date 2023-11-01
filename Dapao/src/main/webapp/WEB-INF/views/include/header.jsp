@@ -328,7 +328,7 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="/admin/FAQList"><i class="fa fa-circle-o"></i> 글 목록조회 </a></li>
-                <li><a href="/admin/FAQWrite"><i class="fa fa-circle-o"></i> 글쓰기 </a></li>
+                <li><a href="/admin/FAQWriteForm"><i class="fa fa-circle-o"></i> 글쓰기 </a></li>
               </ul>
             </li>
             <li class="treeview">
