@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+
 <mapper namespace="com.dapao.mapper.AdminMapper">
 
 
@@ -10,7 +11,11 @@
 	<select id="userInfo" resultType="UserVO">
 		select * from us where 
 		us_id=#{us_id}
-	</select>
+
+  
+ <mapper  namespace="com.dapao.mapper.AdminMapper">
+ 	
+
 
 	<!-- 회원관리 - 회원정지부여 -->
 	<update id="userStop">
@@ -39,12 +44,21 @@
 	<select id="userCount" resultType="int">
 		select count(*) from us
 	</select>
-	
+  	
 	<!-- 사업자관리 - 모든사업자정보출력 -->
-	<select id="ownerList" resultType="EntVO">
-		select * from ent
+ 	<select id="ownerList" resultType="EntVO">
+ 		select * from ent 
+ 		order by own_state
+		limit #{pageStart},#{pageSize}
+ 	</select>
+ 	
+ 	<!-- 사업자 총 개수 조회 -->
+	<select id="ownerCount" resultType="int">
+		<![CDATA[
+		select count(*) from ent
+		where own_id > 0
+		]]>
 	</select>
-
 
 	<!-- 사업자관리 - 사업자정보출력 -->
 	<select id="ownerInfo" resultType="EntVO">
@@ -52,7 +66,14 @@
 		own_id=#{own_id}
 	</select>
 
-	<!-- 사업자관리 - 사업자 탈퇴 -->
+	
+	<!-- 사업자 승인 -->
+	<update id="ownerApprove">
+		update ent set own_state=0 
+		where own_id=#{own_id}
+	</update>
+	
+	<!-- 사업자 탈퇴 -->
 	<update id="ownerInfoDelete">
 		update ent set own_state=2
 		where own_id=#{own_id}
@@ -60,8 +81,10 @@
 
 	<!-- FAQ&공지 관리 - FAQ 리스트 -->
 	<select id="FAQList" resultType="CsVO">
-		select * from cs where cs_board
-		= 1
+		select * from cs 
+		where cs_board = 1 
+		order by cs_no, cs_regdate 
+		limit #{pageStart},#{pageSize}
 	</select>
 
 	<!-- FAQ&공지 관리 - FAQ 1개 정보 -->
@@ -69,22 +92,23 @@
 		select * from cs where cs_no =
 		#{cs_no}
 	</select>
-
-	<!-- FAQ&공지 관리 - FAQ 글쓰기 -->
-	<insert id="">
-
+	
+	<!-- FAQ 글쓰기 -->
+	<insert id="FAQWrite">
+		insert into cs (cs_title,cs_content,cs_board,cs_group) 
+		values(#{cs_title},#{cs_content},1,#{cs_group})
 	</insert>
 
 	<!-- FAQ&공지 관리 - FAQ정보 수정 -->
 	<update id="FAQInfoUpdate">
-		update cs
-		set cs_title=#{cs_title},
-		cs_content=#{cs_content},cs_group=#{cs_group},cs_board=#{cs_board},cs_state=#{cs_state},cs_view=#{cs_view},cs_regdate=now(),cs_update=now()
-		where cs_no=#{cs_no}
+		update cs 
+		set cs_title=#{cs_title}, cs_content=#{cs_content},cs_update=now() 
+		where cs_no=#{cs_no} 
 	</update>
-
-
-
-
-
-</mapper> 
+	
+	<!-- FAQ 글 총 개수 조회 -->
+	<select id="FAQCount" resultType="int">
+		select count(*) from cs where cs_board=1
+	</select>
+	
+ </mapper> 

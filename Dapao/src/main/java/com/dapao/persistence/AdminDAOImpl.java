@@ -21,6 +21,7 @@ import com.dapao.domain.UserVO;
 public class AdminDAOImpl implements AdminDAO {
 	// 디비연결객체 정보를 주입
 
+
 	private static final Logger logger = LoggerFactory.getLogger(AdminDAOImpl.class);
 
 	@Inject
@@ -73,46 +74,65 @@ public class AdminDAOImpl implements AdminDAO {
 		return sqlSession.selectOne(NAMESPACE+".userCount");
 	}
 	
-	@Override
-	public List<EntVO> ownerList() throws Exception {
-		logger.debug(" DAO : ownerList() 호출");
 
-		return sqlSession.selectList(NAMESPACE + ".ownerList");
-	}
-
-	@Override
-	public EntVO ownerInfo(String own_id) throws Exception {
-		logger.debug("DAO : ownerInfo(String own_id) 호출");
-		return sqlSession.selectOne(NAMESPACE + ".ownerInfo", own_id);
-	}
-
-	@Override
-	public void ownerInfoDelete(String own_id) throws Exception {
-		logger.debug("DAO : ownerInfoDelete(String own_id) 호출");
-		sqlSession.update(NAMESPACE + ".ownerInfoDelete", own_id);
-	}
-
-	@Override
-	public List<CsVO> FAQList() throws Exception {
-		logger.debug("DAO : FAQList() 호출");
-		return sqlSession.selectList(NAMESPACE + ".FAQList");
-	}
-
-	@Override
-	public CsVO FAQInfo(Integer cs_no) throws Exception {
-		logger.debug("DAO : FAQInfo(Integer cs_no)  호출");
-		return sqlSession.selectOne(NAMESPACE + ".FAQInfo", cs_no);
-	}
-
-	@Override
-	public void FAQWrite() throws Exception {
-		logger.debug("DAO : FAQWrite()  호출");
-		sqlSession.insert(NAMESPACE + ".FAQWrite");
-	}
-
-	@Override
-	public int FAQInfoUpdate(CsVO vo) throws Exception {
-		logger.debug("DAO : FAQInfoUpdate(CsVO vo)  호출");
-		return sqlSession.update(NAMESPACE + ".FAQInfoUpdate", vo);
-	}
+		@Override
+		public List<EntVO> ownerList(Criteria cri) throws Exception{
+			logger.debug(" DAO : ownerList() 호출");
+			
+			return sqlSession.selectList(NAMESPACE+".ownerList",cri);
+		}
+		
+		@Override
+		public int ownerCount(Integer own_id) throws Exception {
+			logger.debug(" DAO : ownerList() 호출");
+			return sqlSession.selectOne(NAMESPACE+".ownerCount");
+		}
+		
+		@Override
+		public EntVO ownerInfo(String own_id) throws Exception {
+			logger.debug("DAO : ownerInfo(String own_id) 호출");
+			return sqlSession.selectOne(NAMESPACE+".ownerInfo",own_id);
+		}
+		
+		@Override
+		public int ownerApprove(String own_id) throws Exception {
+			logger.debug("DAO : ownerApprove(String own_id) 호출");
+			return sqlSession.update(NAMESPACE+".ownerApprove",own_id);
+		}
+		
+		@Override
+		public int ownerInfoDelete(String own_id) throws Exception {
+			logger.debug("DAO : ownerInfoDelete(String own_id) 호출");
+			return sqlSession.update(NAMESPACE+".ownerInfoDelete",own_id);
+		}
+		
+		@Override
+		public List<CsVO> FAQList(Criteria cri) throws Exception {
+			logger.debug("DAO : FAQList() 호출");
+			return sqlSession.selectList(NAMESPACE+".FAQList",cri);
+		}
+		
+		@Override
+		public CsVO FAQInfo(Integer cs_no) throws Exception {
+			logger.debug("DAO : FAQInfo(Integer cs_no)  호출");
+			return sqlSession.selectOne(NAMESPACE+".FAQInfo", cs_no);
+		}
+		
+		@Override
+		public void FAQWrite(CsVO vo) throws Exception {
+			logger.debug("DAO : FAQWrite()  호출");	
+			sqlSession.insert(NAMESPACE+".FAQWrite",vo);
+		}
+		
+		@Override
+		public int FAQInfoUpdate(CsVO vo) throws Exception {
+			logger.debug("DAO : FAQInfoUpdate(CsVO vo)  호출");
+			return sqlSession.update(NAMESPACE+".FAQInfoUpdate", vo);
+		}
+		
+		@Override
+		public int FAQCount() throws Exception {
+			logger.debug("DAO : FAQCount(Integer cs_no)  호출");
+			return sqlSession.selectOne(NAMESPACE+".FAQCount");
+		}
 }
