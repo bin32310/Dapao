@@ -98,8 +98,7 @@ public class AdminController {
 	// http://localhost:8088/admin/ownerList
 	// 사업자 리스트 출력
 	@RequestMapping("/ownerList")
-
-	public void ownerListGET(Criteria cri,Model model, Integer own_id) throws Exception{
+	public void ownerListGET(Criteria cri,Model model, String own_id) throws Exception{
 		logger.debug("ownerListGET() 호출");
 		
 		// 페이징 처리( 페이지 블럭 처리 객체 )
@@ -136,6 +135,7 @@ public class AdminController {
 	@RequestMapping(value = "/ownerStop")
 	public int ownerStop(EntVO vo) throws Exception {
 		logger.debug("ownerStop() 호출");
+		logger.debug("vo : "+vo);
 		return aService.ownerStop(vo);
 	}
 	
@@ -149,8 +149,10 @@ public class AdminController {
 	
 	//사업자 탈퇴
 	@RequestMapping("/ownerInfoDelete")
+	@ResponseBody
 	public int ownerInfoDeleteGET(String own_id) throws Exception{
 		logger.debug("ownerInfoDeleteGET() 호출");
+		logger.debug(""+aService.ownerInfoDelete(own_id));
 		return aService.ownerInfoDelete(own_id);
 	}
 
@@ -215,6 +217,22 @@ public class AdminController {
 		logger.debug("vo@@" + vo);
 		
 		return aService.FAQInfoUpdate(vo);
+	}
+	
+	// FAQ 등록하기
+	@RequestMapping("/FAQUpload")
+	@ResponseBody
+	public int FAQUpload(@RequestParam("cs_no") Integer cs_no) throws Exception{
+		logger.debug("FAQUpload() 호출");
+		return aService.FAQUpload(cs_no);
+	}
+	
+	// FAQ 등록하기
+	@RequestMapping("/FAQRemove")
+	@ResponseBody
+	public int FAQRemove(@RequestParam("cs_no") Integer cs_no) throws Exception{
+		logger.debug("FAQRemove() 호출");
+		return aService.FAQRemove(cs_no);
 	}
 
 }

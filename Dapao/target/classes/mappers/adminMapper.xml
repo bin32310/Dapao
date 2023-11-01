@@ -62,7 +62,7 @@
 
 	<!-- 사업자 관리 - 사업자정지 -->
 	<update id="ownerStop">
-		update ent set own_stopdate=date_add(now(), interval #{own_stopdate} day) own_state=1 
+		update ent set own_stopdate=date_add(now(), interval #{own_stopdate} day), own_state=1 
 		where own_id=#{own_id}
 	</update>
 	
@@ -92,7 +92,7 @@
 		#{cs_no}
 	</select>
 	
-	<!-- FAQ 글쓰기 -->
+	<!-- FAQ&공지 관리 - FAQ 글쓰기 -->
 	<insert id="FAQWrite">
 		insert into cs (cs_title,cs_content,cs_board,cs_group) 
 		values(#{cs_title},#{cs_content},1,#{cs_group})
@@ -105,9 +105,21 @@
 		where cs_no=#{cs_no} 
 	</update>
 	
-	<!-- FAQ 글 총 개수 조회 -->
+	<!-- FAQ&공지 관리 - FAQ 글 총 개수 조회 -->
 	<select id="FAQCount" resultType="int">
 		select count(*) from cs where cs_board=1 
 	</select>
+	
+	<!-- FAQ&공지 관리 - FAQ 등록 -->
+	<update id="FAQUpload">
+		update cs set cs_state=1 
+		where cs_no=#{cs_no}
+	</update>
+	
+	<!-- FAQ&공지 관리 - FAQ 등록해제 -->
+	<update id="FAQRemove">
+		update cs set cs_state=0 
+		where cs_no=#{cs_no}
+	</update>
 	
 </mapper>	

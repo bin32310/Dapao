@@ -76,7 +76,7 @@ public class AdminServiceImpl implements AdminService{
 	}
   
   	@Override
-	public int ownerCount(Integer own_id) throws Exception {
+	public int ownerCount(String own_id) throws Exception {
 		logger.debug("service : ownerCount() 호출 ");
 		return adao.ownerCount(own_id);
 	}
@@ -125,7 +125,19 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Override
 	public int FAQCount() throws Exception {
-		logger.debug("service : FAQCount(Integer cs_no) 호출");
+		logger.debug("service : FAQCount() 호출");
 		return adao.FAQCount();
+	}
+	
+	@Override
+	public int FAQUpload(Integer cs_no) throws Exception {
+		logger.debug("service : FAQUpload(Integer cs_no) 호출");
+		return adao.FAQUpload(cs_no);
+	}
+	
+	@Override
+	public int FAQRemove(Integer cs_no) throws Exception {
+		logger.debug("service : FAQRemove(Integer cs_no) 호출");
+		return adao.FAQRemove(cs_no);
 	}
 }

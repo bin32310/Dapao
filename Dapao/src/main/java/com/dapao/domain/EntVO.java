@@ -25,5 +25,6 @@ public class EntVO {
 	private String ent_ct;
 	private Integer ent_account;
 	private Integer ent_stop;
+	private String own_stopdate;
 
 }

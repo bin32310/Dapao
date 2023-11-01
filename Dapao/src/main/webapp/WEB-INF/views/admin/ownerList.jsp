@@ -266,7 +266,6 @@
 							},
 							dataType : "json",
 							success : function(data) {
-								console.log(date);
 								if (data == 1) {
 									alert("정상적으로 정지가 부여되었습니다.");
 									location.replace("/admin/ownerList");
@@ -285,9 +284,8 @@
 							},
 							dataType : "json",
 							success : function(data){
-								console.log(data);
-								alert("승인완료");
-								location.replace("/admin/ownerList");
+									alert("승인완료")
+									location.replace("/admin/ownerList");
 							},
 							error : function() {
 								console.log("오류");
@@ -302,9 +300,8 @@
 							},
 							dataType : "json",
 							success : function(data) {
-								console.log(data)
-								alert("탈퇴완료")
-								location.replace("/admin/ownerList");
+									alert("탈퇴완료")
+									location.replace("/admin/ownerList");
 							},
 							error : function() {
 								console.log("오류");
