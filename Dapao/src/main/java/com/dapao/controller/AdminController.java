@@ -325,5 +325,15 @@ public class AdminController {
 		logger.debug("reviewDelete()");
 		return aService.reviewDelete(rv_no);
 	}
+	
+	// 신고관리 - 신고서 작성
+	// http://localhost:8088/admin/acWriteForm
+	@RequestMapping("/acWriteForm")
+	public void acWriteForm(String own_id, String us_id) throws Exception{
+		logger.debug("acWriteForm()  호출");
+		own_id = "1";
+		us_id = "2";
+	}
+	
 
 }
