@@ -13,9 +13,6 @@ import jdk.jshell.spi.ExecutionControl.ExecutionControlException;
 public interface AdminService {
 	
 	
-	// 회원관리 - 모든유저정보 출력
-	public List<UserVO> getAllUser() throws Exception;
-	
 	// 회원관리 - 개인유저정보 출력
 	public UserVO userInfo(String us_id) throws Exception;
 	
@@ -56,6 +53,21 @@ public interface AdminService {
 	// FAQ&공지 관리 - FAQ 리스트
 	public List<CsVO> FAQList(Criteria cri) throws Exception;
 	
+	//FAQ 글쓰기
+	public void FAQWrite(CsVO vo) throws Exception;
+		
+	// FAQ 총 글개수 조회
+	public int FAQCount() throws Exception;
+	
+	// notice 총 글개수 조회
+	public int noticeCount() throws Exception;
+	
+	// notice 글 목록 리스트
+	public List<CsVO> noticeList(Criteria cri) throws Exception;
+	
+	// notice 글쓰기
+	public void noticeWrite(CsVO vo) throws Exception;
+
 	// FAQ&공지 관리 - cs 1개정보 출력
 	public CsVO csInfo(Integer cs_no) throws Exception;
 	
@@ -73,7 +85,7 @@ public interface AdminService {
 	
 	// FAQ&공지 관리 - FAQ 등록해제
 	public int FAQRemove(Integer cs_no) throws Exception;
-	
+
 	// 리뷰관리 - 리뷰리스트
 	public List<ReviewVO> reviewList(Criteria cri) throws  Exception;
 		
@@ -85,6 +97,5 @@ public interface AdminService {
 	
 	// 리뷰관리 - 리뷰 삭제
 	public int reviewDelete(Integer rv_no) throws Exception;
-	
-	
+
 }

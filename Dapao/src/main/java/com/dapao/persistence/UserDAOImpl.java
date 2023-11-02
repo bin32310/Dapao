@@ -1,8 +1,7 @@
 package com.dapao.persistence;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -13,8 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.dapao.domain.AdVO;
+import com.dapao.domain.EntVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.LoveVO;
+import com.dapao.domain.TotalVO;
 import com.dapao.domain.UserVO;
 
 
@@ -37,7 +38,7 @@ public class UserDAOImpl implements UserDAO {
 	= "com.dapao.mapper.UserMapper";
 	
 	
-	
+	// 현재시간 
 	@Override
 	public String getTime() {
 		//디비연결
@@ -52,6 +53,32 @@ public class UserDAOImpl implements UserDAO {
 		return time;
 	}
 
+	
+	// 메인
+	// 인기가게(광고) 목록
+	@Override
+	public List<TotalVO> adList() {
+		logger.debug("adList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + ".adList");
+	}
+	
+	// 중고거래 글 목록 
+	@Override
+	public List<ItemVO> itemList() {
+		logger.debug("itemList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + ".itemList");
+	}
+	
+	// 찜 목록
+	@Override
+	public List<TotalVO> loveList(String us_id) {
+		logger.debug("loveList(String us_id) 호출");
+		
+		return sqlSession.selectList(NAMESPACE + ".loveList",us_id);
+	}
+	
 
 	@Override
 	public void userJoin(UserVO joinVO) {
@@ -82,11 +109,12 @@ public class UserDAOImpl implements UserDAO {
 	
 
 
+
 	@Override
-	public UserVO userInfo(String sessionUs_id) {
+	public UserVO userInfo(String us_id) {
 		System.out.println(" DAOImpl : getUser(String sessionUserid) 호출 ");
 		
-		return sqlSession.selectOne(NAMESPACE + ".userInfo",sessionUs_id);
+		return sqlSession.selectOne(NAMESPACE + ".userInfo",us_id);
 	}
 
 
@@ -110,31 +138,23 @@ public class UserDAOImpl implements UserDAO {
 		// SQL구문 호출		
 		return sqlSession.delete(NAMESPACE + ".userDelete",delVO);
 	}
-
-
-//	@Override
-//	public AdVO adList() {
-//		logger.debug("adList() 호출");
-//		
-//		return sqlSession.selectOne(NAMESPACE + ".adList");
-//	}
-//	
-//	@Override
-//	public ItemVO itemList() {
-//		logger.debug("itemList() 호출");
-//		
-//		return sqlSession.selectOne(NAMESPACE + ".itemList");
-//	}
-//	
-//	@Override
-//	public LoveVO loveList(String us_id) {
-//		logger.debug("loveList(String us_id) 호출");
-//		
-//		return sqlSession.selectOne(NAMESPACE + ".loveList",us_id);
-//	}
-
 	
-	
+	@Override
+	public UserVO userCheckId(String us_id) {
+		System.out.println(" DAOImpl : getUser(String sessionus_id) 호출 ");
+		return sqlSession.selectOne(NAMESPACE + ".userCheckId",us_id);
+	}
+
+
+
+
+
+//	@Override
+//	public String userInfoCheck(String us_id) throws Exception {
+//		logger.debug("userInfoCheck(String us_id) 호출");
+	//	return sqlSession.selectOne(NAMESPACE+ ".userInfoCheck", us_id);
+	//}
+
 	
 	
 	

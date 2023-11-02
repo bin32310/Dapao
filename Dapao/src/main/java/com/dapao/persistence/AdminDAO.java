@@ -11,9 +11,6 @@ import com.dapao.domain.UserVO;
 public interface AdminDAO {
 	
 	
-	// 회원관리 - 모든유저정보 출력
-	public List<UserVO> getAllUser() throws Exception;
-	
 	// 회원관리 - 개인유저정보 출력
 	public UserVO userInfo(String us_id) throws Exception;
 	
@@ -31,7 +28,6 @@ public interface AdminDAO {
 	
 	// 회원관리 - 전체회원수 조회
 	public int getUserCount() throws Exception;
-
 	
 	// 사업자 관리 - 사업자정보 리스트
 	public List<EntVO> ownerList(Criteria cri) throws  Exception;
@@ -53,7 +49,19 @@ public interface AdminDAO {
 	
 	// FAQ&공지 관리 - FAQ 리스트
 	public List<CsVO> FAQList(Criteria cri) throws Exception;
+
+	// FAQ 총 글개수 조회
+	public int FAQCount() throws Exception;
 	
+	// notice 총 글개수 조회
+	public int noticeCount() throws Exception;
+	
+	// notice 글 목록 리스트
+	public List<CsVO> noticeList(Criteria cri) throws Exception;
+	
+	// notice 글쓰기
+	public void noticeWrite(CsVO vo) throws Exception;
+
 	// FAQ&공지 관리 - cs 1개정보 출력
 	public CsVO csInfo(Integer cs_no) throws Exception;
 	

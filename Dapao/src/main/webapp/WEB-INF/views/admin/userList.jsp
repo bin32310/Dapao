@@ -216,6 +216,7 @@
 					if (data == 1) {
 						alert("정상적으로 정지가 부여되었습니다.");
 						$('#myModal').modal('hide');
+						location.replace("/admin/userList");
 					}
 				},
 				error : function(data) {
@@ -225,7 +226,6 @@
 		});
 		// 탈퇴눌렀을때 탈퇴처리
 		$('#delete').click(function() {
-			alert("@@@@@@@@");
 			var us_id = $('#us_id').val();
 			$.ajax({
 				url : "/admin/userDelete",
@@ -237,6 +237,7 @@
 					if (data == 1) {
 						alert("정상적으로 탈퇴처리되었습니다.");
 						$('#myModal').modal('hide');
+						location.replace("admin/userList");
 					}
 				},
 				error : function() {
