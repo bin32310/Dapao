@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
+import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 import com.dapao.persistence.AdminDAO;
 
@@ -149,6 +150,30 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
+	public List<ReviewVO> reviewList(Criteria cri) throws Exception {
+		logger.debug("service : reviewList(Criteria cri) 호출");
+		return adao.reviewList(cri);
+	}
+	
+	@Override
+	public int reviewCount(Integer rv_no) throws Exception {
+		logger.debug("service : reviewCount(Integer rv_no) 호출");
+		return adao.reviewCount(rv_no);
+	}
+	
+	@Override
+	public ReviewVO reviewInfo(Integer rv_no) throws Exception {
+		logger.debug("service : reviewInfo(Integer rv_no)호출");
+		return adao.reviewInfo(rv_no);
+	}
+	
+	@Override
+	public int reviewDelete(Integer rv_no) throws Exception {
+		logger.debug("service : reviewDelete(Integer rv_no)호출");
+		return adao.reviewDelete(rv_no);
+	}
+  
+  @Override
 	public void noticeWrite(CsVO vo) throws Exception {
 		logger.debug("service : noticeWrite(CsVO vo) 호출");
 		adao.noticeWrite(vo);
@@ -159,5 +184,5 @@ public class AdminServiceImpl implements AdminService{
 		logger.debug("service : csDelete(Integer cs_no) 호출");
 		return adao.csDelete(cs_no);
 	}
-	
+
 }

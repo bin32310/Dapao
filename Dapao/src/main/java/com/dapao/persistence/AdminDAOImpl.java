@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
+import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 
 @Service
@@ -227,4 +228,40 @@ public class AdminDAOImpl implements AdminDAO {
 			return sqlSession.selectOne(NAMESPACE+".FAQCount");
 		}
 		
+		@Override
+		public int FAQUpload(Integer cs_no) throws Exception {
+			logger.debug("FAQUpload(Integer cs_no) 호출");
+			return sqlSession.update(NAMESPACE+".FAQUpload", cs_no);
+		}
+		
+		@Override
+		public int FAQRemove(Integer cs_no) throws Exception {
+			logger.debug("FAQRemove(Integer cs_no) 호출");
+			return sqlSession.update(NAMESPACE+".FAQRemove", cs_no);
+		}
+		
+		@Override
+		public List<ReviewVO> reviewList(Criteria cri) throws Exception {
+			logger.debug("reviewList(Criteria cri) 호출");
+			return sqlSession.selectList(NAMESPACE+".reviewList", cri);
+		}
+		
+		@Override
+		public int reviewCount(Integer rv_no) throws Exception {
+			logger.debug("reviewCount(Integer rv_no) 호출");
+			return sqlSession.selectOne(NAMESPACE+".reviewCount",rv_no);
+		}
+		
+		@Override
+		public ReviewVO reviewInfo(Integer rv_no) throws Exception {
+			logger.debug("reviewInfo(Integer rv_no) 호출");
+			return sqlSession.selectOne(NAMESPACE+".reviewInfo", rv_no);
+		}
+		
+		@Override
+		public int reviewDelete(Integer rv_no) throws Exception {
+			logger.debug("reviewDelete(Integer rv_no) 호출");
+			return sqlSession.update(NAMESPACE+".reviewDelete", rv_no);
+		}
+
 }
