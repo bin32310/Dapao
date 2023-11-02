@@ -31,6 +31,8 @@
 						<td>${vo.cs_title }</td>
 						<td>${vo.cs_regdate }</td>
 						<td>${vo.cs_view }</td>
+						<td><button type="button" name="upload" class="upload">등록</button>
+							<button type="button" name="remove" class="remove">등록해제</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -131,6 +133,7 @@
 	</div>
 </div>
 
+
 <script type="text/javascript">
 
 	$(function() {
@@ -161,13 +164,12 @@
 			});// cs_no click ajax
 			
 			$('.update').click(function(){
-				alert("@@@@");
 				$.ajax({
 					url : "/admin/FAQInfoUpdate",
 					data : {
 						"cs_no" : $('input[name=cs_no]').val(),
 						"cs_title" : $('input[name=cs_title]').val(),
-						"cs_content" : $('input[name=cs_content]').val(),
+						"cs_content" : $('input[name=cs_content]').val()
 					},
 					dataType : "json",
 					success : function(data) {
@@ -180,6 +182,34 @@
 					}
 				});//update click ajax
 			});//update click
+			$('.upload').click(function(){
+				$.ajax({
+					url : "/admin/FAQUpload",
+					data : {
+						"cs_no" : $('input[name=cs_no]').val()
+					},
+					dataType : "json",
+					success : function(data){
+						console.log(data)
+						alert("FAQ - 등록완료")
+						location.replace("/admin/FAQList");
+					}
+				}); // upload click ajax
+			});// upload click
+			$('.remove').click(function(){
+				$.ajax({
+					url : "/admin/FAQRemove",
+					data : {
+						"cs_no" : $('input[name=cs_no]').val()
+					},dataType : "json",
+					success : function(data){
+						console.log(data)
+						alert("FAQ - 등록해제완료")
+						location.replace("/admin/FAQList");
+					}
+					
+				});// remove click ajax
+			});// remove click
 		});// cs_no click
 	});//ready
 </script>

@@ -98,8 +98,7 @@ public class AdminController {
 	// http://localhost:8088/admin/ownerList
 	// 사업자 리스트 출력
 	@RequestMapping("/ownerList")
-
-	public void ownerListGET(Criteria cri,Model model, Integer own_id) throws Exception{
+	public void ownerListGET(Criteria cri,Model model, String own_id) throws Exception{
 		logger.debug("ownerListGET() 호출");
 		
 		// 페이징 처리( 페이지 블럭 처리 객체 )
@@ -131,6 +130,14 @@ public class AdminController {
 		return aService.ownerInfo(own_id);
 	}
 
+	// 사업자 정지부여
+	@ResponseBody
+	@RequestMapping(value = "/ownerStop")
+	public int ownerStop(EntVO vo) throws Exception {
+		logger.debug("ownerStop() 호출");
+		logger.debug("vo : "+vo);
+		return aService.ownerStop(vo);
+	}
 	
 	// 사업자 승인
 	@RequestMapping("/ownerApprove")
@@ -142,11 +149,32 @@ public class AdminController {
 	
 	//사업자 탈퇴
 	@RequestMapping("/ownerInfoDelete")
+	@ResponseBody
 	public int ownerInfoDeleteGET(String own_id) throws Exception{
 		logger.debug("ownerInfoDeleteGET() 호출");
+		logger.debug(""+aService.ownerInfoDelete(own_id));
 		return aService.ownerInfoDelete(own_id);
 	}
 
+	// cs 1개정보
+	@RequestMapping("/csInfo")
+	@ResponseBody // ajax(JSON 데이터 넘겨줄때 사용)
+	public CsVO csInfo(@RequestParam("cs_no") Integer cs_no) throws Exception {
+		logger.debug("csInfo() 호출" + cs_no);
+		logger.debug("cs_no@@" + cs_no);
+		return aService.csInfo(cs_no);
+	}
+
+	// FAQ 수정하기
+	@RequestMapping("/csInfoUpdate")
+	@ResponseBody // ajax(JSON 데이터 넘겨줄때 사용)
+	public int csInfoUpdate(CsVO vo) throws Exception {
+		logger.debug("csInfoUpdate() 호출");
+		logger.debug("vo@@" + vo);
+		
+		return aService.csInfoUpdate(vo);
+	}
+	
 	// http://localhost:8088/admin/FAQList
 	// FAQ 리스트
 	@RequestMapping("/FAQList")
@@ -174,16 +202,6 @@ public class AdminController {
 		model.addAttribute("vo", FAQList);
 		
 	}
-
-	// FAQ 1개정보
-	@RequestMapping("/FAQInfo")
-	@ResponseBody // ajax(JSON 데이터 넘겨줄때 사용)
-	public CsVO FAQInfo(@RequestParam("cs_no") Integer cs_no) throws Exception {
-		logger.debug("FAQInfo() 호출" + cs_no);
-		logger.debug("cs_no@@" + cs_no);
-		return aService.FAQInfo(cs_no);
-	}
-
 	
 	// FAQ 글쓰기 폼
 	@RequestMapping(value = "/FAQWriteForm",method = RequestMethod.GET)
@@ -200,14 +218,21 @@ public class AdminController {
 		return "redirect:/admin/FAQList";
 	}
 
-	// FAQ 수정하기
-	@RequestMapping("/FAQInfoUpdate")
-	@ResponseBody // ajax(JSON 데이터 넘겨줄때 사용)
-	public int FAQInfoUpdate(CsVO vo) throws Exception {
-		logger.debug("FAQInfoUpdate() 호출");
-		logger.debug("vo@@" + vo);
-		
-		return aService.FAQInfoUpdate(vo);
+	// FAQ 등록하기
+	@RequestMapping("/FAQUpload")
+	@ResponseBody
+	public int FAQUpload(@RequestParam("cs_no") Integer cs_no) throws Exception{
+		logger.debug("FAQUpload() 호출");
+		return aService.FAQUpload(cs_no);
 	}
+	
+	// FAQ 등록해제
+	@RequestMapping("/FAQRemove")
+	@ResponseBody
+	public int FAQRemove(@RequestParam("cs_no") Integer cs_no) throws Exception{
+		logger.debug("FAQRemove() 호출");
+		return aService.FAQRemove(cs_no);
+	}
+
 
 }

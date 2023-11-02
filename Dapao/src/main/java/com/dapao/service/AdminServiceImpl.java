@@ -76,10 +76,16 @@ public class AdminServiceImpl implements AdminService{
 	}
   
   	@Override
-	public int ownerCount(Integer own_id) throws Exception {
+	public int ownerCount(String own_id) throws Exception {
 		logger.debug("service : ownerCount() 호출 ");
 		return adao.ownerCount(own_id);
 	}
+  	
+  	@Override
+  	public int ownerStop(EntVO vo) throws Exception {
+  		logger.debug("service : ownerStop(EntVO vo) 호출 ");
+  		return adao.ownerStop(vo);
+  	}
 	
 	@Override
 	public int ownerApprove(String own_id) throws Exception {
@@ -100,9 +106,9 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public CsVO FAQInfo(Integer cs_no) throws Exception {
-		logger.debug("service : FAQInfo(Integer cs_no) 호출");
-		return adao.FAQInfo(cs_no);
+	public CsVO csInfo(Integer cs_no) throws Exception {
+		logger.debug("service : csInfo(Integer cs_no) 호출");
+		return adao.csInfo(cs_no);
 	}
 	
 	@Override
@@ -112,14 +118,26 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public int FAQInfoUpdate(CsVO vo) throws Exception {
-		logger.debug("service : FAQInfoUpdate(CsVO vo) 호출");
-		return adao.FAQInfoUpdate(vo);
+	public int csInfoUpdate(CsVO vo) throws Exception {
+		logger.debug("service : csInfoUpdate(CsVO vo) 호출");
+		return adao.csInfoUpdate(vo);
 	}
 	
 	@Override
 	public int FAQCount() throws Exception {
-		logger.debug("service : FAQCount(Integer cs_no) 호출");
+		logger.debug("service : FAQCount() 호출");
 		return adao.FAQCount();
+	}
+	
+	@Override
+	public int FAQUpload(Integer cs_no) throws Exception {
+		logger.debug("service : FAQUpload(Integer cs_no) 호출");
+		return adao.FAQUpload(cs_no);
+	}
+	
+	@Override
+	public int FAQRemove(Integer cs_no) throws Exception {
+		logger.debug("service : FAQRemove(Integer cs_no) 호출");
+		return adao.FAQRemove(cs_no);
 	}
 }

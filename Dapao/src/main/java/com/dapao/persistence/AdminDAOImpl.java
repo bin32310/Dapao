@@ -1,8 +1,6 @@
 package com.dapao.persistence;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -83,7 +81,7 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		
 		@Override
-		public int ownerCount(Integer own_id) throws Exception {
+		public int ownerCount(String own_id) throws Exception {
 			logger.debug(" DAO : ownerList() 호출");
 			return sqlSession.selectOne(NAMESPACE+".ownerCount");
 		}
@@ -92,6 +90,12 @@ public class AdminDAOImpl implements AdminDAO {
 		public EntVO ownerInfo(String own_id) throws Exception {
 			logger.debug("DAO : ownerInfo(String own_id) 호출");
 			return sqlSession.selectOne(NAMESPACE+".ownerInfo",own_id);
+		}
+		
+		@Override
+		public int ownerStop(EntVO vo) throws Exception {
+			logger.debug("DAO : ownerStop(EntVO vo) 호출");
+			return sqlSession.update(NAMESPACE+".ownerStop", vo);
 		}
 		
 		@Override
@@ -113,9 +117,9 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		
 		@Override
-		public CsVO FAQInfo(Integer cs_no) throws Exception {
-			logger.debug("DAO : FAQInfo(Integer cs_no)  호출");
-			return sqlSession.selectOne(NAMESPACE+".FAQInfo", cs_no);
+		public CsVO csInfo(Integer cs_no) throws Exception {
+			logger.debug("DAO : csInfo(Integer cs_no)  호출");
+			return sqlSession.selectOne(NAMESPACE+".csInfo", cs_no);
 		}
 		
 		@Override
@@ -125,14 +129,26 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		
 		@Override
-		public int FAQInfoUpdate(CsVO vo) throws Exception {
-			logger.debug("DAO : FAQInfoUpdate(CsVO vo)  호출");
-			return sqlSession.update(NAMESPACE+".FAQInfoUpdate", vo);
+		public int csInfoUpdate(CsVO vo) throws Exception {
+			logger.debug("DAO : csInfoUpdate(CsVO vo)  호출");
+			return sqlSession.update(NAMESPACE+".csInfoUpdate", vo);
 		}
 		
 		@Override
 		public int FAQCount() throws Exception {
-			logger.debug("DAO : FAQCount(Integer cs_no)  호출");
+			logger.debug("DAO : FAQCount()  호출");
 			return sqlSession.selectOne(NAMESPACE+".FAQCount");
+		}
+		
+		@Override
+		public int FAQUpload(Integer cs_no) throws Exception {
+			logger.debug("FAQUpload(Integer cs_no) 호출");
+			return sqlSession.update(NAMESPACE+".FAQUpload", cs_no);
+		}
+		
+		@Override
+		public int FAQRemove(Integer cs_no) throws Exception {
+			logger.debug("FAQRemove(Integer cs_no) 호출");
+			return sqlSession.update(NAMESPACE+".FAQRemove", cs_no);
 		}
 }
