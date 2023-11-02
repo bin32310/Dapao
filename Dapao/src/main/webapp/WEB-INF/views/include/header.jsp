@@ -324,11 +324,12 @@
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-dashboard"></i> <span>FAQ</span> <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-dashboard"></i> <span>FAQ&공지사항&리뷰</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="/admin/FAQList"><i class="fa fa-circle-o"></i> 글 목록조회 </a></li>
                 <li><a href="/admin/FAQWriteForm"><i class="fa fa-circle-o"></i> 글쓰기 </a></li>
+                <li><a href="/admin/FAQList"><i class="fa fa-circle-o"></i> 글 목록조회 </a></li>
+                <li><a href="/admin/reviewList"><i class="fa fa-circle-o"></i> 리뷰관리 </a></li>
               </ul>
             </li>
             <li class="treeview">

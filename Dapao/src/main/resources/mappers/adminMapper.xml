@@ -121,4 +121,30 @@
 		where cs_no=#{cs_no}
 	</update>
 	
+	<!-- 리뷰관리 - 리뷰리스트 -->
+	<select id="reviewList" resultType="ReviewVO">
+		select * from review 
+		order by rv_no, rv_regdate 
+		limit #{pageStart},#{pageSize}
+	</select>
+	
+	<!-- 리뷰관리 - 리뷰 글 총 개수 조회 -->
+	<select id="reviewCount" resultType="int">
+		<![CDATA[
+		select count(*) from review 
+		where rv_no > 0
+		]]>
+	</select>
+	
+	<!-- 리뷰관리 - 리뷰 글 1개정보 -->
+	<select id="reviewInfo" resultType="ReviewVO">
+		select * from review where rv_no=#{rv_no}
+	</select>
+	
+	<!-- 리뷰관리 - 리뷰삭제 -->
+	<update id="reviewDelete">
+		update review set rv_state=1,rv_outdate=now() 
+		where rv_no=#{rv_no}
+	</update>
+	
 </mapper>	

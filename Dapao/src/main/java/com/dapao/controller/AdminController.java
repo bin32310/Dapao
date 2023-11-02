@@ -19,6 +19,7 @@ import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.PageVO;
+import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 import com.dapao.service.AdminService;
 
@@ -178,7 +179,6 @@ public class AdminController {
 	// http://localhost:8088/admin/FAQList
 	// FAQ 리스트
 	@RequestMapping("/FAQList")
-
 	public void FAQList(Criteria cri,Model model) throws Exception{
 		logger.debug("FAQList() 호출");
 		
@@ -232,6 +232,49 @@ public class AdminController {
 	public int FAQRemove(@RequestParam("cs_no") Integer cs_no) throws Exception{
 		logger.debug("FAQRemove() 호출");
 		return aService.FAQRemove(cs_no);
+	}
+	
+	// 리뷰관리 - 리뷰 리스트
+	@RequestMapping("/reviewList")
+	public void reviewList(Criteria cri,Model model,Integer rv_no) throws Exception{
+		logger.debug("reviewList() 호출");
+		
+		// 페이징 처리( 페이지 블럭 처리 객체 )
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(aService.reviewCount(rv_no));
+		
+		// 페이징처리 정보도 뷰페이지로 전달
+		logger.debug("pageVO : "+pageVO);
+		model.addAttribute("pageVO", pageVO);
+		
+		//페이지 이동시 받아온 페이지 번호
+		if(cri.getPage() > pageVO.getEndPage()) {
+			// 잘못된 페이지 정보 입력
+			cri.setPage(pageVO.getEndPage());
+		}
+		
+		List<ReviewVO> reviewList = aService.reviewList(cri);
+		logger.debug(""+reviewList);
+		
+		model.addAttribute("vo", reviewList);
+	}
+	
+	// 리뷰관리 - 1개정보
+	@RequestMapping("/reviewInfo")
+	@ResponseBody // ajax(JSON 데이터 넘겨줄때 사용)
+	public ReviewVO reviewInfo(@RequestParam("rv_no") Integer rv_no) throws Exception {
+		logger.debug("reviewInfo() 호출" + rv_no);
+		logger.debug("rv_no@@" + rv_no);
+		return aService.reviewInfo(rv_no);
+	}
+	
+	// 리뷰관리 - 리뷰 삭제
+	@RequestMapping("/reviewDelete")
+	@ResponseBody
+	public int reviewDelete(Integer rv_no) throws Exception{
+		logger.debug("reviewDelete()");
+		return aService.reviewDelete(rv_no);
 	}
 
 

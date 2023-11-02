@@ -5,6 +5,7 @@ import java.util.List;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
+import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 
 import jdk.jshell.spi.ExecutionControl.ExecutionControlException;
@@ -72,6 +73,18 @@ public interface AdminService {
 	
 	// FAQ&공지 관리 - FAQ 등록해제
 	public int FAQRemove(Integer cs_no) throws Exception;
+	
+	// 리뷰관리 - 리뷰리스트
+	public List<ReviewVO> reviewList(Criteria cri) throws  Exception;
+		
+	// 리뷰관리 - 리뷰 총 글개수 조회
+	public int reviewCount(Integer rv_no) throws Exception;
+	
+	// 리뷰관리 - 리뷰 1개정보 출력
+	public ReviewVO reviewInfo(Integer rv_no) throws Exception;
+	
+	// 리뷰관리 - 리뷰 삭제
+	public int reviewDelete(Integer rv_no) throws Exception;
 	
 	
 }

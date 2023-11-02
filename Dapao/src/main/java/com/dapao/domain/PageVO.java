@@ -35,7 +35,7 @@ public class PageVO {
 	private boolean prev;	// 이전
 	private boolean next;	// 다음
 	
-	private int displayPageNum = 2;	// 페이지블럭의 크기(개수)
+	private int displayPageNum = 10;	// 페이지블럭의 크기(개수)
 		
 	private Criteria cri;	// 페이지 정보, 페이지 사이즈 저장객체
 	
