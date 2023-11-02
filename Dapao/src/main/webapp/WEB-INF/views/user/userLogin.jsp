@@ -31,7 +31,7 @@
 			비밀번호<input type="password" name="us_pw"><hr>
 			<input type="submit" value="로그인" >
 			<input type="button" value="회원가입 바로가기" 
-				onclick=" location.href='user/userJoin';">	
+				onclick="location.href='/user/userJoin';">	
 		</form>
 	
 	</fieldset>
