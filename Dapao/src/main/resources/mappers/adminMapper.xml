@@ -86,10 +86,9 @@
 		limit #{pageStart},#{pageSize}
 	</select>
 
-	<!-- FAQ&공지 관리 - FAQ 1개 정보 -->
-	<select id="FAQInfo" resultType="CsVO">
-		select * from cs where cs_no =
-		#{cs_no}
+	<!-- FAQ&공지 관리 - cs 1개 정보 -->
+	<select id="csInfo" resultType="CsVO">
+		select * from cs where cs_no=#{cs_no}
 	</select>
 	
 	<!-- FAQ&공지 관리 - FAQ 글쓰기 -->
@@ -98,8 +97,8 @@
 		values(#{cs_title},#{cs_content},1,#{cs_group})
 	</insert>
 
-	<!-- FAQ&공지 관리 - FAQ정보 수정 -->
-	<update id="FAQInfoUpdate">
+	<!-- FAQ&공지 관리 - cs정보 수정 -->
+	<update id="csInfoUpdate">
 		update cs 
 		set cs_title=#{cs_title}, cs_content=#{cs_content},cs_update=now() 
 		where cs_no=#{cs_no} 

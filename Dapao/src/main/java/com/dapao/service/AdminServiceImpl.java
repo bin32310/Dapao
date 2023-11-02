@@ -106,9 +106,9 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public CsVO FAQInfo(Integer cs_no) throws Exception {
-		logger.debug("service : FAQInfo(Integer cs_no) 호출");
-		return adao.FAQInfo(cs_no);
+	public CsVO csInfo(Integer cs_no) throws Exception {
+		logger.debug("service : csInfo(Integer cs_no) 호출");
+		return adao.csInfo(cs_no);
 	}
 	
 	@Override
@@ -118,9 +118,9 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public int FAQInfoUpdate(CsVO vo) throws Exception {
-		logger.debug("service : FAQInfoUpdate(CsVO vo) 호출");
-		return adao.FAQInfoUpdate(vo);
+	public int csInfoUpdate(CsVO vo) throws Exception {
+		logger.debug("service : csInfoUpdate(CsVO vo) 호출");
+		return adao.csInfoUpdate(vo);
 	}
 	
 	@Override

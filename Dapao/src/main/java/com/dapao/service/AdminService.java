@@ -55,14 +55,14 @@ public interface AdminService {
 	// FAQ&공지 관리 - FAQ 리스트
 	public List<CsVO> FAQList(Criteria cri) throws Exception;
 	
-	// FAQ&공지 관리 - FAQ 1개정보 출력
-	public CsVO FAQInfo(Integer cs_no) throws Exception;
+	// FAQ&공지 관리 - cs 1개정보 출력
+	public CsVO csInfo(Integer cs_no) throws Exception;
 	
 	// FAQ&공지 관리 - FAQ 글쓰기
 	public void FAQWrite(CsVO vo) throws Exception;
 	
-	// FAQ&공지 관리 - FAQ 정보 수정
-	public int FAQInfoUpdate(CsVO vo) throws Exception;
+	// FAQ&공지 관리 - cs 정보 수정
+	public int csInfoUpdate(CsVO vo) throws Exception;
 	
 	// FAQ&공지 관리 - FAQ 총 글개수 조회
 	public int FAQCount() throws Exception;
