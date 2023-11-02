@@ -71,11 +71,6 @@ public class AdminDAOImpl implements AdminDAO {
 		return sqlSession.selectList(NAMESPACE + ".ownerList", cri);
 	}
 
-	@Override
-	public int ownerCount(Integer own_id) throws Exception {
-		logger.debug(" DAO : ownerList() 호출");
-		return sqlSession.selectOne(NAMESPACE + ".ownerCount");
-	}
 
 	@Override
 	public EntVO ownerInfo(String own_id) throws Exception {
@@ -154,7 +149,7 @@ public class AdminDAOImpl implements AdminDAO {
 		logger.debug("DAO : noticeWrite()  호출");
 		sqlSession.insert(NAMESPACE + ".noticeWrite", vo);
 	}
-	
+
 	@Override
 	public int csDelete(Integer cs_no) throws Exception {
 		logger.debug("DAO : csDelete(Integer cs_no)  호출");
