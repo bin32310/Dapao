@@ -9,11 +9,6 @@ import com.dapao.domain.UserVO;
 
 public interface AdminDAO {
 	
-	// 사업자 정보 리스트
-	public List<EntVO> ownerList(Criteria cri) throws  Exception;
-	
-	// 사업자 총개수 조회
-	public int ownerCount(Integer own_id) throws Exception;
 	
 	// 회원관리 - 개인유저정보 출력
 	public UserVO userInfo(String us_id) throws Exception;
@@ -33,36 +28,27 @@ public interface AdminDAO {
 	// 회원관리 - 전체회원수 조회
 	public int getUserCount() throws Exception;
 	
-	// 사업자 정보 출력
+	// 사업자 관리 - 사업자정보 리스트
+	public List<EntVO> ownerList(Criteria cri) throws  Exception;
+	
+	// 사업자 관리 - 사업자 총개수 조회
+	public int ownerCount(String own_id) throws Exception;
+	
+	// 사업자 관리 - 사업자 정보 출력
 	public EntVO ownerInfo(String own_id) throws Exception;
 	
-	// 사업자 승인
+	// 사업자 관리 - 사업자 정지
+	public int ownerStop(EntVO vo) throws Exception;
+	
+	// 사업자 관리 - 사업자 승인
 	public int ownerApprove(String own_id) throws Exception;
 	
-	// 사업자 탈퇴
+	// 사업자 관리 - 사업자 탈퇴
 	public int ownerInfoDelete(String own_id) throws Exception;
-		
-	// cs 1개정보 출력
-	public CsVO csInfo(Integer cs_no) throws Exception;
-		
-	// cs 글 정보 수정
-	public int csInfoUpdate(CsVO vo) throws Exception;
 	
-	// cs 글 삭제
-	public int csDelete(Integer cs_no) throws Exception;
-	
-	// cs 등록
-	public int csUpload(Integer cs_no) throws Exception;
-	
-	// cs 등록해제
-	public int csRemove(Integer cs_no) throws Exception;
-	
-	// FAQ 리스트
+	// FAQ&공지 관리 - FAQ 리스트
 	public List<CsVO> FAQList(Criteria cri) throws Exception;
-	
-	// FAQ 글쓰기
-	public void FAQWrite(CsVO vo) throws Exception;
-	
+
 	// FAQ 총 글개수 조회
 	public int FAQCount() throws Exception;
 	
@@ -75,4 +61,21 @@ public interface AdminDAO {
 	// notice 글쓰기
 	public void noticeWrite(CsVO vo) throws Exception;
 
+	// FAQ&공지 관리 - cs 1개정보 출력
+	public CsVO csInfo(Integer cs_no) throws Exception;
+	
+	// FAQ&공지 관리 - FAQ 글쓰기
+	public void FAQWrite(CsVO vo) throws Exception;
+	
+	// FAQ&공지 관리 - cs 정보 수정
+	public int csInfoUpdate(CsVO vo) throws Exception;
+	
+	// FAQ&공지 관리 - FAQ 총 글개수 조회
+	public int FAQCount() throws Exception;
+	
+	// FAQ&공지 관리 - FAQ 등록
+	public int FAQUpload(Integer cs_no) throws Exception;
+	
+	// FAQ&공지 관리 - FAQ 등록해제
+	public int FAQRemove(Integer cs_no) throws Exception;
 }

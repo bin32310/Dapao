@@ -60,13 +60,19 @@
 		own_id=#{own_id}
 	</select>
 
-	<!-- 사업자 승인 -->
+	<!-- 사업자 관리 - 사업자정지 -->
+	<update id="ownerStop">
+		update ent set own_stopdate=date_add(now(), interval #{own_stopdate} day), own_state=1 
+		where own_id=#{own_id}
+	</update>
+	
+	<!-- 사업자 관리 - 승인요청 처리 -->
 	<update id="ownerApprove">
 		update ent set own_state=0
 		where own_id=#{own_id}
 	</update>
-
-	<!-- 사업자 탈퇴 -->
+	
+	<!-- 사업자 관리 - 사업자 탈퇴 -->
 	<update id="ownerInfoDelete">
 		update ent set own_state=2
 		where own_id=#{own_id}
@@ -104,7 +110,7 @@
 		set cs_title=#{cs_title}, cs_content=#{cs_content},cs_update=now()
 		where cs_no=#{cs_no}
 	</update>
-
+    
 	<!-- FAQ&공지 관리 - FAQ 글 총 개수 조회 -->
 	<select id="FAQCount" resultType="int">
 		select count(*) from cs where
@@ -143,8 +149,4 @@
 		(cs_title,cs_content,cs_board,cs_group)
 		values(#{cs_title},#{cs_content},0,#{cs_group})
 	</insert>
-	
-
-
-
 </mapper>	

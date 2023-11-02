@@ -97,8 +97,7 @@ public class AdminController {
 	// http://localhost:8088/admin/ownerList
 	// 사업자 리스트 출력
 	@RequestMapping("/ownerList")
-
-	public void ownerListGET(Criteria cri, Model model, Integer own_id) throws Exception {
+	public void ownerListGET(Criteria cri,Model model, String own_id) throws Exception{
 		logger.debug("ownerListGET() 호출");
 
 		// 페이징 처리( 페이지 블럭 처리 객체 )
@@ -130,6 +129,15 @@ public class AdminController {
 		return aService.ownerInfo(own_id);
 	}
 
+	// 사업자 정지부여
+	@ResponseBody
+	@RequestMapping(value = "/ownerStop")
+	public int ownerStop(EntVO vo) throws Exception {
+		logger.debug("ownerStop() 호출");
+		logger.debug("vo : "+vo);
+		return aService.ownerStop(vo);
+	}
+	
 	// 사업자 승인
 	@RequestMapping("/ownerApprove")
 	@ResponseBody
@@ -140,8 +148,10 @@ public class AdminController {
 
 	// 사업자 탈퇴
 	@RequestMapping("/ownerInfoDelete")
-	public int ownerInfoDeleteGET(String own_id) throws Exception {
+	@ResponseBody
+	public int ownerInfoDeleteGET(String own_id) throws Exception{
 		logger.debug("ownerInfoDeleteGET() 호출");
+		logger.debug(""+aService.ownerInfoDelete(own_id));
 		return aService.ownerInfoDelete(own_id);
 	}
 
@@ -160,7 +170,6 @@ public class AdminController {
 	public int csInfoUpdate(CsVO vo) throws Exception {
 		logger.debug("csInfoUpdate() 호출");
 		logger.debug("vo@@" + vo);
-
 		return aService.csInfoUpdate(vo);
 	}
 	
@@ -216,9 +225,8 @@ public class AdminController {
 		List<CsVO> FAQList = aService.FAQList(cri);
 
 		model.addAttribute("vo", FAQList);
-
 	}
-
+	
 	// FAQ 글쓰기 폼
 	@RequestMapping(value = "/FAQWriteForm", method = RequestMethod.GET)
 	public void FAQWriteForm() throws Exception {
@@ -272,6 +280,5 @@ public class AdminController {
 		List<CsVO> noticeList = aService.noticeList(cri);
 
 		model.addAttribute("noticeList", noticeList);
-	}
-
+    }
 }

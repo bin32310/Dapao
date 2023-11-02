@@ -182,6 +182,12 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-sm-2 control-label">own_stopdate</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="own_stopdate" readonly><br>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-2 control-label">ent_account</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" name="ent_account" readonly><br>
@@ -195,8 +201,15 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" name="update" class="update">승인</button>
-				<button type="button" name="delete" class="delete">탈퇴</button>
+				<select name="stop" class="btn btn-default" aria-label="Small select example">
+					<option selected>정지</option>
+					<option value="7">7일</option>
+					<option value="30">30일</option>
+					<option value="100">100일</option>
+				</select>
+				<button type="button" class="btn btn-default" id="stop">정지</button>
+				<button type="button" name="update" class="btn btn-default update">승인</button>
+				<button type="button" name="delete" class="btn btn-default delete">탈퇴</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
@@ -243,6 +256,26 @@
 							console.log("오류");
 						}
 					});// ownInfo click ajax
+					$('#stop').click(function() {
+						var own_stopdate = $('select[name=stop]').val();
+						$.ajax({
+							url : "/admin/ownerStop",
+							data : {
+								"own_id" : $('input[name=own_id]').val(),
+								"own_stopdate" : own_stopdate
+							},
+							dataType : "json",
+							success : function(data) {
+								if (data == 1) {
+									alert("정상적으로 정지가 부여되었습니다.");
+									location.replace("/admin/ownerList");
+								}
+							},
+							error : function(data) {
+								console.log("에러");
+							}
+						});
+					});
 					$(".update").click(function(){
 						$.ajax({
 							url : "/admin/ownerApprove",
@@ -251,8 +284,8 @@
 							},
 							dataType : "json",
 							success : function(data){
-								console.log(data)
-								alert("승인완료")
+									alert("승인완료")
+									location.replace("/admin/ownerList");
 							},
 							error : function() {
 								console.log("오류");
@@ -267,16 +300,14 @@
 							},
 							dataType : "json",
 							success : function(data) {
-								console.log(data)
-								alert("탈퇴완료")
-								location.replace("/admin/ownerList");
+									alert("탈퇴완료")
+									location.replace("/admin/ownerList");
 							},
 							error : function() {
 								console.log("오류");
 							}
 						});//delete click ajax
 					});// delete click
-
 				});// ownInfo click
 	});//ready
 </script>

@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.dapao.persistence.AdminDAO;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
@@ -24,6 +26,8 @@ public class DataSourceTest {
 	private static final Logger logger = LoggerFactory.getLogger(DataSourceTest.class);
 	@Inject
 	private DataSource ds;
+	@Inject
+	private AdminDAO adao;
 	
 	//@Test
 	public void ds_test() {
@@ -33,6 +37,28 @@ public class DataSourceTest {
 			Connection con = ds.getConnection();
 			logger.debug("con : "+con);
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//@Test
+	public void 사업자정보수정test() {
+		logger.debug("사업자정보수정test()");
+		try {
+			
+			logger.debug("ownerInfoUpdate");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void 사업자탈퇴test() {
+		logger.debug("사업자탈퇴test()");
+		try {
+			adao.ownerInfoDelete(null);
+			logger.debug("ownerInfoDelete");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -71,10 +71,16 @@ public class AdminServiceImpl implements AdminService{
 	}
   
   	@Override
-	public int ownerCount(Integer own_id) throws Exception {
+	public int ownerCount(String own_id) throws Exception {
 		logger.debug("service : ownerCount() 호출 ");
 		return adao.ownerCount(own_id);
 	}
+  	
+  	@Override
+  	public int ownerStop(EntVO vo) throws Exception {
+  		logger.debug("service : ownerStop(EntVO vo) 호출 ");
+  		return adao.ownerStop(vo);
+  	}
 	
 	@Override
 	public int ownerApprove(String own_id) throws Exception {
@@ -114,7 +120,7 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Override
 	public int FAQCount() throws Exception {
-		logger.debug("service : FAQCount(Integer cs_no) 호출");
+		logger.debug("service : FAQCount() 호출");
 		return adao.FAQCount();
 	}
 	
