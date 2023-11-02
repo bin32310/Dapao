@@ -1,17 +1,12 @@
 package com.dapao.persistence;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.inject.Inject;
-
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
@@ -19,9 +14,8 @@ import com.dapao.domain.UserVO;
 
 @Service
 public class AdminDAOImpl implements AdminDAO {
+
 	// 디비연결객체 정보를 주입
-
-
 	private static final Logger logger = LoggerFactory.getLogger(AdminDAOImpl.class);
 
 	@Inject
@@ -35,12 +29,6 @@ public class AdminDAOImpl implements AdminDAO {
 	private static final String NAMESPACE = "com.dapao.mapper.AdminMapper";
 
 	@Override
-	public List<UserVO> getAllUser() throws Exception {
-		logger.debug("DAO : getAllUser() 호출");
-		return sqlSession.selectList(NAMESPACE + ".getAllUser");
-	}
-
-	@Override
 	public UserVO userInfo(String us_id) throws Exception {
 		logger.debug("DAO : userInfo(us_id) 호출");
 		return sqlSession.selectOne(NAMESPACE + ".userInfo", us_id);
@@ -49,90 +37,126 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public int userStop(UserVO vo) throws Exception {
 		logger.debug("DAO : userStop(String us_id, String us_stopdate) 호출");
-		return sqlSession.update(NAMESPACE+".userStop", vo);
+		return sqlSession.update(NAMESPACE + ".userStop", vo);
 	}
-	
+
 	@Override
 	public void userStateUpdate(String us_id) throws Exception {
 		logger.debug("DAO : userStateUpdate(String us_id) 호출");
-		sqlSession.update(NAMESPACE+".userStateUpdate", us_id);
+		sqlSession.update(NAMESPACE + ".userStateUpdate", us_id);
 	}
-	
+
 	@Override
 	public int userDelete(String us_id) throws Exception {
 		logger.debug("DAO : userDelete(String us_id) 호출");
-		return sqlSession.update(NAMESPACE+".userDelete", us_id);
+		return sqlSession.update(NAMESPACE + ".userDelete", us_id);
 	}
-	
+
 	@Override
-	public List<UserVO> getUserList(Criteria cri) throws Exception {	
-		return sqlSession.selectList(NAMESPACE+".userListCri", cri);
+	public List<UserVO> getUserList(Criteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".userListCri", cri);
 	}
-	
+
 	@Override
 	public int getUserCount() throws Exception {
-		return sqlSession.selectOne(NAMESPACE+".userCount");
+		return sqlSession.selectOne(NAMESPACE + ".userCount");
+	}
+
+	@Override
+	public List<EntVO> ownerList(Criteria cri) throws Exception {
+		logger.debug(" DAO : ownerList() 호출");
+
+		return sqlSession.selectList(NAMESPACE + ".ownerList", cri);
+	}
+
+	@Override
+	public int ownerCount(Integer own_id) throws Exception {
+		logger.debug(" DAO : ownerList() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".ownerCount");
+	}
+
+	@Override
+	public EntVO ownerInfo(String own_id) throws Exception {
+		logger.debug("DAO : ownerInfo(String own_id) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".ownerInfo", own_id);
+	}
+
+	@Override
+	public int ownerApprove(String own_id) throws Exception {
+		logger.debug("DAO : ownerApprove(String own_id) 호출");
+		return sqlSession.update(NAMESPACE + ".ownerApprove", own_id);
+	}
+
+	@Override
+	public int ownerInfoDelete(String own_id) throws Exception {
+		logger.debug("DAO : ownerInfoDelete(String own_id) 호출");
+		return sqlSession.update(NAMESPACE + ".ownerInfoDelete", own_id);
+	}
+
+	@Override
+	public List<CsVO> FAQList(Criteria cri) throws Exception {
+		logger.debug("DAO : FAQList() 호출");
+		return sqlSession.selectList(NAMESPACE + ".FAQList", cri);
+	}
+
+	@Override
+	public CsVO csInfo(Integer cs_no) throws Exception {
+		logger.debug("DAO : csInfo(Integer cs_no)  호출");
+		return sqlSession.selectOne(NAMESPACE + ".csInfo", cs_no);
+	}
+
+	@Override
+	public void FAQWrite(CsVO vo) throws Exception {
+		logger.debug("DAO : FAQWrite()  호출");
+		sqlSession.insert(NAMESPACE + ".FAQWrite", vo);
+	}
+
+	@Override
+	public int csInfoUpdate(CsVO vo) throws Exception {
+		logger.debug("DAO : csInfoUpdate(CsVO vo)  호출");
+		return sqlSession.update(NAMESPACE + ".csInfoUpdate", vo);
+	}
+
+	@Override
+	public int FAQCount() throws Exception {
+		logger.debug("DAO : FAQCount(Integer cs_no)  호출");
+		return sqlSession.selectOne(NAMESPACE + ".FAQCount");
+	}
+
+	@Override
+	public int noticeCount() throws Exception {
+		logger.debug("DAO : noticeCount() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".noticeCount");
+	}
+
+	@Override
+	public List<CsVO> noticeList(Criteria cri) throws Exception {
+		logger.debug("DAO : noticeList() 호출");
+		return sqlSession.selectList(NAMESPACE + ".noticeList", cri);
+	}
+
+	@Override
+	public int csUpload(Integer cs_no) throws Exception {
+		logger.debug("DAO : csUpload(Integer cs_no) 호출");
+		return sqlSession.update(NAMESPACE + ".csUpload", cs_no);
+	}
+
+	@Override
+	public int csRemove(Integer cs_no) throws Exception {
+		logger.debug("DAO : csRemove(Integer cs_no) 호출");
+		return sqlSession.update(NAMESPACE + ".csRemove", cs_no);
+	}
+
+	@Override
+	public void noticeWrite(CsVO vo) throws Exception {
+		logger.debug("DAO : noticeWrite()  호출");
+		sqlSession.insert(NAMESPACE + ".noticeWrite", vo);
 	}
 	
+	@Override
+	public int csDelete(Integer cs_no) throws Exception {
+		logger.debug("DAO : csDelete(Integer cs_no)  호출");
+		return sqlSession.delete(NAMESPACE+".csDelete", cs_no);
+	}
 
-		@Override
-		public List<EntVO> ownerList(Criteria cri) throws Exception{
-			logger.debug(" DAO : ownerList() 호출");
-			
-			return sqlSession.selectList(NAMESPACE+".ownerList",cri);
-		}
-		
-		@Override
-		public int ownerCount(Integer own_id) throws Exception {
-			logger.debug(" DAO : ownerList() 호출");
-			return sqlSession.selectOne(NAMESPACE+".ownerCount");
-		}
-		
-		@Override
-		public EntVO ownerInfo(String own_id) throws Exception {
-			logger.debug("DAO : ownerInfo(String own_id) 호출");
-			return sqlSession.selectOne(NAMESPACE+".ownerInfo",own_id);
-		}
-		
-		@Override
-		public int ownerApprove(String own_id) throws Exception {
-			logger.debug("DAO : ownerApprove(String own_id) 호출");
-			return sqlSession.update(NAMESPACE+".ownerApprove",own_id);
-		}
-		
-		@Override
-		public int ownerInfoDelete(String own_id) throws Exception {
-			logger.debug("DAO : ownerInfoDelete(String own_id) 호출");
-			return sqlSession.update(NAMESPACE+".ownerInfoDelete",own_id);
-		}
-		
-		@Override
-		public List<CsVO> FAQList(Criteria cri) throws Exception {
-			logger.debug("DAO : FAQList() 호출");
-			return sqlSession.selectList(NAMESPACE+".FAQList",cri);
-		}
-		
-		@Override
-		public CsVO FAQInfo(Integer cs_no) throws Exception {
-			logger.debug("DAO : FAQInfo(Integer cs_no)  호출");
-			return sqlSession.selectOne(NAMESPACE+".FAQInfo", cs_no);
-		}
-		
-		@Override
-		public void FAQWrite(CsVO vo) throws Exception {
-			logger.debug("DAO : FAQWrite()  호출");	
-			sqlSession.insert(NAMESPACE+".FAQWrite",vo);
-		}
-		
-		@Override
-		public int FAQInfoUpdate(CsVO vo) throws Exception {
-			logger.debug("DAO : FAQInfoUpdate(CsVO vo)  호출");
-			return sqlSession.update(NAMESPACE+".FAQInfoUpdate", vo);
-		}
-		
-		@Override
-		public int FAQCount() throws Exception {
-			logger.debug("DAO : FAQCount(Integer cs_no)  호출");
-			return sqlSession.selectOne(NAMESPACE+".FAQCount");
-		}
 }

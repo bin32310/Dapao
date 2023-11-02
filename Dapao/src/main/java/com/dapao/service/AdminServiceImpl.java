@@ -22,11 +22,6 @@ public class AdminServiceImpl implements AdminService{
 	@Inject
 	private AdminDAO adao;
 
-	@Override
-	public List<UserVO> getAllUser() throws Exception {
-		logger.debug("service : getAllUser() 호출 ");
-		return adao.getAllUser();
-	}
 	
 	@Override
 	public UserVO userInfo(String us_id) throws Exception {
@@ -100,9 +95,9 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public CsVO FAQInfo(Integer cs_no) throws Exception {
-		logger.debug("service : FAQInfo(Integer cs_no) 호출");
-		return adao.FAQInfo(cs_no);
+	public CsVO csInfo(Integer cs_no) throws Exception {
+		logger.debug("service : csInfo(Integer cs_no) 호출");
+		return adao.csInfo(cs_no);
 	}
 	
 	@Override
@@ -112,9 +107,9 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public int FAQInfoUpdate(CsVO vo) throws Exception {
-		logger.debug("service : FAQInfoUpdate(CsVO vo) 호출");
-		return adao.FAQInfoUpdate(vo);
+	public int csInfoUpdate(CsVO vo) throws Exception {
+		logger.debug("service : csInfoUpdate(CsVO vo) 호출");
+		return adao.csInfoUpdate(vo);
 	}
 	
 	@Override
@@ -122,4 +117,41 @@ public class AdminServiceImpl implements AdminService{
 		logger.debug("service : FAQCount(Integer cs_no) 호출");
 		return adao.FAQCount();
 	}
+	
+	@Override
+	public int noticeCount() throws Exception {
+		logger.debug("service : noticeCount() 호출");
+		return adao.noticeCount();
+	}
+	
+	@Override
+	public List<CsVO> noticeList(Criteria cri) throws Exception {
+		logger.debug("service : noticeList() 호출");
+		return adao.noticeList(cri);
+	}
+	
+	@Override
+	public int csUpload(Integer cs_no) throws Exception {
+		logger.debug("service : csUpload(Integer cs_no) 호출");
+		return adao.csUpload(cs_no);
+	}
+	
+	@Override
+	public int csRemove(Integer cs_no) throws Exception {
+		logger.debug("service : csRemove(Integer cs_no) 호출");
+		return adao.csRemove(cs_no);
+	}
+	
+	@Override
+	public void noticeWrite(CsVO vo) throws Exception {
+		logger.debug("service : noticeWrite(CsVO vo) 호출");
+		adao.noticeWrite(vo);
+	}
+	
+	@Override
+	public int csDelete(Integer cs_no) throws Exception {
+		logger.debug("service : csDelete(Integer cs_no) 호출");
+		return adao.csDelete(cs_no);
+	}
+	
 }

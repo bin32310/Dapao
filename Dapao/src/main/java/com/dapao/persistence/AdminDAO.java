@@ -15,9 +15,6 @@ public interface AdminDAO {
 	// 사업자 총개수 조회
 	public int ownerCount(Integer own_id) throws Exception;
 	
-	// 회원관리 - 모든유저정보 출력
-	public List<UserVO> getAllUser() throws Exception;
-	
 	// 회원관리 - 개인유저정보 출력
 	public UserVO userInfo(String us_id) throws Exception;
 	
@@ -35,7 +32,6 @@ public interface AdminDAO {
 	
 	// 회원관리 - 전체회원수 조회
 	public int getUserCount() throws Exception;
-
 	
 	// 사업자 정보 출력
 	public EntVO ownerInfo(String own_id) throws Exception;
@@ -45,19 +41,38 @@ public interface AdminDAO {
 	
 	// 사업자 탈퇴
 	public int ownerInfoDelete(String own_id) throws Exception;
+		
+	// cs 1개정보 출력
+	public CsVO csInfo(Integer cs_no) throws Exception;
+		
+	// cs 글 정보 수정
+	public int csInfoUpdate(CsVO vo) throws Exception;
+	
+	// cs 글 삭제
+	public int csDelete(Integer cs_no) throws Exception;
+	
+	// cs 등록
+	public int csUpload(Integer cs_no) throws Exception;
+	
+	// cs 등록해제
+	public int csRemove(Integer cs_no) throws Exception;
 	
 	// FAQ 리스트
 	public List<CsVO> FAQList(Criteria cri) throws Exception;
 	
-	// FAQ 1개정보 출력
-	public CsVO FAQInfo(Integer cs_no) throws Exception;
-	
-	//FAQ 글쓰기
+	// FAQ 글쓰기
 	public void FAQWrite(CsVO vo) throws Exception;
-	
-	// FAQ 정보 수정
-	public int FAQInfoUpdate(CsVO vo) throws Exception;
 	
 	// FAQ 총 글개수 조회
 	public int FAQCount() throws Exception;
+	
+	// notice 총 글개수 조회
+	public int noticeCount() throws Exception;
+	
+	// notice 글 목록 리스트
+	public List<CsVO> noticeList(Criteria cri) throws Exception;
+	
+	// notice 글쓰기
+	public void noticeWrite(CsVO vo) throws Exception;
+
 }
