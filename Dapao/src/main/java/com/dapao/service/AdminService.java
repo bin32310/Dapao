@@ -10,8 +10,7 @@ import com.dapao.domain.UserVO;
 import jdk.jshell.spi.ExecutionControl.ExecutionControlException;
 
 public interface AdminService {
-	
-	
+		
 	// 회원관리 - 개인유저정보 출력
 	public UserVO userInfo(String us_id) throws Exception;
 	
@@ -29,7 +28,6 @@ public interface AdminService {
 	
 	// 회원관리 - 전체회원수조회
 	public int getUserCount() throws Exception;
-	
 	
 	// 사업자 관리 - 사업자정보 리스트
 	public List<EntVO> ownerList(Criteria cri) throws Exception;
@@ -49,40 +47,38 @@ public interface AdminService {
 	// 사업자 관리 - 사업자 탈퇴
 	public int ownerInfoDelete(String own_id) throws Exception;
 	
-	// FAQ&공지 관리 - FAQ 리스트
-	public List<CsVO> FAQList(Criteria cri) throws Exception;
-	
-	//FAQ 글쓰기
-	public void FAQWrite(CsVO vo) throws Exception;
-		
-	// FAQ 총 글개수 조회
-	public int FAQCount() throws Exception;
-	
-	// notice 총 글개수 조회
-	public int noticeCount() throws Exception;
-	
-	// notice 글 목록 리스트
-	public List<CsVO> noticeList(Criteria cri) throws Exception;
-	
-	// notice 글쓰기
-	public void noticeWrite(CsVO vo) throws Exception;
-
 	// FAQ&공지 관리 - cs 1개정보 출력
 	public CsVO csInfo(Integer cs_no) throws Exception;
-	
-	// FAQ&공지 관리 - FAQ 글쓰기
-	public void FAQWrite(CsVO vo) throws Exception;
 	
 	// FAQ&공지 관리 - cs 정보 수정
 	public int csInfoUpdate(CsVO vo) throws Exception;
 	
+	// FAQ&공지 관리 - cs 등록
+	public int csUpload(Integer cs_no) throws Exception;
+	
+	// FAQ&공지 관리 - cs 등록해제
+	public int csRemove(Integer cs_no) throws Exception;
+	
+	// FAQ&공지 관리 - cs 삭제
+	public int csDelete(Integer cs_no) throws Exception;
+	
+	// FAQ&공지 관리 - FAQ 리스트
+	public List<CsVO> FAQList(Criteria cri) throws Exception;
+	
+	// FAQ&공지 관리 - FAQ 글쓰기
+	public void FAQWrite(CsVO vo) throws Exception;
+	
 	// FAQ&공지 관리 - FAQ 총 글개수 조회
 	public int FAQCount() throws Exception;
 	
-	// FAQ&공지 관리 - FAQ 등록
-	public int FAQUpload(Integer cs_no) throws Exception;
+	//  FAQ&공지 관리 - notice 총 글개수 조회
+	public int noticeCount() throws Exception;
 	
-	// FAQ&공지 관리 - FAQ 등록해제
-	public int FAQRemove(Integer cs_no) throws Exception;
+	//  FAQ&공지 관리 - notice 글 목록 리스트
+	public List<CsVO> noticeList(Criteria cri) throws Exception;
+	
+	//  FAQ&공지 관리 - notice 글쓰기
+	public void noticeWrite(CsVO vo) throws Exception;
+
 	
 }
