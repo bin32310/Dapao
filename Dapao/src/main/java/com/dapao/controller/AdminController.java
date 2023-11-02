@@ -2,7 +2,6 @@ package com.dapao.controller;
 
 import java.util.List;
 
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -22,7 +21,6 @@ import com.dapao.domain.PageVO;
 import com.dapao.domain.UserVO;
 import com.dapao.service.AdminService;
 
-
 @Controller
 @RequestMapping("/admin/*")
 public class AdminController {
@@ -31,30 +29,30 @@ public class AdminController {
 
 	@Inject
 	private AdminService aService;
-	
+
 	// 모든회원리스트정보출력 ( 페이징처리 + 페이지블럭처리 )
 	// http://localhost:8088/admin/userList
 	@RequestMapping(value = "/userList", method = RequestMethod.GET)
-	public void listPageGET(Criteria cri, Model model, HttpSession session) throws Exception{		
+	public void listPageGET(Criteria cri, Model model, HttpSession session) throws Exception {
 		// 페이징처리(페이지 블럭 처리 객체)
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
 		pageVO.setTotalCount(aService.getUserCount());
-		
+
 		model.addAttribute("pageVO", pageVO);
-		
+
 		// 페이지이동시 받아온 페이지 번호
-		if(cri.getPage() > pageVO.getEndPage()) {
+		if (cri.getPage() > pageVO.getEndPage()) {
 			// 잘못된 페이지 정보를 입력받음. 글이없음.
 			cri.setPage(pageVO.getEndPage());
 		}
-		
-		List<UserVO> userList =  aService.getUserList(cri);
+
+		List<UserVO> userList = aService.getUserList(cri);
 		// 리스트사이즈확인
-		logger.debug(" 글개수 : "+userList.size());
-		
+		logger.debug(" 글개수 : " + userList.size());
+
 		// 페이지정보 view페이지전달
-		model.addAttribute("userList",userList);
+		model.addAttribute("userList", userList);
 		session.setAttribute("viewcntck", "on");
 	}
 
@@ -75,49 +73,50 @@ public class AdminController {
 	// 회원정지부여
 	@ResponseBody
 	@RequestMapping(value = "/userStop")
-	public int userStop(@RequestParam("us_id") String us_id, @RequestParam("us_stopdate") String us_stopdate) throws Exception {
+	public int userStop(@RequestParam("us_id") String us_id, @RequestParam("us_stopdate") String us_stopdate)
+			throws Exception {
 		logger.debug("us_id, us_stopdate : " + us_id + "," + us_stopdate);
-		
+
 		UserVO vo = new UserVO();
 		vo.setUs_id(us_id);
 		vo.setUs_stopdate(us_stopdate);
-		
+
 		aService.userStateUpdate(us_id);
-		
+
 		return aService.userStop(vo);
 	}
-	
+
 	// 회원탈퇴처리
 	@ResponseBody
-	@RequestMapping(value="/userDelete")
-	public int userDelete(@RequestParam("us_id") String us_id) throws Exception{
-		logger.debug("탈퇴처리 us_id : "+us_id);
+	@RequestMapping(value = "/userDelete")
+	public int userDelete(@RequestParam("us_id") String us_id) throws Exception {
+		logger.debug("탈퇴처리 us_id : " + us_id);
 		return aService.userDelete(us_id);
 	}
-	
+
 	// http://localhost:8088/admin/ownerList
 	// 사업자 리스트 출력
 	@RequestMapping("/ownerList")
 	public void ownerListGET(Criteria cri,Model model, String own_id) throws Exception{
 		logger.debug("ownerListGET() 호출");
-		
+
 		// 페이징 처리( 페이지 블럭 처리 객체 )
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
 		pageVO.setTotalCount(aService.ownerCount(own_id));
-		
+
 		// 페이징처리 정보도 뷰페이지로 전달
-		logger.debug("pageVO : "+pageVO);
+		logger.debug("pageVO : " + pageVO);
 		model.addAttribute("pageVO", pageVO);
-		
-		//페이지 이동시 받아온 페이지 번호
-		if(cri.getPage() > pageVO.getEndPage()) {
+
+		// 페이지 이동시 받아온 페이지 번호
+		if (cri.getPage() > pageVO.getEndPage()) {
 			// 잘못된 페이지 정보 입력
 			cri.setPage(pageVO.getEndPage());
 		}
-		
+
 		List<EntVO> ownerList = aService.ownerList(cri);
-		
+
 		model.addAttribute("vo", ownerList);
 
 	}
@@ -142,12 +141,12 @@ public class AdminController {
 	// 사업자 승인
 	@RequestMapping("/ownerApprove")
 	@ResponseBody
-	public int ownerApprove(String own_id) throws Exception{
+	public int ownerApprove(String own_id) throws Exception {
 		logger.debug("ownerApprove() 호출");
 		return aService.ownerApprove(own_id);
 	}
-	
-	//사업자 탈퇴
+
+	// 사업자 탈퇴
 	@RequestMapping("/ownerInfoDelete")
 	@ResponseBody
 	public int ownerInfoDeleteGET(String own_id) throws Exception{
@@ -165,74 +164,121 @@ public class AdminController {
 		return aService.csInfo(cs_no);
 	}
 
-	// FAQ 수정하기
+	// cs 수정하기
 	@RequestMapping("/csInfoUpdate")
 	@ResponseBody // ajax(JSON 데이터 넘겨줄때 사용)
 	public int csInfoUpdate(CsVO vo) throws Exception {
 		logger.debug("csInfoUpdate() 호출");
 		logger.debug("vo@@" + vo);
-		
 		return aService.csInfoUpdate(vo);
 	}
 	
-	// http://localhost:8088/admin/FAQList
+	// cs 삭제하기
+	@ResponseBody
+	@RequestMapping(value="/csDelete")
+	public int csDelete(@RequestParam("cs_no") Integer cs_no) throws Exception{
+		logger.debug("전달받은 cs_no : "+cs_no);		
+		return aService.csDelete(cs_no);
+	}
+
+	// cs 등록하기
+	@RequestMapping("/csUpload")
+	@ResponseBody
+	public int csUpload(@RequestParam("cs_no") Integer cs_no) throws Exception {
+		logger.debug("csUpload() 호출");
+		logger.debug("csUpload() 컨트롤러 ajax전달값 : "+cs_no);
+		logger.debug("csUpload() 컨트롤러 result : "+aService.csUpload(cs_no));
+		return aService.csUpload(cs_no);
+	}
+
+	// cs 등록해제
+	@RequestMapping("/csRemove")
+	@ResponseBody
+	public int csRemove(@RequestParam("cs_no") Integer cs_no) throws Exception {
+		logger.debug("csRemove() 호출");
+		logger.debug("csUpload() 컨트롤러 result : "+aService.csRemove(cs_no));
+		return aService.csRemove(cs_no);
+	}
+
 	// FAQ 리스트
+	// http://localhost:8088/admin/FAQList
 	@RequestMapping("/FAQList")
 
-	public void FAQList(Criteria cri,Model model) throws Exception{
+	public void FAQList(Criteria cri, Model model) throws Exception {
 		logger.debug("FAQList() 호출");
-		
+
 		// 페이징 처리( 페이지 블럭 처리 객체 )
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
 		pageVO.setTotalCount(aService.FAQCount());
-		
+
 		// 페이징처리 정보도 뷰페이지로 전달
-		logger.debug("pageVO : "+pageVO);
+		logger.debug("pageVO : " + pageVO);
 		model.addAttribute("pageVO", pageVO);
-		
-		//페이지 이동시 받아온 페이지 번호
-		if(cri.getPage() > pageVO.getEndPage()) {
+
+		// 페이지 이동시 받아온 페이지 번호
+		if (cri.getPage() > pageVO.getEndPage()) {
 			// 잘못된 페이지 정보 입력
 			cri.setPage(pageVO.getEndPage());
 		}
-		
+
 		List<CsVO> FAQList = aService.FAQList(cri);
-		
+
 		model.addAttribute("vo", FAQList);
-		
 	}
 	
 	// FAQ 글쓰기 폼
-	@RequestMapping(value = "/FAQWriteForm",method = RequestMethod.GET)
-	public void FAQWriteForm() throws Exception{
+	@RequestMapping(value = "/FAQWriteForm", method = RequestMethod.GET)
+	public void FAQWriteForm() throws Exception {
 		logger.debug(" FAQWriteForm() 호출 ");
-		
+
 	}
-	
-	//FAQ 글쓰기
+
+	// FAQ 글쓰기
 	@RequestMapping("/FAQWrite")
-	public String FAQWrite(CsVO vo) throws Exception{
+	public String FAQWrite(CsVO vo) throws Exception {
 		logger.debug("FAQWrite() 호출");
 		aService.FAQWrite(vo);
 		return "redirect:/admin/FAQList";
 	}
 
-	// FAQ 등록하기
-	@RequestMapping("/FAQUpload")
-	@ResponseBody
-	public int FAQUpload(@RequestParam("cs_no") Integer cs_no) throws Exception{
-		logger.debug("FAQUpload() 호출");
-		return aService.FAQUpload(cs_no);
+	// 공지사항 작성페이지 폼
+	// http://localhost:8088/admin/noticeWriteForm
+	@RequestMapping(value = "/noticeWriteForm")
+	public void noticeWriteForm() throws Exception {
+		logger.debug(" FAQWriteForm() 호출 ");
 	}
 	
-	// FAQ 등록해제
-	@RequestMapping("/FAQRemove")
-	@ResponseBody
-	public int FAQRemove(@RequestParam("cs_no") Integer cs_no) throws Exception{
-		logger.debug("FAQRemove() 호출");
-		return aService.FAQRemove(cs_no);
+	// 공지사항 글쓰기
+	@RequestMapping("/noticeWrite")
+	public String noticeWrite(CsVO vo) throws Exception {
+		logger.debug("FAQWrite() 호출");
+		aService.noticeWrite(vo);
+		return "redirect:/admin/noticeList";
 	}
 
+	// 공지사항 리스트
+	// http://localhost:8088/admin/noticeList
+	@RequestMapping(value = "/noticeList")
+	public void noticeList(Criteria cri, Model model) throws Exception {
 
+		// 페이징 처리( 페이지 블럭 처리 객체 )
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(aService.noticeCount());
+
+		// 페이징처리 정보도 뷰페이지로 전달
+		logger.debug("pageVO : " + pageVO);
+		model.addAttribute("pageVO", pageVO);
+
+		// 페이지 이동시 받아온 페이지 번호
+		if (cri.getPage() > pageVO.getEndPage()) {
+			// 잘못된 페이지 정보 입력
+			cri.setPage(pageVO.getEndPage());
+		}
+
+		List<CsVO> noticeList = aService.noticeList(cri);
+
+		model.addAttribute("noticeList", noticeList);
+    }
 }

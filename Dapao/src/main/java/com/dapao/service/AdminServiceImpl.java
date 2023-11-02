@@ -22,11 +22,6 @@ public class AdminServiceImpl implements AdminService{
 	@Inject
 	private AdminDAO adao;
 
-	@Override
-	public List<UserVO> getAllUser() throws Exception {
-		logger.debug("service : getAllUser() 호출 ");
-		return adao.getAllUser();
-	}
 	
 	@Override
 	public UserVO userInfo(String us_id) throws Exception {
@@ -130,14 +125,39 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public int FAQUpload(Integer cs_no) throws Exception {
-		logger.debug("service : FAQUpload(Integer cs_no) 호출");
-		return adao.FAQUpload(cs_no);
+	public int noticeCount() throws Exception {
+		logger.debug("service : noticeCount() 호출");
+		return adao.noticeCount();
 	}
 	
 	@Override
-	public int FAQRemove(Integer cs_no) throws Exception {
-		logger.debug("service : FAQRemove(Integer cs_no) 호출");
-		return adao.FAQRemove(cs_no);
+	public List<CsVO> noticeList(Criteria cri) throws Exception {
+		logger.debug("service : noticeList() 호출");
+		return adao.noticeList(cri);
 	}
+	
+	@Override
+	public int csUpload(Integer cs_no) throws Exception {
+		logger.debug("service : csUpload(Integer cs_no) 호출");
+		return adao.csUpload(cs_no);
+	}
+	
+	@Override
+	public int csRemove(Integer cs_no) throws Exception {
+		logger.debug("service : csRemove(Integer cs_no) 호출");
+		return adao.csRemove(cs_no);
+	}
+	
+	@Override
+	public void noticeWrite(CsVO vo) throws Exception {
+		logger.debug("service : noticeWrite(CsVO vo) 호출");
+		adao.noticeWrite(vo);
+	}
+	
+	@Override
+	public int csDelete(Integer cs_no) throws Exception {
+		logger.debug("service : csDelete(Integer cs_no) 호출");
+		return adao.csDelete(cs_no);
+	}
+	
 }

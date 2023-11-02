@@ -7,13 +7,13 @@
 
 	<!-- 회원관리 - 개인회원정보출력 -->
 	<select id="userInfo" resultType="UserVO">
-		select * from us where 
+		select * from us where
 		us_id=#{us_id}
 	</select>
 
 	<!-- 회원관리 - 회원정지부여 -->
 	<update id="userStop">
-		update us set us_stopdate=date_add(now(), interval 
+		update us set us_stopdate=date_add(now(), interval
 		#{us_stopdate} day) where us_id=#{us_id};
 	</update>
 
@@ -26,11 +26,11 @@
 	<update id="userDelete">
 		update us set us_state=2 where us_id=#{us_id}
 	</update>
-	
+
 	<!-- 회원관리 - 페이징처리 후 회원리스트 조회 -->
 	<select id="userListCri" resultType="UserVO">
-		select * from us 
-		where us_id!='admin' order by us_id 
+		select * from us
+		where us_id!='admin' order by us_id, us_regdate
 		limit #{pageStart},#{pageSize}
 	</select>
 
@@ -38,15 +38,15 @@
 	<select id="userCount" resultType="int">
 		select count(*) from us
 	</select>
-  	
+
 	<!-- 사업자관리 - 모든사업자정보출력 -->
- 	<select id="ownerList" resultType="EntVO">
- 		select * from ent 
- 		order by own_state
+	<select id="ownerList" resultType="EntVO">
+		select * from ent
+		order by own_state
 		limit #{pageStart},#{pageSize}
- 	</select>
- 	
- 	<!-- 사업자 총 개수 조회 -->
+	</select>
+
+	<!-- 사업자 총 개수 조회 -->
 	<select id="ownerCount" resultType="int">
 		<![CDATA[
 		select count(*) from ent
@@ -68,7 +68,7 @@
 	
 	<!-- 사업자 관리 - 승인요청 처리 -->
 	<update id="ownerApprove">
-		update ent set own_state=0 
+		update ent set own_state=0
 		where own_id=#{own_id}
 	</update>
 	
@@ -80,45 +80,73 @@
 
 	<!-- FAQ&공지 관리 - FAQ 리스트 -->
 	<select id="FAQList" resultType="CsVO">
-		select * from cs 
-		where cs_board = 1 
-		order by cs_no, cs_regdate 
+		select * from cs
+		where cs_board = 1
+		order by cs_no, cs_regdate
 		limit #{pageStart},#{pageSize}
 	</select>
 
 	<!-- FAQ&공지 관리 - cs 1개 정보 -->
 	<select id="csInfo" resultType="CsVO">
-		select * from cs where cs_no=#{cs_no}
+		select * from cs where cs_no =
+		#{cs_no}
 	</select>
 	
+	<!-- FAQ&공지 관리 - cs 글 삭제 -->
+	<delete id="csDelete">
+		delete from cs where cs_no=#{cs_no}
+	</delete>
+
 	<!-- FAQ&공지 관리 - FAQ 글쓰기 -->
 	<insert id="FAQWrite">
-		insert into cs (cs_title,cs_content,cs_board,cs_group) 
+		insert into cs
+		(cs_title,cs_content,cs_board,cs_group)
 		values(#{cs_title},#{cs_content},1,#{cs_group})
 	</insert>
 
 	<!-- FAQ&공지 관리 - cs정보 수정 -->
 	<update id="csInfoUpdate">
-		update cs 
-		set cs_title=#{cs_title}, cs_content=#{cs_content},cs_update=now() 
-		where cs_no=#{cs_no} 
+		update cs
+		set cs_title=#{cs_title}, cs_content=#{cs_content},cs_update=now()
+		where cs_no=#{cs_no}
 	</update>
-	
+    
 	<!-- FAQ&공지 관리 - FAQ 글 총 개수 조회 -->
 	<select id="FAQCount" resultType="int">
-		select count(*) from cs where cs_board=1 
+		select count(*) from cs where
+		cs_board=1
 	</select>
-	
-	<!-- FAQ&공지 관리 - FAQ 등록 -->
-	<update id="FAQUpload">
-		update cs set cs_state=1 
+
+	<!-- FAQ&공지 관리 - notice 글 총 개수 조회 -->
+	<select id="noticeCount" resultType="int">
+		select count(*) from cs
+		where cs_board=0
+	</select>
+
+	<!-- FAQ&공지 관리 - notice 리스트 -->
+	<select id="noticeList" resultType="CsVO">
+		select * from cs
+		where cs_board = 0
+		order by cs_no, cs_regdate
+		limit #{pageStart},#{pageSize}
+	</select>
+
+	<!-- FAQ&공지 관리 - cs 등록 -->
+	<update id="csUpload">
+		update cs set cs_state=1
+		where cs_no=#{cs_no}
+	</update>
+
+	<!-- FAQ&공지 관리 - cs 등록해제 -->
+	<update id="csRemove">
+		update cs set cs_state=0
 		where cs_no=#{cs_no}
 	</update>
 	
-	<!-- FAQ&공지 관리 - FAQ 등록해제 -->
-	<update id="FAQRemove">
-		update cs set cs_state=0 
-		where cs_no=#{cs_no}
-	</update>
-	
+	<!-- FAQ&공지 관리 - notice 글쓰기 -->
+	<insert id="noticeWrite">
+		insert into cs
+		(cs_title,cs_content,cs_board,cs_group)
+		values(#{cs_title},#{cs_content},0,#{cs_group})
+	</insert>
 </mapper>	
