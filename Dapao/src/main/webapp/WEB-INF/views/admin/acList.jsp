@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../include/header.jsp"%>
 
-	<h1>/admin/acWriteForm.jsp</h1>
+	<h1>/admin/acList.jsp</h1>
 <div class="box">
 	<div class="box-header with-board">
 		<h3 class="box-title">신고 리스트</h3>
@@ -11,44 +11,35 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr role="row">
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">글 번호</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">제목</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">등록일</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">등록형태</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">등록상태</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">신고번호</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">신고자</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">피신고자</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">신고사유</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">상품번호</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">신고일</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">신고상태</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">처리결과</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="vo" items="${vo }">
 					<tr role="row" class="odd">
-						<td><a class="cs_no">${vo.cs_no }</a></td>
-						<td>${vo.cs_title }</td>
-						<td>${vo.cs_regdate }</td>
+						<td><a class="ac_no">${vo.ac_no }</a></td>
+						<td>${vo.us_id }</td>
+						<td>${vo.ac_own_id+vo_ac_us_id }</td>
+						<td>${vo.ac_cate }</td>
+						<td>${vo.ac_item }</td>
+						<td>${vo.ac_regdate}</td>
 						<c:choose>
-							<c:when test="${vo.cs_group eq '0' }">
-								<td>회원공지</td>
+							<c:when test="${vo.ac_state eq '0' }">
+								<td><button type="button" class="acState" value="${vo.ac_state }">접수</button></td>
 							</c:when>
-							<c:when test="${vo.cs_group eq '1' }">
-								<td>사업자공지</td>
+							<c:when test="${vo.ac_state eq '1' }">
+								<td><button type="button" class="acState" value="${vo.ac_state }">처리</button></td>
 							</c:when>
 						</c:choose>
-						<c:choose>
-							<c:when test="${vo.cs_state eq '0' }">
-								<td>해제</td>
-							</c:when>
-							<c:when test="${vo.cs_state eq '1' }">
-								<td>등록</td>
-							</c:when>
-						</c:choose>
-						<c:choose>
-							<c:when test="${vo.cs_state eq '0' }">
-								<td><button type="button" class="csState" value="${vo.cs_no }">등록</button></td>
-							</c:when>
-							<c:when test="${vo.cs_state eq '1' }">
-								<td><button type="button" class="csState" value="${vo.cs_no }">해제</button></td>
-							</c:when>
-						</c:choose>
-					</tr>
+						<td>${vo.ac_result}</td>
+						</tr>
 				</c:forEach>
 			</tbody>
 			<tfoot>
@@ -59,15 +50,15 @@
 		<ul class="pagination pagination-sm no-margin pull-right">
 
 			<c:if test="${pageVO.prev }">
-				<li><a href="/admin/FAQList?page=${pageVO.startPage-1 } ">←</a></li>
+				<li><a href="/admin/acList?page=${pageVO.startPage-1 } ">←</a></li>
 			</c:if>
 
 			<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
-				<li ${pageVO.cri.page == i? 'class="active"':'' }><a href="/admin/FAQList?page=${i }">${i }</a></li>
+				<li ${pageVO.cri.page == i? 'class="active"':'' }><a href="/admin/acList?page=${i }">${i }</a></li>
 			</c:forEach>
 
 			<c:if test="${pageVO.next }">
-				<li><a href="/admin/FAQList?page=${pageVO.endPage+1 }">→</a></li>
+				<li><a href="/admin/acList?page=${pageVO.endPage+1 }">→</a></li>
 			</c:if>
 		</ul>
 	</div>
@@ -81,61 +72,56 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">FAQ</h4>
+				<h4 class="modal-title">신고</h4>
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label class="col-sm-2 control-label">글번호</label>
+					<label class="col-sm-2 control-label">신고번호</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_no" readonly><br>
+						<input type="text" class="form-control" name="ac_no" readonly><br>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">제목</label>
+					<label class="col-sm-2 control-label">신고자</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_title"><br>
+						<input type="text" class="form-control" name="us_id"><br>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">내용</label>
+					<label class="col-sm-2 control-label">피신고자</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_content"><br>
+						<input type="text" class="form-control" name="id"><br>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">등록형태</label>
+					<label class="col-sm-2 control-label">상품번호</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_group"><br>
+						<input type="text" class="form-control" name="ac_item"><br>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">등록상태</label>
+					<label class="col-sm-2 control-label">신고사유</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_state"><br>
+						<input type="text" class="form-control" name="ac_cate"><br>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">조회수</label>
+					<label class="col-sm-2 control-label">신고내용</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_view"><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">게시일</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_regdate"><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">수정일</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_update"><br>
+						<input type="text" class="form-control" name="ac_content"><br>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" name="update" class="update">수정</button>
-				<button type="button" name="update" class="delete">삭제</button>
+				<select name="ac_result" class="btn btn-default" aria-label="Small select example">
+					<option selected>정지기간</option>
+					<option value="정지7일">정지7일</option>
+					<option value="정지30일">정지30일</option>
+					<option value="정지100일">정지100일</option>
+					<option value="영구정지">영구정지</option>
+				</select>
+				<button type="button" class="btn btn-default" name="ac_result" class="ac_result">정지</button>
+				<button type="button" class="btn btn-default" name="update" class="delete">삭제</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
@@ -145,149 +131,58 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('.cs_no').click(function() {
+		$('.ac_no').click(function() {
 			$('#myLargeModal').modal("show");
 
 			$.ajax({
-				url : "/admin/csInfo",
+				url : "/admin/acInfo",
 				data : {
-					"cs_no" : $(this).text()
+					"ac_no" : $(this).text()
 				},
 				dataType : "json",
 				success : function(data) {
 					console.log(data)
-					$('input[name=cs_no]').val(data.cs_no)
-					$('input[name=cs_title]').val(data.cs_title)
-					$('input[name=cs_content]').val(data.cs_content)
-					if(data.cs_group == 0){
-						$('input[name=cs_group]').val("회원공지");
-					}else{
-						$('input[name=cs_group]').val("사업자공지");
+					$('input[name=ac_no]').val(data.ac_no)
+					$('input[name=us_id]').val(data.us_id)
+					if(data.ac_own_id == null || data.ac_own_id == ""){
+						$('input[name=id]').val(data.ac_us_id)
 					}
-					if(data.cs_state == 0){
-						$('input[name=cs_state]').val("해제")
-					}else{
-						$('input[name=cs_state]').val("등록")
-					}					
-					$('input[name=cs_view]').val(data.cs_view)
-					$('input[name=cs_regdate]').val(data.cs_regdate)
-					$('input[name=cs_update]').val(data.cs_update)
+					if(data.ac_us_id == null || data.ac_us_id == ""){
+						$('input[name=id]').val(data.ac_own_id)
+					}
+					$('input[name=ac_item]').val(data.ac_item)
+					$('input[name=ac_cate]').val(data.ac_cate)
+					$('input[name=ac_content]').val(data.ac_content)
 				},
 				error : function() {
 					console.log("오류");
 				}
-			});// cs_no click ajax
+			});// ac_no click ajax
+		});// ac_no click
+		$('ac_result').click(function(){
 			
-			$('.update').click(function(){
-				$.ajax({
-					url : "/admin/csInfoUpdate",
-					data : {
-						"cs_no" : $('input[name=cs_no]').val(),
-						"cs_title" : $('input[name=cs_title]').val(),
-						"cs_content" : $('input[name=cs_content]').val()
-					},
-					dataType : "json",
-					success : function(data) {
-						console.log(data)
-						alert("수정완료");
-						location.replace("/admin/FAQList");
-					},
-					error : function() {
-						console.log("오류");
-					}
-				});//update click ajax
-			});//update click
-			$('.upload').click(function(){
-				$.ajax({
-					url : "/admin/FAQUpload",
-					data : {
-						"cs_no" : $('input[name=cs_no]').val()
-					},
-					dataType : "json",
-					success : function(data){
-						console.log(data)
-						alert("FAQ - 등록완료")
-						location.replace("/admin/FAQList");
-					}
-				}); // upload click ajax
-			});// upload click
-			$('.remove').click(function(){
-				$.ajax({
-					url : "/admin/FAQRemove",
-					data : {
-						"cs_no" : $('input[name=cs_no]').val()
-					},dataType : "json",
-					success : function(data){
-						console.log(data)
-						alert("FAQ - 등록해제완료")
-						location.replace("/admin/FAQList");
-					}
-					
-				});// remove click ajax
-			});// remove click
-		});// cs_no click
-		
-		// FAQ 삭제버튼 클릭시
-		$('.delete').click(function(){
-			$.ajax({
-				url:"/admin/csDelete",
-				data:{"cs_no" : $('input[name=cs_no]').val()},
-				dataType:"json",
-				success:function(data){
-					console.log(data);
-					console.log("성공");
-					location.replace("/admin/FAQList");
-				},
-				error:function(){
-					console.log("에러");
-				}
-			});
 		});
-		
-		// 등록/해제 버튼 클릭시 
-		$('.csState').click(function(){
+		// 접수 버튼 클릭시 
+		$('.acState').click(function(){
 			var state = $(this).text();
 			console.log("state : "+state);
 			
-			if(state == '등록'){
-				alert("등록");	
-				console.log($(this).val());				
+			if(state == '접수'){
 				$.ajax({
-					url:"/admin/csUpload",
-					data:{"cs_no" : $(this).val()},
+					url:"/admin/acHandling",
+					data:{"ac_no" : $('input[name=ac_no]').val()},
 					dataType:"json",
 					success:function(data){
 						console.log("성공결과 : "+data);
-						console.log("성공");
-						location.replace("/admin/FAQList");
+						alert("처리되었습니다.")
+						location.replace("/admin/acList");
 					},
 					error:function(){
 						console.log("에러");
 					}
-				});
-			}
-			
-			if(state == '해제'){
-				alert("해제");
-				console.log($(this).val());
-				$.ajax({
-					url:"/admin/csRemove",
-					data:{"cs_no":$(this).val()},
-					dataType:"json",
-					success:function(data){
-						console.log("성공결과 : "+data);
-						console.log("성공");
-						location.replace("/admin/FAQList");
-					},
-					error:function(){
-						console.log("에러");
-					}
-				});			
-			}
-		
-		}) // 등록/해제 버튼 클릭시
-		
-		
+				});// 접수버튼 클릭시 ajax
+			}// if
+		}) // 접수 버튼 클릭시
 	});//ready
 </script>
 

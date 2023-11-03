@@ -176,4 +176,32 @@
 		where rv_no=#{rv_no}
 	</update>
 	
+	<!-- 신고관리 - 신고리스트 -->
+	<select id="acList" resultType="AcVO">
+		select * from ac 
+		order by ac_no, ac_regdate 
+		limit #{pageStart},#{pageSize}
+	</select>
+	
+	<!-- 신고관리 - 신고 총 개수 조회 -->
+	<select id="acCount" resultType="int">
+		<![CDATA[
+		select count(*) from cs 
+		where cs_no > 0
+		]]>
+	</select>
+	
+	<!-- 신고관리 - 신고 1개 글 조회 -->
+	<select id="acInfo" resultType="AcVO">
+		select * from ac 
+		where ac_no=#{ac_no}
+	</select>
+	
+	<!-- 신고관리 - 접수 처리 -->
+	<update id="acHandling">
+		update ac set ac_state=1
+		where ac_no=#{ac_no}
+	</update>
+	
+	
 </mapper>	

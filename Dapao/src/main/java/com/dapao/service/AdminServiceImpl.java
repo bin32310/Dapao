@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.dapao.domain.AcVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
@@ -22,7 +23,6 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Inject
 	private AdminDAO adao;
-
 	
 	@Override
 	public UserVO userInfo(String us_id) throws Exception {
@@ -184,5 +184,30 @@ public class AdminServiceImpl implements AdminService{
 		logger.debug("service : csDelete(Integer cs_no) 호출");
 		return adao.csDelete(cs_no);
 	}
-
+	
+	@Override
+	public List<AcVO> acList(Criteria cri) throws Exception {
+		logger.debug("service : acList(Criteria cri) 호출");
+		return adao.acList(cri);
+	}
+	
+	@Override
+	public int acCount(Integer ac_no) throws Exception {
+		logger.debug("service : acCount(Integer ac_no) 호출");
+		return adao.acCount(ac_no);
+	}
+	
+	@Override
+	public AcVO acInfo(Integer ac_no) throws Exception {
+		logger.debug("service : acInfo(Integer ac_no) 호출");
+		return adao.acInfo(ac_no);
+	}
+	
+	// 신고관리 - 접수 처리
+	@Override
+	public int acHandling(Integer ac_no) throws Exception {
+		logger.debug("service : acHandling(Integer ac_no) 호출");
+		return adao.acHandling(ac_no);
+	}
+	
 }

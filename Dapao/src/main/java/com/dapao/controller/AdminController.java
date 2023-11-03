@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dapao.domain.AcVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
@@ -326,7 +327,51 @@ public class AdminController {
 		return aService.reviewDelete(rv_no);
 	}
 	
-	// 신고관리 - 신고서 작성
+	// 신고관리 - 신고 리스트
+	@RequestMapping("/acList")
+	public void acList(Criteria cri, Model model, Integer ac_no,Integer ac_item) throws Exception{
+		logger.debug("acList()");
+		// 페이징 처리( 페이지 블럭 처리 객체 )
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(aService.acCount(ac_no));
+
+		// 페이징처리 정보도 뷰페이지로 전달
+		logger.debug("pageVO : " + pageVO);
+		model.addAttribute("pageVO", pageVO);
+
+		// 페이지 이동시 받아온 페이지 번호
+		if (cri.getPage() > pageVO.getEndPage()) {
+			// 잘못된 페이지 정보 입력
+			cri.setPage(pageVO.getEndPage());
+		}
+
+		List<AcVO> acList = aService.acList(cri);
+		logger.debug("" + acList);
+
+		model.addAttribute("vo", acList);
+		
+	}
+	
+	// 신고관리 - 신고 1개 글 정보
+	@RequestMapping("/acInfo")
+	@ResponseBody // ajax(JSON 데이터 넘겨줄때 사용)
+	public AcVO acInfo(@RequestParam("ac_no") Integer ac_no) throws Exception {
+		logger.debug("acInfo() 호출");
+		logger.debug("ac_no@@" + ac_no);
+		return aService.acInfo(ac_no);
+	}
+	
+	// 신고관리 - 접수 처리하기
+	@RequestMapping("/acHandling")
+	@ResponseBody
+	public int acHandling(@RequestParam("ac_no") Integer ac_no) throws Exception{
+		logger.debug("acHandling() 호출");
+		return aService.acHandling(ac_no);
+	}
+	
+	
+	// 신고관리 - 신고서 작성 폼
 	// http://localhost:8088/admin/acWriteForm
 	@RequestMapping("/acWriteForm")
 	public void acWriteForm(String own_id, String us_id) throws Exception{
@@ -334,6 +379,15 @@ public class AdminController {
 		own_id = "1";
 		us_id = "2";
 	}
+	
+	// 신고관리 - 신고서 작성
+	public int acList(AcVO vo) throws Exception{
+		logger.debug("acWrite() 호출");
+		logger.debug("vo",vo);
+		return 0;
+	}
+	
+	
 	
 
 }
