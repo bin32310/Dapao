@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 		return resultVO;
 	}
 
-	// 유저 정보 조회
+	// 회원 정보 조회
 	@Override
 	public UserVO userInfo(String us_id) {
 		logger.debug("userInfo(String id)  호출");   //4번
@@ -104,12 +104,32 @@ public class UserServiceImpl implements UserService {
 		UserVO resultVO =	udao.userCheckId(us_id); 
 		return resultVO;
 	}
+	
+	
+	
+	
+	// 마이페이지 내 판매글 조회
+	@Override
+	public List<ItemVO> userSellList(String us_id) {
+logger.debug("sellList(String us_id) 호출");
+		
+		return udao.userSellList(us_id);
+		
+	}
+	
+	
+	
+	
+	
 
+	
 //	@Override
 //	public String userInfoCheck(String us_id) throws Exception {
 //		logger.debug("userInfoCheck(String us_id) 호출");
 //		return null;
 //	}
  
-
+	
+	
+	
 }

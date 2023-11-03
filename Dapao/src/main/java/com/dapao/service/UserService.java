@@ -49,7 +49,8 @@ public interface UserService {
     // 회원정보 삭제
     public int userDelete(UserVO deleteVO);
 
-
+    // 마이페이지 내판매글 조회
+    public List<ItemVO> userSellList(String us_id);
 	
 	
 	

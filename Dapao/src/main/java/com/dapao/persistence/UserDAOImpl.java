@@ -109,7 +109,7 @@ public class UserDAOImpl implements UserDAO {
 	
 
 
-
+	// 회원 정보 조회(마이페이지)
 	@Override
 	public UserVO userInfo(String us_id) {
 		System.out.println(" DAOImpl : getUser(String sessionUserid) 호출 ");
@@ -145,6 +145,14 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.selectOne(NAMESPACE + ".userCheckId",us_id);
 	}
 
+
+
+	// 마이페이지 내 판매글 
+		@Override
+		public List<ItemVO> userSellList(String us_id) {
+			
+			return sqlSession.selectList(NAMESPACE+".userSellList");
+		}
 
 
 

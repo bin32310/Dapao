@@ -56,7 +56,9 @@ public String getTime();
 	// 회원가입 시 아이디 중복체크
 	public UserVO userCheckId(String us_id);
 	
-
+	//마이페이지 내 판매글 불러오기
+	public List<ItemVO> userSellList(String us_id);
+	   
 
 	
 }

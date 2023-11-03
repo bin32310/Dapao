@@ -200,7 +200,7 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="../user/userInfo" class="btn btn-default btn-flat">마이페이지</a>
+                      <a href="../mypage/userInfo" class="btn btn-default btn-flat">마이페이지</a>
                     </div>
                     <div class="pull-right">
                       <a href="../user/userLogout" class="btn btn-default btn-flat">로그아웃</a>
@@ -222,7 +222,7 @@
               <img src="${pageContext.request.contextPath }/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-            <a href="../user/userInfo"><p>${us_nickname }( ${us_id } )</p></a>
+            <a href="../mypage/userInfo"><p>${us_nickname }( ${us_id } )</p></a>
 
               <a href="../item/coinCharge">대나무 페이 ${us_coin }원</a>
             </div>

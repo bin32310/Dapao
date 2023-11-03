@@ -1,6 +1,7 @@
 package com.dapao.controller;
 
 import java.io.PrintWriter;
+import java.security.Provider.Service;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.dapao.domain.ItemVO;
 import com.dapao.domain.UserVO;
 import com.dapao.service.UserService;
+import com.mysql.cj.Session;
 
 /**
  *    1. 공통URI (~.me 대신 폴더명) / 각 기능별 URI 설정
@@ -40,30 +43,30 @@ public class MypageController {
       
       //http://localhost:8088/user/userMain
       
-      //http://localhost:8088/user/userinfo
+      //http://localhost:8088/mypage/userInfo
       
    
       
   
    
          
-         
+      //http://localhost:8088/mypage/userInfo
       // 회원정보조회
       // 세션에서 아이디 정보 가져옴
       @RequestMapping(value = "/userInfo",method = RequestMethod.GET)
-      public String infoGET(HttpSession session, Model model) {
+      public String infoGET(HttpSession session, Model model)throws Exception {
          logger.debug(" userInfoGET() 호출 ");
          
          // 사용자의 아이디정보 => 세션에 있는 정보 가져오기  1.infoGET( HttpSession session)
          String us_id = (String) session.getAttribute("us_id"); // 2.
-         
+         logger.debug(" us_id : " +us_id);
          
          // 회원정보 조회 
          UserVO resultVO =   uService.userInfo(us_id);
-
+         logger.debug("resultVO"+resultVO);
          model.addAttribute("infoVO", resultVO);
          
-         return "/user/userInfo";
+         return "/mypage/userInfo";
       }
          
          
@@ -81,7 +84,7 @@ public class MypageController {
          // model.addAttribute(uService.userInfo(id));
          // => 이름 : userVO (리턴타입의 클래스 첫글자를 소문자로 변경)
    
-         return "/user/userUpdate";
+         return "/mypage/userInfoUpdate";
       }
          
          
@@ -100,7 +103,7 @@ public class MypageController {
          // 메인페이지로 이동
          
          
-         return "redirect:/user/userInfo";
+         return "redirect:/mypage/userInfo";
       }
       
       
@@ -112,7 +115,7 @@ public class MypageController {
          
          
          
-         return "/user/userDelete";
+         return "/mypage/userDelete";
       }
       
       
@@ -133,15 +136,33 @@ public class MypageController {
             return "redirect:/user/userMain";
          }
          // 삭제 실패(result == 0)
-         return "redirect:/user/userDelete";
+         return "redirect:/mypage/userDelete";
       }
       
-   
+      
+      // 1102 추가
+      //http://localhost:8088/mypage/userSellList
+      // 마이페이지 내 판매글 보기
+      @RequestMapping(value = "/userSellList", method = RequestMethod.GET)
+      public void getList(HttpSession session, Model model) throws Exception{
+		
+    		// 세션 아이디 확인
+			String us_id = (String)session.getAttribute("us_id");
+			logger.debug(" us_id : " +us_id);
+			
+			  List<ItemVO> resultVO =   uService.userSellList(us_id);
+			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@resultVO"+resultVO);
+		//	model.addAttribute("", );
+			model.addAttribute("userSellList", resultVO);
+    	  
+    	  /*
+		 * List<ItemVO> userSellList = null; userSellList =
+		 * uService.userSellList(us_id); model.addAttribute("userSellList",
+		 * userSellList);
+		 */
       
       
-      
-      
-      
+      }
       
       
       
