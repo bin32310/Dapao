@@ -21,7 +21,7 @@
 	
  --%>
 
-${resultVO }
+${userSellList }
 <%-- <table>
 		<thead>
 			<tr>

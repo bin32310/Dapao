@@ -152,7 +152,7 @@ public class MypageController {
 			
 			  List<ItemVO> resultVO =   uService.userSellList(us_id);
 			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@resultVO"+resultVO);
-		//	model.addAttribute("", );
+	
 			model.addAttribute("userSellList", resultVO);
     	  
     	  /*

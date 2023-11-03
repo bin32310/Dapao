@@ -20,6 +20,7 @@ import com.dapao.domain.UserVO;
 
 
 @Repository
+
 public class UserDAOImpl implements UserDAO {
 	
 	
@@ -79,7 +80,7 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.selectList(NAMESPACE + ".loveList",us_id);
 	}
 	
-
+	// 회원가입
 	@Override
 	public void userJoin(UserVO joinVO) {
 		// 디비연결-O		
@@ -94,6 +95,8 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 
+	
+	// 회원 로그인
 	@Override
 	public UserVO userLogin(UserVO loginVO) {
 		System.out.println(" DAOImpl : userLogin() 실행 ");
@@ -117,7 +120,8 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.selectOne(NAMESPACE + ".userInfo",us_id);
 	}
 
-
+	
+	// 회원정보 수정
 	@Override
 	public void userUpdate(UserVO updateVO) {
 		System.out.println(" DAOImpl : userUpdate(UserVO updateVO) 호출");
@@ -130,6 +134,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 
+	// 회원 탈퇴
 	@Override
 	public int userDelete(UserVO delVO) {
 		System.out.println(" DAOImpl : 탈퇴 ");
@@ -139,19 +144,21 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.delete(NAMESPACE + ".userDelete",delVO);
 	}
 	
-	@Override
-	public UserVO userCheckId(String us_id) {
-		System.out.println(" DAOImpl : getUser(String sessionus_id) 호출 ");
-		return sqlSession.selectOne(NAMESPACE + ".userCheckId",us_id);
-	}
+	
+	
+	// 아이디 중복확인
+	
+	  @Override public UserVO userCheckId(String us_id) {
+	  System.out.println(" DAOImpl : getUser(String sessionus_id) 호출 "); return
+	  sqlSession.selectOne(NAMESPACE + ".userCheckId",us_id); }
+	 
+	 
 
-
-
-	// 마이페이지 내 판매글 
+	// 마이페이지 내 판매글 조회
 		@Override
 		public List<ItemVO> userSellList(String us_id) {
 			
-			return sqlSession.selectList(NAMESPACE+".userSellList");
+			return sqlSession.selectList(NAMESPACE+".userSellList",us_id);
 		}
 
 
