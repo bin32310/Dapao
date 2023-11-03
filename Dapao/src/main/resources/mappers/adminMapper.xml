@@ -176,4 +176,40 @@
 		where rv_no=#{rv_no}
 	</update>
 	
+	<!-- 회원상품관리 - 글 총 개수 조회 -->
+	<select id="itemCount" resultType="int">
+		select count(*) from item
+	</select>	
+	
+	<!-- 회원상품관리 - 리스트조회 -->
+	<select id="itemList" resultType="ItemVO">
+		select * from item 
+		order by it_no, it_regdate 
+		limit #{pageStart},#{pageSize}
+	</select>
+	
+	<!-- 회원상품관리 - 상품삭제(글내리기) -->
+	<update id="itemDelete">
+		update item set it_state=2, it_outdate=now() where it_no=#{it_no}
+	</update>
+	
+	<!-- 사업자상품관리 - 글 총 개수 조회 -->
+	<select id="prodCount" resultType="int">
+		select count(*) from product
+	</select>	
+	
+	<!-- 회원상품관리 - 리스트조회 -->
+	<select id="prodList" resultType="ProdVO">
+		select * from product  
+		order by prod_no 
+		limit #{pageStart},#{pageSize}
+	</select>
+	
+	<!-- 회원상품관리 - 상품삭제(글내리기) -->
+	<update id="prodDelete">
+		update product set prod_state=2, prod_outdate=now() where prod_no=#{prod_no}
+	</update>
+	
+	
+	
 </mapper>	

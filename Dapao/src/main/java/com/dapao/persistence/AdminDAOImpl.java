@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
+import com.dapao.domain.ItemVO;
+import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 
@@ -190,5 +192,41 @@ public class AdminDAOImpl implements AdminDAO {
 		logger.debug("reviewDelete(Integer rv_no) 호출");
 		return sqlSession.update(NAMESPACE + ".reviewDelete", rv_no);
 	}
-
+	
+	@Override
+	public int itemCount() throws Exception {
+		logger.debug("itemCount() 호출");
+		return sqlSession.selectOne(NAMESPACE+".itemCount");
+	}
+	
+	@Override
+	public List<ItemVO> itemList(Criteria cri) throws Exception {
+		logger.debug("itemList(Criteria cri) 호출");
+		return sqlSession.selectList(NAMESPACE+".itemList", cri);
+	}
+	
+	@Override
+	public int itemDelete(Integer it_no) throws Exception {
+		logger.debug("itemDelete(Integer it_no)");
+		return sqlSession.update(NAMESPACE+".itemDelete", it_no);
+	}
+	
+	@Override
+	public int prodCount() throws Exception {
+		logger.debug("prodCount() 호출");
+		return sqlSession.selectOne(NAMESPACE+".prodCount");
+	}
+	
+	@Override
+	public List<ProdVO> prodList(Criteria cri) throws Exception {
+		logger.debug("prodList(Criteria cri) 호출");
+		return sqlSession.selectList(NAMESPACE+".prodList", cri);
+	}
+	
+	@Override
+	public int prodDelete(Integer prod_no) throws Exception {
+		logger.debug("prodDelete(Integer prod_no)");
+		return sqlSession.update(NAMESPACE+".prodDelete", prod_no);
+	}
+	
 }

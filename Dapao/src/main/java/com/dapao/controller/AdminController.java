@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
+import com.dapao.domain.ItemVO;
 import com.dapao.domain.PageVO;
+import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 import com.dapao.service.AdminService;
@@ -325,5 +327,81 @@ public class AdminController {
 		logger.debug("reviewDelete()");
 		return aService.reviewDelete(rv_no);
 	}
+	
+	
+	// 회원상품관리리스트
+	// http://localhost:8088/admin/itemList
+	@RequestMapping(value="/itemList")
+	public void itemList(Criteria cri,Model model) throws Exception{
+		// 상품리스트정보 저장
+		// 페이징 처리( 페이지 블럭 처리 객체 )
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(aService.itemCount());
 
+		// 페이징처리 정보도 뷰페이지로 전달
+		logger.debug("pageVO : " + pageVO);
+		model.addAttribute("pageVO", pageVO);
+
+		// 페이지 이동시 받아온 페이지 번호
+		if (cri.getPage() > pageVO.getEndPage()) {
+			// 잘못된 페이지 정보 입력
+			cri.setPage(pageVO.getEndPage());
+		}
+
+		List<ItemVO> itemList = aService.itemList(cri);
+
+		model.addAttribute("itemList", itemList);		
+	}
+	
+	// 회원상품 삭제처리
+	@ResponseBody
+	@RequestMapping(value="/itemDelete")
+	public int itemDelete(@RequestParam("it_no") Integer it_no) throws Exception{
+		// 회원상품테이블 상태변경(update)	
+		return aService.itemDelete(it_no);
+	}
+	
+	// 사업자상품관리리스트
+	// http://localhost:8088/admin/prodList?
+	@RequestMapping(value="/prodList")
+	public void prodList(Criteria cri,Model model) throws Exception{
+		// 상품리스트정보 저장
+		// 페이징 처리( 페이지 블럭 처리 객체 )
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(aService.prodCount());
+
+		// 페이징처리 정보도 뷰페이지로 전달
+		logger.debug("pageVO : " + pageVO);
+		model.addAttribute("pageVO", pageVO);
+
+		// 페이지 이동시 받아온 페이지 번호
+		if (cri.getPage() > pageVO.getEndPage()) {
+			// 잘못된 페이지 정보 입력
+			cri.setPage(pageVO.getEndPage());
+		}
+
+		List<ProdVO> prodList = aService.prodList(cri);
+
+		model.addAttribute("prodList", prodList);		
+	}
+
+	// 사업자상품 삭제처리
+	@ResponseBody
+	@RequestMapping(value="/prodDelete")
+	public int prodDelete(@RequestParam("prod_no") Integer prod_no) throws Exception{
+		// 회원상품테이블 상태변경(update)	
+		return aService.prodDelete(prod_no);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

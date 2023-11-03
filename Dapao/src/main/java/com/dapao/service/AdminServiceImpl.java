@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
+import com.dapao.domain.ItemVO;
+import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 import com.dapao.persistence.AdminDAO;
@@ -184,5 +186,40 @@ public class AdminServiceImpl implements AdminService{
 		logger.debug("service : csDelete(Integer cs_no) 호출");
 		return adao.csDelete(cs_no);
 	}
-
+	
+	@Override
+	public int itemCount() throws Exception {
+		logger.debug("service : itemCount() 호출");
+		return adao.itemCount();
+	}
+	
+	@Override
+	public List<ItemVO> itemList(Criteria cri) throws Exception {
+		logger.debug("service : itemList(Criteria cri) 호출");
+		return adao.itemList(cri);
+	}
+	
+	@Override
+	public int itemDelete(Integer it_no) throws Exception {
+		logger.debug("itemDelete(Integer it_no) 호출");
+		return adao.itemDelete(it_no);
+	}
+	
+	@Override
+	public int prodCount() throws Exception {
+		logger.debug("service : prodCount() 호출");
+		return adao.prodCount();
+	}
+	
+	@Override
+	public List<ProdVO> prodList(Criteria cri) throws Exception {
+		logger.debug("service : prodList(Criteria cri) 호출");
+		return adao.prodList(cri);
+	}
+	
+	@Override
+	public int prodDelete(Integer prod_no) throws Exception {
+		logger.debug("service : prodDelete(Integer prod_no) 호출");
+		return adao.prodDelete(prod_no);
+	}
 }

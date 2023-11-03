@@ -5,6 +5,8 @@ import java.util.List;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
+import com.dapao.domain.ItemVO;
+import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 
@@ -92,5 +94,24 @@ public interface AdminService {
 	
 	// 리뷰관리 - 리뷰 삭제
 	public int reviewDelete(Integer rv_no) throws Exception;
+	
+	// 회원상품관리 - 총 상품 글개수 조회
+	public int itemCount() throws Exception;
+	
+	// 회원상품관리  - 회원상품 목록 리스트
+	public List<ItemVO> itemList(Criteria cri) throws Exception;
+	
+	// 회원상품관리 - 상품삭제(글내리기)
+	public int itemDelete(Integer it_no) throws Exception;
+	
+	// 사업자상품관리 - 총 상품 글개수 조회
+	public int prodCount() throws Exception;
+	
+	// 사업자상품관리 - 사업자상품 목록 리스트
+	public List<ProdVO> prodList(Criteria cri) throws Exception;
+	
+	// 사업자상품관리 - 상품삭제(글내리기)
+	public int prodDelete(Integer prod_no) throws Exception;
 
+	
 }
