@@ -94,12 +94,18 @@ public class ItemController {
 		logger.debug("연결된 뷰페이지(views/item/itemDetail.jsp)를 출력");
 		
 		//return "redirect:/mypage/userSell";
-		return "redirect:/item/itemDetail?it_no="+it_no;
+
+		return "redirect:/itemDetail?it_no="+it_no;
 		
 	}
 
-	
-	
+	// http://localhost:8088/item/uploadAjax
+	// 파일 업로드 
+	@RequestMapping(value = "/uploadAjax", method = RequestMethod.GET)
+	public void uploadAjaxGET(HttpSession session, ItemVO itemVO ) throws Exception {
+		logger.debug("uploadAjaxGET() 호출");
+		
+	}
 	
 	// http://localhost:8088/item/it0emDetail
 	// 판매글상세 GET - 글 정보를 입력
@@ -186,7 +192,7 @@ public class ItemController {
 		logger.debug("@@코인 총금액 확인 : " + total_price);
 		
 		// 서비스 -> DAO 호출 : 판매글 조회
-		//ItemVO itemVO = iService.itemDetail(it_bno);
+		//ItemVO itemVO = iService.itemDetail(it_no);
 		//logger.debug("@@판매글 정보 : " + itemVO);
 		
 		// 연결된 뷰페이지에 출력 => 컨트롤러의 정보를 view 페이지로 전달
@@ -198,9 +204,6 @@ public class ItemController {
 		return "redirect:/item/url";
 		
 	}
-	
-
-
 	
 	
 }
