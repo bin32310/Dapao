@@ -67,33 +67,34 @@ public class ItemController {
 	
 	// 판매글 작성POST - 작성한 판매글 등록
 	@RequestMapping(value = "/itemWrite", method = RequestMethod.POST)
-	public String itemWritePOST(HttpSession session, ItemVO itemVO ) throws Exception {
+	public String itemWritePOST(HttpSession session, ItemVO itemVO) throws Exception {
 		logger.debug("itemWritePOST() 호출");
-		
+		int it_no=0;
 		// 세션 - 아이디
 		String us_id = (String) session.getAttribute("us_id");
+		itemVO.setUs_id(us_id);
+		logger.debug("itemVO : " + itemVO);
 		
 		// 서비스 -> DAO 호출 : 판매글  작성 등록
 		int result = iService.itemWrite(itemVO);
 		if(result == 1) { // 성공적으로 글 등록시
 			
-			int it_no = iService.itemWriteCheck(us_id);
+			it_no = iService.itemWriteCheck(us_id);
 			
 		}
-		int it_no = itemVO.getIt_no();
-		itemVO.setUs_id(us_id);
+		
 		logger.debug("@@판매글 정보 : " + itemVO);
 		
-		int result1 = iService.itemWrite(itemVO);
-		
-		if(result1 != 1) {
+		if(result != 1) {
 			logger.debug("판매글 등록 실패");
 			return "/item/userMain";
 		}
 		
 		logger.debug("판매글 등록 성공");
 		logger.debug("연결된 뷰페이지(views/item/itemDetail.jsp)를 출력");
-		return "/item/itemDetail?it_no="+it_no;
+		
+		//return "redirect:/mypage/userSell";
+		return "redirect:/itemDetail?it_no="+it_no;
 		
 	}
 
@@ -104,42 +105,6 @@ public class ItemController {
 		logger.debug("uploadAjaxGET() 호출");
 		
 	}
-	// 파일 업로드 
-	@RequestMapping(value = "/uploadAjaxAction", method = RequestMethod.POST)
-	@ResponseBody
-	public void uploadAjaxActionPOST(MultipartFile[] uploadFile ) throws Exception {
-		logger.debug("uploadAjaxActionPOST() 호출");
-		
-		logger.debug("update ajax post.....");
-		
-		String uploadFolder = "C:\\upload";
-		
-		for(MultipartFile multipartFile : uploadFile) {
-			
-			logger.debug("-----------------------------------------------");
-			logger.debug("Upload File Name : " + multipartFile.getOriginalFilename());
-			logger.debug("Upload File Size : " + multipartFile.getSize());
-			
-			String uploadFileName = multipartFile.getOriginalFilename();
-			
-			// IE has file path
-			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-			logger.debug("only file name : " + uploadFileName);
-			
-			File saveFile = new File(uploadFolder, uploadFileName);
-			
-			try {
-				multipartFile.transferTo(saveFile);
-			}catch (Exception e) {
-				logger.debug(e.getMessage());
-			}// catch
-			
-		}// for
-		
-	}
-	
-	
-	
 	
 	// http://localhost:8088/item/it0emDetail
 	// 판매글상세 GET - 글 정보를 입력
@@ -226,7 +191,7 @@ public class ItemController {
 		logger.debug("@@코인 총금액 확인 : " + total_price);
 		
 		// 서비스 -> DAO 호출 : 판매글 조회
-		//ItemVO itemVO = iService.itemDetail(it_bno);
+		//ItemVO itemVO = iService.itemDetail(it_no);
 		//logger.debug("@@판매글 정보 : " + itemVO);
 		
 		// 연결된 뷰페이지에 출력 => 컨트롤러의 정보를 view 페이지로 전달
