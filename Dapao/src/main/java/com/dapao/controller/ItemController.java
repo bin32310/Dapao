@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.TotalVO;
 import com.dapao.domain.UserVO;
-import com.dapao.service.ItemService;
+import com.dapao.service.ItemServiceImpl;
 import com.dapao.service.UserService;
 
 //http://localhost:8088/user/userMain
@@ -38,7 +38,7 @@ public class ItemController {
 	private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
 	
 	@Inject
-	private ItemService iService;
+	private ItemServiceImpl iService;
 	
 	@Inject
 	private UserService uService;
@@ -67,77 +67,37 @@ public class ItemController {
 	
 	// 판매글 작성POST - 작성한 판매글 등록
 	@RequestMapping(value = "/itemWrite", method = RequestMethod.POST)
-	public String itemWritePOST(HttpSession session, ItemVO itemVO ) throws Exception {
+	public String itemWritePOST(HttpSession session, ItemVO itemVO) throws Exception {
 		logger.debug("itemWritePOST() 호출");
-		
+		int it_no=0;
 		// 세션 - 아이디
 		String us_id = (String) session.getAttribute("us_id");
+		itemVO.setUs_id(us_id);
+		logger.debug("itemVO : " + itemVO);
 		
 		// 서비스 -> DAO 호출 : 판매글  작성 등록
 		int result = iService.itemWrite(itemVO);
 		if(result == 1) { // 성공적으로 글 등록시
 			
-			int it_no = iService.itemWriteCheck(us_id);
+			it_no = iService.itemWriteCheck(us_id);
 			
 		}
-		int it_no = itemVO.getIt_no();
-		itemVO.setUs_id(us_id);
+		
 		logger.debug("@@판매글 정보 : " + itemVO);
 		
-		int result1 = iService.itemWrite(itemVO);
-		
-		if(result1 != 1) {
+		if(result != 1) {
 			logger.debug("판매글 등록 실패");
-			return "/item/userMain";
+			return "redirect:/user/userMain";
 		}
 		
 		logger.debug("판매글 등록 성공");
 		logger.debug("연결된 뷰페이지(views/item/itemDetail.jsp)를 출력");
-		return "/item/itemDetail?it_no="+it_no;
+		
+		//return "redirect:/mypage/userSell";
+		return "redirect:/item/itemDetail?it_no="+it_no;
 		
 	}
 
-	// http://localhost:8088/item/uploadAjax
-	// 파일 업로드 
-	@RequestMapping(value = "/uploadAjax", method = RequestMethod.GET)
-	public void uploadAjaxGET(HttpSession session, ItemVO itemVO ) throws Exception {
-		logger.debug("uploadAjaxGET() 호출");
-		
-	}
-	// 파일 업로드 
-	@RequestMapping(value = "/uploadAjaxAction", method = RequestMethod.POST)
-	@ResponseBody
-	public void uploadAjaxActionPOST(MultipartFile[] uploadFile ) throws Exception {
-		logger.debug("uploadAjaxActionPOST() 호출");
-		
-		logger.debug("update ajax post.....");
-		
-		String uploadFolder = "C:\\upload";
-		
-		for(MultipartFile multipartFile : uploadFile) {
-			
-			logger.debug("-----------------------------------------------");
-			logger.debug("Upload File Name : " + multipartFile.getOriginalFilename());
-			logger.debug("Upload File Size : " + multipartFile.getSize());
-			
-			String uploadFileName = multipartFile.getOriginalFilename();
-			
-			// IE has file path
-			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-			logger.debug("only file name : " + uploadFileName);
-			
-			File saveFile = new File(uploadFolder, uploadFileName);
-			
-			try {
-				multipartFile.transferTo(saveFile);
-			}catch (Exception e) {
-				logger.debug(e.getMessage());
-			}// catch
-			
-		}// for
-		
-	}
-	
 	
 	
 	
