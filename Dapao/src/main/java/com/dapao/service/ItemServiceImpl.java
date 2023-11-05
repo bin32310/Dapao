@@ -10,22 +10,21 @@ import org.springframework.stereotype.Service;
 
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.TotalVO;
-import com.dapao.persistence.ItemDAO;
+import com.dapao.persistence.ItemDAOImpl;
 
 
-@Service
-public class ItemServiceImpl implements ItemService {
+@Service(value = "itemService")
+public class ItemServiceImpl {
 	
 	
 
 	private static final Logger logger = LoggerFactory.getLogger(ItemServiceImpl.class);
 	
 	@Inject
-	private ItemDAO idao;
+	private ItemDAOImpl idao;
 
 	
 	// 판매글 등록
-	@Override
 	public int itemWrite(ItemVO itemVO) {
 		logger.debug("itemWrite(ItemVO itemVO) 호출 ");
 		
@@ -33,7 +32,6 @@ public class ItemServiceImpl implements ItemService {
 	}
 	
 	// 판매글 등록 확인
-	@Override
 	public int itemWriteCheck(String us_id) {
 		logger.debug("itemWriteCheck(String us_id) 호출 ");
 		
@@ -43,7 +41,6 @@ public class ItemServiceImpl implements ItemService {
 
 
 	// 판매글 상세 
-	@Override
 	public TotalVO itemDetail(Integer it_no) {
 		
 		logger.debug("itemDetail(Integer it_no) 호출 ");
@@ -54,14 +51,12 @@ public class ItemServiceImpl implements ItemService {
 	}
 	
 	// 판매자 다른 물품
-	@Override
 	public List<ItemVO> sellerItem(TotalVO seller) {
 		logger.debug("sellerItem(TotalVO seller) 호출 ");
 		return idao.sellerItem(seller);
 	}
 
 	// 비슷한 물건 조회(같은 카테고리)
-	@Override
 	public List<ItemVO> sameCate(TotalVO item) {
 
 		logger.debug("sameCate(String it_cate) 호출 ");

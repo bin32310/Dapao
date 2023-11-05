@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.TotalVO;
 
-@Repository
-public class ItemDAOImpl implements ItemDAO{
+@Repository(value = "itemDAO")
+public class ItemDAOImpl{
 
 	private static final Logger logger = LoggerFactory.getLogger(ItemDAOImpl.class);
 	
@@ -31,7 +31,6 @@ public class ItemDAOImpl implements ItemDAO{
 	
 	
 	// 판매글 작성
-	@Override
 	public int itemWrite(ItemVO itemVO) {
 		logger.debug("DAOImpl : itemWrite(ItemVO itemVO) 호출");
 		
@@ -39,7 +38,6 @@ public class ItemDAOImpl implements ItemDAO{
 	}
 	
 	//판매글 작성 후 확인
-	@Override
 	public int itemWriteCheck(String us_id) {
 		logger.debug("DAOImpl : itemWriteCheck(String us_id) 호출");
 		
@@ -47,7 +45,6 @@ public class ItemDAOImpl implements ItemDAO{
 	}
 	
 	// 판매글 조회 
-	@Override
 	public TotalVO itemDetail(Integer it_no) {
 		System.out.println("DAOImpl : itemDetail(Integer it_no) 호출");
 		return sqlSession.selectOne(NAMESPACE + ".itemDetail", it_no);
@@ -55,14 +52,12 @@ public class ItemDAOImpl implements ItemDAO{
 	}
 	
 	// 판매자 다른 물품
-	@Override
 	public List<ItemVO> sellerItem(TotalVO seller) {
 		System.out.println("DAOImpl : sellerItem(ItemVO seller) 호출");
 		return sqlSession.selectList(NAMESPACE + ".sellerItem", seller);
 	}
 
 	// 비슷한 물품 조회(같은 카테고리)
-	@Override
 	public List<ItemVO> sameCate(TotalVO item) {
 		System.out.println("DAOImpl : sameCate(String it_cate) 호출");
 		return sqlSession.selectList(NAMESPACE + ".sameCate", item);

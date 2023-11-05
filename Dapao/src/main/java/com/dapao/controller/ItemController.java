@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.TotalVO;
 import com.dapao.domain.UserVO;
-import com.dapao.service.ItemService;
+import com.dapao.service.ItemServiceImpl;
 import com.dapao.service.UserService;
 
 //http://localhost:8088/user/userMain
@@ -38,7 +38,7 @@ public class ItemController {
 	private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
 	
 	@Inject
-	private ItemService iService;
+	private ItemServiceImpl iService;
 	
 	@Inject
 	private UserService uService;
@@ -87,13 +87,14 @@ public class ItemController {
 		
 		if(result != 1) {
 			logger.debug("판매글 등록 실패");
-			return "/item/userMain";
+			return "redirect:/user/userMain";
 		}
 		
 		logger.debug("판매글 등록 성공");
 		logger.debug("연결된 뷰페이지(views/item/itemDetail.jsp)를 출력");
 		
 		//return "redirect:/mypage/userSell";
+
 		return "redirect:/itemDetail?it_no="+it_no;
 		
 	}
@@ -203,9 +204,6 @@ public class ItemController {
 		return "redirect:/item/url";
 		
 	}
-	
-
-
 	
 	
 }
