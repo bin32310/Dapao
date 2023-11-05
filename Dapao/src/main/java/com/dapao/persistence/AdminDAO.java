@@ -105,4 +105,16 @@ public interface AdminDAO {
 	// 신고관리 - 접수 처리
 	public int acHandling(Integer ac_no) throws Exception;
 	
+	// 신고관리 - 신고 처리상태 업뎃(user 조회)
+	public String acResultSelectUserId (AcVO vo) throws Exception;
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner 조회)
+	public String acResultSelectOwnerId (AcVO vo) throws Exception;
+	
+	// 신고관리 - 신고 처리상태 업뎃(user)
+	public int acResultUserUpdate(AcVO acVo,UserVO userVo) throws Exception;
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner)
+	public int acResultOwnerUpdate(AcVO acVo,EntVO entVo) throws Exception;
+	
 }

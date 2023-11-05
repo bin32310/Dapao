@@ -1,6 +1,8 @@
 package com.dapao.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
@@ -216,6 +218,40 @@ public class AdminDAOImpl implements AdminDAO {
 	public int acHandling(Integer ac_no) throws Exception {
 		logger.debug("DAO : acHandling(Integer ac_no) 호출");
 		return sqlSession.update(NAMESPACE+".acHandling", ac_no);
+	}
+
+	// 신고관리 - 신고 처리상태 업뎃(user 조회)
+	@Override
+	public String acResultSelectUserId(AcVO vo) throws Exception {
+		logger.debug("DAO : acResultSelectUserId(AcVO vo) 호출");
+		return sqlSession.selectOne(NAMESPACE+".acResultSelectUserId", vo);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner 조회)
+	@Override
+	public String acResultSelectOwnerId(AcVO vo) throws Exception {
+		logger.debug("DAO : acResultSelectOwnerId(AcVO vo) 호출");
+		return sqlSession.selectOne(NAMESPACE+".acResultSelectOwnerId", vo);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(user)
+	@Override
+	public int acResultUserUpdate(AcVO acVo,UserVO userVo) throws Exception {
+		logger.debug("DAO : acResultUserUpdate(AcVO acVo,UserVO userVo) 호출");
+		Map<String, Object> vo = new HashMap<String, Object>();
+		vo.put("acVo", acVo);
+		vo.put("userVo", userVo);
+		return sqlSession.update(NAMESPACE+".acResultUserUpdate", vo);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner)
+	@Override
+	public int acResultOwnerUpdate(AcVO acVo,EntVO entVo) throws Exception {
+		logger.debug("DAO : acResultOwnerUpdate(AcVO acVo,EntVO entVo) 호출");
+		Map<String, Object> vo = new HashMap<String, Object>();
+		vo.put("acVo", acVo);
+		vo.put("entVo", entVo);
+		return sqlSession.update(NAMESPACE+".acResultOwnerUpdate", vo);
 	}
 	
 

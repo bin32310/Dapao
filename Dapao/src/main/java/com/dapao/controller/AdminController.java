@@ -1,6 +1,7 @@
 package com.dapao.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -370,6 +371,22 @@ public class AdminController {
 		return aService.acHandling(ac_no);
 	}
 	
+	// 신고관리 - 신고 처리상태 업뎃
+	@ResponseBody
+	@RequestMapping("/acResultUpdate")
+	public int acResultUserUpdate(AcVO acVo, EntVO entVo,UserVO userVo,Map<String, Object> vo) throws Exception {
+		logger.debug("acResultUpdate() 호출");
+		logger.debug("acVo1 : "+acVo);
+		logger.debug("voO : "+aService.acResultSelectOwnerId(acVo));
+		logger.debug("voU : "+aService.acResultSelectUserId(acVo));
+		if (aService.acResultSelectOwnerId(acVo) != null) {
+			return aService.acResultOwnerUpdate(acVo,entVo);
+		}
+		if(aService.acResultSelectUserId(acVo) != null) {
+			return aService.acResultUserUpdate(acVo,userVo);
+		}
+		return 0;
+	}
 	
 	// 신고관리 - 신고서 작성 폼
 	// http://localhost:8088/admin/acWriteForm
@@ -381,7 +398,7 @@ public class AdminController {
 	}
 	
 	// 신고관리 - 신고서 작성
-	public int acList(AcVO vo) throws Exception{
+	public int acWrite(AcVO vo) throws Exception{
 		logger.debug("acWrite() 호출");
 		logger.debug("vo",vo);
 		return 0;

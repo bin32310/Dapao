@@ -1,6 +1,8 @@
 package com.dapao.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -208,6 +210,40 @@ public class AdminServiceImpl implements AdminService{
 	public int acHandling(Integer ac_no) throws Exception {
 		logger.debug("service : acHandling(Integer ac_no) 호출");
 		return adao.acHandling(ac_no);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(user 조회)
+	@Override
+	public String acResultSelectUserId(AcVO vo) throws Exception {
+		logger.debug("service : acResultSelectUserId(AcVO vo) 호출");
+		return adao.acResultSelectUserId(vo);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner 조회)
+	@Override
+	public String acResultSelectOwnerId(AcVO vo) throws Exception {
+		logger.debug("service : acResultSelectOwnerId(AcVO vo) 호출");
+		return adao.acResultSelectOwnerId(vo);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(user)
+	@Override
+	public int acResultUserUpdate(AcVO acVo,UserVO userVo) throws Exception {
+		logger.debug("service : acResultUserUpdate(AcVO vo) 호출");
+//		Map<String, Object> vo = new HashMap<String, Object>();
+//		vo.put("acVo", acVo);
+//		vo.put("userVo", userVo);
+		return adao.acResultUserUpdate(acVo, userVo);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner)
+	@Override
+	public int acResultOwnerUpdate(AcVO acVo,EntVO entVo) throws Exception {
+		logger.debug("service : acResultOwnerUpdate(AcVO vo) 호출");
+		Map<String, Object> vo = new HashMap<String, Object>();
+		vo.put("acVo", acVo);
+		vo.put("entVo", entVo);
+		return adao.acResultOwnerUpdate(acVo, entVo);
 	}
 	
 }

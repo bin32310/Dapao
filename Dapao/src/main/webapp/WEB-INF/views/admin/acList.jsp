@@ -113,14 +113,14 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<select name="ac_result" class="btn btn-default" aria-label="Small select example">
-					<option selected>정지기간</option>
-					<option value="정지7일">정지7일</option>
-					<option value="정지30일">정지30일</option>
-					<option value="정지100일">정지100일</option>
+				<select name="acStop" class="btn btn-default" aria-label="Small select example">
+					<option selected value="0">정지기간</option>
+					<option value="7">정지7일</option>
+					<option value="30">정지30일</option>
+					<option value="100">정지100일</option>
 					<option value="영구정지">영구정지</option>
 				</select>
-				<button type="button" class="btn btn-default" name="ac_result" class="ac_result">정지</button>
+				<button type="button" class="btn btn-default" id="ac_result">정지</button>
 				<button type="button" class="btn btn-default" name="update" class="delete">삭제</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
@@ -130,6 +130,7 @@
 
 
 <script type="text/javascript">
+	
 	$(function() {
 		$('.ac_no').click(function() {
 			$('#myLargeModal').modal("show");
@@ -144,10 +145,10 @@
 					console.log(data)
 					$('input[name=ac_no]').val(data.ac_no)
 					$('input[name=us_id]').val(data.us_id)
-					if(data.ac_own_id == null || data.ac_own_id == ""){
+					if (data.ac_own_id == null || data.ac_own_id == "") {
 						$('input[name=id]').val(data.ac_us_id)
 					}
-					if(data.ac_us_id == null || data.ac_us_id == ""){
+					if (data.ac_us_id == null || data.ac_us_id == "") {
 						$('input[name=id]').val(data.ac_own_id)
 					}
 					$('input[name=ac_item]').val(data.ac_item)
@@ -159,30 +160,64 @@
 				}
 			});// ac_no click ajax
 		});// ac_no click
-		$('ac_result').click(function(){
-			
-		});
+
 		// 접수 버튼 클릭시 
-		$('.acState').click(function(){
+		$('.acState').click(function() {
 			var state = $(this).text();
-			console.log("state : "+state);
-			
-			if(state == '접수'){
+			console.log("state : " + state);
+
+			if (state == '접수') {
+				console.log($(this).val());
 				$.ajax({
-					url:"/admin/acHandling",
-					data:{"ac_no" : $('input[name=ac_no]').val()},
-					dataType:"json",
-					success:function(data){
-						console.log("성공결과 : "+data);
+					url : "/admin/acHandling",
+					data : {
+						"ac_no" : $(this).val()
+					},
+					dataType : "json",
+					success : function(data) {
+						console.log("성공결과 : " + data);
 						alert("처리되었습니다.")
 						location.replace("/admin/acList");
 					},
-					error:function(){
+					error : function() {
 						console.log("에러");
 					}
 				});// 접수버튼 클릭시 ajax
 			}// if
 		}) // 접수 버튼 클릭시
+
+	$('#ac_result').click(function() {
+			console.log("acStop : "+$('select[name=acStop]').val());
+			console.log("ac_no : "+$('input[name=ac_no]').val());
+
+			var us_stopdate = $('select[name=acStop]').val();
+			var own_stopdate = $('select[name=acStop]').val();
+			var ac_result = $('select[name=acStop]').text();
+			alert("@@");
+		
+			if($('select[name=acStop]').val() == 0){
+				alert("정지기간을 선택해주세요");
+			}
+			$.ajax({
+				url : "/admin/acResultUpdate",
+				data : {
+					"ac_no" : $('input[name=ac_no]').val(),
+					"us_stopdate" : us_stopdate,
+					"own_stopdate" : own_stopdate,
+					"ac_result" : ac_result
+				},
+				dataType : "json",
+				success : function(data) {
+					if (data == 1) {
+						alert("정상적으로 정지가 부여되었습니다.");
+						location.replace("/admin/acList");
+					}
+				},
+				error : function(data) {
+					console.log("에러");
+				}
+			}); // ac_result click us ajax
+		}); // ac_result click
 	});//ready
 </script>
 

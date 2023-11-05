@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.dapao.domain.AcVO;
 import com.dapao.persistence.AdminDAO;
 
 
@@ -52,7 +53,7 @@ public class DataSourceTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void 사업자탈퇴test() {
 		logger.debug("사업자탈퇴test()");
 		try {
@@ -62,6 +63,15 @@ public class DataSourceTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void test() throws Exception{
+		adao.acResultSelectOwnerId(null);
+		adao.acResultSelectUserId(null);
+		adao.acResultUserUpdate(null, null);
+		//adao.acResultOwnerUpdate(null, null);
+	}
+	
 	
 
 	

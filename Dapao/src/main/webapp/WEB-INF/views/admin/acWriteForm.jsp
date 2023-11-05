@@ -67,6 +67,19 @@
 				alert("내용을 입력해주세요");
 			}
 		});
-	});
+		$('#write').click(function(){
+			$.ajax({
+				url : "/admin/acWrite",
+				data : {
+					""
+				},
+				dataType : "json",
+				success : function(data){
+					
+				}
+				
+			});//write click ajax
+		});//write click
+	});//ready
 </script>
 <%@include file="../include/footer.jsp" %>
