@@ -13,20 +13,19 @@
   
   
   <insert id="itemWrite">
-	  insert into item(us_id,it_title,it_price,it_content,it_con,it_cate,it_img) 
-	  values(#{us_id},#{it_title},#{it_price},#{it_content},#{it_con},#{it_cate},#{it_img})
+	  insert into item(us_id,it_title,it_price,it_content,it_con,it_cate) 
+	  values(#{us_id},#{it_title},#{it_price},#{it_content},#{it_con},#{it_cate})
   </insert>
   
   <select id="itemWriteCheck" resultType="Integer">
-  	select * from item 
+  	select max(it_no) from item 
   	where us_id=#{us_id} 
-  	order by it_bno desc
   </select>
   
   <select id="itemDetail" resultType="TotalVO">
   	select i.*, u.* from item i join us u 
   	on i.us_id = u.us_id 
-  	where it_no=#{it_no}
+  	where i.it_no=#{it_no}
   </select>
   
   <select id="sellerItem" resultType="itemVO">
