@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.UserVO;
-import com.dapao.service.UserService;
+import com.dapao.service.UserServiceImpl;
 import com.mysql.cj.Session;
 
 /**
@@ -39,7 +39,7 @@ public class MypageController {
       
       
       @Inject
-      private UserService uService;
+      private UserServiceImpl uService;
       
       //http://localhost:8088/user/userMain
       
