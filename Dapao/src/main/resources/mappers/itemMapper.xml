@@ -12,6 +12,11 @@
   <mapper namespace="com.dapao.mapper.ItemMapper">
   
   
+  <update id="viewCnt">
+  	update item set it_ivew = it_view+1  
+  	where it_no=#{it_no}
+  </update>
+  
   <insert id="itemWrite">
 	  insert into item(us_id,it_title,it_price,it_content,it_con,it_cate) 
 	  values(#{us_id},#{it_title},#{it_price},#{it_content},#{it_con},#{it_cate})

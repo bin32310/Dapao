@@ -32,6 +32,13 @@ public class ItemDAOImpl{
 	= "com.dapao.mapper.ItemMapper";
 	
 	
+	// 조회수 증가 
+	public int viewCnt(Integer it_no) {
+		logger.debug("DAOImpl : viewCnt(Integer it_no) 호출");
+		
+		return sqlSession.insert(NAMESPACE + ".viewCnt", it_no);
+	}
+	
 	// 판매글 작성
 	public int itemWrite(ItemVO itemVO) {
 		logger.debug("DAOImpl : itemWrite(ItemVO itemVO) 호출");
