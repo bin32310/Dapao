@@ -24,22 +24,22 @@
 
 		프로필 사진 <br>
 		
-		닉네임 : <input type="text" name="us_name" value = "${yourPage.us_nickname }"><br>
-		주소 : <input type="text" name="us_addr" value = "${yourPage.us_addr }"><br>
-				  
+		닉네임 : <input type="text" name="us_name" value = "${yourInfo.us_nickname }"><br>
+		주소 : <input type="text" name="us_addr" value = "${yourInfo.us_addr }"><br>
+		${yourItemVO }		  
 		판매중인 물건		  
-		<c:forEach var="yp" items="yourVO">
-				사진 : <input type="text" name="us_name" value = "${yp.us_nickname }"><br>
-				제목 : <input type="text" name="us_name" value = "${yp.us_nickname }"><br>
-				가격 : <input type="text" name="us_addr" value = "${yp.us_addr }"><br>
+		<c:forEach var="yi" items="${yourItemVO }">
+				사진 : <input type="text" name="it_img" value = "${yi.it_title }">
+				제목 : <input type="text" name="it_title" value = "${yi.it_title }">
+				가격 : <input type="text" name="it_price" value = "${yi.it_price }"><br>
 		</c:forEach>
 		
 		리뷰		  
-		<c:forEach var="rv" items="userVO">
+<%-- 		<c:forEach var="rv" items="${userVO}">
 				닉네임 : <input type="text" name="us_name" value = "${rv.us_nickname }"><br>
 				별점 : <input type="text" name="rv_star" value = "${rv.rv_star }"><br>
 				리뷰내용 : <input type="text" name="rv_content" value = "${rv.rv_content }"><br>
-		</c:forEach>
+		</c:forEach> --%>
 		
 		
 		
