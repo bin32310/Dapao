@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.dapao.domain.ItemVO;
+import com.dapao.domain.LoveVO;
 import com.dapao.domain.TotalVO;
+import com.dapao.domain.UserVO;
 import com.dapao.persistence.ItemDAOImpl;
 
 
@@ -40,7 +42,7 @@ public class ItemServiceImpl {
 
 
 
-	// 판매글 상세 
+	// 판매물건글 상세 
 	public TotalVO itemDetail(Integer it_no) {
 		
 		logger.debug("itemDetail(Integer it_no) 호출 ");
@@ -49,6 +51,46 @@ public class ItemServiceImpl {
 		return idao.itemDetail(it_no);
 		
 	}
+	
+	// 찜 여부 확인
+	public int itemLove(ItemVO itemLove) {
+		
+		logger.debug("itemLove() 호출");
+		return idao.itemLove(itemLove);
+	}
+	
+	// 찜 등록 
+	public int itemLoveInsert(LoveVO loveVO) {
+		
+		logger.debug("itemLoveInsert(LoveVO loveVO) 호출");
+		return idao.itemLoveInsert(loveVO);
+		
+	}
+	
+	// 찜 삭제
+	public int itemLoveDelete(LoveVO loveVO) {
+		
+		logger.debug("itemLoveDelete(LoveVO loveVO) 호출");
+		return idao.itemLoveDelete(loveVO);
+		
+	}
+	
+	// 판매물품글 검색 조회 
+	public List<ItemVO> itemSearch(String it_title) {
+		
+		logger.debug("itemSearch(String it_title) 호출");
+		return idao.itemSearch(it_title);
+		
+	}
+	
+	// 판매물품글 카테고리 조회 
+	public List<ItemVO> itemCate(String it_cate) {
+		
+		logger.debug("itemCate(String it_cate) 호출");
+		return idao.itemCate(it_cate);
+		
+	}
+
 	
 	// 판매자 다른 물품
 	public List<ItemVO> sellerItem(TotalVO seller) {
@@ -65,7 +107,18 @@ public class ItemServiceImpl {
 	}
 	
 	
+	// 판매자 프로필
+	public UserVO yourInfo(String us_id) {
+		logger.debug("Service : yourInfo(String us_id) 호출");
+		return idao.yourInfo(us_id);
+	}
+
 	
+	// 판매자 판매 물품 목록
+	public List<ItemVO> yourItem(String us_id) {
+		logger.debug("Service : yourItem(String us_id) 호출");
+		return idao.yourItem(us_id);
+	}
 	
 	
 	

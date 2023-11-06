@@ -228,9 +228,9 @@
             </div>
           </div>
           <!-- search form -->
-          <form action="#" method="get" class="sidebar-form">
+          <form action="../item/itemSearch" method="get" class="sidebar-form">
             <div class="input-group">
-              <input type="text" name="q" class="form-control" placeholder="Search..."/>
+              <input type="text" name="it_title" class="form-control" placeholder="Search..."/>
               <span class="input-group-btn">
                 <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
@@ -252,56 +252,62 @@
             <li class="header">카테고리</li>
             
             <li class="treeview">
-              <a href="../item/itemSearch?cate=패션의류">
+              <a href="../item/itemCate?it_cate=패션의류">
                 <i class="fa fa-star"></i>
                 <span>패션의류</span>
               </a>
             </li>
             <li>
-              <a href="../item/itemSearch?cate=뷰티/잡화">
+              <a href="../item/itemCate?it_cate=뷰티/잡화">
                 <i class="fa fa-shopping-cart"></i>
                 <span>뷰티/잡화</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="../item/itemSearch?cate=유아용품">
+              <a href="../item/itemCate?it_cate=유아용품">
                 <i class="fa fa-github-alt"></i>
                 <span>유아용품</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="../item/itemSearch?cate=가구생활">
+              <a href="../item/itemCate?it_cate=가구생활">
                 <i class="fa fa-laptop"></i>
                 <span>가구/생활</span>
               </a>
             </li>
             <!-- <li class="treeview active"> -->
             <li class="treeview">
-              <a href="../item/itemSearch?cate=취미">
+              <a href="../item/itemCate?it_cate=취미">
                 <i class="fa fa-users"></i>
                 <span>취미</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="../item/itemSearch?cate=전자기기">
+              <a href="../item/itemCate?it_cate=전자기기">
                 <i class="fa fa-laptop"></i>
                 <span>전자기기</span>
               </a>
             </li>
             <li>
-              <a href="../item/itemSearch?cate=스포츠레저">
+              <a href="../item/itemCate?it_cate=스포츠레저">
                 <i class="fa fa-soccer-ball-o"></i>
                 <span>스포츠/레저</span>
               </a>
             </li>
             <li>
-              <a href="../item/itemSearch?cate=자동차">
+              <a href="../item/itemCate?it_cate=자동차">
                 <i class="fa fa-car"></i>
                 <span>자동차</span>
               </a>
             </li>
 
-            <li><a href="${pageContext.request.contextPath }/resources/documentation/index.html"><i class="fa fa-book"></i> <span>도서</span></a></li>
+            <li>
+            	<a href="../item/itemCate?it_cate=도서">
+		          <i class="fa fa-book"></i>
+		          <span>도서</span>
+            	</a>
+            </li>
+            
             <li class="header">기타</li>
             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>공지사항</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>FAQ</span></a></li>

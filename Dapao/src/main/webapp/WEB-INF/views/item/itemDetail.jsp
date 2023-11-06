@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 
@@ -16,11 +17,11 @@
 		<%@ include file="../include/userLoginHeader.jsp" %>
 	</c:if>
 	
-<!-- 	<h1> /item/item_detail.jsp</h1>
-	<h1> 물건 상세페이지 </h1> -->
-	
 	<fieldset>
 		<form action=""  method="post">
+			<c:if test="${!empty us_id }">
+				<input type="button" value="신고하기" onclick="location.href='/ac/writeForm?it_no=${itemVO.it_no}';"> <br>
+			</c:if>
 			상품번호 <input type="text" value="${itemVO.it_no }" name="it_no"> <br>
 			<a>이미지 사진</a>
 			<input type="text" value="${itemVO.it_img }" name="it_img"> <br>
@@ -34,11 +35,17 @@
 			<input type="text" value="${itemVO.it_cate }" name="it_cate"> <br>
 			<input type="text" value="${itemVO.us_addr }" name="us_addr"> <br> 
 			
-			<input type="hidden" value="${itemVO.us_id }" name="us_no"> <br>
+			<input type="hidden" value="${itemVO.us_id }" name="us_id"> <br>
 			
-			<input type="button" value="찜"> 
-			<input type="button" value="판다톡"> 
-			<input type="submit" value="바로구매"> 
+			<c:if test="${empty us_id }">
+				<input type="button" value="로그인하고 구매하기" id="login_buy">
+			</c:if>
+			<c:if test="${!empty us_id }">
+				<input type="button" value="찜" id="addLoveBtn"> 
+				<input type="hidden" value="${love}" id="love_value"> 
+				<input type="button" value="판다톡"> 
+				<input type="submit" value="바로구매"> 
+			</c:if>
 		
 		</form>
 	</fieldset>
@@ -48,6 +55,9 @@
 		상세 내용 <br>
 		<textarea rows="10" cols="10">${itemVO.it_content}</textarea>
 	</form>
+	
+	<a href="/item/yourPage?us_id=${itemVO.us_id }" > 판매자 프로필 보러가기 </a>
+	
 	
 	<a>판매자의 다른 상품도 보기</a>
 
@@ -71,6 +81,81 @@
 	</c:forEach> 
 	
 	<%@ include file="../include/userFooter.jsp" %>
+	
+
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+	
+	
+
+	
+	
+	var love = ${love};
+	console.log(love);
+	
+	// 처음 찜 여부 확인 
+	if(love == 0){
+		$('#addLoveBtn').attr("value","찜하기");
+	}else{
+		
+		$('#addLoveBtn').attr("value","찜취소");
+	}
+	
+	
+
+	// 찜버튼 클릭 
+	$('#addLoveBtn').on("click", function(){
+		alert("찜버튼클릭");
+		
+		var love_value = $("input[id='love_value']").val();
+		var it_no = $("input[name='it_no']").val();
+		
+		$.ajax({
+			type : "get",
+			url : "/item/itemLove",
+			data : {"love_value" : love_value, "it_no" : it_no},
+			dataType : "JSON",
+			error: function(){
+				alert("찜실패");
+			},
+			success : function(result){
+				console.log(result)
+				if(result == 1){
+					if( love_value == 0){ // 찜하기 
+						
+						console.log(result);
+						$('#love_value').attr("value",1);
+						$('#addLoveBtn').attr("value","찜취소");
+						console.log(love_value);
+						
+					}else{ // 찜취소
+								
+						console.log(result);
+						$('#love_value').attr("value",0);
+						$('#addLoveBtn').attr("value","찜하기");
+						console.log(love_value);
+					} //else
+				}
+			} // success 끝	
+		}) // ajax 끝
+
+	});
+	
+	// 로그인하고 구매하기 버튼클릭
+	$('#login_buy').click(function(){
+		location.href='/user/userLogin';			
+	});
+
+	
+	
+});
+
+
+</script>	
+	
+	
 
 </body>
 </html>
