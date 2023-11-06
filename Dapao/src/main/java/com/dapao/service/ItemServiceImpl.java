@@ -26,6 +26,12 @@ public class ItemServiceImpl {
 	private ItemDAOImpl idao;
 
 	
+	// 조회수 증가
+	public int viewCnt(Integer it_no) {
+		logger.debug("viewCnt(Integer it_no) 호출 ");
+		return idao.viewCnt(it_no);
+	}
+	
 	// 판매글 등록
 	public int itemWrite(ItemVO itemVO) {
 		logger.debug("itemWrite(ItemVO itemVO) 호출 ");

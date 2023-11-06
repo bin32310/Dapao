@@ -23,7 +23,7 @@ import com.dapao.domain.LoveVO;
 import com.dapao.domain.TotalVO;
 import com.dapao.domain.UserVO;
 import com.dapao.service.ItemServiceImpl;
-import com.dapao.service.UserService;
+import com.dapao.service.UserServiceImpl;
 
 //http://localhost:8088/user/userMain
 
@@ -42,7 +42,7 @@ public class ItemController {
 	private ItemServiceImpl iService;
 	
 	@Inject
-	private UserService uService;
+	private UserServiceImpl uService;
 	
 	
 	// http://localhost:8088/item/chat
@@ -59,7 +59,7 @@ public class ItemController {
 	// http://localhost:8088/item/itemSearch
 	// 판매물품글 검색 조회GET - 판매글 작성 페이지로 이동
 	@RequestMapping(value = "/itemSearch", method = RequestMethod.GET)
-	public void itemSearchGET(String it_title, Model model) throws Exception {
+	public void itemSearchGET(String it_title, Model model, HttpSession session) throws Exception {
 		logger.debug("itemSearchGET() 호출");
 		
 		logger.debug("검색단어 : " + it_title);
@@ -68,6 +68,8 @@ public class ItemController {
 		List<ItemVO> searchItemVO = iService.itemSearch(it_title);
 		// logger.debug("@@검색한 물품 정보 : " + searchItemVO);
 		model.addAttribute("searchItemVO", searchItemVO);
+		// 조회수 증가를 체크 : on - 1 , off - 2
+		session.setAttribute("itemView", "on");
 				
 		logger.debug("연결된 뷰페이지(views/item/itemSearch.jsp)를 출력");
 		
@@ -77,13 +79,15 @@ public class ItemController {
 	// http://localhost:8088/item/itemCate
 	// 판매물품글 카테고리 조회GET - 판매글 작성 페이지로 이동
 	@RequestMapping(value = "/itemCate", method = RequestMethod.GET)
-	public void itemCateGET(String it_cate, Model model) throws Exception {
+	public void itemCateGET(String it_cate, Model model, HttpSession session) throws Exception {
 		logger.debug("itemCateGET() 호출");
 		logger.debug("검색 카테고리 : " + it_cate);
 		
 		// 검색
 		List<ItemVO> cateItemVO = iService.itemCate(it_cate);
 		model.addAttribute("cateItemVO", cateItemVO);
+		// 조회수 증가를 체크 : on - 1 , off - 2
+		session.setAttribute("itemView", "on");
 				
 		logger.debug("연결된 뷰페이지(views/item/itemCate.jsp)를 출력");
 		
@@ -177,6 +181,13 @@ public class ItemController {
 		logger.debug("@@비슷한 물품 정보 : " + sameCateVO);
 		model.addAttribute("sameCateVO", sameCateVO);
 		
+
+		// 조회수 증가를 체크 : on - 1 , off - 2
+        if(session.getAttribute("itemView").equals("on")) {
+             int viewcnt= iService.viewCnt(it_no);
+             logger.debug("viewcnt : " + viewcnt);
+            session.setAttribute("viewcntCheck", "off");
+        }
 		
 		logger.debug("연결된 뷰페이지(views/item/itemDetail.jsp)를 출력");
 		return "/item/itemDetail";
