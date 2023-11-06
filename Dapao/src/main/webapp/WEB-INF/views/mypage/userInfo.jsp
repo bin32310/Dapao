@@ -10,22 +10,27 @@
 </head>
 <body>
 
-		<h1>views/user/userMypage</h1>
-		<h1>마이페이지</h1>
+		<h1>views/mypage/userInfo</h1>
+		<h1>마이페이지-정보조회</h1>
 		
+		<c:if test="${empty us_id }">
+		<%@ include file="../include/userHeader.jsp" %>
+	</c:if>
+	<c:if test="${!empty us_id }">
+		<%@ include file="../include/userLoginHeader.jsp" %>
+	</c:if>
+	
 		
-		
-		
-	<button><a href="/user/userInfoUpdate">내프로필 수정 
-	 </a></button>	
+	<button><a href="/mypage/userInfoUpdate">내프로필 수정 
+	 </a></button>
 			
+<!-- 			
 			
-			<button onclick="confirmPassword()">회원정보 수정하기</button>
 		<script type="text/javascript">
 			$.ajax({
 				
 				var usId = $('input[name=us_id]').val();
-            url : "/user/userInfoUpdate",
+            url : "/mypage/userInfoUpdate",
             type : "POST",
             data : {
                "us_id" : usId
@@ -45,7 +50,7 @@
 			 
 			</script>
 			
-			
+			 -->
 			
 			
 <!-- <script type="text/javascript">
@@ -67,30 +72,32 @@ function confirmPassword() {
 	 -->
 	
 	
-		<a href="/user/userSell">판매 목록 </a>
-		<a href="/user/userBuy">구매 목록 </a>
-		<a href="/user/userReview">내가 쓴 리뷰 </a>
-		<a href="/user/userCs">고객센터</a>
-		<a href="/user/userLove">찜 목록 </a> 
+		<a href="/mypage/userSellList">판매 목록 </a>
+		<a href="/mypage/userBuy">구매 목록 </a>
+		<a href="/mypage/userReview">내가 쓴 리뷰 </a>
+		<a href="/mypage/userCs">고객센터</a>
+		<a href="/mypage/userLove">찜 목록 </a> 
 		
 		<button><a href="/user/userMain">확인 </a></button>	
-		<c:forEach var="vo" items="UserVO">
+		
+	 	
 			프로필 사진 <br>
-			 <!-- 수정 버튼 누르면 비밀번호 1회 체크 -->	<input type="hidden" name="us_pw" value="${vo.us_pw}" id="us_pw"> 
-				닉네임 : <input type="text" name="us_name" value = "${vo.us_nickname }"><br>
-				아이디 : <input type="text" name="us_id" value = "${vo.us_id }"><br>
-				이메일 : <input type="text" name="us_email" value = "${vo.us_email }"><hr>
-				  주소 : <input type="text" name="us_addr" value = "${vo.us_addr }"><br>
-				가입일 : <input type="text" name="us_regdate" value = "${vo.us_regdate }"><br>
-		  신고누적횟수 : <input type="text" name="us_account" value = "${vo.us_account }"><br>
-			  정지횟수 : <input type="text" name="us_stop" value = "${vo.us_stop }"><br>
+			 <!-- 수정 버튼 누르면 비밀번호 1회 체크 <input type="hidden" name="us_pw" value="${vo.us_pw}" id="us_pw"> -->	
+			 
+				닉네임 : <input type="text" name="us_nickname" value = "${infoVO.us_nickname }"><br>
+				아이디 : <input type="text" name="us_id" value = "${infoVO.us_id }"><br>
+				이메일 : <input type="text" name="us_email" value = "${infoVO.us_email }"><hr>
+				  주소 : <input type="text" name="us_addr" value = "${infoVO.us_addr }"><br>
+				가입일 : <input type="text" name="us_regdate" value = "${infoVO.us_regdate }"><br>
+		  신고누적횟수 : <input type="text" name="us_account" value = "${infoVO.us_account }"><br>
+			  정지횟수 : <input type="text" name="us_stop" value = "${infoVO.us_stop }"><br>
 				
-		</c:forEach>
+		
 		
 		
 		<button><a href="/user/userDelete"> 회원 탈퇴하기 </a></button>	
 		
-		
+		<%@ include file="../include/userFooter.jsp" %>
 		
 		
 </body>

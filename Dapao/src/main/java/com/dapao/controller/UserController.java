@@ -1,7 +1,9 @@
 package com.dapao.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -13,10 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dapao.domain.UserVO;
-import com.dapao.service.UserService;
+import com.dapao.service.UserServiceImpl;
+
 
 /**
  * 	1. 공통URI (~.me 대신 폴더명) / 각 기능별 URI 설정
@@ -36,7 +40,7 @@ public class UserController {
 		private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 		
 		@Inject
-		private UserService uService;
+		private UserServiceImpl uService;
 		
 		//http://localhost:8088/user/userMain
 		// 유저 메인페이지 호출
@@ -194,6 +198,13 @@ public class UserController {
 			// 삭제 실패(result == 0)
 			return "redirect:/user/userDelete";
 		}
+		
+		
+		// 비밀번호 찾기
+	//	public ModelAndView userFindPwNum() {
+			
+	//	}
+	
 		
 		
 		
