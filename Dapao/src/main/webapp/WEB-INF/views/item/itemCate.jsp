@@ -18,10 +18,10 @@
 </head>
 <body>
 
-	<h1>/item/itemSearch.jsp</h1>
+	<h1>/item/itemCateSearch.jsp</h1>
 	<h1>검색시 나타나는 페이지</h1>
 	
-	<c:forEach var="it" items="${searchItemVO}">
+	<c:forEach var="it" items="${cateItemVO}">
 		<form action="">
 			<a href="../item/itemDetail?it_no=${it.it_no }">이미지</a> 
 			<a href="../item/itemDetail?it_no=${it.it_no }">${it.it_title}</a> 

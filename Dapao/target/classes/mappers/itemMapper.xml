@@ -13,34 +13,71 @@
   
   
   <insert id="itemWrite">
-	  insert into item(us_id,it_title,it_price,it_content,it_con,it_cate,it_img) 
-	  values(#{us_id},#{it_title},#{it_price},#{it_content},#{it_con},#{it_cate},#{it_img})
+	  insert into item(us_id,it_title,it_price,it_content,it_con,it_cate) 
+	  values(#{us_id},#{it_title},#{it_price},#{it_content},#{it_con},#{it_cate})
   </insert>
   
   <select id="itemWriteCheck" resultType="Integer">
-  	select * from item 
+  	select max(it_no) from item 
   	where us_id=#{us_id} 
-  	order by it_bno desc
+  </select>
+  
+  <select id="itemSearch" resultType="ItemVO">
+  	select * from item 
+  	where it_title like CONCAT('%', #{it_title}, '%')
+  </select>
+  
+  <select id="itemCate" resultType="ItemVO">
+  	select * from item 
+  	where it_cate = #{it_cate}
   </select>
   
   <select id="itemDetail" resultType="TotalVO">
   	select i.*, u.* from item i join us u 
   	on i.us_id = u.us_id 
-  	where it_no=#{it_no}
+  	where i.it_no=#{it_no}
   </select>
   
-  <select id="sellerItem" resultType="itemVO">
+  <select id="itemLove" resultType="int">
+  	select count(*) from love 
+  	where us_id=#{us_id} and it_no=#{it_no}
+  </select>
+  
+  <insert id="itemLoveInsert">
+  	insert into love(it_no, us_id) 
+  	values(#{it_no},#{us_id})
+  </insert>
+  
+  <delete id="itemLoveDelete">
+  	delete from love 
+  	where us_id = #{us_id} and it_no = #{it_no}
+  </delete>
+  
+  
+  <select id="sellerItem" resultType="ItemVO">
   select it_img, it_title, it_no
   from item 
   where us_id=#{us_id} and it_no != #{it_no} 
   order by rand() limit 5;
   </select>
   
-  <select id="sameCate" resultType="itemVO">
+  <select id="sameCate" resultType="ItemVO">
   select it_img, it_title, it_no 
   from item 
   where it_cate=#{it_cate} and it_no != #{it_no} 
   order by rand() limit 5;
+  </select>
+  
+  <select id="yourInfo" resultType="UserVO">
+  	select * from us 
+  	where us_id=#{us_id}
+  </select>
+  
+  
+  <select id="yourItem" resultType="ItemVO">
+  select it_img, it_title, it_no from item 
+  where us_id=#{us_id} 
+  order by it_no desc;
   </select>
   
   

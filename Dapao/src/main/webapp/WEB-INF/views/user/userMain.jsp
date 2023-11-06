@@ -68,7 +68,7 @@
 	<h2> 인기 물건 둘러보기 </h2>
 	
  	<c:forEach var="item" items="${itemList}">
-		<a href="../item/itemDetail?it_no=${item.it_no }"><input type="text" value="/upload/${item.it_img }" name="it_img"> </a>
+		<a href="../item/itemDetail?it_no=${item.it_no }"><input type="text" value="/upload/${item.it_img }" name="it_img" > </a>
 		<a href="../item/itemDetail?it_no=${item.it_no }"><input type="text" value="${item.it_title }" name="it_title"> </a>
 		<a href="../item/itemDetail?it_no=${item.it_no }"><input type="text" value="${item.it_price }" name="it_price"> </a> <br><br>
 	</c:forEach>  

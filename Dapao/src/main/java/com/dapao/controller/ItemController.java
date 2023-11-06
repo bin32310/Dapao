@@ -19,9 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dapao.domain.ItemVO;
+import com.dapao.domain.LoveVO;
 import com.dapao.domain.TotalVO;
 import com.dapao.domain.UserVO;
-import com.dapao.service.ItemService;
+import com.dapao.service.ItemServiceImpl;
 import com.dapao.service.UserService;
 
 //http://localhost:8088/user/userMain
@@ -38,7 +39,7 @@ public class ItemController {
 	private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
 	
 	@Inject
-	private ItemService iService;
+	private ItemServiceImpl iService;
 	
 	@Inject
 	private UserService uService;
@@ -54,6 +55,42 @@ public class ItemController {
 		
 	}
 	
+	
+	// http://localhost:8088/item/itemSearch
+	// 판매물품글 검색 조회GET - 판매글 작성 페이지로 이동
+	@RequestMapping(value = "/itemSearch", method = RequestMethod.GET)
+	public void itemSearchGET(String it_title, Model model) throws Exception {
+		logger.debug("itemSearchGET() 호출");
+		
+		logger.debug("검색단어 : " + it_title);
+		
+		// 검색
+		List<ItemVO> searchItemVO = iService.itemSearch(it_title);
+		// logger.debug("@@검색한 물품 정보 : " + searchItemVO);
+		model.addAttribute("searchItemVO", searchItemVO);
+				
+		logger.debug("연결된 뷰페이지(views/item/itemSearch.jsp)를 출력");
+		
+	}
+	
+	
+	// http://localhost:8088/item/itemCate
+	// 판매물품글 카테고리 조회GET - 판매글 작성 페이지로 이동
+	@RequestMapping(value = "/itemCate", method = RequestMethod.GET)
+	public void itemCateGET(String it_cate, Model model) throws Exception {
+		logger.debug("itemCateGET() 호출");
+		logger.debug("검색 카테고리 : " + it_cate);
+		
+		// 검색
+		List<ItemVO> cateItemVO = iService.itemCate(it_cate);
+		model.addAttribute("cateItemVO", cateItemVO);
+				
+		logger.debug("연결된 뷰페이지(views/item/itemCate.jsp)를 출력");
+		
+	}
+	
+	
+	
 	// http://localhost:8088/item/itemWrite
 	// 판매글 작성GET - 판매글 작성 페이지로 이동
 	@RequestMapping(value = "/itemWrite", method = RequestMethod.GET)
@@ -67,88 +104,62 @@ public class ItemController {
 	
 	// 판매글 작성POST - 작성한 판매글 등록
 	@RequestMapping(value = "/itemWrite", method = RequestMethod.POST)
-	public String itemWritePOST(HttpSession session, ItemVO itemVO ) throws Exception {
+	public String itemWritePOST(HttpSession session, ItemVO itemVO) throws Exception {
 		logger.debug("itemWritePOST() 호출");
-		
+		int it_no=0;
 		// 세션 - 아이디
 		String us_id = (String) session.getAttribute("us_id");
+		itemVO.setUs_id(us_id);
+		logger.debug("itemVO : " + itemVO);
 		
 		// 서비스 -> DAO 호출 : 판매글  작성 등록
 		int result = iService.itemWrite(itemVO);
 		if(result == 1) { // 성공적으로 글 등록시
 			
-			int it_no = iService.itemWriteCheck(us_id);
+			it_no = iService.itemWriteCheck(us_id);
 			
 		}
-		int it_no = itemVO.getIt_no();
-		itemVO.setUs_id(us_id);
+		
 		logger.debug("@@판매글 정보 : " + itemVO);
 		
-		int result1 = iService.itemWrite(itemVO);
-		
-		if(result1 != 1) {
+		if(result != 1) {
 			logger.debug("판매글 등록 실패");
-			return "/item/userMain";
+			return "redirect:/user/userMain";
 		}
 		
 		logger.debug("판매글 등록 성공");
 		logger.debug("연결된 뷰페이지(views/item/itemDetail.jsp)를 출력");
-		return "/item/itemDetail?it_no="+it_no;
 		
-	}
+		//return "redirect:/mypage/userSell";
 
-	// http://localhost:8088/item/uploadAjax
-	// 파일 업로드 
-	@RequestMapping(value = "/uploadAjax", method = RequestMethod.GET)
-	public void uploadAjaxGET(HttpSession session, ItemVO itemVO ) throws Exception {
-		logger.debug("uploadAjaxGET() 호출");
-		
-	}
-	// 파일 업로드 
-	@RequestMapping(value = "/uploadAjaxAction", method = RequestMethod.POST)
-	@ResponseBody
-	public void uploadAjaxActionPOST(MultipartFile[] uploadFile ) throws Exception {
-		logger.debug("uploadAjaxActionPOST() 호출");
-		
-		logger.debug("update ajax post.....");
-		
-		String uploadFolder = "C:\\upload";
-		
-		for(MultipartFile multipartFile : uploadFile) {
-			
-			logger.debug("-----------------------------------------------");
-			logger.debug("Upload File Name : " + multipartFile.getOriginalFilename());
-			logger.debug("Upload File Size : " + multipartFile.getSize());
-			
-			String uploadFileName = multipartFile.getOriginalFilename();
-			
-			// IE has file path
-			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-			logger.debug("only file name : " + uploadFileName);
-			
-			File saveFile = new File(uploadFolder, uploadFileName);
-			
-			try {
-				multipartFile.transferTo(saveFile);
-			}catch (Exception e) {
-				logger.debug(e.getMessage());
-			}// catch
-			
-		}// for
+		return "redirect:/itemDetail?it_no="+it_no;
 		
 	}
 	
 	
-	
-	
-	// http://localhost:8088/item/it0emDetail
-	// 판매글상세 GET - 글 정보를 입력
+	// http://localhost:8088/item/itemDetail
+	// 판매물건상세 GET - 글 정보를 불러오기 
 	@RequestMapping(value = "/itemDetail", method = RequestMethod.GET)
-	public String itemDetailGET(Integer it_no, Model model) throws Exception {
+	public String itemDetailGET(Integer it_no, Model model, HttpSession session) throws Exception {
 		logger.debug("itemDetailGET() 호출");
 		
+		int love = 0;
 		// 파라메터 자동수집
 		logger.debug("@@판매글 번호 : " + it_no);
+		
+		// 세션 - 아이디
+		String us_id = (String) session.getAttribute("us_id");
+		if(us_id == null) { // 찜했는지 확인x
+			
+		}else {// 찜했는지 확인0
+			ItemVO itemLove = new ItemVO();
+			itemLove.setUs_id(us_id);
+			itemLove.setIt_no(it_no);
+			love = iService.itemLove(itemLove);
+		}
+
+		// 0 - 찜 안함,  1 -찜함 
+		model.addAttribute("love",love);
 		
 		// 판매글 조회
 		TotalVO itemVO = iService.itemDetail(it_no);
@@ -200,6 +211,57 @@ public class ItemController {
 	}
 	
 	
+
+	// 찜기능 GET - 찜 목록에 등록/삭제
+	@ResponseBody
+	@RequestMapping(value = "/itemLove", method = RequestMethod.GET)
+	public int itemLoveGET(Integer love_value, Integer it_no, HttpSession session) throws Exception {
+		logger.debug("itemLoveGet() 호출");
+		
+		// 파라메터 자동수집
+		logger.debug("@@판매글 번호 : " + it_no);
+		logger.debug("@@love_value : " + love_value);
+		
+		// 세션 - 아이디
+		String us_id = (String) session.getAttribute("us_id");
+
+		LoveVO loveVO = new LoveVO();
+		loveVO.setUs_id(us_id);
+		loveVO.setIt_no(it_no);
+		
+		if(love_value == 0) {
+			// 찜하기 (insert)
+			
+			return iService.itemLoveInsert(loveVO);
+		}
+		
+		// love_value == 1
+		// 찜취소  (delete)
+			
+		return iService.itemLoveDelete(loveVO);
+	}
+	
+	
+	// http://localhost:8088/item/yourPage
+	// 상대방 프로필 GET
+	@RequestMapping(value = "/yourPage", method = RequestMethod.GET)
+	public void yourPageGET(String us_id, Model model) throws Exception {
+		logger.debug("yourPageGET() 호출");
+		
+		UserVO userVO = iService.yourInfo(us_id);
+		logger.debug("userVO : " + userVO );
+		List<ItemVO> itemVO = iService.yourItem(us_id);
+		logger.debug("@@itemVO : " + itemVO );
+		
+		model.addAttribute("yourInfo", userVO);
+		model.addAttribute("yourItemVO", itemVO);
+		
+		
+		
+		
+	}
+	
+	
 	// http://localhost:8088/item/coinCharge
 	// 대나무페이 충전 GET - 충전페이지로 이동 
 	@RequestMapping(value = "/coinCharge", method = RequestMethod.GET)
@@ -226,7 +288,7 @@ public class ItemController {
 		logger.debug("@@코인 총금액 확인 : " + total_price);
 		
 		// 서비스 -> DAO 호출 : 판매글 조회
-		//ItemVO itemVO = iService.itemDetail(it_bno);
+		//ItemVO itemVO = iService.itemDetail(it_no);
 		//logger.debug("@@판매글 정보 : " + itemVO);
 		
 		// 연결된 뷰페이지에 출력 => 컨트롤러의 정보를 view 페이지로 전달
@@ -238,9 +300,6 @@ public class ItemController {
 		return "redirect:/item/url";
 		
 	}
-	
-
-
 	
 	
 }
