@@ -1,6 +1,8 @@
 package com.dapao.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -8,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.dapao.domain.AcVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
@@ -22,7 +25,6 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Inject
 	private AdminDAO adao;
-
 	
 	@Override
 	public UserVO userInfo(String us_id) throws Exception {
@@ -184,5 +186,58 @@ public class AdminServiceImpl implements AdminService{
 		logger.debug("service : csDelete(Integer cs_no) 호출");
 		return adao.csDelete(cs_no);
 	}
-
+	
+	@Override
+	public List<AcVO> acList(Criteria cri) throws Exception {
+		logger.debug("service : acList(Criteria cri) 호출");
+		return adao.acList(cri);
+	}
+	
+	@Override
+	public int acCount(Integer ac_no) throws Exception {
+		logger.debug("service : acCount(Integer ac_no) 호출");
+		return adao.acCount(ac_no);
+	}
+	
+	@Override
+	public AcVO acInfo(Integer ac_no) throws Exception {
+		logger.debug("service : acInfo(Integer ac_no) 호출");
+		return adao.acInfo(ac_no);
+	}
+	
+	// 신고관리 - 접수 처리
+	@Override
+	public int acHandling(Integer ac_no) throws Exception {
+		logger.debug("service : acHandling(Integer ac_no) 호출");
+		return adao.acHandling(ac_no);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(user 조회)
+	@Override
+	public String acResultSelectUserId(AcVO vo) throws Exception {
+		logger.debug("service : acResultSelectUserId(AcVO vo) 호출");
+		return adao.acResultSelectUserId(vo);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner 조회)
+	@Override
+	public String acResultSelectOwnerId(AcVO vo) throws Exception {
+		logger.debug("service : acResultSelectOwnerId(AcVO vo) 호출");
+		return adao.acResultSelectOwnerId(vo);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(user)
+	@Override
+	public int acResultUserUpdate(AcVO acVo,UserVO userVo,String stop) throws Exception {
+		logger.debug("service : acResultUserUpdate(AcVO vo) 호출");
+		return adao.acResultUserUpdate(acVo, userVo,stop);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner)
+	@Override
+	public int acResultOwnerUpdate(AcVO acVo,EntVO entVo,String stop) throws Exception {
+		logger.debug("service : acResultOwnerUpdate(AcVO vo) 호출");
+		return adao.acResultOwnerUpdate(acVo, entVo,stop);
+	}
+	
 }

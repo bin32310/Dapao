@@ -2,6 +2,7 @@ package com.dapao.persistence;
 
 import java.util.List;
 
+import com.dapao.domain.AcVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
@@ -91,5 +92,29 @@ public interface AdminDAO {
 	
 	// 리뷰관리 - 리뷰 삭제
 	public int reviewDelete(Integer rv_no) throws Exception;
+	
+	// 신고관리 - 신고 리스트
+	public List<AcVO> acList(Criteria cri) throws Exception;
+	
+	// 신고관리 - 신고 총 개수 조회
+	public int acCount(Integer ac_no) throws Exception;
 
+	// 신고관리 - 신고 1개 글 정보
+	public AcVO acInfo(Integer ac_no) throws Exception;
+	
+	// 신고관리 - 접수 처리
+	public int acHandling(Integer ac_no) throws Exception;
+	
+	// 신고관리 - 신고 처리상태 업뎃(user 조회)
+	public String acResultSelectUserId (AcVO vo) throws Exception;
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner 조회)
+	public String acResultSelectOwnerId (AcVO vo) throws Exception;
+	
+	// 신고관리 - 신고 처리상태 업뎃(user)
+	public int acResultUserUpdate(AcVO acVo,UserVO userVo,String stop) throws Exception;
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner)
+	public int acResultOwnerUpdate(AcVO acVo,EntVO entVo,String stop) throws Exception;
+	
 }

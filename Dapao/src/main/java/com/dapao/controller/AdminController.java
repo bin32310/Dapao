@@ -1,6 +1,8 @@
 package com.dapao.controller;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -9,11 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dapao.domain.AcVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
@@ -325,5 +329,91 @@ public class AdminController {
 		logger.debug("reviewDelete()");
 		return aService.reviewDelete(rv_no);
 	}
+	
+	// 신고관리 - 신고 리스트
+	@RequestMapping("/acList")
+	public void acList(Criteria cri, Model model, Integer ac_no,Integer ac_item) throws Exception{
+		logger.debug("acList()");
+		// 페이징 처리( 페이지 블럭 처리 객체 )
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(aService.acCount(ac_no));
+
+		// 페이징처리 정보도 뷰페이지로 전달
+		logger.debug("pageVO : " + pageVO);
+		model.addAttribute("pageVO", pageVO);
+
+		// 페이지 이동시 받아온 페이지 번호
+		if (cri.getPage() > pageVO.getEndPage()) {
+			// 잘못된 페이지 정보 입력
+			cri.setPage(pageVO.getEndPage());
+		}
+
+		List<AcVO> acList = aService.acList(cri);
+		logger.debug("" + acList);
+
+		model.addAttribute("vo", acList);
+		
+	}
+	
+	// 신고관리 - 신고 1개 글 정보
+	@RequestMapping("/acInfo")
+	@ResponseBody // ajax(JSON 데이터 넘겨줄때 사용)
+	public AcVO acInfo(@RequestParam("ac_no") Integer ac_no) throws Exception {
+		logger.debug("acInfo() 호출");
+		logger.debug("ac_no@@" + ac_no);
+		return aService.acInfo(ac_no);
+	}
+	
+	// 신고관리 - 접수 처리하기
+	@RequestMapping("/acHandling")
+	@ResponseBody
+	public int acHandling(@RequestParam("ac_no") Integer ac_no) throws Exception{
+		logger.debug("acHandling() 호출");
+		return aService.acHandling(ac_no);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃
+	@ResponseBody
+	@RequestMapping("/acResultUpdate")
+	public int acResultUserUpdate(AcVO acVo, EntVO entVo,UserVO userVo, String id,String stop) throws Exception {
+		logger.debug("acResultUpdate() 호출");
+		logger.debug("acVo1 : "+acVo);
+		logger.debug("id : "+id);
+		logger.debug("stop : "+stop);
+		logger.debug("voO : "+aService.acResultSelectOwnerId(acVo));
+		logger.debug("voU : "+aService.acResultSelectUserId(acVo));
+		String ac_own_id = aService.acResultSelectOwnerId(acVo);
+		String ac_us_id = aService.acResultSelectUserId(acVo);
+		if (ac_own_id != null || ac_own_id == id) {
+			return aService.acResultOwnerUpdate(acVo,entVo,stop);
+		}
+//		if(ac_us_id != null || ac_us_id == id) {
+//			logger.debug("acVo2 : "+acVo);
+			return aService.acResultUserUpdate(acVo,userVo,stop);
+//		}
+//		return 0;
+	}
+	
+	// 신고관리 - 신고서 작성 폼
+	// http://localhost:8088/admin/acWriteForm
+	@RequestMapping("/acWriteForm")
+	public void acWriteForm(String own_id, String us_id, Model model) throws Exception{
+		logger.debug("acWriteForm()  호출");
+		own_id = "1";
+		us_id = "2";
+		model.addAttribute("own_id", own_id);
+		model.addAttribute("us_id", us_id);
+	}
+	
+	// 신고관리 - 신고서 작성
+	public int acWrite(AcVO vo) throws Exception{
+		logger.debug("acWrite() 호출");
+		logger.debug("vo",vo);
+		return 0;
+	}
+	
+	
+	
 
 }
