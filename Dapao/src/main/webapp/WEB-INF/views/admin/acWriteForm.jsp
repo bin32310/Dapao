@@ -13,11 +13,11 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<label>신고자</label>
-					<input type="text" class="form-control" name="id">
+					<input type="text" class="form-control" name="id" value="${us_id }">
 				</div>
 				<div class="col-lg-6">
 					<label>피신고자</label>
-					<input type="text" class="form-control" name="id">
+					<input type="text" class="form-control" name="id" value="${us_id+own_id }">
 				</div>
 			</div>
 			<div class="row">

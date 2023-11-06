@@ -112,9 +112,9 @@ public interface AdminDAO {
 	public String acResultSelectOwnerId (AcVO vo) throws Exception;
 	
 	// 신고관리 - 신고 처리상태 업뎃(user)
-	public int acResultUserUpdate(AcVO acVo,UserVO userVo) throws Exception;
+	public int acResultUserUpdate(AcVO acVo,UserVO userVo,String stop) throws Exception;
 	
 	// 신고관리 - 신고 처리상태 업뎃(owner)
-	public int acResultOwnerUpdate(AcVO acVo,EntVO entVo) throws Exception;
+	public int acResultOwnerUpdate(AcVO acVo,EntVO entVo,String stop) throws Exception;
 	
 }

@@ -189,25 +189,36 @@
 	$('#ac_result').click(function() {
 			console.log("acStop : "+$('select[name=acStop]').val());
 			console.log("ac_no : "+$('input[name=ac_no]').val());
+			console.log("id : "+$('input[name=id]').val());
+			console.log("text : "+$('selected').text());
+			
 
 			var us_stopdate = $('select[name=acStop]').val();
 			var own_stopdate = $('select[name=acStop]').val();
-			var ac_result = $('select[name=acStop]').text();
-			alert("@@");
 		
 			if($('select[name=acStop]').val() == 0){
 				alert("정지기간을 선택해주세요");
+			}
+			if ($('select[name=acStop]').val() == 7) {
+				var ac_result = "정지7일";
+			}
+			if ($('select[name=acStop]').val() == 30) {
+				var ac_result = "정지30일";
+			}
+			if ($('select[name=acStop]').val() == 100) {
+				var ac_result = "정지100일";
 			}
 			$.ajax({
 				url : "/admin/acResultUpdate",
 				data : {
 					"ac_no" : $('input[name=ac_no]').val(),
-					"us_stopdate" : us_stopdate,
-					"own_stopdate" : own_stopdate,
-					"ac_result" : ac_result
+					"stop" : $('select[name=acStop]').val(),
+					"ac_result" : ac_result,
+					"id" : $('input[name=id]').val()
 				},
 				dataType : "json",
 				success : function(data) {
+					console.log(data)
 					if (data == 1) {
 						alert("정상적으로 정지가 부여되었습니다.");
 						location.replace("/admin/acList");

@@ -1,5 +1,6 @@
 package com.dapao.controller;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -374,27 +376,34 @@ public class AdminController {
 	// 신고관리 - 신고 처리상태 업뎃
 	@ResponseBody
 	@RequestMapping("/acResultUpdate")
-	public int acResultUserUpdate(AcVO acVo, EntVO entVo,UserVO userVo,Map<String, Object> vo) throws Exception {
+	public int acResultUserUpdate(AcVO acVo, EntVO entVo,UserVO userVo, String id,String stop) throws Exception {
 		logger.debug("acResultUpdate() 호출");
 		logger.debug("acVo1 : "+acVo);
+		logger.debug("id : "+id);
+		logger.debug("stop : "+stop);
 		logger.debug("voO : "+aService.acResultSelectOwnerId(acVo));
 		logger.debug("voU : "+aService.acResultSelectUserId(acVo));
-		if (aService.acResultSelectOwnerId(acVo) != null) {
-			return aService.acResultOwnerUpdate(acVo,entVo);
+		String ac_own_id = aService.acResultSelectOwnerId(acVo);
+		String ac_us_id = aService.acResultSelectUserId(acVo);
+		if (ac_own_id != null || ac_own_id == id) {
+			return aService.acResultOwnerUpdate(acVo,entVo,stop);
 		}
-		if(aService.acResultSelectUserId(acVo) != null) {
-			return aService.acResultUserUpdate(acVo,userVo);
-		}
-		return 0;
+//		if(ac_us_id != null || ac_us_id == id) {
+//			logger.debug("acVo2 : "+acVo);
+			return aService.acResultUserUpdate(acVo,userVo,stop);
+//		}
+//		return 0;
 	}
 	
 	// 신고관리 - 신고서 작성 폼
 	// http://localhost:8088/admin/acWriteForm
 	@RequestMapping("/acWriteForm")
-	public void acWriteForm(String own_id, String us_id) throws Exception{
+	public void acWriteForm(String own_id, String us_id, Model model) throws Exception{
 		logger.debug("acWriteForm()  호출");
 		own_id = "1";
 		us_id = "2";
+		model.addAttribute("own_id", own_id);
+		model.addAttribute("us_id", us_id);
 	}
 	
 	// 신고관리 - 신고서 작성

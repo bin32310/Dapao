@@ -228,22 +228,16 @@ public class AdminServiceImpl implements AdminService{
 	
 	// 신고관리 - 신고 처리상태 업뎃(user)
 	@Override
-	public int acResultUserUpdate(AcVO acVo,UserVO userVo) throws Exception {
+	public int acResultUserUpdate(AcVO acVo,UserVO userVo,String stop) throws Exception {
 		logger.debug("service : acResultUserUpdate(AcVO vo) 호출");
-//		Map<String, Object> vo = new HashMap<String, Object>();
-//		vo.put("acVo", acVo);
-//		vo.put("userVo", userVo);
-		return adao.acResultUserUpdate(acVo, userVo);
+		return adao.acResultUserUpdate(acVo, userVo,stop);
 	}
 	
 	// 신고관리 - 신고 처리상태 업뎃(owner)
 	@Override
-	public int acResultOwnerUpdate(AcVO acVo,EntVO entVo) throws Exception {
+	public int acResultOwnerUpdate(AcVO acVo,EntVO entVo,String stop) throws Exception {
 		logger.debug("service : acResultOwnerUpdate(AcVO vo) 호출");
-		Map<String, Object> vo = new HashMap<String, Object>();
-		vo.put("acVo", acVo);
-		vo.put("entVo", entVo);
-		return adao.acResultOwnerUpdate(acVo, entVo);
+		return adao.acResultOwnerUpdate(acVo, entVo,stop);
 	}
 	
 }

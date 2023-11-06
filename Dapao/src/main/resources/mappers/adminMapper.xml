@@ -204,14 +204,14 @@
 	</update>
 	
 	<!-- 신고관리 - 신고 처리상태 업뎃(user 조회) -->
-	<select id="acResultSelectUserId" resultType="AcVO">
+	<select id="acResultSelectUserId" resultType="String">
 		select ac_us_id 
 		from ac 
 		where ac_no=#{ac_no}
 	</select>
 	
 	<!-- 신고관리 - 신고 처리상태 업뎃(owner 조회) -->
-	<select id="acResultSelectOwnerId" resultType="AcVO">
+	<select id="acResultSelectOwnerId" resultType="String">
 		select ac_own_id 
 		from ac 
 		where ac_no=#{ac_no}
@@ -220,15 +220,14 @@
 	<!-- 신고관리 - 신고 user 처리상태 업뎃 -->
 	<update id="acResultUserUpdate">
 		update us join ac on us.us_id = ac.ac_us_id 
-		set us.us_stopdate=date_add(now(), interval #{us_stopdate} day),ac.ac_result=#{ac_reault},us.us_state=1 
+		set us.us_stopdate=date_add(now(), interval #{stop} day),ac.ac_result=#{ac_result},us.us_state=1, ac.ac_state=1 
 		where ac.ac_no=#{ac_no}
 	</update>
 	
 	<!-- 신고관리 - 신고 user 처리상태 업뎃 -->
 	<update id="acResultOwnerUpdate">
-		update ent set ent.own_stopdate=date_add(now(), interval#{own_stopdate} day,ac.ac_result=#{ac_reault},ent.own_state=1 
-		from ent join ac 
-		on ent.own_id = ac.ac_own_id 
+		update ent join ac on ent.own_id = ac.ac_own_id 
+		set ent.own_stopdate=date_add(now(), interval #{stop} day),ac.ac_result=#{ac_result},ent.own_state=1, ac.ac_state=1 
 		where ac.ac_no=#{ac_no}
 	</update>
 	
