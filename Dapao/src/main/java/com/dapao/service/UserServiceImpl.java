@@ -12,6 +12,7 @@ import com.dapao.domain.AdVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.LoveVO;
+import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TotalVO;
 import com.dapao.domain.UserVO;
 
@@ -76,21 +77,27 @@ public class UserServiceImpl {
 	}
 
 	
-	public void userupdate(UserVO updateVO) {
-		logger.debug("userUpdate(updateVo) 호출");
+	// 회원정보 수정
+	public void userInfoUpdate(UserVO userInfoUpdateVO) {
+		logger.debug("userInfoUpdate(userInfoUpdateVo) 호출");
 		
-		udao.userUpdate(updateVO);
+		udao.userInfoUpdate(userInfoUpdateVO);
 		
 	}
 
+
+	// 회원탈퇴
 	
-	public int userDelete(UserVO deleteVO) {
-		logger.debug("userDelete(deleteVO) 호출");
-		int result = 	udao.userDelete(deleteVO);
+		public int userDelete(UserVO deleteVO) {
+			logger.debug("userDelete(deleteVO) 호출");
+			int result = 	udao.userDelete(deleteVO);
+			
+			return result;
+		}
 		
-		return result;
-	}
-
+		
+		
+		
 	
 	public void userJoin(UserVO joinVO) {
 		logger.debug("userJoin(joinVO) 호출"); 
@@ -99,6 +106,7 @@ public class UserServiceImpl {
 		
 	}
 
+	
 	
 	public UserVO userCheckId(String us_id) {
 		logger.debug("userCheckId(String id)  호출");
@@ -119,17 +127,13 @@ logger.debug("sellList(String us_id) 호출");
 		
 	}
 	
+	//마이페이지 내 리뷰 목록 조회
+	
 	
 	
 	
 	
 
-	
-//	@Override
-//	public String userInfoCheck(String us_id) throws Exception {
-//		logger.debug("userInfoCheck(String us_id) 호출");
-//		return null;
-//	}
  
 	
 	
