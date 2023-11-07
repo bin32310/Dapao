@@ -39,25 +39,28 @@
 						<c:choose>
 							<c:when test="${list.prod_state eq '0' }">
 								<td>판매중</td>
-							</c:when>						
+							</c:when>
 							<c:when test="${list.prod_state eq '1' }">
 								<td>판매완료</td>
-							</c:when>						
+							</c:when>
 							<c:when test="${list.prod_state eq '2' }">
 								<td>삭제</td>
-							</c:when>						
+							</c:when>
 						</c:choose>
 						<c:choose>
 							<c:when test="${list.prod_state eq '0' }">
 								<td>등록 ${list.prod_regdate }</td>
 							</c:when>
+							<c:when test="${list.prod_state eq '1' }">
+								<td>판매 ${list.prod_outdate }</td>
+							</c:when>						
 							<c:when test="${list.prod_state eq '2' }">
 								<td>삭제 ${list.prod_outdate }</td>
-							</c:when>
+							</c:when>										
 						</c:choose>
 						<c:if test="${list.prod_state eq '0' }">	
-							<td><button type="button" class="prodState" value="${list.prod_no }">삭제</button></td>
-						</c:if>													
+							<td><button type="button" class="itState" value="${list.prod_no }">삭제</button></td>
+						</c:if>												
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -101,7 +104,7 @@
 					dataType:"json",
 					success:function(data){
 						console.log("성공 / 결과 : "+data);
-						location.replace("/admin/prodList?page="+page);
+						location.replace("/admin/prodList?page=${param.page}");
 					},
 					error:function(){
 						console.log("에러");

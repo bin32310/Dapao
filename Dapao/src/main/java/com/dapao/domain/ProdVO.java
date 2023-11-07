@@ -19,5 +19,4 @@ public class ProdVO {
 	private Date prod_regdate;
 	private Date prod_outdate;
 	private String own_id;
-
 }

@@ -99,7 +99,7 @@
 				dataType:"json",
 				success:function(data){
 					console.log("성공 / 결과 : "+data);
-					location.replace("/admin/itemList");
+					location.replace("/admin/itemList?page=${param.page}");
 				},
 				error:function(){
 					console.log("에러");
