@@ -7,10 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
 
-<h1>판매글 목록</h1>
-<h2>views/mypage/userSellList</h2>
+<body>
 
 		<c:if test="${empty us_id }">
 		<%@ include file="../include/userHeader.jsp" %>
@@ -19,43 +17,38 @@
 		<%@ include file="../include/userLoginHeader.jsp" %>
 	</c:if>
 	
-	
-			<script type="text/javascript">
-	function back(){
-	      history.back();  // 뒤로가기
-	   }
-	
-	</script>
-	
- 
+
+<h1>내가 쓴 리뷰 목록(판매자 = 회원)</h1>
+<h2>views/mypage/userReviewUs</h2>
 
 
- <table>
+<table>
 		<thead>
 			<tr>
 			
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성일</th>
+				<th>리뷰번호</th>
+				<th>판매자</th>
+				<th>내용</th>
+				<th>별점</th>
+				<th>등록날짜</th>
 			</tr>
 		</thead>
 		
 		<tbody>
 		
-	<c:forEach items="${userSellList}" var="userSellList">
+	<c:forEach items="${userReviewUs}" var="userReviewUs">
 				<tr>
-					<th>${userSellList.it_no }</th>
-					<th>${userSellList.it_title }</th>
-					<th>${userSellList.it_regdate }</th>
+					<th>${userReviewUs.rv_no }</th>
+					<th>${userReviewUs.rv_Us_id }</th>
+					<th>${userReviewUs.rv_content }</th>
+					<th>${userReviewUs.rv_star }</th>
+					<th>${userReviewUs.rv_regdate }</th>
 				</tr>
 			</c:forEach> 
 		</tbody>
 	</table> 
 
-<input type="button" onclick="back()" value="뒤로가기">
-
-
- 	<%@ include file="../include/userFooter.jsp" %> 
+<%@ include file="../include/userFooter.jsp" %> 
 
 </body>
 </html>

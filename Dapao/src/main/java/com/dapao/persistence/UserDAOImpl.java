@@ -15,6 +15,7 @@ import com.dapao.domain.AdVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.LoveVO;
+import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TotalVO;
 import com.dapao.domain.UserVO;
 
@@ -122,28 +123,28 @@ public class UserDAOImpl  {
 
 	
 	// 회원정보 수정
-	
-	public void userUpdate(UserVO updateVO) {
-		System.out.println(" DAOImpl : userUpdate(UserVO updateVO) 호출");
 		
-		// SQL구문 호출
-		sqlSession.update(NAMESPACE + ".userUpdate", updateVO);
-		
-		System.out.println(" DAOImpl : 수정완료! ");
-		
-	}
+		public void userInfoUpdate(UserVO userInfoUpdateVO) {
+			System.out.println(" DAOImpl : userInfoUpdate(UserVO userInfoUpdateVO) 호출");
+			
+			// SQL구문 호출
+			sqlSession.update(NAMESPACE + ".userInfoUpdate", userInfoUpdateVO);
+			
+			System.out.println(" DAOImpl : 수정완료! ");
+			
+		}
 
 
-	// 회원 탈퇴
+		// 회원 탈퇴
 	
-	public int userDelete(UserVO delVO) {
-		System.out.println(" DAOImpl : 탈퇴 ");
+		public int userDelete(UserVO deleteVO) {
+			System.out.println(" DAOImpl : 탈퇴 ");
+			
+			// 정상   -  0  /   정지 -  1   /  탈퇴2  
+			// SQL구문 호출		
+			return sqlSession.delete(NAMESPACE + ".userDelete",deleteVO);
+		}
 		
-		// 정상   -  0  /   정지 -  1   /  탈퇴  - 2
-		// SQL구문 호출		
-		return sqlSession.delete(NAMESPACE + ".userDelete",delVO);
-	}
-	
 	
 	
 	// 아이디 중복확인
@@ -163,6 +164,8 @@ public class UserDAOImpl  {
 
 
 
+		// 마이페이지 내 리뷰 목록 조회
+	
 
 
 //	public String userInfoCheck(String us_id) throws Exception {

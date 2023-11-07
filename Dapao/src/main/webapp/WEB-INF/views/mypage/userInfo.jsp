@@ -84,18 +84,18 @@ function confirmPassword() {
 			프로필 사진 <br>
 			 <!-- 수정 버튼 누르면 비밀번호 1회 체크 <input type="hidden" name="us_pw" value="${vo.us_pw}" id="us_pw"> -->	
 			 
-				닉네임 : <input type="text" name="us_nickname" value = "${infoVO.us_nickname }"><br>
-				아이디 : <input type="text" name="us_id" value = "${infoVO.us_id }"><br>
-				이메일 : <input type="text" name="us_email" value = "${infoVO.us_email }"><hr>
-				  주소 : <input type="text" name="us_addr" value = "${infoVO.us_addr }"><br>
-				가입일 : <input type="text" name="us_regdate" value = "${infoVO.us_regdate }"><br>
-		  신고누적횟수 : <input type="text" name="us_account" value = "${infoVO.us_account }"><br>
-			  정지횟수 : <input type="text" name="us_stop" value = "${infoVO.us_stop }"><br>
+				닉네임 : <input type="text" name="us_nickname" value = "${infoVO.us_nickname }" readonly><br>
+				아이디 : <input type="text" name="us_id" value = "${infoVO.us_id }" readonly><br>
+				이메일 : <input type="text" name="us_email" value = "${infoVO.us_email }" readonly><hr>
+				  주소 : <input type="text" name="us_addr" value = "${infoVO.us_addr }" readonly><br>
+				가입일 : <input type="text" name="us_regdate" value = "${infoVO.us_regdate }" readonly><br>
+		  신고누적횟수 : <input type="text" name="us_account" value = "${infoVO.us_account }" readonly><br>
+			  정지횟수 : <input type="text" name="us_stop" value = "${infoVO.us_stop }" readonly><br>
 				
 		
 		
 		
-		<button><a href="/user/userDelete"> 회원 탈퇴하기 </a></button>	
+		<button><a href="/mypage/userDelete"> 회원 탈퇴하기 </a></button>	
 		
 		<%@ include file="../include/userFooter.jsp" %>
 		
