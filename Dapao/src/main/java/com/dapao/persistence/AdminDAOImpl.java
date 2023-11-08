@@ -252,6 +252,7 @@ public class AdminDAOImpl implements AdminDAO {
 		vo.put("acVo", acVo);
 		vo.put("entVo", entVo);
 		vo.put("stop", stop);
+		logger.debug("allvo"+vo);
 		return sqlSession.update(NAMESPACE+".acResultOwnerUpdate", vo);
 	}
 	
