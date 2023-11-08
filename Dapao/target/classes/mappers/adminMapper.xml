@@ -220,15 +220,15 @@
 	<!-- 신고관리 - 신고 user 처리상태 업뎃 -->
 	<update id="acResultUserUpdate">
 		update us join ac on us.us_id = ac.ac_us_id 
-		set us.us_stopdate=date_add(now(), interval #{stop} day),ac.ac_result=#{ac_result},us.us_state=1, ac.ac_state=1 
-		where ac.ac_no=#{ac_no}
+		set us.us_stopdate=date_add(now(), interval #{stop} day),ac.ac_result=#{acVo.ac_result},us.us_state=1, ac.ac_state=1 
+		where ac.ac_no=#{acVo.ac_no}
 	</update>
 	
 	<!-- 신고관리 - 신고 user 처리상태 업뎃 -->
 	<update id="acResultOwnerUpdate">
 		update ent join ac on ent.own_id = ac.ac_own_id 
-		set ent.own_stopdate=date_add(now(), interval #{stop} day),ac.ac_result=#{ac_result},ent.own_state=1, ac.ac_state=1 
-		where ac.ac_no=#{ac_no}
+		set ent.own_stopdate=date_add(now(), interval #{stop} day),ac.ac_result=#{acVo.ac_result},ent.own_state=1, ac.ac_state=1 
+		where ac.ac_no=#{acVo.ac_no}
 	</update>
 	
 </mapper>	

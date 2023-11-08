@@ -52,8 +52,8 @@
 	</bean>
 	<!-- 끝 : SqlSessionTemplate 객체 - 디비연결(자동), myBatis 설정, SQL실행, 자원해제, 트랜잭션 관리, 쓰레드 안정성 관리 -->
 	
-	<!-- com.itwillbs.persistence 패키지 등록 -->
+	<!-- com.dapao.persistence 패키지 등록 -->
 	<context:component-scan base-package="com.dapao.persistence"></context:component-scan>	
-	<!-- com.itwillbs.service 패키지 등록 -->
+	<!-- com.dapao.service 패키지 등록 -->
 	<context:component-scan base-package="com.dapao.service"></context:component-scan>	
 </beans>

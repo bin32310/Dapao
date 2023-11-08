@@ -28,17 +28,24 @@
 	
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler" path="/echo"/>
+		<websocket:mapping handler="chatHandler" path="/chat" />
 		<websocket:sockjs/>
 	</websocket:handlers>
+	<websocket:handlers>
+		<websocket:mapping handler="echoHandler" path="/echo.sockjs" />
+		<websocket:mapping handler="chatHandler" path="/chat.sockjs" />
+		<websocket:sockjs />
+		
+	</websocket:handlers>
 	
-	<beans:bean id="echoHandler" class="com.dapao.controller.EchoHandler"></beans:bean>
+	<beans:bean id="echoHandler" class="com.dapao.controller.EchoHandler" />
+	<beans:bean id="chatHandler" class="com.dapao.controller.ChatWebSocketHandler" />
 	
 	<context:component-scan base-package="com.dapao.controller" />
 	
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
 	</beans:bean>
-	
 	
 	
 </beans:beans>
