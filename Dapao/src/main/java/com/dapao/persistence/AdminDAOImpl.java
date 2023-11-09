@@ -12,9 +12,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.dapao.domain.AcVO;
+import com.dapao.domain.AdVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
+import com.dapao.domain.ExpVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 
@@ -262,5 +264,39 @@ public class AdminDAOImpl implements AdminDAO {
 		return sqlSession.insert(NAMESPACE+".acWrite",vo);
 	}
 	
+	// 체험단관리 - 체험단 리스트
+	@Override
+	public List<ExpVO> expList(Criteria cri) throws Exception {
+		logger.debug("DAO :  expList(Criteria cri) 호출");
+		return sqlSession.selectList(NAMESPACE+".expList", cri);
+	}
+	
+	// 체험단관리 - 체험단 글개수 조회
+	@Override
+	public int expCount(Integer exp_no) throws Exception {
+		logger.debug("DAO :  expCount(Integer exp_no) 호출");
+		return sqlSession.selectOne(NAMESPACE+".expCount", exp_no);
+	}
+	
+	// 체험단관리 - 체험단 글 1개 정보
+	@Override
+	public ExpVO expInfo(Integer exp_no) throws Exception {
+		logger.debug("DAO :  expInfo(Integer exp_no) 호출");
+		return sqlSession.selectOne(NAMESPACE+".expInfo", exp_no);
+	}
+	
+	// 체험단관리 - 상태 업데이트
+	@Override
+	public void expStateUpdate(Integer exp_no) throws Exception {
+		logger.debug("DAO :  expStateUpdate(Integer exp_no) 호출");
+		sqlSession.update(NAMESPACE+".expStateUpdate", exp_no);
+	}
+	
+	// 체험단관리 - 광고테이블 insert
+	@Override
+	public int expAdInsert(AdVO vo) throws Exception {
+		logger.debug("DAO :  expAdInsert(AdVO vo 호출");
+		return sqlSession.insert(NAMESPACE+".expAdInsert", vo);
+	}
 
 }

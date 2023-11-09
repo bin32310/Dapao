@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/websoket/*")
+@RequestMapping("/websocket/*")
 public class ChatControllet {
 
 	private static final Logger logger = LoggerFactory.getLogger(ChatControllet.class);

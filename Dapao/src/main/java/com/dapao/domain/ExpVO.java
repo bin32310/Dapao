@@ -13,7 +13,7 @@ public class ExpVO {
 	private Integer exp_psn;
 	private Integer exp_psn_ch;
 	private String exp_notice;
-	private Date ent_regdate;
+	private Date exp_regdate;
 	private String own_id;
 	private int exp_state;
 

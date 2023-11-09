@@ -3,9 +3,11 @@ package com.dapao.service;
 import java.util.List;
 
 import com.dapao.domain.AcVO;
+import com.dapao.domain.AdVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
+import com.dapao.domain.ExpVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 
@@ -121,5 +123,18 @@ public interface AdminService {
 	//신고관리 - 신고 글 쓰기
 	public int acWrite(AcVO vo) throws Exception;
 	
-
+	// 체험단관리 - 체험단 리스트
+	public List<ExpVO> expList(Criteria cri) throws  Exception;
+	
+	// 체험단관리 - 체험단 글개수 조회
+	public int expCount(Integer exp_no) throws Exception;
+	
+	// 체험단관리 - 체험단 글 1개 정보
+	public ExpVO expInfo(Integer exp_no) throws Exception;
+	
+	// 체험단관리 - 상태 업데이트
+	public void expStateUpdate(Integer exp_no) throws Exception;
+	
+	// 체험단관리 - 광고테이블 insert
+	public int expAdInsert(AdVO vo) throws Exception;
 }

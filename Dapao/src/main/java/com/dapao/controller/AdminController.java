@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dapao.domain.AcVO;
+import com.dapao.domain.AdVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
+import com.dapao.domain.ExpVO;
 import com.dapao.domain.PageVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
@@ -413,7 +415,55 @@ public class AdminController {
 		return 0;
 	}
 	
+	// 환불신청 - API
+	@RequestMapping
+	public void refund() throws Exception {
+		
+	}
 	
+	// http://localhost:8088/admin/expList
+	// 체험단관리 - 체험단 리스트
+	@RequestMapping("/expList")
+	public void expList(Criteria cri, Model model, Integer exp_no,Integer ac_item) throws Exception{
+		logger.debug("expList()");
+		// 페이징 처리( 페이지 블럭 처리 객체 )
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(aService.expCount(exp_no));
+
+		// 페이징처리 정보도 뷰페이지로 전달
+		logger.debug("pageVO : " + pageVO);
+		model.addAttribute("pageVO", pageVO);
+
+		// 페이지 이동시 받아온 페이지 번호
+		if (cri.getPage() > pageVO.getEndPage()) {
+			// 잘못된 페이지 정보 입력
+			cri.setPage(pageVO.getEndPage());
+		}
+
+		List<ExpVO> expList = aService.expList(cri);
+		logger.debug("" + expList);
+
+		model.addAttribute("vo", expList);
+		
+	}
+	
+	// 체험단관리 - 체험단 글 1개 정보
+	@RequestMapping("/expInfo")
+	@ResponseBody // ajax(JSON 데이터 넘겨줄때 사용)
+	public ExpVO expInfo(@RequestParam("exp_no") Integer exp_no) throws Exception {
+		logger.debug("expInfo() 호출");
+		logger.debug("exp_no@@" + exp_no);
+		return aService.expInfo(exp_no);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/expAdInsert")
+	public int expAdInsert(Integer exp_no, AdVO vo) throws Exception{
+		logger.debug("expAdInsert(Integer exp_no, String own_id, Date ad_upload)");
+		aService.expStateUpdate(exp_no);
+		return aService.expAdInsert(vo);
+	}
 	
 
 }
