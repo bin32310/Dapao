@@ -236,8 +236,8 @@ public class AdminDAOImpl implements AdminDAO {
 	
 	// 신고관리 - 신고 처리상태 업뎃(user)
 	@Override
-	public int acResultUserUpdate(AcVO acVo,UserVO userVo,String stop) throws Exception {
-		logger.debug("DAO : acResultUserUpdate(AcVO acVo,UserVO userVo) 호출");
+	public int acResultUserUpdate(AcVO acVo,String stop) throws Exception {
+		logger.debug("DAO : acResultOwnerUpdate(AcVO acVo,String stop) 호출");
 		Map<String, Object> vo = new HashMap<String, Object>();
 		vo.put("acVo", acVo);
 		vo.put("stop", stop);
@@ -246,13 +246,20 @@ public class AdminDAOImpl implements AdminDAO {
 	
 	// 신고관리 - 신고 처리상태 업뎃(owner)
 	@Override
-	public int acResultOwnerUpdate(AcVO acVo,EntVO entVo,String stop) throws Exception {
-		logger.debug("DAO : acResultOwnerUpdate(AcVO acVo,EntVO entVo) 호출");
+	public int acResultOwnerUpdate(AcVO acVo,String stop) throws Exception {
+		logger.debug("DAO : acResultOwnerUpdate(AcVO acVo,String stop) 호출");
 		Map<String, Object> vo = new HashMap<String, Object>();
 		vo.put("acVo", acVo);
-		vo.put("entVo", entVo);
 		vo.put("stop", stop);
+		logger.debug("allvo"+vo);
 		return sqlSession.update(NAMESPACE+".acResultOwnerUpdate", vo);
+	}
+	
+	//신고관리 - 신고 글 쓰기
+	@Override
+	public int acWrite(AcVO vo) throws Exception {
+		logger.debug("DAO :  acWrite(AcVO vo) 호출");
+		return sqlSession.insert(NAMESPACE+".acWrite",vo);
 	}
 	
 

@@ -315,7 +315,7 @@
             <li class="header">MAIN NAVIGATION</li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-dashboard"></i> <span>관리</span> <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-dashboard"></i> <span>회원관리</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                 <li><a href="/admin/userList"><i class="fa fa-circle-o"></i> 회원관리 </a></li>
@@ -324,14 +324,42 @@
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-dashboard"></i> <span>FAQ&공지사항&리뷰</span> <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-dashboard"></i> <span>상품관리</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="/admin/FAQWriteForm"><i class="fa fa-circle-o"></i> 글쓰기 </a></li>
-                <li><a href="/admin/FAQList"><i class="fa fa-circle-o"></i> 글 목록조회 </a></li>
-                <li><a href="/admin/reviewList"><i class="fa fa-circle-o"></i> 리뷰관리 </a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> 회원 </a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> 사업자 </a></li>
               </ul>
             </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-dashboard"></i> <span>신고관리</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href=""><i class="fa fa-circle-o"></i> 신고 글쓰기 </a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> 신고 목록 </a></li>
+              </ul>
+            </li>
+            <li><a href=""><i class="fa fa-book"></i> <span>체험단 신청관리</span></a></li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-dashboard"></i> <span>공지사항</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="/admin/noticeWriteForm"><i class="fa fa-circle-o"></i> 공지사항 글쓰기 </a></li>
+                <li><a href="/admin/noticeList"><i class="fa fa-circle-o"></i> 공지사항 목록 </a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-dashboard"></i> <span>FAQ</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="/admin/FAQWriteForm"><i class="fa fa-circle-o"></i> FAQ 글쓰기 </a></li>
+                <li><a href="/admin/FAQList"><i class="fa fa-circle-o"></i> FAQ 목록 </a></li>
+              </ul>
+            </li>
+            <li><a href="/admin/reviewList"><i class="fa fa-book"></i> <span>리뷰관리</span></a></li>
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-files-o"></i>
@@ -449,7 +477,7 @@
                 <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
               </ul>
             </li>
-            <li><a href="${pageContext.request.contextPath }/resources/documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+            
             <li class="header">LABELS</li>
             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>

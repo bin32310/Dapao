@@ -228,16 +228,23 @@ public class AdminServiceImpl implements AdminService{
 	
 	// 신고관리 - 신고 처리상태 업뎃(user)
 	@Override
-	public int acResultUserUpdate(AcVO acVo,UserVO userVo,String stop) throws Exception {
-		logger.debug("service : acResultUserUpdate(AcVO vo) 호출");
-		return adao.acResultUserUpdate(acVo, userVo,stop);
+	public int acResultUserUpdate(AcVO acVo,String stop) throws Exception {
+		logger.debug("service : acResultUserUpdate(AcVO acVo,String stop) 호출");
+		return adao.acResultUserUpdate(acVo, stop);
 	}
 	
 	// 신고관리 - 신고 처리상태 업뎃(owner)
 	@Override
-	public int acResultOwnerUpdate(AcVO acVo,EntVO entVo,String stop) throws Exception {
-		logger.debug("service : acResultOwnerUpdate(AcVO vo) 호출");
-		return adao.acResultOwnerUpdate(acVo, entVo,stop);
+	public int acResultOwnerUpdate(AcVO acVo,String stop) throws Exception {
+		logger.debug("service : acResultUserUpdate(AcVO acVo,String stop) 호출");
+		return adao.acResultOwnerUpdate(acVo, stop);
+	}
+	
+	//신고관리 - 신고 글 쓰기
+	@Override
+	public int acWrite(AcVO vo) throws Exception {
+		logger.debug("service : acWrite(AcVO vo) 호출");
+		return adao.acWrite(vo);
 	}
 	
 }

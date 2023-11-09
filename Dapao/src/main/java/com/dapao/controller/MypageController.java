@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dapao.domain.ItemVO;
+import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 import com.dapao.service.UserServiceImpl;
 import com.mysql.cj.Session;
@@ -70,8 +71,8 @@ public class MypageController {
       }
          
          
-      //회원정보 수정 GET방식 =--> update뷰페이지에 기존에 있던 데이터 보여주는것  1. get메서드 만들기 public String updateGET()  + 매핑 
-      @RequestMapping(value = "/userUpdate",method = RequestMethod.GET)
+    //회원정보 수정 GET방식 =--> update뷰페이지에 기존에 있던 데이터 보여주는것  1. get메서드 만들기 public String updateGET()  + 매핑 
+      @RequestMapping(value = "/userInfoUpdate",method = RequestMethod.GET)
       public String updateGET(HttpSession session, Model model) {
          logger.debug(" userUpdateGET() 호출 ");
          
@@ -91,15 +92,15 @@ public class MypageController {
          
          
       // 회원정보 수정 POST 방식
-      @RequestMapping(value = "/userUpdate",method = RequestMethod.POST)
-      public String userUpdatePOST(UserVO updatevo) {
-         logger.debug(" userUpdatePOST() 호출");
+      @RequestMapping(value = "/userInfoUpdate",method = RequestMethod.POST)
+      public String userInfoUpdatePOST(UserVO userInfoUpdatevo) {
+         logger.debug(" userInfoUpdatePOST() 호출");
          
          // 수정할 정보를 저장(파라메터) public String updatePOST(UserVO vo)
-         logger.debug("vo "+updatevo);
+         logger.debug("vo "+userInfoUpdatevo);
          
          //서비스 -> DAO 회원정보 수정
-         uService.userupdate(updatevo);
+         uService.userInfoUpdate(userInfoUpdatevo);
          // 메인페이지로 이동
          
          
@@ -121,14 +122,17 @@ public class MypageController {
       
       // 회원정보 탈퇴 POST
       @RequestMapping(value = "/userDelete",method=RequestMethod.POST)
-      public String userDeletePOST(UserVO vo, HttpSession session) {
+      public String userDeletePOST(UserVO userDeletevo, HttpSession session) {
          logger.debug("userDeletePOST() 호출");
          //로그인제어 (생략)
          // 전달정보를 저장하자(아이디, 비밀번호)
-         logger.debug("vo : "+vo);
+         String us_id = (String)session.getAttribute("us_id");
+         userDeletevo.setUs_id(us_id);
+         
+         logger.debug("vo : "+userDeletevo);
          
          // 서비스 --> DAO 회원정보 탈퇴 메서드
-      int result =    uService.userDelete(vo);
+      int result =    uService.userDelete(userDeletevo);
          
          // 페이지 이동(결과에 따른 이동)
          if(result == 1) { //삭제성공 --> 로그링ㄴ세션도 같이 제거 해야함
@@ -138,6 +142,7 @@ public class MypageController {
          // 삭제 실패(result == 0)
          return "redirect:/mypage/userDelete";
       }
+     
       
       
       // 1102 추가
@@ -151,7 +156,7 @@ public class MypageController {
 			logger.debug(" us_id : " +us_id);
 			
 			  List<ItemVO> resultVO =   uService.userSellList(us_id);
-			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@resultVO"+resultVO);
+			logger.debug("resultVO"+resultVO);
 	
 			model.addAttribute("userSellList", resultVO);
     	  
@@ -161,11 +166,20 @@ public class MypageController {
 		 * userSellList);
 		 */
       
+      }
       
+      
+      //마이페이지 내가 쓴 리뷰 판매자유형(사업자 / 회원) 선택 페이지
+      
+      
+    	  
       }
       
       
       
       
       
-}
+      
+      
+      
+      

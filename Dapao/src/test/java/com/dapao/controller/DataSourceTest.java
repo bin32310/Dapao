@@ -68,8 +68,8 @@ public class DataSourceTest {
 	public void test() throws Exception{
 		adao.acResultSelectOwnerId(null);
 		adao.acResultSelectUserId(null);
-		adao.acResultUserUpdate(null, null, "");
-		adao.acResultOwnerUpdate(null, null, "");
+		adao.acResultUserUpdate(null,  "");
+		adao.acResultOwnerUpdate(null, "");
 	}
 	
 	

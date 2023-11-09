@@ -32,10 +32,10 @@
 						<td>${vo.ac_regdate}</td>
 						<c:choose>
 							<c:when test="${vo.ac_state eq '0' }">
-								<td><button type="button" class="acState" value="${vo.ac_state }">접수</button></td>
+								<td><button type="button" class="acState" value="${vo.ac_no }">접수</button></td>
 							</c:when>
 							<c:when test="${vo.ac_state eq '1' }">
-								<td><button type="button" class="acState" value="${vo.ac_state }">처리</button></td>
+								<td><button type="button" class="acState" value="${vo.ac_no }">처리</button></td>
 							</c:when>
 						</c:choose>
 						<td>${vo.ac_result}</td>
@@ -163,27 +163,34 @@
 
 		// 접수 버튼 클릭시 
 		$('.acState').click(function() {
-			var state = $(this).text();
-			console.log("state : " + state);
+			
+			$('#myLargeModal').modal("show");
 
-			if (state == '접수') {
-				console.log($(this).val());
-				$.ajax({
-					url : "/admin/acHandling",
-					data : {
-						"ac_no" : $(this).val()
-					},
-					dataType : "json",
-					success : function(data) {
-						console.log("성공결과 : " + data);
-						alert("처리되었습니다.")
-						location.replace("/admin/acList");
-					},
-					error : function() {
-						console.log("에러");
+			$.ajax({
+				url : "/admin/acInfo",
+				data : {
+					"ac_no" : $(this).val()
+				},
+				dataType : "json",
+				success : function(data) {
+					console.log(data)
+					$('input[name=ac_no]').val(data.ac_no)
+					$('input[name=us_id]').val(data.us_id)
+					if (data.ac_own_id == null || data.ac_own_id == "") {
+						$('input[name=id]').val(data.ac_us_id)
 					}
-				});// 접수버튼 클릭시 ajax
-			}// if
+					if (data.ac_us_id == null || data.ac_us_id == "") {
+						$('input[name=id]').val(data.ac_own_id)
+					}
+					$('input[name=ac_item]').val(data.ac_item)
+					$('input[name=ac_cate]').val(data.ac_cate)
+					$('input[name=ac_content]').val(data.ac_content)
+				},
+				error : function() {
+					console.log("오류");
+				}
+			});// acState click ajax
+			
 		}) // 접수 버튼 클릭시
 
 	$('#ac_result').click(function() {
@@ -219,10 +226,8 @@
 				dataType : "json",
 				success : function(data) {
 					console.log(data)
-					if (data == 1) {
-						alert("정상적으로 정지가 부여되었습니다.");
-						location.replace("/admin/acList");
-					}
+					alert("정상적으로 정지가 부여되었습니다.");
+					location.replace("/admin/acList");
 				},
 				error : function(data) {
 					console.log("에러");

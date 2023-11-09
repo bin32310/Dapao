@@ -113,20 +113,31 @@
 
    <!-- 회원정보 수정 -->
 
-   <update id="userUpdate">
-      update us set 
-      us_id=#{us_id},us_ps=#{us_pw},us_name=#{us_name},us_email=#{us_email},us_tel=#{us_tel},us_addr=#{us_addr},us#{us_nickname} 
-      where us_pw=#{us_pw}
+   <update id="userInfoUpdate">
+      update us  
+      set us_id=#{us_id},us_pw=#{us_pw},us_name=#{us_name},us_email=#{us_email},us_tel=#{us_tel},us_addr=#{us_addr},us_nickname=#{us_nickname}  
+      where us_id=#{us_id}
    </update>
+
+
+<!-- 탈퇴시 비밀번호 받고 비교 -->
+<select id="pwCheck2">
+	select * 
+	from us 
+	where us_id=#{us_id} and us_pw=#{us_pw}
+</select>
+
 
 
 
    <!-- 회원탈퇴 -->
 
    <update id="userDelete">
-      update us set us_state = "2" 
+      update us set us_state = 2  
       where us_id=#{us_id} and us_pw=#{us_pw}
    </update>
+   
+   
 
 	<!-- 마이페이지 내 판매글 불러오기 -->
 		<select id="userSellList" resultType="ItemVO">
@@ -136,7 +147,11 @@
 			
 		</select>
 		
-
+		
+	<!-- 마이페이지 내 리뷰 목록 불러오기 -->
+	<select id="userReview" resultType="ReviewVO">
+		select 
+	</select>
 
 
 </mapper>

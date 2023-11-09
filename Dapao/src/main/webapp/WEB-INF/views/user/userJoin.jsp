@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<c:if test="${empty us_id }">
+		<%@ include file="../include/userHeader.jsp" %>
+	</c:if>
+	<c:if test="${!empty us_id }">
+		<%@ include file="../include/userLoginHeader.jsp" %>
+	</c:if>
+	
+	
 <h1>/views/user/userLogin</h1>
 
 <fieldset>
@@ -23,5 +33,8 @@
 	</form>
 
 </fieldset>
+
+<%@ include file="../include/userFooter.jsp" %> 
+
 </body>
 </html>
