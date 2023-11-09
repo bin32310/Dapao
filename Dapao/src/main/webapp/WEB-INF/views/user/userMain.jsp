@@ -46,8 +46,10 @@
 	<c:forEach var="ad" items="${adList}">
 		<fieldset>
 			<form>
-				<a href="../ent/ent?ent_id=${ad.own_id }"><input type="text" value="/upload/${ad.ent_img }" name="ent_img"></a> <br>
-				<a href="../ent/ent?ent_id=${ad.own_id }"><input type="text" value="${ad.ent_name }" name="ent_name"> </a>
+				<a href="../ent/ent?ent_id=${ad.own_id }">
+					<img src="/imgfile/${ad.ent_img }" name="ent_img" width="150px" height="150px"> <br>
+					<input type="text" value="${ad.ent_name }" name="ent_name">
+				</a>
 			</form>
 		</fieldset>
 	</c:forEach> 
@@ -57,9 +59,11 @@
  		<c:forEach var="love" items="${loveList}">
 			<fieldset>
 				<form action="">
-					<a href="../item/itemDetail?it_no=${love.it_no }"> <input type="text" value="/upload/${love.it_img }" name="it_img"></a> <br>
-					<a href="../item/itemDetaiil?it_no=${love.it_no }"> <input type="text" value="${love.it_title }" name="it_title"></a> <br>
-					<input type="text" value="${love.it_price }" name="it_price">
+					<a href="../item/itemDetail?it_no=${love.it_no }">
+						<img src="/imgfile/${love.it_img }" name="it_img" width="150px" height="150px"> <br>
+						<input type="text" value="${love.it_title }" name="it_title"> <br>
+						<input type="text" value="${love.it_price }" name="it_price">
+					</a>
 				</form>
 			</fieldset>
 		</c:forEach> 
@@ -68,9 +72,11 @@
 	<h2> 인기 물건 둘러보기 </h2>
 	
  	<c:forEach var="item" items="${itemList}">
-		<a href="../item/itemDetail?it_no=${item.it_no }"><input type="text" value="/upload/${item.it_img }" name="it_img" > </a>
-		<a href="../item/itemDetail?it_no=${item.it_no }"><input type="text" value="${item.it_title }" name="it_title"> </a>
-		<a href="../item/itemDetail?it_no=${item.it_no }"><input type="text" value="${item.it_price }" name="it_price"> </a> <br><br>
+		<a href="../item/itemDetail?it_no=${item.it_no }">
+			<img src="/imgfile/${item.it_img }" name="it_img" width="150px" height="150px" > <br>
+			<input type="text" value="${item.it_title }" name="it_title"> <br>
+			<input type="text" value="${item.it_price }" name="it_price">
+		</a> 
 	</c:forEach>  
 	
 	<%@ include file="../include/userFooter.jsp" %>

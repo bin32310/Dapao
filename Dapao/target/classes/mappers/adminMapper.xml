@@ -221,7 +221,7 @@
 	<update id="acResultUserUpdate">
 		update us join ac on us.us_id = ac.ac_us_id 
 		set us.us_stopdate=date_add(now(), interval #{stop} day),ac.ac_result=#{ac_result},us.us_state=1, ac.ac_state=1 
-		where ac.ac_no=#{ac_no}
+		where ac.ac_no=#{zac_no}
 	</update>
 	
 	<!-- 신고관리 - 신고 user 처리상태 업뎃 -->
