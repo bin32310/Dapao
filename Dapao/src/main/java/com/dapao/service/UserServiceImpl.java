@@ -98,7 +98,7 @@ public class UserServiceImpl {
 		
 		
 		
-	
+	// 회원가입
 	public void userJoin(UserVO joinVO) {
 		logger.debug("userJoin(joinVO) 호출"); 
 		
@@ -128,11 +128,21 @@ logger.debug("sellList(String us_id) 호출");
 	}
 	
 	//마이페이지 내 리뷰 목록 조회
+	public List<ReviewVO> userReview(String rv_buy_id){
+		logger.debug("rv_buy_id  :  "+ rv_buy_id);
+		return udao.userReview(rv_buy_id);
+	}
 	
 	
-	
-	
-	
+	// 아이디 찾기 
+	public String userFindId(UserVO vo) {
+		logger.debug("userFindId(String us_id) 호출");   //4번
+		//디비동착 (DAO)에서 회원정보 조회
+		udao.userFindId(vo); // 위에서 받은 정보를 여기로 전달 5번
+			
+		return udao.userFindId(vo);
+		
+	}
 
  
 	

@@ -26,7 +26,7 @@
 	비밀번호 확인<input type="password" name="us_pw_ch"><br>
 	이름<input type="text" name="us_name"><br>
 	닉네임<input type="text" name="us_nickname"><br>
-	이메일<input type="text" name="us_email"><br>
+	이메일<input type="text" name="us_email" pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}"><br>
 	전화번호<input type="text" name="us_tel"><br>
 	주소<input type="text" name="us_addr"><br>
 		<input type="submit" value="회원가입하기">

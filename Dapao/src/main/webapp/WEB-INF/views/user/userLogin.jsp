@@ -40,8 +40,14 @@
 			<input type="button" value="회원가입 바로가기" 
 				onclick="location.href='/user/userJoin';">	
 		</form>
+		
 	
 	</fieldset>
+	
+	<input type="button" value="아이디찾기" 
+				onclick="location.href='/user/userFindId';">	
+		<input type="button" value="비밀번호찾기" 
+				onclick="location.href='/user/userFindPw';">	
 	
 <%@ include file="../include/userFooter.jsp" %> 
 

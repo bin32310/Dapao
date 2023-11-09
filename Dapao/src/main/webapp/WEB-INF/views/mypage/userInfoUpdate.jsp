@@ -43,17 +43,15 @@
 	<form action="" method="post" name="fr">
 	    닉네임<input type="text" name="us_nickname" value="${vo.us_nickname }"><br>
 	    아이디<input type="text" name="us_id" value="${vo.us_id }" readonly><br>
-		이름 <input type="text" name="us_name" value="${vo.us_name } "><br>
-		이메일 <input type="text" name="us_email" value="${vo.us_email }"><br>
+		이름 <input type="text" name="us_name" value="${vo.us_name }" readonly><br>
+		이메일 <input type="text" name="us_email" value="${vo.us_email }" readonly><br>
 		전화번호<input type="text" name="us_tel" value="${vo.us_tel }"><br>
 		주소<input type="text" name="us_addr" value="${vo.us_addr }"><br>
 		새 비밀번호 <input type="password" name="us_pw" placeholder="새 비밀번호를 입력하세요" ><br>
 		새 비밀번호확인<input type="password" name="us_pw" placeholder="새 비밀번호를 확인하세요" ><br>
 	   
-	 
-	    <button onclick="back()">뒤로가기</button>
-	    
-		<input type="submit" class="btn" value="회원정보 수정" onclick="">
+		<input type="submit" class="btn" value="회원정보 수정">
+		 <button onclick="back()">뒤로가기</button>
 	</form>
 </fieldset>
 </body>

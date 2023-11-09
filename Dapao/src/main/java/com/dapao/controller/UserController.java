@@ -16,9 +16,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -196,4 +199,81 @@ public class UserController {
 	 * 
 	 * }
 	 */
+	
+	//아이디 찾기
+	// http://localhost:8088/user/userFindId
+		@RequestMapping(value = "/userFindId", method = RequestMethod.GET)
+		public void userFindIdGET() {
+			logger.debug(" userFindIdGET()  호출 ");
+			logger.debug(" 연결된 뷰페이지로 이동 ");
+
+			
+		}
+		
+		
+		
+		// 아이디 찾기 POST 
+	
+	  @RequestMapping(value = "/userFindId", method = RequestMethod.POST)
+	  public String userFindIdPOST(HttpSession session, UserVO vo, Model model) throws Exception { 
+		  logger.debug(" userFindId2POST()  호출 ");
+	  logger.debug(" 연결된 뷰페이지로 이동 ");
+	  
+	  logger.debug("vo@@@@@@@@@@@@@@@@"+vo);
+	  
+	     String us_info="0";
+	     us_info=  uService.userFindId(vo);
+	     logger.debug("@@@@@@@@@@@@@@@"+us_info);
+	   
+	     
+	     logger.debug("info@@@@@@@@@@@@@@@@"+us_info);
+	  
+	    if(us_info == null) {
+	    	session.setAttribute("userFindId", "fail");	
+		    logger.debug("ddddddddddddddddddd");
+	    	
+	    }
+	    
+	    
+	    else{
+	    	model.addAttribute("us_id",us_info);
+	    	session.setAttribute("userFindId", "success");	
+	    	logger.debug("!!!!!!!!!!!!!!!!!!!!!!!!!");
+	    }
+	    return "redirect:/user/userFindId2";
+	    
+	   
+	 
+	
+	  }
+	
+	  
+	  
+	  @RequestMapping(value = "/userFindId2", method = RequestMethod.GET)
+	   public void userFindId2(@ModelAttribute("us_id") String us_id, Model model) throws Exception {
+		  
+		  	
+		  	model.addAttribute(us_id);
+		  
+	    }
+		
 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
