@@ -231,4 +231,9 @@
 		where ac.ac_no=#{acVo.ac_no}
 	</update>
 	
+	<!-- 신고관리 - 신고 글 쓰기 -->
+	<insert id="">
+	
+	</insert>
+	
 </mapper>	
