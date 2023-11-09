@@ -2,6 +2,7 @@ package com.dapao.domain;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,14 +23,13 @@ public class ItemVO { /* itemDTO */
 	private Integer it_view; // 글 조회수
 	private String it_con; // 상품 상태
 	private String it_cate; // 상품 카테고리
+	private String it_img; // 상품 대표사진
 	private Integer it_state; // 글 상태
 	private Date it_regdate; // 글 등록시간
 	private Date it_outdate; // 글 삭제시간
 	private Integer it_love; // 상품 찜수
-	private String it_img; // 상품 사진
 	
-
-	
+	private List<FileVO> fileList; // 사진 
 	
 	
 	

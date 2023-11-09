@@ -10,8 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.dapao.domain.FileVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.LoveVO;
+import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TotalVO;
 import com.dapao.domain.UserVO;
 
@@ -52,9 +54,50 @@ public class ItemDAOImpl{
 		
 		return sqlSession.selectOne(NAMESPACE + ".itemWriteCheck", us_id);
 	}
+
+	// 파일 업로드
+	public void insertFile(FileVO fileVO) {
+		logger.debug("DAOImpl : insertFile(ItemVO itemVO) 호출");
+		
+		sqlSession.insert(NAMESPACE + ".insertFile", fileVO);
+	}
+	
+	// 판매자 정보 조회 
+	public UserVO sellerInfo(String sellerId) {
+		logger.debug("DAOImpl : sellerInfo(String sellerId) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".sellerInfo", sellerId);
+		
+	}
+	
+	// 판매자 리뷰 조회 
+	public List<ReviewVO> sellerRv(ItemVO itemVO) {
+		logger.debug("DAOImpl : sellerRv(ItemVO itemVO) 호출");
+		return sqlSession.selectList(NAMESPACE + ".sellerRv", itemVO);
+		
+	}
+	
+	// 판매물품글 사진 조회 
+	public List<FileVO> itemFile(Integer it_no) {
+		logger.debug("DAOImpl : itemFile(Integer it_no) 호출");
+		return sqlSession.selectList(NAMESPACE + ".itemFile", it_no);
+		
+	}
+	
+	// 판매물품글 대표사진 조회 
+	public FileVO itemFileMain(Integer it_no) {
+		logger.debug("DAOImpl : itemFileMain(Integer it_no) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".itemFileMain", it_no);
+		
+	}
+	
+	// 판매물품글 대표사진 입력
+	public int itemFileMainInsert(FileVO vo) {
+		logger.debug("DAOImpl : itemFileMainInsert(FileVO vo) 호출");
+		return sqlSession.update(NAMESPACE + ".itemFileMainInsert", vo);
+	}
 	
 	// 판매물품글 조회 
-	public TotalVO itemDetail(Integer it_no) {
+	public ItemVO itemDetail(Integer it_no) {
 		logger.debug("DAOImpl : itemDetail(Integer it_no) 호출");
 		return sqlSession.selectOne(NAMESPACE + ".itemDetail", it_no);
 		
@@ -98,15 +141,15 @@ public class ItemDAOImpl{
 	}
 	
 	// 판매자 다른 물품
-	public List<ItemVO> sellerItem(TotalVO seller) {
-		logger.debug("DAOImpl : sellerItem(ItemVO seller) 호출");
-		return sqlSession.selectList(NAMESPACE + ".sellerItem", seller);
+	public List<ItemVO> sellerItem(ItemVO itemVO) {
+		logger.debug("DAOImpl : sellerItem(ItemVO itemVO) 호출");
+		return sqlSession.selectList(NAMESPACE + ".sellerItem", itemVO);
 	}
 
 	// 비슷한 물품 조회(같은 카테고리)
-	public List<ItemVO> sameCate(TotalVO item) {
-		logger.debug("DAOImpl : sameCate(String it_cate) 호출");
-		return sqlSession.selectList(NAMESPACE + ".sameCate", item);
+	public List<ItemVO> sameCate(ItemVO itemVO) {
+		logger.debug("DAOImpl : sameCate(ItemVO itemVO) 호출");
+		return sqlSession.selectList(NAMESPACE + ".sameCate", itemVO);
 	}
 	
 	// 판매자 프로필

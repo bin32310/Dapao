@@ -22,12 +22,15 @@
 	<h1>검색시 나타나는 페이지</h1>
 	
 	<c:forEach var="it" items="${cateItemVO}">
-		<form action="">
-			<a href="../item/itemDetail?it_no=${it.it_no }">이미지</a> 
-			<a href="../item/itemDetail?it_no=${it.it_no }">${it.it_title}</a> 
-			<a href="../item/itemDetail?it_no=${it.it_no }">${it.it_price}</a>
-			<a href="../item/itemDetail?it_no=${it.it_no }">${it.it_regdate}</a> <br> 
-		</form>
+		<div>
+			<a href="../item/itemDetail?it_no=${it.it_no }">
+				<img src="/imgfile/${it.it_img }" width="150px" height="150px"> <br>
+				<input type="text" value="${it.it_title}">  <br>
+				<input type="text" value="${it.it_price}">
+				<input type="text" value="${it.it_regdate}">
+			</a>
+		</div>
+		<br>
 	</c:forEach>
 
 <%@ include file="../include/userFooter.jsp" %>

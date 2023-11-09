@@ -16,31 +16,44 @@
 	<c:if test="${!empty us_id }">
 		<%@ include file="../include/userLoginHeader.jsp" %>
 	</c:if>
-	
+
+
+		<div id ="uploadResult">
+			<ul></ul>
+		</div>
+
+
+
 	<fieldset>
 		<form action=""  method="post">
-			<c:if test="${!empty us_id }">
-				<input type="button" value="신고하기" onclick="location.href='/ac/writeForm?it_no=${itemVO.it_no}';"> <br>
-			</c:if>
-			상품번호 <input type="text" value="${itemVO.it_no }" name="it_no"> <br>
-			<a>이미지 사진</a>
-			<input type="text" value="${itemVO.it_img }" name="it_img"> <br>
+
 			
- 			<input type="text" value="${itemVO.it_title }" name="it_title"> <br>
+			<c:if test="${!empty us_id && itemVO.us_id != us_id}">
+				<input type="button" value="신고하기" onclick="location.href='/admin/ac/writeForm?it_no=${itemVO.it_no}';"> <br>
+			</c:if>
+			
+			<input type="hidden" value="${itemVO.it_no }" name="it_no"> <br>
+
+			
+ 			<input type="text" value="${itemVO.it_title }" name="it_title">
 			<input type="text" value="${itemVO.it_price }" name="it_price"> <br>
-			<input type="text" value="${itemVO.it_love }" name="it_love"> <br>
-			<input type="text" value="${itemVO.it_view }" name="it_view"> <br>
-			<input type="text" value="${itemVO.it_regdate }" name="it_regdate"> <br>
+			찜수 <input type="text" value="${itemVO.it_love }" name="it_love"> | 
+			조회수 <input type="text" value="${itemVO.it_view }" name="it_view">  | 
+			등록일 <input type="text" value="${itemVO.it_regdate }" name="it_regdate"> <br>
+			
+				
+			판매자 <a href="/item/yourPage?us_id=${itemVO.us_id }" >
+			<input type="text" value="${sellerVO.us_nickname }" name="us_id"> </a> <br>
+			카테고리 <input type="text" value="${itemVO.it_cate }" name="it_cate"> <br>
 			상품상태 <input type="text" value="${itemVO.it_con }" name="it_con"> <br>
-			<input type="text" value="${itemVO.it_cate }" name="it_cate"> <br>
-			<input type="text" value="${itemVO.us_addr }" name="us_addr"> <br> 
+			<input type="text" value="${sellerVO.us_addr }" name="us_addr"> <br> 
 			
 			<input type="hidden" value="${itemVO.us_id }" name="us_id"> <br>
 			
 			<c:if test="${empty us_id }">
 				<input type="button" value="로그인하고 구매하기" id="login_buy">
 			</c:if>
-			<c:if test="${!empty us_id }">
+			<c:if test="${!empty us_id && itemVO.us_id != us_id}">
 				<input type="button" value="찜" id="addLoveBtn"> 
 				<input type="hidden" value="${love}" id="love_value"> 
 				<input type="button" value="판다톡"> 
@@ -51,34 +64,45 @@
 	</fieldset>
 	
 	<form action="">
-	
 		상세 내용 <br>
 		<textarea rows="10" cols="10">${itemVO.it_content}</textarea>
 	</form>
 	
-	<a href="/item/yourPage?us_id=${itemVO.us_id }" > 판매자 프로필 보러가기 </a>
-	
-	
-	<a>판매자의 다른 상품도 보기</a>
+	<br><hr><br>
 
-	<c:forEach var="si" items="${sellerItemVO}">
-		<form action="">
-		상품번호(나중에 지우기) <br>  <input type="text" value="${si.it_no }" name="it_no"> <br>
-			<a href="../item/itemDetail?it_no=${si.it_no }"><input type="text" value="${si.it_img }" name="it_img"> </a> <br>
-			<a href="../item/itemDetail?it_no=${si.it_no }"><input type="text" value="${si.it_title }" name="it_title"> </a> <br>
-		</form>
-	</c:forEach>
 	
+	<br><hr><br>
+	<a>판매자의 다른 상품도 보기</a>
+	<table border="1">
+		<c:forEach var="si" items="${sellerItemVO}">
+			<input type="hidden" value="${si.it_no }" name="it_no"> <br>
+			<tr>
+				<td  id ="uploadSeller">
+					<img src="/imgfile/${si.it_img }" width="150px" height="150px">
+				</td>
+				<td>
+					<a href="../item/itemDetail?it_no=${si.it_no }"><input type="text" value="${si.it_title }" name="it_title"> </a>
+				</td>
+		</c:forEach>
+	</table>	
 	
+	<br><hr><br>
 	<a>비슷한 상품 둘러보기</a>
+	<table border="1">
+		<c:forEach var="sc" items="${sameCateVO}">
+			<input type="hidden" value="${sc.it_no }" name="it_no">
+			<tr>
+				<td id ="uploadCate">
+					<img src="/imgfile/${sc.it_img }" width="150px" height="150px">
+				</td>
+				<td>
+					<a href="../item/itemDetail?it_no=${sc.it_no }">${sc.it_title }</a>
+				</td>
+			</tr>
+		</c:forEach> 	
+	</table>
 	
-	<c:forEach var="sc" items="${sameCateVO}">
-		<form action="">
-			상품번호(나중에 지우기) <br> <input type="text" value="${sc.it_no }" name="it_no"> <br>
-			<a href="../item/itemDetail?it_no=${sc.it_no }"><input type="text" value="${sc.it_img }" name="it_img"> </a> <br>
-			<a href="../item/itemDetail?it_no=${ssci.it_no }"><input type="text" value="${sc.it_title }" name="it_title"> </a> <br>
-		</form>
-	</c:forEach> 
+
 	
 	<%@ include file="../include/userFooter.jsp" %>
 	
@@ -88,12 +112,13 @@
 
 $(document).ready(function(){
 	
+	//var path = "F:\\upload" + ${si.it_img };
+	//console.log(path);
+	//$("#img src").html(path);
 	
-
-	
-	
+	var str="";
 	var love = ${love};
-	console.log(love);
+	console.log("love : " + love);
 	
 	// 처음 찜 여부 확인 
 	if(love == 0){
@@ -103,11 +128,42 @@ $(document).ready(function(){
 		$('#addLoveBtn').attr("value","찜취소");
 	}
 	
+	// 파일 확인
+	
+	var it_no=$("input[name='it_no']").val();
+	//alert(it_no);
+	
+	// 물건 상세 사진 확인 -콜백함수
+	$.getJSON("/item/itemFile",{it_no:it_no},function(data){ 
+	
+				//alert("실행");
+				console.log("function");
+				console.log(data);
+				
+				
+				$(data).each(function(i,file){
+					console.log("반복");
+					if(file.image){
+						console.log("if");
+						var filePath = encodeURIComponent(file.uploadPath + "/s_" + file.uuid+"_"+file.fileName);
+						console.log(filePath);
+						//src="/display?fileName='filePath'"
+						str += "<img src='/item/display?fileName="+filePath+"'>";		
+					}else{
+						console.log("else");
+						var filePath = encodeURIComponent(file.uploadPath+"/"+file.uuid+"_"+file.fileName);
+						//str+="<li><a href='/item/download?fileName="+filePath"'>"+file.fileName+"</a></li>";
+					}
+				}); // data.each
+				console.log("@@str : ");
+				console.log(str);
+				$("#uploadResult ul").html(str);
+	});// getJSON 
 	
 
 	// 찜버튼 클릭 
 	$('#addLoveBtn').on("click", function(){
-		alert("찜버튼클릭");
+		//alert("찜버튼클릭");
 		
 		var love_value = $("input[id='love_value']").val();
 		var it_no = $("input[name='it_no']").val();
@@ -139,7 +195,7 @@ $(document).ready(function(){
 					} //else
 				}
 			} // success 끝	
-		}) // ajax 끝
+		}); // ajax 끝
 
 	});
 	

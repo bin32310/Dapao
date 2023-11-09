@@ -4,6 +4,7 @@ package com.dapao.domain;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.Data;
 @Data
@@ -30,5 +31,7 @@ public class UserVO {/*UserDTO*/
 	private Integer us_account; // 신고 누적 횟수(기본값 0)
 	private Integer us_stop; // 정지 횟수(기본값 0)
 
+//	private ItemVO itemvo; // itemvo
+//	private List<ReviewVO> reviewList; // List<ReviewVO>
 	
 }
