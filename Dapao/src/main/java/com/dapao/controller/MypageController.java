@@ -36,7 +36,9 @@ import com.mysql.cj.Session;
 @RequestMapping("/mypage/*")
 public class MypageController {
    
+	
       private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
+      
       
       
       @Inject
@@ -149,7 +151,7 @@ public class MypageController {
       //http://localhost:8088/mypage/userSellList
       // 마이페이지 내 판매글 보기
       @RequestMapping(value = "/userSellList", method = RequestMethod.GET)
-      public void getList(HttpSession session, Model model) throws Exception{
+      public void userSellList(HttpSession session, Model model) throws Exception{
 		
     		// 세션 아이디 확인
 			String us_id = (String)session.getAttribute("us_id");
@@ -169,7 +171,19 @@ public class MypageController {
       }
       
       
-      //마이페이지 내가 쓴 리뷰 판매자유형(사업자 / 회원) 선택 페이지
+      //마이페이지 내가 쓴 리뷰 목록
+      @RequestMapping(value = "/userReview",method = RequestMethod.GET)
+      public void userReview(HttpSession session, Model model)throws Exception{
+    	  
+    	  String rv_buy_id = (String)session.getAttribute("us_id");
+    	  logger.debug(" us_id  : " + rv_buy_id);
+    	  
+    	  List<ReviewVO> resultVO = uService.userReview(rv_buy_id);
+    	  logger.debug("resultVO" + resultVO);
+    	  
+    	  model.addAttribute("userReview", resultVO);
+    	  
+      }
       
       
     	  

@@ -71,6 +71,17 @@ function confirmPassword() {
 	
 	 -->
 	
+<!-- 	<script>
+    var msg = '${msg}';
+    if(msg === '비밀번호를 다시 확인해 주세요.') {
+        alert("비밀번호를 다시 확인해 주세요.");
+    }
+</script>
+	
+	 -->
+	
+	
+	
 	
 		<a href="/mypage/userSellList">판매 목록 </a>
 		<a href="/mypage/userBuy">구매 목록 </a>
@@ -87,6 +98,7 @@ function confirmPassword() {
 				닉네임 : <input type="text" name="us_nickname" value = "${infoVO.us_nickname }" readonly><br>
 				아이디 : <input type="text" name="us_id" value = "${infoVO.us_id }" readonly><br>
 				이메일 : <input type="text" name="us_email" value = "${infoVO.us_email }" readonly><hr>
+			  전화번호 : <input type="text" name="us_tel" value = "${infoVO.us_tel }" readonly><hr>
 				  주소 : <input type="text" name="us_addr" value = "${infoVO.us_addr }" readonly><br>
 				가입일 : <input type="text" name="us_regdate" value = "${infoVO.us_regdate }" readonly><br>
 		  신고누적횟수 : <input type="text" name="us_account" value = "${infoVO.us_account }" readonly><br>

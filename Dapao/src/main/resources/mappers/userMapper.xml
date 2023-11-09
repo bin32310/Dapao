@@ -150,9 +150,20 @@
 		
 	<!-- 마이페이지 내 리뷰 목록 불러오기 -->
 	<select id="userReview" resultType="ReviewVO">
-		select 
+		select rv_no, rv_own_id, rv_us_id, rv_content, rv_star, rv_regdate 
+		from review 
+		where rv_buy_id=#{us_id}
 	</select>
-
+	
+	
+	<!-- 아이디 찾기 -->
+	<select id="userFindId" resultType="String">
+		select us_id 
+        from us 
+        where us_name=#{us_name} and us_tel=#{us_tel}
+	
+	</select>
+	
 
 </mapper>
 

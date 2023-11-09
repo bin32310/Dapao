@@ -165,15 +165,22 @@ public class UserDAOImpl  {
 
 
 		// 마이페이지 내 리뷰 목록 조회
-	
+	public List<ReviewVO> userReview(String rv_buy_id){
+		logger.debug("@@@@@@@@@@@@@@@@us_id"+rv_buy_id);
+		return sqlSession.selectList(NAMESPACE+".userReview", rv_buy_id);
+		
+		
+		
+	}
+
+    // 아이디 찾기 
+	public String userFindId(UserVO vo) {
+		System.out.println(" DAOImpl : getuserFindId vo "+ vo);
+		
+		return sqlSession.selectOne(NAMESPACE + ".userFindId",vo);
+	}
 
 
-//	public String userInfoCheck(String us_id) throws Exception {
-//		logger.debug("userInfoCheck(String us_id) 호출");
-	//	return sqlSession.selectOne(NAMESPACE+ ".userInfoCheck", us_id);
-	//}
-
-	
 	
 	
 	
