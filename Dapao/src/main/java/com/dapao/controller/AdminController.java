@@ -365,18 +365,18 @@ public class AdminController {
 		return aService.acInfo(ac_no);
 	}
 	
-	// 신고관리 - 접수 처리하기
-	@RequestMapping("/acHandling")
-	@ResponseBody
-	public int acHandling(@RequestParam("ac_no") Integer ac_no) throws Exception{
-		logger.debug("acHandling() 호출");
-		return aService.acHandling(ac_no);
-	}
+//	// 신고관리 - 접수 처리하기
+//	@RequestMapping("/acHandling")
+//	@ResponseBody
+//	public int acHandling(@RequestParam("ac_no") Integer ac_no) throws Exception{
+//		logger.debug("acHandling() 호출");
+//		return aService.acHandling(ac_no);
+//	}
 	
 	// 신고관리 - 신고 처리상태 업뎃
 	@ResponseBody
 	@RequestMapping("/acResultUpdate")
-	public int acResultUserUpdate(AcVO acVo, EntVO entVo,UserVO userVo, String id,String stop) throws Exception {
+	public int acResultUserUpdate(AcVO acVo, String id,String stop) throws Exception {
 		logger.debug("acResultUpdate() 호출");
 		logger.debug("acVo1 : "+acVo);
 		logger.debug("id : "+id);
@@ -386,11 +386,11 @@ public class AdminController {
 		String ac_own_id = aService.acResultSelectOwnerId(acVo);
 		String ac_us_id = aService.acResultSelectUserId(acVo);
 		if (ac_own_id != null || ac_own_id == id) {
-			return aService.acResultOwnerUpdate(acVo,entVo,stop);
+			return aService.acResultOwnerUpdate(acVo,stop);
 		}
 //		if(ac_us_id != null || ac_us_id == id) {
 //			logger.debug("acVo2 : "+acVo);
-			return aService.acResultUserUpdate(acVo,userVo,stop);
+			return aService.acResultUserUpdate(acVo,stop);
 //		}
 //		return 0;
 	}

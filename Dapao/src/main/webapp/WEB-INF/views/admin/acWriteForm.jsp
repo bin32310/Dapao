@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp" %>
 
-	<h1>/admin/FAOWriteFrom.jsp.jsp</h1>
+	<h1>/admin/acWriteForm.jsp</h1>
 
 <div class="box box-primary">
 	<div class="box-header with-border">
@@ -75,7 +75,8 @@
 				},
 				dataType : "json",
 				success : function(data){
-					
+					alert("접수되었습니다");
+					location.replace("/admin/acList");
 				}
 				
 			});//write click ajax

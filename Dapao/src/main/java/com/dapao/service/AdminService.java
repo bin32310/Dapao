@@ -113,11 +113,13 @@ public interface AdminService {
 	public String acResultSelectOwnerId (AcVO vo) throws Exception;
 	
 	// 신고관리 - 신고 처리상태 업뎃(user)
-	public int acResultUserUpdate(AcVO acVo,UserVO userVo,String stop) throws Exception;
+	public int acResultUserUpdate(AcVO acVo,String stop) throws Exception;
 	
 	// 신고관리 - 신고 처리상태 업뎃(owner)
-	public int acResultOwnerUpdate(AcVO acVo,EntVO entVo,String stop) throws Exception;
+	public int acResultOwnerUpdate(AcVO acVo,String stop) throws Exception;
 
+	//신고관리 - 신고 글 쓰기
+	public int acWrite(AcVO vo) throws Exception;
 	
 
 }
