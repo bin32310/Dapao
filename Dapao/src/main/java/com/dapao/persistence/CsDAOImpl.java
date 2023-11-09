@@ -26,11 +26,44 @@ public class CsDAOImpl {
 		logger.debug("userNticeCount() 호출");
 		return sqlSession.selectOne(NAMESPACE+".userNoticeCount");
 	}
-	
+		
 	// 회원이보는 공지사항리스트
 	public List<CsVO> userNoticeList(Criteria cri) throws Exception{
 		logger.debug("userNoticeList() 호출");
 		return sqlSession.selectList(NAMESPACE+".userNoticeList", cri);
 	}
+	
+	// 공지사항 조회수 1증가
+	public int notiViewUp(Integer cs_no) throws Exception{
+		return sqlSession.update(NAMESPACE+".notiViewUp", cs_no);
+	}
+	
+	// 회원이 공지사항 클릭시 공지사항상세페이지
+	public CsVO userNotice(Integer cs_no) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+".userNotice", cs_no);
+	}
+	
+	// 회원이보는 faq리스트 수
+	public int userFAQCount() throws Exception{
+		logger.debug("userFAQCount() 호출");
+		return sqlSession.selectOne(NAMESPACE+".userFAQCount");
+	}
+	
+	// 회원이보는 faq리스트
+	public List<CsVO> userFAQList(Criteria cri) throws Exception{
+		logger.debug("userFAQList() 호출");
+		return sqlSession.selectList(NAMESPACE+".userFAQList", cri);
+	}
+	
+	// 사업자가보는 공지사항리스트 수
+	public int ownNoticeCount() throws Exception{
+		return sqlSession.selectOne(NAMESPACE+".ownNoticeCount");
+	}
+		
+	// 사업자가보는 공지사항리스트
+	public List<CsVO> ownNoticeList(Criteria cri) throws Exception{
+		return sqlSession.selectList(NAMESPACE+".ownNoticeList", cri);
+	}
+
 	
 }

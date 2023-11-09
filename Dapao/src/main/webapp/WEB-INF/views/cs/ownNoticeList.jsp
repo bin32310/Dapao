@@ -25,7 +25,12 @@
 				<c:forEach var="list" items="${noticeList }">
 					<tr role="row" class="odd">
 						<td>${list.cs_no }</td>
-						<td><a class="noticeList" href='/cs/userNotice?page=${param.page }&cs_no=${list.cs_no }'>${list.cs_title }</a></td>
+						<c:if test="${not empty param.page }">
+							<td><a class="noticeList" href='/cs/ownNotice?page=${param.page }&cs_no=${list.cs_no }'>${list.cs_title }</a></td>
+						</c:if>
+						<c:if test="${empty param.page }">
+							<td><a class="noticeList" href='/cs/ownNotice?cs_no=${list.cs_no }'>${list.cs_title }</a></td>
+						</c:if>
 						<td>${list.cs_regdate }</td>
 					</tr>
 				</c:forEach>
@@ -38,15 +43,15 @@
 		<ul class="pagination pagination-sm no-margin pull-right">
 
 			<c:if test="${pageVO.prev }">
-				<li><a href="/cs/userNoticeList?page=${pageVO.startPage-1 } ">←</a></li>
+				<li><a href="/cs/ownNoticeList?page=${pageVO.startPage-1 } ">←</a></li>
 			</c:if>
 
 			<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
-				<li ${pageVO.cri.page == i? 'class="active"':'' }><a href="/cs/userNoticeList?page=${i }">${i }</a></li>
+				<li ${pageVO.cri.page == i? 'class="active"':'' }><a href="/cs/ownNoticeList?page=${i }">${i }</a></li>
 			</c:forEach>
 
 			<c:if test="${pageVO.next }">
-				<li><a href="/cs/userNoticeList?page=${pageVO.endPage+1 }">→</a></li>
+				<li><a href="/cs/ownNoticeList?page=${pageVO.endPage+1 }">→</a></li>
 			</c:if>
 		</ul>
 	</div>

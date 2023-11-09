@@ -17,7 +17,17 @@
 		<span id="title">${notice.cs_title }</span> <span id="view">조회수 : ${notice.cs_view }</span>
 	</div>
 	<div class="content">${notice.cs_content }</div>
-	<button type="button" id="listBtn" onclick="location.href='/cs/userNoticeList?page=${page}'">목록가기</button>
+	<c:choose>
+		<c:when test="${not empty param.page }">
+			<button type="button" id="listBtn" onclick="location.href='/cs/ownNoticeList?page=${page}'">목록가기</button>
+		</c:when>
+		<c:when test="${empty param.page }">
+			<button type="button" id="listBtn" onclick="location.href='/cs/ownNoticeList'">목록가기</button>
+		</c:when>
+	</c:choose>
+	
+
+	
 </div>
 
 
