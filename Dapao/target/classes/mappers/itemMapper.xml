@@ -171,4 +171,19 @@
   </select>
   
   
+  <update id="coinCharge">
+  	update us set us_coin = us_coin + #{pay_price} 
+  	where us_id = #{us_id } 
+  </update>
+  
+  <insert id="coinChargePay">
+  	insert into pay(imp_uid ,pay_uid ,pay_kind ,pay_price ,us_id ,pay_con ,pay_pg, pay_card, pay_method) 
+  	values(#{imp_uid },#{pay_uid },#{pay_kind },#{pay_price },#{us_id },#{pay_con },#{pay_pg},#{pay_card},#{pay_method})
+  </insert>
+  
+  <select id="userCoin" resultType="Integer">
+  	select us_coin from us 
+  	where us_id=#{us_id}
+  </select>
+  
   </mapper>
