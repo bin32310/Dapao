@@ -17,6 +17,8 @@ import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.ExpVO;
+import com.dapao.domain.ItemVO;
+import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 
@@ -257,11 +259,18 @@ public class AdminDAOImpl implements AdminDAO {
 		return sqlSession.update(NAMESPACE+".acResultOwnerUpdate", vo);
 	}
 	
-	//신고관리 - 신고 글 쓰기
+	//신고관리 - 신고 user 글 쓰기
 	@Override
-	public int acWrite(AcVO vo) throws Exception {
-		logger.debug("DAO :  acWrite(AcVO vo) 호출");
-		return sqlSession.insert(NAMESPACE+".acWrite",vo);
+	public int acUserWrite(AcVO vo) throws Exception {
+		logger.debug("DAO :  acUserWrite(AcVO vo) 호출");
+		return sqlSession.insert(NAMESPACE+".acUserWrite",vo);
+	}
+	
+	//신고관리 - 신고 owner 글 쓰기
+	@Override
+	public int acOwnerWrite(AcVO vo) throws Exception {
+		logger.debug("DAO :  acOwnerWrite(AcVO vo) 호출");
+		return sqlSession.insert(NAMESPACE+".acOwnerWrite",vo);
 	}
 	
 	// 체험단관리 - 체험단 리스트

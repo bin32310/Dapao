@@ -16,6 +16,8 @@ import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.ExpVO;
+import com.dapao.domain.ItemVO;
+import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 import com.dapao.persistence.AdminDAO;
@@ -242,11 +244,18 @@ public class AdminServiceImpl implements AdminService{
 		return adao.acResultOwnerUpdate(acVo, stop);
 	}
 	
-	//신고관리 - 신고 글 쓰기
+	//신고관리 - 신고 user 글 쓰기
 	@Override
-	public int acWrite(AcVO vo) throws Exception {
-		logger.debug("service : acWrite(AcVO vo) 호출");
-		return adao.acWrite(vo);
+	public int acUserWrite(AcVO vo) throws Exception {
+		logger.debug("service : acUserWrite(AcVO vo) 호출");
+		return adao.acUserWrite(vo);
+	}
+	
+	//신고관리 - 신고 user 글 쓰기
+	@Override
+	public int acOwnerWrite(AcVO vo) throws Exception {
+		logger.debug("service : acOwnerWrite(AcVO vo) 호출");
+		return adao.acOwnerWrite(vo);
 	}
 	
 	// 체험단관리 - 체험단 리스트
