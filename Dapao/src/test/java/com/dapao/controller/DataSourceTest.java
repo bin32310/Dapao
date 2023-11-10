@@ -15,7 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dapao.domain.AcVO;
-import com.dapao.persistence.AdminDAO;
+import com.dapao.persistence.AdminDAOImpl;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,7 +28,7 @@ public class DataSourceTest {
 	@Inject
 	private DataSource ds;
 	@Inject
-	private AdminDAO adao;
+	private AdminDAOImpl adao;
 	
 	//@Test
 	public void ds_test() {

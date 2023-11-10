@@ -11,25 +11,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dapao.domain.AcVO;
-import com.dapao.domain.AdVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.ExpVO;
-import com.dapao.domain.ItemVO;
 import com.dapao.domain.PageVO;
 import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
-import com.dapao.service.AdminService;
+import com.dapao.service.AdminServiceImpl;
 
 @Controller
 @RequestMapping("/admin/*")
@@ -38,7 +35,7 @@ public class AdminController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
 	@Inject
-	private AdminService aService;
+	private AdminServiceImpl aService;
 
 	// 회원관리 - 모든회원리스트정보출력 ( 페이징처리 + 페이지블럭처리 )
 	// http://localhost:8088/admin/userList
