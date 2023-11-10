@@ -1,14 +1,8 @@
 package com.dapao.domain;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.List;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 
 @Data

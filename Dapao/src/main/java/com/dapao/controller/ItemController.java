@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dapao.domain.FileVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.LoveVO;
+import com.dapao.domain.PayVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 import com.dapao.service.ItemServiceImpl;
@@ -506,12 +507,12 @@ public class ItemController {
 	public void yourPageGET(String us_id, Model model) throws Exception {
 		logger.debug("yourPageGET() 호출");
 		
-		UserVO userVO = iService.yourInfo(us_id);
-		logger.debug("userVO : " + userVO );
+		UserVO yourVO = iService.yourInfo(us_id);
+		logger.debug("yourVO : " + yourVO );
 		List<ItemVO> itemVO = iService.yourItem(us_id);
 		logger.debug("@@itemVO : " + itemVO );
 		
-		model.addAttribute("yourInfo", userVO);
+		model.addAttribute("yourInfo", yourVO);
 		model.addAttribute("yourItemVO", itemVO);
 		
 		
@@ -523,40 +524,52 @@ public class ItemController {
 	// http://localhost:8088/item/coinCharge
 	// 대나무페이 충전 GET - 충전페이지로 이동 
 	@RequestMapping(value = "/coinCharge", method = RequestMethod.GET)
-	public void coinChargeGET() throws Exception {
+	public void coinChargeGET(HttpSession session, Model model) throws Exception {
 		logger.debug("coinChargeGET() 호출");
+		
+		// 세션 아이디
+		String us_id = (String)session.getAttribute("us_id");
+		UserVO userVO = uService.userInfo(us_id);
+		model.addAttribute("userVO", userVO);
 		
 		
 	}
 
 	// 대나무페이 충전 POST - 충전금액 입력
+	@ResponseBody
 	@RequestMapping(value = "/coinCharge", method = RequestMethod.POST)
-	public String coinChargePOST(HttpSession session, Model model, @ModelAttribute Integer coinCharge) throws Exception {
+	public void coinChargePOST(HttpSession session, Model model, PayVO payVO) throws Exception {
 		logger.debug("coinChargePOST() 호출");
 		
 		// 세션 아이디, 코인 금액, url
 		String us_id = (String)session.getAttribute("us_id");
 		Integer us_coin = (Integer)session.getAttribute("us_coin");
-		String url = (String)session.getAttribute("URL");
-		logger.debug("@@회원 아이디 확인 : " + us_id);
-		logger.debug("@@코인금액 확인 : " + us_coin);
-		logger.debug("@@충전금액 확인 : " + coinCharge);
+		//String url = (String)session.getAttribute("URL");
+		logger.debug("회원 아이디 확인 : " + us_id);
+		logger.debug("충전전 코인금액 확인 : " + us_coin);
 		
-		Integer total_price = us_coin + coinCharge;
-		logger.debug("@@코인 총금액 확인 : " + total_price);
+		logger.debug("@@payVO : " + payVO );
+		payVO.setUs_id(us_id);
+		payVO.setPay_kind("대나무페이");
+		payVO.setPay_con("결제완료");
+		logger.debug("@@@@@payVO : " + payVO );
 		
-		// 서비스 -> DAO 호출 : 판매글 조회
-		//ItemVO itemVO = iService.itemDetail(it_no);
-		//logger.debug("@@판매글 정보 : " + itemVO);
+		// 코인충전
+		int us_result = iService.coinCharge(payVO);
+		logger.debug(" us_result(성공시 1) : " + us_result);
 		
-		// 연결된 뷰페이지에 출력 => 컨트롤러의 정보를 view 페이지로 전달
-		// Model 객체를 사용
-		// model.addAttribute("itemVO", itemVO);
+		// 코인값 저장
+		us_coin = iService.userCoin(us_id);
+		session.setAttribute("us_coin", us_coin);
+		logger.debug("충전후 코인금액 확인 : " + us_coin);
 		
 		
-		logger.debug("연결된 뷰페이지(views/item/itemDetail.jsp)를 출력");
-		return "redirect:/item/url";
-		
+		// 결제 정보 입력
+		int pay_result = iService.coinChargePay(payVO);
+		logger.debug(" us_result : " + pay_result);
+		logger.debug("결제 리스트나 이전 uri로 이동");
+	
+	
 	}
 	
 	
