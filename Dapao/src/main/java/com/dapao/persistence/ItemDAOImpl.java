@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.dapao.domain.FileVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.LoveVO;
+import com.dapao.domain.PayVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TotalVO;
 import com.dapao.domain.UserVO;
@@ -102,7 +103,6 @@ public class ItemDAOImpl{
 		return sqlSession.selectOne(NAMESPACE + ".itemDetail", it_no);
 		
 	}
-	
 
 	// 찜 여부 확인
 	public int itemLove(ItemVO itemLove) {
@@ -164,7 +164,28 @@ public class ItemDAOImpl{
 		logger.debug("DAOImpl : yourItem(String us_id) 호출");
 		return sqlSession.selectList(NAMESPACE + ".yourItem", us_id);
 	}
+	
+	// 코인충전
+	public int coinCharge(PayVO payVO) {
+		logger.debug("DAOImpl : coinCharge(PayVO payVO) 호출");
+		return sqlSession.update(NAMESPACE + ".coinCharge", payVO);
+		
+	}
+	
+	// 코인 충전 결제 내역
+	public int coinChargePay(PayVO payVO) {
+		logger.debug("DAOImpl : coinChargePay(PayVO payVO) 호출");
+		return sqlSession.update(NAMESPACE + ".coinChargePay", payVO);
+		
+	}
 
+	// 코인 가격 불러오기
+	public int userCoin(String us_id) {
+		logger.debug("DAOImpl : userCoin(String us_id) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".userCoin", us_id);
+		
+	}
+	
 	
 	
 	

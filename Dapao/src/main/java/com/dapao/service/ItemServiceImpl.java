@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.dapao.domain.FileVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.LoveVO;
+import com.dapao.domain.PayVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TotalVO;
 import com.dapao.domain.UserVO;
@@ -171,7 +172,25 @@ public class ItemServiceImpl {
 		return idao.yourItem(us_id);
 	}
 	
+	// 코인충전
+	public int coinCharge(PayVO payVO) {
+		logger.debug("Service : coinCharge(PayVO payVO) 호출");
+		return idao.coinCharge(payVO);
+		
+	}
 	
+	// 코인충전 결제 내역
+	public int coinChargePay(PayVO payVO) {
+		logger.debug("Service : coinChargePay(PayVO payVO) 호출");
+		return idao.coinChargePay(payVO);
+		
+	}
+	
+	// 코인충전 결제 내역
+	public int userCoin(String us_id) {
+		logger.debug("Service : userCoin(String us_id) 호출");
+		return idao.userCoin(us_id);
+	}
 	
 	
 	
