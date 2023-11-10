@@ -343,7 +343,12 @@ public class AdminController {
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
 		pageVO.setTotalCount(aService.itemCount());
+		
+		List<ItemVO> itemList = aService.itemList(cri);
 
+		model.addAttribute("itemList", itemList);	
+	}
+	
 	// 신고관리 - 신고 리스트
 	@RequestMapping("/acList")
 	public void acList(Criteria cri, Model model, Integer ac_no,Integer ac_item) throws Exception{
@@ -362,10 +367,13 @@ public class AdminController {
 			// 잘못된 페이지 정보 입력
 			cri.setPage(pageVO.getEndPage());
 		}
+		
+		List<AcVO> acList = aService.acList(cri);
+		logger.debug("" + acList);
 
-		List<ItemVO> itemList = aService.itemList(cri);
+		model.addAttribute("vo", acList);
 
-		model.addAttribute("itemList", itemList);		
+	
 	}
 	
 	// 회원상품 삭제처리
@@ -375,6 +383,7 @@ public class AdminController {
 		// 회원상품테이블 상태변경(update)	
 		return aService.itemDelete(it_no);
 	}
+	
 	
 	// 사업자상품관리리스트
 	// http://localhost:8088/admin/prodList?
@@ -386,10 +395,9 @@ public class AdminController {
 		pageVO.setCri(cri);
 		pageVO.setTotalCount(aService.prodCount());
 
-		List<AcVO> acList = aService.acList(cri);
-		logger.debug("" + acList);
+		List<ProdVO> prodList = aService.prodList(cri);
 
-		model.addAttribute("vo", acList);
+		model.addAttribute("prodList", prodList);	
 		
 	}
 	
@@ -470,9 +478,11 @@ public class AdminController {
 			cri.setPage(pageVO.getEndPage());
 		}
 
-		List<ProdVO> prodList = aService.prodList(cri);
+		List<ExpVO> expList = aService.expList(cri);
+		logger.debug("" + expList);
 
-		model.addAttribute("prodList", prodList);		
+		model.addAttribute("vo", expList);
+	
 	}
 
 	// 사업자상품 삭제처리
@@ -480,12 +490,10 @@ public class AdminController {
 	@RequestMapping(value="/prodDelete")
 	public int prodDelete(@RequestParam("prod_no") Integer prod_no) throws Exception{
 		// 회원상품테이블 상태변경(update)	
+		
+	
+		
 		return aService.prodDelete(prod_no);
-	}
-		List<ExpVO> expList = aService.expList(cri);
-		logger.debug("" + expList);
-
-		model.addAttribute("vo", expList);
 		
 	}
 	
