@@ -3,21 +3,21 @@
 <%@include file="../include/header.jsp" %>
 
 	<h1>/admin/acWriteForm.jsp</h1>
-
+	 
 <div class="box box-primary">
 	<div class="box-header with-border">
 		<h3 class="box-title">신고 글쓰기</h3>
 	</div>
-	<form action="/admin/csWrite " method="post" role="form">
+	<form action="/admin/acWrite " method="post" role="form">
 		<div class="box-body">
 			<div class="row">
 				<div class="col-lg-6">
 					<label>신고자</label>
-					<input type="text" class="form-control" name="id" value="${us_id }">
+					<input type="text" class="form-control" name="us_id" value="${us_id }">
 				</div>
 				<div class="col-lg-6">
 					<label>피신고자</label>
-					<input type="text" class="form-control" name="id" value="${us_id+own_id }">
+					<input type="text" class="form-control" name="id" value="${item.us_id+prod.own_id }">
 				</div>
 			</div>
 			<div class="row">
@@ -67,20 +67,6 @@
 				alert("내용을 입력해주세요");
 			}
 		});
-		$('#write').click(function(){
-			$.ajax({
-				url : "/admin/acWrite",
-				data : {
-					""
-				},
-				dataType : "json",
-				success : function(data){
-					alert("접수되었습니다");
-					location.replace("/admin/acList");
-				}
-				
-			});//write click ajax
-		});//write click
 	});//ready
 </script>
 <%@include file="../include/footer.jsp" %>

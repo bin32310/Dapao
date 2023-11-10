@@ -24,6 +24,7 @@ import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.ExpVO;
+import com.dapao.domain.ItemVO;
 import com.dapao.domain.PageVO;
 import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
@@ -127,7 +128,6 @@ public class AdminController {
 		List<EntVO> ownerList = aService.ownerList(cri);
 
 		model.addAttribute("vo", ownerList);
-
 	}
 
 	// 사업자관리 - 사업자 1명의 정보 출력
@@ -410,52 +410,44 @@ public class AdminController {
 		return aService.acInfo(ac_no);
 	}
 	
-//	// 신고관리 - 접수 처리하기
-//	@RequestMapping("/acHandling")
-//	@ResponseBody
-//	public int acHandling(@RequestParam("ac_no") Integer ac_no) throws Exception{
-//		logger.debug("acHandling() 호출");
-//		return aService.acHandling(ac_no);
-//	}
-	
 	// 신고관리 - 신고 처리상태 업뎃
 	@ResponseBody
 	@RequestMapping("/acResultUpdate")
 	public int acResultUserUpdate(AcVO acVo, String id,String stop) throws Exception {
 		logger.debug("acResultUpdate() 호출");
-		logger.debug("acVo1 : "+acVo);
-		logger.debug("id : "+id);
-		logger.debug("stop : "+stop);
-		logger.debug("voO : "+aService.acResultSelectOwnerId(acVo));
-		logger.debug("voU : "+aService.acResultSelectUserId(acVo));
 		String ac_own_id = aService.acResultSelectOwnerId(acVo);
 		String ac_us_id = aService.acResultSelectUserId(acVo);
 		if (ac_own_id != null || ac_own_id == id) {
 			return aService.acResultOwnerUpdate(acVo,stop);
 		}
-//		if(ac_us_id != null || ac_us_id == id) {
-//			logger.debug("acVo2 : "+acVo);
 			return aService.acResultUserUpdate(acVo,stop);
-//		}
-//		return 0;
 	}
 	
 	// 신고관리 - 신고서 작성 폼
 	// http://localhost:8088/admin/acWriteForm
 	@RequestMapping("/acWriteForm")
-	public void acWriteForm(String own_id, String us_id, Model model) throws Exception{
+	public void acWriteForm(ItemVO itemVo, ProdVO prodVo, HttpSession session, Model model) throws Exception{
 		logger.debug("acWriteForm()  호출");
-		own_id = "1";
-		us_id = "2";
-		model.addAttribute("own_id", own_id);
-		model.addAttribute("us_id", us_id);
+		String session_us_id = (String)session.getAttribute("us_id");
+		model.addAttribute("item", itemVo);
+		model.addAttribute("prod", prodVo);
+		model.addAttribute("us_id", session_us_id);
+		
 	}
 	
 	// 신고관리 - 신고서 작성
-	public int acWrite(AcVO vo) throws Exception{
+	@RequestMapping("acWrite")
+	public String acWrite(AcVO vo,String id) throws Exception{
 		logger.debug("acWrite() 호출");
 		logger.debug("vo",vo);
-		return 0;
+		String ac_us_id = aService.acResultSelectUserId(vo);
+		String ac_own_id = aService.acResultSelectOwnerId(vo);
+		if (ac_own_id != null || ac_own_id == id) {
+			aService.acOwnerWrite(vo);
+		}else {
+			aService.acUserWrite(vo);
+		}
+		return "request:/admin/acList";
 	}
 	
 	// http://localhost:8088/admin/expList

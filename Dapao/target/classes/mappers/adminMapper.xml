@@ -265,9 +265,16 @@
 		where ac.ac_no=#{acVo.ac_no}
 	</update>
 	
-	<!-- 신고관리 - 신고 글 쓰기 -->
-	<insert id="">
+	<!-- 신고관리 - 신고 user 글 쓰기 -->
+	<insert id="acUserWrite">
+		insert into ac(us_id,ac_us_id,ac_cate,ac_content,ac_item) 
+		values(#{us_id},#{ac_us_id},#{ac_cate},#{ac_content},#{ac_item})
+	</insert>
 	
+	<!-- 신고관리 - 신고 owner 글 쓰기 -->
+	<insert id="acOwnerWrite">
+		insert into ac(us_id,ac_own_id,ac_cate,ac_content,ac_item) 
+		values(#{us_id},#{ac_own_id},#{ac_cate},#{ac_content},#{ac_item})
 	</insert>
 	
 	<!-- 체험단관리 - 체험단 리스트 -->

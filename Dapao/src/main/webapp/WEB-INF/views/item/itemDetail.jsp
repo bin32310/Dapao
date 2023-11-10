@@ -29,7 +29,7 @@
 
 			
 			<c:if test="${!empty us_id && itemVO.us_id != us_id}">
-				<input type="button" value="신고하기" onclick="location.href='/admin/ac/writeForm?it_no=${itemVO.it_no}';"> <br>
+				<input type="button" value="신고하기" onclick="location.href='../admin/acWriteForm?it_no=${itemVO.it_no}&us_id=${itemVO.us_id }';"> <br>
 			</c:if>
 			
 			<input type="hidden" value="${itemVO.it_no }" name="it_no"> <br>

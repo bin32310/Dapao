@@ -10,6 +10,8 @@ import com.dapao.domain.EntVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.ProdVO;
 import com.dapao.domain.ExpVO;
+import com.dapao.domain.ItemVO;
+import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 
@@ -140,8 +142,11 @@ public interface AdminService {
 	// 신고관리 - 신고 처리상태 업뎃(owner)
 	public int acResultOwnerUpdate(AcVO acVo,String stop) throws Exception;
 
-	//신고관리 - 신고 글 쓰기
-	public int acWrite(AcVO vo) throws Exception;
+	//신고관리 - 신고 user 글 쓰기
+	public int acUserWrite(AcVO vo) throws Exception;
+	
+	//신고관리 - 신고 owner 글 쓰기
+	public int acOwnerWrite(AcVO vo) throws Exception;
 	
 	// 체험단관리 - 체험단 리스트
 	public List<ExpVO> expList(Criteria cri) throws  Exception;
