@@ -89,7 +89,7 @@
 <!-- 회원가입 -->
 
    <insert id="userJoin">
-      insert into us(us_id,us_pw,us_name,us_email,us_tel,us_addr,us_nickname)
+      insert into us(us_id,us_pw,us_name,us_email,us_tel,us_addr,us_nickname) 
       values(#{us_id},#{us_pw},#{us_name},#{us_email},#{us_tel},#{us_addr},#{us_nickname})
    </insert>
 
@@ -106,31 +106,64 @@
 
    <!-- 회원정보 조회 -->
    <select id="userInfo" resultType="UserVO">
-      select * from us
+      select * from us 
       where us_id=#{us_id}
    </select>
 
 
    <!-- 회원정보 수정 -->
 
-   <update id="userUpdate">
-      update us set
-      us_id=#{us_id},us_ps=#{us_pw},us_name=#{us_name},us_email=#{us_email},us_tel=#{us_tel},us_addr=#{us_addr},us#{us_nickname}
-      where us_pw=#{us_pw}
+   <update id="userInfoUpdate">
+      update us  
+      set us_id=#{us_id},us_pw=#{us_pw},us_name=#{us_name},us_email=#{us_email},us_tel=#{us_tel},us_addr=#{us_addr},us_nickname=#{us_nickname}  
+      where us_id=#{us_id}
    </update>
+
+
+<!-- 탈퇴시 비밀번호 받고 비교 -->
+<select id="pwCheck2">
+	select * 
+	from us 
+	where us_id=#{us_id} and us_pw=#{us_pw}
+</select>
+
 
 
 
    <!-- 회원탈퇴 -->
 
    <update id="userDelete">
-      update us set us_state = "2"
+      update us set us_state = 2  
       where us_id=#{us_id} and us_pw=#{us_pw}
    </update>
+   
+   
 
-
-
-
+	<!-- 마이페이지 내 판매글 불러오기 -->
+		<select id="userSellList" resultType="ItemVO">
+		select it_no, it_title, it_regdate 
+		from item 
+		where us_id=#{us_id}
+			
+		</select>
+		
+		
+	<!-- 마이페이지 내 리뷰 목록 불러오기 -->
+	<select id="userReview" resultType="ReviewVO">
+		select rv_no, rv_own_id, rv_us_id, rv_content, rv_star, rv_regdate 
+		from review 
+		where rv_buy_id=#{us_id}
+	</select>
+	
+	
+	<!-- 아이디 찾기 -->
+	<select id="userFindId" resultType="String">
+		select us_id 
+        from us 
+        where us_name=#{us_name} and us_tel=#{us_tel}
+	
+	</select>
+	
 
 </mapper>
 

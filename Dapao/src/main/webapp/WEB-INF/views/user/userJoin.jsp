@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<c:if test="${empty us_id }">
+		<%@ include file="../include/userHeader.jsp" %>
+	</c:if>
+	<c:if test="${!empty us_id }">
+		<%@ include file="../include/userLoginHeader.jsp" %>
+	</c:if>
+	
+	
 <h1>/views/user/userLogin</h1>
 
 <fieldset>
@@ -16,12 +26,15 @@
 	비밀번호 확인<input type="password" name="us_pw_ch"><br>
 	이름<input type="text" name="us_name"><br>
 	닉네임<input type="text" name="us_nickname"><br>
-	이메일<input type="text" name="us_email"><br>
+	이메일<input type="text" name="us_email" pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}"><br>
 	전화번호<input type="text" name="us_tel"><br>
 	주소<input type="text" name="us_addr"><br>
 		<input type="submit" value="회원가입하기">
 	</form>
 
 </fieldset>
+
+<%@ include file="../include/userFooter.jsp" %> 
+
 </body>
 </html>

@@ -1,6 +1,8 @@
 package com.dapao.controller;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -9,15 +11,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dapao.domain.AcVO;
+import com.dapao.domain.AdVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.ItemVO;
+import com.dapao.domain.ExpVO;
 import com.dapao.domain.PageVO;
 import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
@@ -328,7 +334,6 @@ public class AdminController {
 		return aService.reviewDelete(rv_no);
 	}
 	
-	
 	// 회원상품관리리스트
 	// http://localhost:8088/admin/itemList
 	@RequestMapping(value="/itemList")
@@ -338,6 +343,15 @@ public class AdminController {
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
 		pageVO.setTotalCount(aService.itemCount());
+
+	// 신고관리 - 신고 리스트
+	@RequestMapping("/acList")
+	public void acList(Criteria cri, Model model, Integer ac_no,Integer ac_item) throws Exception{
+		logger.debug("acList()");
+		// 페이징 처리( 페이지 블럭 처리 객체 )
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(aService.acCount(ac_no));
 
 		// 페이징처리 정보도 뷰페이지로 전달
 		logger.debug("pageVO : " + pageVO);
@@ -372,6 +386,80 @@ public class AdminController {
 		pageVO.setCri(cri);
 		pageVO.setTotalCount(aService.prodCount());
 
+		List<AcVO> acList = aService.acList(cri);
+		logger.debug("" + acList);
+
+		model.addAttribute("vo", acList);
+		
+	}
+	
+	// 신고관리 - 신고 1개 글 정보
+	@RequestMapping("/acInfo")
+	@ResponseBody // ajax(JSON 데이터 넘겨줄때 사용)
+	public AcVO acInfo(@RequestParam("ac_no") Integer ac_no) throws Exception {
+		logger.debug("acInfo() 호출");
+		logger.debug("ac_no@@" + ac_no);
+		return aService.acInfo(ac_no);
+	}
+	
+//	// 신고관리 - 접수 처리하기
+//	@RequestMapping("/acHandling")
+//	@ResponseBody
+//	public int acHandling(@RequestParam("ac_no") Integer ac_no) throws Exception{
+//		logger.debug("acHandling() 호출");
+//		return aService.acHandling(ac_no);
+//	}
+	
+	// 신고관리 - 신고 처리상태 업뎃
+	@ResponseBody
+	@RequestMapping("/acResultUpdate")
+	public int acResultUserUpdate(AcVO acVo, String id,String stop) throws Exception {
+		logger.debug("acResultUpdate() 호출");
+		logger.debug("acVo1 : "+acVo);
+		logger.debug("id : "+id);
+		logger.debug("stop : "+stop);
+		logger.debug("voO : "+aService.acResultSelectOwnerId(acVo));
+		logger.debug("voU : "+aService.acResultSelectUserId(acVo));
+		String ac_own_id = aService.acResultSelectOwnerId(acVo);
+		String ac_us_id = aService.acResultSelectUserId(acVo);
+		if (ac_own_id != null || ac_own_id == id) {
+			return aService.acResultOwnerUpdate(acVo,stop);
+		}
+//		if(ac_us_id != null || ac_us_id == id) {
+//			logger.debug("acVo2 : "+acVo);
+			return aService.acResultUserUpdate(acVo,stop);
+//		}
+//		return 0;
+	}
+	
+	// 신고관리 - 신고서 작성 폼
+	// http://localhost:8088/admin/acWriteForm
+	@RequestMapping("/acWriteForm")
+	public void acWriteForm(String own_id, String us_id, Model model) throws Exception{
+		logger.debug("acWriteForm()  호출");
+		own_id = "1";
+		us_id = "2";
+		model.addAttribute("own_id", own_id);
+		model.addAttribute("us_id", us_id);
+	}
+	
+	// 신고관리 - 신고서 작성
+	public int acWrite(AcVO vo) throws Exception{
+		logger.debug("acWrite() 호출");
+		logger.debug("vo",vo);
+		return 0;
+	}
+	
+	// http://localhost:8088/admin/expList
+	// 체험단관리 - 체험단 리스트
+	@RequestMapping("/expList")
+	public void expList(Criteria cri, Model model, Integer exp_no,Integer ac_item) throws Exception{
+		logger.debug("expList()");
+		// 페이징 처리( 페이지 블럭 처리 객체 )
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(aService.expCount(exp_no));
+
 		// 페이징처리 정보도 뷰페이지로 전달
 		logger.debug("pageVO : " + pageVO);
 		model.addAttribute("pageVO", pageVO);
@@ -394,14 +482,40 @@ public class AdminController {
 		// 회원상품테이블 상태변경(update)	
 		return aService.prodDelete(prod_no);
 	}
+		List<ExpVO> expList = aService.expList(cri);
+		logger.debug("" + expList);
 
+		model.addAttribute("vo", expList);
+		
+	}
 	
+	// 체험단관리 - 체험단 글 1개 정보
+	@RequestMapping("/expInfo")
+	@ResponseBody // ajax(JSON 데이터 넘겨줄때 사용)
+	public ExpVO expInfo(@RequestParam("exp_no") Integer exp_no) throws Exception {
+		logger.debug("expInfo() 호출");
+		logger.debug("exp_no@@" + exp_no);
+		return aService.expInfo(exp_no);
+	}
 	
+	// 체험단관리 - 상태 업뎃 및 광고테이블 insert
+	@ResponseBody
+	@RequestMapping("/expAdInsert")
+	public int expAdInsert(Integer exp_no, String own_id, String ad_date) throws Exception{
+		logger.debug("expAdInsert(Integer exp_no, String own_id, String ad_date)");
+		aService.expStateUpdate(exp_no);
+		return aService.expAdInsert(own_id, ad_date);
+	}
 	
+	// 체험단관리 - 반려 상태 업뎃
+	@ResponseBody
+	@RequestMapping("/expReturn")
+	public int expReturn(ExpVO vo) throws Exception{
+		logger.debug("expReturn(ExpVO vo) 호출");
+		return aService.expReturn(vo);
+	}
 	
-	
-	
-	
+
 	
 	
 }

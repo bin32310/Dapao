@@ -1,6 +1,8 @@
 package com.dapao.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -8,11 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.dapao.domain.AcVO;
+import com.dapao.domain.AdVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.ProdVO;
+import com.dapao.domain.ExpVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 import com.dapao.persistence.AdminDAO;
@@ -24,7 +29,6 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Inject
 	private AdminDAO adao;
-
 	
 	@Override
 	public UserVO userInfo(String us_id) throws Exception {
@@ -221,5 +225,107 @@ public class AdminServiceImpl implements AdminService{
 	public int prodDelete(Integer prod_no) throws Exception {
 		logger.debug("service : prodDelete(Integer prod_no) 호출");
 		return adao.prodDelete(prod_no);
+	}
+
+  @Override
+	public List<AcVO> acList(Criteria cri) throws Exception {
+		logger.debug("service : acList(Criteria cri) 호출");
+		return adao.acList(cri);
+	}
+	
+	@Override
+	public int acCount(Integer ac_no) throws Exception {
+		logger.debug("service : acCount(Integer ac_no) 호출");
+		return adao.acCount(ac_no);
+	}
+	
+	@Override
+	public AcVO acInfo(Integer ac_no) throws Exception {
+		logger.debug("service : acInfo(Integer ac_no) 호출");
+		return adao.acInfo(ac_no);
+	}
+	
+	// 신고관리 - 접수 처리
+	@Override
+	public int acHandling(Integer ac_no) throws Exception {
+		logger.debug("service : acHandling(Integer ac_no) 호출");
+		return adao.acHandling(ac_no);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(user 조회)
+	@Override
+	public String acResultSelectUserId(AcVO vo) throws Exception {
+		logger.debug("service : acResultSelectUserId(AcVO vo) 호출");
+		return adao.acResultSelectUserId(vo);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner 조회)
+	@Override
+	public String acResultSelectOwnerId(AcVO vo) throws Exception {
+		logger.debug("service : acResultSelectOwnerId(AcVO vo) 호출");
+		return adao.acResultSelectOwnerId(vo);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(user)
+	@Override
+	public int acResultUserUpdate(AcVO acVo,String stop) throws Exception {
+		logger.debug("service : acResultUserUpdate(AcVO acVo,String stop) 호출");
+		return adao.acResultUserUpdate(acVo, stop);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner)
+	@Override
+	public int acResultOwnerUpdate(AcVO acVo,String stop) throws Exception {
+		logger.debug("service : acResultUserUpdate(AcVO acVo,String stop) 호출");
+		return adao.acResultOwnerUpdate(acVo, stop);
+	}
+	
+	//신고관리 - 신고 글 쓰기
+	@Override
+	public int acWrite(AcVO vo) throws Exception {
+		logger.debug("service : acWrite(AcVO vo) 호출");
+		return adao.acWrite(vo);
+	}
+	
+	// 체험단관리 - 체험단 리스트
+	@Override
+	public List<ExpVO> expList(Criteria cri) throws Exception {
+		logger.debug("service : expList(Criteria cri) 호출");
+		return adao.expList(cri);
+	}
+	
+	// 체험단관리 - 체험단 글개수 조회
+	@Override
+	public int expCount(Integer exp_no) throws Exception {
+		logger.debug("service : expCount(Integer exp_no) 호출");
+		return adao.expCount(exp_no);
+	}
+	
+	// 체험단관리 - 체험단 글 1개 정보
+	@Override
+	public ExpVO expInfo(Integer exp_no) throws Exception {
+		logger.debug("service : expInfo(Integer exp_no)호출");
+		return adao.expInfo(exp_no);
+	}
+	
+	// 체험단관리 - 상태 업데이트
+	@Override
+	public void expStateUpdate(Integer exp_no) throws Exception {
+		logger.debug("service : expStateUpdate(Integer exp_no) 호출");
+		adao.expStateUpdate(exp_no);
+	}
+	
+	// 체험단관리 - 광고테이블 insert
+	@Override
+	public int expAdInsert(String own_id, String ad_date) throws Exception {
+		logger.debug("service : expAdInsert(String own_id, String ad_date) 호출");
+		return adao.expAdInsert(own_id, ad_date);
+	}
+	
+	// 체험단관리 - 반려 상태 업뎃
+	@Override
+	public int expReturn(ExpVO vo) throws Exception {
+		logger.debug("service : expReturn(Integer exp_no) 호출");
+		return adao.expReturn(vo);
 	}
 }

@@ -44,17 +44,33 @@
 		<async-supported>true</async-supported>
 		
 		<multipart-config>
-			<location>C:\\upload</location> <!-- 파일 업로드 경로 -->
+			<location>F:\\upload</location> <!-- 파일 업로드 경로 -->
 			<max-file-size>20971520</max-file-size> <!-- 파일 최대 크기 1MB * 20 -->
 			<max-request-size>41943040</max-request-size> <!-- 한꺼번에 올릴 수 있는 최대 크기 40MB -->
 			<file-size-threshold>20971520</file-size-threshold> <!-- 특정 사이즈 메모리 사용 20MB -->
 		</multipart-config>
 		
 	</servlet>
-		
+	
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	<!-- <servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>
+				/WEB-INF/spring/appServlet/ws-config.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/websocket/*</url-pattern>
+	</servlet-mapping> -->
 
 </web-app>

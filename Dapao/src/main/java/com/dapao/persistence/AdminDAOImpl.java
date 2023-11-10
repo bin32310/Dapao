@@ -1,6 +1,8 @@
 package com.dapao.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
@@ -8,11 +10,15 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import com.dapao.domain.AcVO;
+import com.dapao.domain.AdVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.CsVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.ProdVO;
+import com.dapao.domain.ExpVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 
@@ -171,25 +177,25 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Override
 	public List<ReviewVO> reviewList(Criteria cri) throws Exception {
-		logger.debug("reviewList(Criteria cri) 호출");
+		logger.debug("DAO : reviewList(Criteria cri) 호출");
 		return sqlSession.selectList(NAMESPACE + ".reviewList", cri);
 	}
 
 	@Override
 	public int reviewCount(Integer rv_no) throws Exception {
-		logger.debug("reviewCount(Integer rv_no) 호출");
+		logger.debug("DAO : reviewCount(Integer rv_no) 호출");
 		return sqlSession.selectOne(NAMESPACE + ".reviewCount", rv_no);
 	}
 
 	@Override
 	public ReviewVO reviewInfo(Integer rv_no) throws Exception {
-		logger.debug("reviewInfo(Integer rv_no) 호출");
+		logger.debug("DAO : reviewInfo(Integer rv_no) 호출");
 		return sqlSession.selectOne(NAMESPACE + ".reviewInfo", rv_no);
 	}
 
 	@Override
 	public int reviewDelete(Integer rv_no) throws Exception {
-		logger.debug("reviewDelete(Integer rv_no) 호출");
+		logger.debug("DAO : reviewDelete(Integer rv_no) 호출");
 		return sqlSession.update(NAMESPACE + ".reviewDelete", rv_no);
 	}
 	
@@ -229,4 +235,116 @@ public class AdminDAOImpl implements AdminDAO {
 		return sqlSession.update(NAMESPACE+".prodDelete", prod_no);
 	}
 	
+	public List<AcVO> acList(Criteria cri) throws Exception {
+		logger.debug("DAO : acList(Criteria cri) 호출");
+		return sqlSession.selectList(NAMESPACE+".acList", cri);
+	}
+	
+	@Override
+	public int acCount(Integer ac_no) throws Exception {
+		logger.debug("DAO : acCount(Integer ac_no) 호출");
+		return sqlSession.selectOne(NAMESPACE+".acCount", ac_no);
+	}
+	
+	@Override
+	public AcVO acInfo(Integer ac_no) throws Exception {
+		logger.debug("DAO : acInfo(Integer ac_no) 호출");
+		return sqlSession.selectOne(NAMESPACE+".acInfo", ac_no);
+	}
+	
+	// 신고관리 - 접수 처리
+	@Override
+	public int acHandling(Integer ac_no) throws Exception {
+		logger.debug("DAO : acHandling(Integer ac_no) 호출");
+		return sqlSession.update(NAMESPACE+".acHandling", ac_no);
+	}
+
+	// 신고관리 - 신고 처리상태 업뎃(user 조회)
+	@Override
+	public String acResultSelectUserId(AcVO vo) throws Exception {
+		logger.debug("DAO : acResultSelectUserId(AcVO vo) 호출");
+		return sqlSession.selectOne(NAMESPACE+".acResultSelectUserId", vo);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner 조회)
+	@Override
+	public String acResultSelectOwnerId(AcVO vo) throws Exception {
+		logger.debug("DAO : acResultSelectOwnerId(AcVO vo) 호출");
+		return sqlSession.selectOne(NAMESPACE+".acResultSelectOwnerId", vo);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(user)
+	@Override
+	public int acResultUserUpdate(AcVO acVo,String stop) throws Exception {
+		logger.debug("DAO : acResultOwnerUpdate(AcVO acVo,String stop) 호출");
+		Map<String, Object> vo = new HashMap<String, Object>();
+		vo.put("acVo", acVo);
+		vo.put("stop", stop);
+		return sqlSession.update(NAMESPACE+".acResultUserUpdate", vo);
+	}
+	
+	// 신고관리 - 신고 처리상태 업뎃(owner)
+	@Override
+	public int acResultOwnerUpdate(AcVO acVo,String stop) throws Exception {
+		logger.debug("DAO : acResultOwnerUpdate(AcVO acVo,String stop) 호출");
+		Map<String, Object> vo = new HashMap<String, Object>();
+		vo.put("acVo", acVo);
+		vo.put("stop", stop);
+		logger.debug("allvo"+vo);
+		return sqlSession.update(NAMESPACE+".acResultOwnerUpdate", vo);
+	}
+	
+	//신고관리 - 신고 글 쓰기
+	@Override
+	public int acWrite(AcVO vo) throws Exception {
+		logger.debug("DAO :  acWrite(AcVO vo) 호출");
+		return sqlSession.insert(NAMESPACE+".acWrite",vo);
+	}
+	
+	// 체험단관리 - 체험단 리스트
+	@Override
+	public List<ExpVO> expList(Criteria cri) throws Exception {
+		logger.debug("DAO :  expList(Criteria cri) 호출");
+		return sqlSession.selectList(NAMESPACE+".expList", cri);
+	}
+	
+	// 체험단관리 - 체험단 글개수 조회
+	@Override
+	public int expCount(Integer exp_no) throws Exception {
+		logger.debug("DAO :  expCount(Integer exp_no) 호출");
+		return sqlSession.selectOne(NAMESPACE+".expCount", exp_no);
+	}
+	
+	// 체험단관리 - 체험단 글 1개 정보
+	@Override
+	public ExpVO expInfo(Integer exp_no) throws Exception {
+		logger.debug("DAO :  expInfo(Integer exp_no) 호출");
+		return sqlSession.selectOne(NAMESPACE+".expInfo", exp_no);
+	}
+	
+	// 체험단관리 - 상태 업데이트
+	@Override
+	public void expStateUpdate(Integer exp_no) throws Exception {
+		logger.debug("DAO :  expStateUpdate(Integer exp_no) 호출");
+		sqlSession.update(NAMESPACE+".expStateUpdate", exp_no);
+	}
+	
+	// 체험단관리 - 광고테이블 insert
+	@Override
+	public int expAdInsert(String own_id, String ad_date) throws Exception {
+		logger.debug("DAO :  expAdInsert(String own_id, String ad_date)호출"+own_id+ad_date);
+		Map<String, Object> vo = new HashMap<String, Object>();
+		vo.put("own_id", own_id);
+		vo.put("ad_date", ad_date);
+		logger.debug("vo"+vo);
+		return sqlSession.insert(NAMESPACE+".expAdInsert", vo);
+	}
+	
+	// 체험단관리 - 반려 상태 업뎃
+	@Override
+	public int expReturn(ExpVO vo) throws Exception {
+		logger.debug("DAO :  expReturn(ExpVO vo) 호출");
+		return sqlSession.update(NAMESPACE+".expReturn", vo);
+	}
+
 }

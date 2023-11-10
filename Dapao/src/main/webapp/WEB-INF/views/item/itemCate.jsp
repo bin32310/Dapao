@@ -18,18 +18,19 @@
 </head>
 <body>
 
-	<h1>/item/itemSearch.jsp</h1>
+	<h1>/item/itemCateSearch.jsp</h1>
 	<h1>검색시 나타나는 페이지</h1>
 	
-	<c:forEach var="it" items="${searchItemVO}">
+	<c:forEach var="it" items="${cateItemVO}">
 		<div>
 			<a href="../item/itemDetail?it_no=${it.it_no }">
 				<img src="/imgfile/${it.it_img }" width="150px" height="150px"> <br>
-				${it.it_title} <br>
-				${it.it_price}
-				${it.it_regdate}
+				<input type="text" value="${it.it_title}">  <br>
+				<input type="text" value="${it.it_price}">
+				<input type="text" value="${it.it_regdate}">
 			</a>
 		</div>
+		<br>
 	</c:forEach>
 
 <%@ include file="../include/userFooter.jsp" %>

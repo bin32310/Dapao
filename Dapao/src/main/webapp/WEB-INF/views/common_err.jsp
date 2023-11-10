@@ -13,8 +13,8 @@
 	<hr>
 	${e.getMessage() }
 	
-	<%
+<%-- 	<%
 		response.addHeader("Refresh", "3; url='/admin/ownerList'");
-	%>
+	%> --%>
 </body>
 </html>
