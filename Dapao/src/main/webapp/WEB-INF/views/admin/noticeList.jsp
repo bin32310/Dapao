@@ -201,7 +201,7 @@
 					success : function(data) {
 						console.log(data)
 						alert("수정완료");
-						location.replace("/admin/noticeList");
+						location.replace("/admin/noticeList?page=${param.page}");
 					},
 					error : function() {
 						console.log("오류");
@@ -219,7 +219,7 @@
 				success:function(data){
 					console.log(data);
 					console.log("성공");
-					location.replace("/admin/noticeList");
+					location.replace("/admin/noticeList?page=${param.page}");
 				},
 				error:function(){
 					console.log("에러");
@@ -242,7 +242,7 @@
 					success:function(data){
 						console.log("성공결과 : "+data);
 						console.log("성공");
-						location.replace("/admin/noticeList");
+						location.replace("/admin/noticeList?page=${param.page}");
 					},
 					error:function(){
 						console.log("에러");
@@ -259,7 +259,7 @@
 					success:function(data){
 						console.log("성공결과 : "+data);
 						console.log("성공");
-						location.replace("/admin/noticeList");
+						location.replace("/admin/noticeList?page=${param.page}");
 					},
 					error:function(){
 						console.log("에러");

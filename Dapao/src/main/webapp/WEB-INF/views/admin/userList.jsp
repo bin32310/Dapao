@@ -216,7 +216,7 @@
 					if (data == 1) {
 						alert("정상적으로 정지가 부여되었습니다.");
 						$('#myModal').modal('hide');
-						location.replace("/admin/userList");
+						location.replace("/admin/userList?page=${param.page}");
 					}
 				},
 				error : function(data) {
@@ -237,7 +237,7 @@
 					if (data == 1) {
 						alert("정상적으로 탈퇴처리되었습니다.");
 						$('#myModal').modal('hide');
-						location.replace("/admin/userList");
+						location.replace("/admin/userList?page=${param.page}");
 					}
 				},
 				error : function() {

@@ -196,7 +196,7 @@
 					success : function(data) {
 						console.log(data)
 						alert("수정완료");
-						location.replace("/admin/FAQList");
+						location.replace("/admin/FAQList?page=${param.page}");
 					},
 					error : function() {
 						console.log("오류");
@@ -213,7 +213,7 @@
 					success : function(data){
 						console.log(data)
 						alert("FAQ - 등록완료")
-						location.replace("/admin/FAQList");
+						location.replace("/admin/FAQList?page=${param.page}");
 					}
 				}); // upload click ajax
 			});// upload click
@@ -226,7 +226,7 @@
 					success : function(data){
 						console.log(data)
 						alert("FAQ - 등록해제완료")
-						location.replace("/admin/FAQList");
+						location.replace("/admin/FAQList?page=${param.page}");
 					}
 					
 				});// remove click ajax
@@ -242,7 +242,7 @@
 				success:function(data){
 					console.log(data);
 					console.log("성공");
-					location.replace("/admin/FAQList");
+					location.replace("/admin/FAQList?page=${param.page}");
 				},
 				error:function(){
 					console.log("에러");
@@ -265,7 +265,7 @@
 					success:function(data){
 						console.log("성공결과 : "+data);
 						console.log("성공");
-						location.replace("/admin/FAQList");
+						location.replace("/admin/FAQList?page=${param.page}");
 					},
 					error:function(){
 						console.log("에러");
@@ -283,7 +283,7 @@
 					success:function(data){
 						console.log("성공결과 : "+data);
 						console.log("성공");
-						location.replace("/admin/FAQList");
+						location.replace("/admin/FAQList?page=${param.page}");
 					},
 					error:function(){
 						console.log("에러");
