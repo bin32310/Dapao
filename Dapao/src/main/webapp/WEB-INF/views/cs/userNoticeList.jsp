@@ -25,7 +25,7 @@
 				<c:forEach var="list" items="${noticeList }">
 					<tr role="row" class="odd">
 						<td>${list.cs_no }</td>
-						<td><a class="noticeList" href='/cs/userNotice?page=${param.page }&cs_no=${list.cs_no }'>${list.cs_title }</a></td>
+						<td><a class="noticeList" href='/cs/userNotice?page=1&cs_no=${list.cs_no }'>${list.cs_title }</a></td>
 						<td>${list.cs_regdate }</td>
 					</tr>
 				</c:forEach>

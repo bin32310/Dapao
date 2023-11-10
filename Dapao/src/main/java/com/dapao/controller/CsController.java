@@ -145,7 +145,32 @@ public class CsController {
 
 		return "/cs/userNotice";
 	}
+	
+	// 사업자가보는 FAQ페이지
+	// http://localhost:8088/cs/ownFAQList
+	@RequestMapping(value = "/ownFAQList")
+	public void ownFAQList(Criteria cri, Model model, HttpSession session) throws Exception {
+		// 페이징처리(페이지 블럭 처리 객체)
 
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(cService.ownFAQCount());
+
+		model.addAttribute("pageVO", pageVO);
+
+		// 페이지이동시 받아온 페이지 번호
+		if (cri.getPage() > pageVO.getEndPage()) {
+			// 잘못된 페이지 정보를 입력받음. 글이없음.
+			cri.setPage(pageVO.getEndPage());
+		}
+		List<CsVO> FAQList = cService.ownFAQList(cri);
+		// 리스트사이즈확인
+		logger.debug(" 글개수 : " + FAQList.size());
+
+		// 페이지정보 view페이지전달
+		model.addAttribute("FAQList", FAQList);
+		session.setAttribute("viewcntck", "on");
+	}
 
 
 }

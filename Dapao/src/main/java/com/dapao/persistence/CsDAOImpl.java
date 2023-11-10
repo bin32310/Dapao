@@ -64,6 +64,18 @@ public class CsDAOImpl {
 	public List<CsVO> ownNoticeList(Criteria cri) throws Exception{
 		return sqlSession.selectList(NAMESPACE+".ownNoticeList", cri);
 	}
+	
+	// 사업자가보는 faq리스트 수
+	public int ownFAQCount() throws Exception{
+		logger.debug("ownFAQCount() 호출");
+		return sqlSession.selectOne(NAMESPACE+".ownFAQCount");
+	}
+	
+	// 사업자가보는 faq리스트
+	public List<CsVO> ownFAQList(Criteria cri) throws Exception{
+		logger.debug("ownFAQList() 호출");
+		return sqlSession.selectList(NAMESPACE+".ownFAQList", cri);
+	}
 
 	
 }

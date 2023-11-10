@@ -58,6 +58,17 @@ public class CsServiceImpl {
 	public List<CsVO> ownNoticeList(Criteria cri) throws Exception{
 		return cdao.ownNoticeList(cri);
 	}
+	
+	// 회원이보는 faq리스트 수
+	public int ownFAQCount() throws Exception{
+		return cdao.ownFAQCount();
+	}
+	
+	// 회원이보는 faq리스트
+	public List<CsVO> ownFAQList(Criteria cri) throws Exception{
+		return cdao.ownFAQList(cri);
+	}
 
+	
 
 }

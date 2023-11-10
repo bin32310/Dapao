@@ -25,12 +25,7 @@
 				<c:forEach var="list" items="${noticeList }">
 					<tr role="row" class="odd">
 						<td>${list.cs_no }</td>
-						<c:if test="${not empty param.page }">
-							<td><a class="noticeList" href='/cs/ownNotice?page=${param.page }&cs_no=${list.cs_no }'>${list.cs_title }</a></td>
-						</c:if>
-						<c:if test="${empty param.page }">
-							<td><a class="noticeList" href='/cs/ownNotice?cs_no=${list.cs_no }'>${list.cs_title }</a></td>
-						</c:if>
+						<td><a class="noticeList" href='/cs/ownNotice?page=1&cs_no=${list.cs_no }'>${list.cs_title }</a></td>
 						<td>${list.cs_regdate }</td>
 					</tr>
 				</c:forEach>

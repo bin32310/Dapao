@@ -32,13 +32,13 @@
 		cs_no=#{cs_no}
 	</select>
 
-	<!-- 회원FAQ&공지 - faq 글 총 개수 조회 -->
+	<!-- 회원FAQ&공지 - 회원 faq 글 총 개수 조회 -->
 	<select id="userFAQCount" resultType="int">
 		select count(*) from cs
-		where cs_group=0 and cs_board=1 cs_state=1
+		where cs_group=0 and cs_board=1 and cs_state=1
 	</select>
 
-	<!-- 회원FAQ&공지 - faq 리스트 -->
+	<!-- 회원FAQ&공지 - 회원 faq 리스트 -->
 	<select id="userFAQList" resultType="CsVO">
 		select * from cs
 		where
@@ -61,6 +61,22 @@
 		order by cs_no, cs_regdate
 		limit #{pageStart},#{pageSize}
 	</select>
+
+	<!-- 회원FAQ&공지 - 사업자 faq 글 총 개수 조회 -->
+	<select id="ownFAQCount" resultType="int">
+		select count(*) from cs
+		where cs_group=1 and cs_board=1 and cs_state=1 
+	</select>
+
+	<!-- 회원FAQ&공지 - 사업자 faq 리스트 -->
+	<select id="ownFAQList" resultType="CsVO">
+		select * from cs
+		where
+		cs_group=1 and cs_board =1 and cs_state=1 
+		order by cs_no, cs_regdate
+		limit #{pageStart},#{pageSize}
+	</select>
+
 
 
 
