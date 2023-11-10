@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dapao.domain.ItemVO;
+import com.dapao.domain.LoveVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 import com.dapao.service.UserServiceImpl;
-import com.mysql.cj.Session;
+
+
 
 /**
  *    1. 공통URI (~.me 대신 폴더명) / 각 기능별 URI 설정
@@ -182,6 +184,23 @@ public class MypageController {
     	  logger.debug("resultVO" + resultVO);
     	  
     	  model.addAttribute("userReview", resultVO);
+    	  
+      }
+      
+      //마이페이지 내가 찜한 목록
+    //http://localhost:8088/mypage/userLoveList
+      @RequestMapping(value = "/userLoveList",method = RequestMethod.GET)
+      public void userLoveList(HttpSession session,Model model) throws Exception{
+    	  
+    	  String us_id = (String)session.getAttribute("us_id");
+    	  logger.debug(" us_id  : "+us_id);
+    	  
+    	  List<LoveVO> resultVO = uService.userLoveList(us_id);
+    	  logger.debug("resultVO "+ resultVO);
+    	  
+    	  model.addAttribute("userLoveList", resultVO);
+    	  
+    	  
     	  
       }
       

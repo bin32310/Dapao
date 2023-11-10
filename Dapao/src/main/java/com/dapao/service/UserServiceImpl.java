@@ -144,7 +144,11 @@ logger.debug("sellList(String us_id) 호출");
 		
 	}
 
- 
+	// 마이페이지 내찜 목록 조회
+	public List<LoveVO> userLoveList(String us_id){
+		logger.debug("us_id  : "+us_id);
+		return udao.userLoveList(us_id);
+	}
 	
 	
 	

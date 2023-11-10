@@ -164,6 +164,18 @@
 	
 	</select>
 	
+	
+	<!-- 마이페이지 내 찜 목록 불러오기 -->
+	<select id="userLoveList" resultType="ItemVO">
+	select t.it_no, t.it_title, t.us_id, t.it_content, t.it_love 
+    from item t 
+    join love on t.it_no = love.it_no
+
+	
+	</select>
+	
+	
+	
 
 </mapper>
 

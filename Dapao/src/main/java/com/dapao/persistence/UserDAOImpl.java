@@ -166,7 +166,7 @@ public class UserDAOImpl  {
 
 		// 마이페이지 내 리뷰 목록 조회
 	public List<ReviewVO> userReview(String rv_buy_id){
-		logger.debug("@@@@@@@@@@@@@@@@us_id"+rv_buy_id);
+		logger.debug("us_id"+rv_buy_id);
 		return sqlSession.selectList(NAMESPACE+".userReview", rv_buy_id);
 		
 		
@@ -180,7 +180,11 @@ public class UserDAOImpl  {
 		return sqlSession.selectOne(NAMESPACE + ".userFindId",vo);
 	}
 
-
+		//마이페이지에서 내찜 목록 조회
+	public List<LoveVO> userLoveList(String us_id){
+		logger.debug("us_id  :  "+us_id);
+		return sqlSession.selectOne(NAMESPACE+".userLoveList", us_id);
+	}
 	
 	
 	
