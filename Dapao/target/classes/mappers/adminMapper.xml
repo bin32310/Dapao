@@ -265,8 +265,14 @@
 	
 	<!-- 체험단관리 - 광고테이블 insert -->
 	<insert id="expAdInsert">
-		insert into (ad_board,ad_upload,own_id) 
-		values(1,date_add(now(), interval #{date} day),#{own_id})
+		insert into ad (ad_board,ad_upload,own_id) 
+		values(1,date_add(now(), interval #{ad_date} day),#{own_id})
 	</insert>
+	
+	<!-- 체험단관리 - 반려 상태 업뎃 -->
+	<update id="expReturn">
+		update exp set exp_state = 2 
+		where exp_no=#{exp_no} and exp_state=0
+	</update>
 	
 </mapper>	

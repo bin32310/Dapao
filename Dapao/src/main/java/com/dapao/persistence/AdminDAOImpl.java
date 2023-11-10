@@ -294,9 +294,20 @@ public class AdminDAOImpl implements AdminDAO {
 	
 	// 체험단관리 - 광고테이블 insert
 	@Override
-	public int expAdInsert(AdVO vo) throws Exception {
-		logger.debug("DAO :  expAdInsert(AdVO vo 호출");
+	public int expAdInsert(String own_id, String ad_date) throws Exception {
+		logger.debug("DAO :  expAdInsert(String own_id, String ad_date)호출"+own_id+ad_date);
+		Map<String, Object> vo = new HashMap<String, Object>();
+		vo.put("own_id", own_id);
+		vo.put("ad_date", ad_date);
+		logger.debug("vo"+vo);
 		return sqlSession.insert(NAMESPACE+".expAdInsert", vo);
+	}
+	
+	// 체험단관리 - 반려 상태 업뎃
+	@Override
+	public int expReturn(ExpVO vo) throws Exception {
+		logger.debug("DAO :  expReturn(ExpVO vo) 호출");
+		return sqlSession.update(NAMESPACE+".expReturn", vo);
 	}
 
 }

@@ -180,13 +180,13 @@
 						}
 					});// exp_no click ajax
 					$('.update').click(function() {
-						var date = $('select[name=update]').val();
-						console.log("ad_upload : "+ad_upload);
+						var ad_date = $('select[name=update]').val();
+						console.log("ad_date : "+ad_date);
 						$.ajax({
 							url : "/admin/expAdInsert",
 							data : {
 								"exp_no" : $('input[name=exp_no]').val(),
-								"date" : date,
+								"ad_date" : ad_date,
 								"own_id" : $('input[name=own_id]').val()
 							},
 							dataType : "json",
@@ -200,7 +200,20 @@
 							}
 						}); // 승인 ajax
 					});// 승인 click
-					
+					$('.delete').click(function(){
+						$.ajax({
+							url : "/admin/expReturn",
+							data:{
+								"exp_no" : $('input[name=exp_no]').val(),
+								"exp_state" : $('input[name=exp_state]').val()
+								},
+							dataType : "json",
+							success : function(data){
+								alert("반려되었습니다.")
+								location.replace("/admin/expList");
+							}
+						})// 반려 ajax
+					})// 반려 click
 				});// exp_no click
 	});//ready
 </script>

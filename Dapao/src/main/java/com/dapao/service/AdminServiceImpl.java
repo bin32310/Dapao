@@ -279,9 +279,16 @@ public class AdminServiceImpl implements AdminService{
 	
 	// 체험단관리 - 광고테이블 insert
 	@Override
-	public int expAdInsert(AdVO vo) throws Exception {
-		logger.debug("service : expAdInsert(AdVO vo) 호출");
-		return adao.expAdInsert(vo);
+	public int expAdInsert(String own_id, String ad_date) throws Exception {
+		logger.debug("service : expAdInsert(String own_id, String ad_date) 호출");
+		return adao.expAdInsert(own_id, ad_date);
+	}
+	
+	// 체험단관리 - 반려 상태 업뎃
+	@Override
+	public int expReturn(ExpVO vo) throws Exception {
+		logger.debug("service : expReturn(Integer exp_no) 호출");
+		return adao.expReturn(vo);
 	}
 	
 }

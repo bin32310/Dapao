@@ -457,12 +457,21 @@ public class AdminController {
 		return aService.expInfo(exp_no);
 	}
 	
+	// 체험단관리 - 상태 업뎃 및 광고테이블 insert
 	@ResponseBody
 	@RequestMapping("/expAdInsert")
-	public int expAdInsert(Integer exp_no, AdVO vo) throws Exception{
-		logger.debug("expAdInsert(Integer exp_no, String own_id, Date ad_upload)");
+	public int expAdInsert(Integer exp_no, String own_id, String ad_date) throws Exception{
+		logger.debug("expAdInsert(Integer exp_no, String own_id, String ad_date)");
 		aService.expStateUpdate(exp_no);
-		return aService.expAdInsert(vo);
+		return aService.expAdInsert(own_id, ad_date);
+	}
+	
+	// 체험단관리 - 반려 상태 업뎃
+	@ResponseBody
+	@RequestMapping("/expReturn")
+	public int expReturn(ExpVO vo) throws Exception{
+		logger.debug("expReturn(ExpVO vo) 호출");
+		return aService.expReturn(vo);
 	}
 	
 

@@ -136,5 +136,8 @@ public interface AdminService {
 	public void expStateUpdate(Integer exp_no) throws Exception;
 	
 	// 체험단관리 - 광고테이블 insert
-	public int expAdInsert(AdVO vo) throws Exception;
+	public int expAdInsert(String own_id, String ad_date) throws Exception;
+	
+	// 체험단관리 - 반려 상태 업뎃
+	public int expReturn(ExpVO vo) throws Exception;
 }
