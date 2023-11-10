@@ -77,7 +77,75 @@
 			<input type="text" value="${item.it_title }" name="it_title"> <br>
 			<input type="text" value="${item.it_price }" name="it_price">
 		</a> 
-	</c:forEach>  
+	</c:forEach> 
+	
+	<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">체험단을 모집합니다</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">??</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="ac_no" readonly><br>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">신고자</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="us_id"><br>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">피신고자</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="id"><br>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">상품번호</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="ac_item"><br>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">신고사유</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="ac_cate"><br>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">신고내용</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="ac_content"><br>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div> 
+
+<script type="text/javascript">
+$(function(){
+	$('#myModal').modal("show");
+	$.ajax({
+		url : "${contextPath}/ad/modalShow"
+		dataType : "json"
+		success : function(data){
+			console.log(data);
+		}
+	});
+ });//ready
+</script>
 	
 	<%@ include file="../include/userFooter.jsp" %>
 	

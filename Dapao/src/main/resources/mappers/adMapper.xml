@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.dapao.mapper.AdMapper">
+	
+	<resultMap type="com.dapao.domain.ExpVO" id="expMap">
+		<id property="own_id" column="own_id"/>
+		
+	</resultMap>
+	<resultMap type="com.dapao.domain.EntVO" id="entMap">
+		
+	</resultMap>
+	
+	<select id="modalShow" resultMap="">
+		
+	</select>
+	
+</mapper>  
