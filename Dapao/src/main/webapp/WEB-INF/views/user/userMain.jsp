@@ -90,44 +90,17 @@
 				<h4 class="modal-title">체험단을 모집합니다</h4>
 			</div>
 			<div class="modal-body">
-				<div class="form-group">
-					<label class="col-sm-2 control-label">??</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ac_no" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">신고자</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="us_id"><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">피신고자</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="id"><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">상품번호</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ac_item"><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">신고사유</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ac_cate"><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">신고내용</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ac_content"><br>
-					</div>
-				</div>
+				가게상호명 <br>
+				<h3 class="ent_name"></h3>
+				체험단 내용<br>
+				<h3 class="exp_content"></h3>
+				체험단 유의 사항<br>
+				<h3 class="exp_notice"></h3>
+				신청인원/체험단모집인원<br>
+				<h3 class="exp_psn_ch exp_psn"></h3>
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.href='';">신청하기</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
@@ -138,12 +111,25 @@
 $(function(){
 	$('#myModal').modal("show");
 	$.ajax({
-		url : "${contextPath}/ad/modalShow"
-		dataType : "json"
+		url : "${contextPath}/ad/modalShow",
+		dataType : "json",
 		success : function(data){
 			console.log(data);
+			$.each(data,function(index,exp){
+				$.each(exp.entList,function(idx,ent){
+					$('.ent_name').append(ent.ent_name);
+				})
+				$('.exp_content').append(exp.exp_content);
+				$('.exp_notice').append(exp.exp_notice);
+				$('.exp_psn_ch').append(exp.exp_psn_ch);
+				$('.exp_psn').append("/"+exp.exp_psn);
+			});
+			
+		},
+		error : function(){
+			alert("@@@@@@@@@@@");
 		}
-	});
+	});//ajax
  });//ready
 </script>
 	
