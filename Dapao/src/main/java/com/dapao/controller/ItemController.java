@@ -30,11 +30,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.dapao.domain.AlarmVO;
 import com.dapao.domain.FileVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.LoveVO;
 import com.dapao.domain.PayVO;
 import com.dapao.domain.ReviewVO;
+import com.dapao.domain.TradeVO;
 import com.dapao.domain.UserVO;
 import com.dapao.service.ItemServiceImpl;
 import com.dapao.service.UserServiceImpl;
@@ -371,7 +373,13 @@ public class ItemController {
 	public String itemDetailGET(Integer it_no, Model model, HttpSession session) throws Exception {
 		logger.debug("itemDetailGET() 호출");
 		
+		// 내가 구매한건지 확인
+		TradeVO tradeVO = new TradeVO();
+		int item_state = 0;
+		
+		// 찜
 		int love = 0;
+		
 		// 파라메터 자동수집
 		logger.debug("@@판매글 번호 : " + it_no);
 		
@@ -424,6 +432,47 @@ public class ItemController {
              int viewcnt= iService.viewCnt(it_no);
              logger.debug("viewcnt : " + viewcnt);
             session.setAttribute("itemView", "off");
+        }
+        
+        // 예약중인 물건일때 내가 구매한건지 확인
+        // trade 테이블에 it_no이 존재하고, 아직 예약중일때 버튼 활성화
+       item_state = itemVO.getIt_state();
+        if(item_state == 1) { //예약중인 물건일때 
+        	
+        	// 거래글정보 가져오기
+        	ItemVO purVO = new ItemVO();
+        	purVO.setIt_no(it_no);
+        	purVO.setUs_id(us_id);
+        	tradeVO = iService.checkPur(purVO);
+        	
+        	
+        	// 거래 구매자 아이디
+        	String tr_id_buyer = tradeVO.getUs_id();
+        	// 거래 구매자의 아이디와 내 아이디가 같으면
+        	if(us_id.equals(tr_id_buyer)) {
+        		
+        		// session에 현재 거래 상태 저장 (0- 안전결제로 예약중 / 1- 거래완료 눌렀음 / 2- 취소 눌렀음)
+        		session.setAttribute("tr_buyer", tradeVO.getTr_buy_state());
+        	}else {
+        		session.setAttribute("tr_buyer", 3);
+        	}
+        	
+        	// 거래 판매자 아이디
+        	String tr_id_seller = tradeVO.getTr_sell_us();
+        	// 거래 판매자의 아이디와 내 아이디가 같으면
+        	if(us_id.equals(tr_id_seller)) {
+           	 
+           		// session에 현재 거래 상태 저장 (0- 안전결제로 예약중 / 1- 거래완료 눌렀음 / 2- 취소 눌렀음)
+           		session.setAttribute("tr_seller", tradeVO.getTr_sell_state());
+        	}else {
+        		session.setAttribute("tr_seller", 3);
+        	}
+        	
+        }else {
+        	
+        	session.setAttribute("tr_buyer", 3);
+        	session.setAttribute("tr_seller", 3);
+        	
         }
 		
 		logger.debug("연결된 뷰페이지(views/item/itemDetail.jsp)를 출력");
@@ -571,6 +620,91 @@ public class ItemController {
 	
 	
 	}
+	
+	// 구매하기 버튼 클릭시 
+	@ResponseBody
+	@RequestMapping(value = "/purchase", method = RequestMethod.POST)
+	public int purchasePOST(HttpSession session, Model model, Integer it_no) throws Exception {
+		logger.debug("coinChargePOST() 호출");
+		
+		// 세션 아이디, 코인 금액
+		String us_id = (String)session.getAttribute("us_id");
+		Integer us_coin = (Integer)session.getAttribute("us_coin");
+		logger.debug("회원 아이디 확인 : " + us_id);
+		logger.debug("충전전 코인금액 확인 : " + us_coin);
+		int coinResult=0;
+		int itResult=0;
+		int alResult=0;
+		
+		// it_no로 정보 조회
+		ItemVO itemVO = iService.itemDetail(it_no);
+		
+		// 코인 비교 
+		if(us_coin >= itemVO.getIt_price()) { // 코인이 충분하면
+			
+			// 코인 차감
+			UserVO PurchaseVO = new UserVO();
+			PurchaseVO.setUs_id(us_id);
+			PurchaseVO.setUs_coin(itemVO.getIt_price()); // 아이템 가격입력 
+			coinResult = iService.purchase(PurchaseVO);
+			logger.debug("코인차감 결과 coinResult : " + coinResult);
+			
+			// 코인값 저장
+			us_coin = iService.userCoin(us_id);
+			session.setAttribute("us_coin", us_coin);
+			logger.debug("구매후 코인금액 확인 : " + us_coin);
+			
+			
+			// 글 상태 변경 (판매중 -> 예약중)
+			itResult = iService.itStateChange(it_no);
+			logger.debug("글상태변경 결과 itResult : " + itResult);
+			
+			// 거래 테이블에 기록(insert )
+			TradeVO tradeVO = new TradeVO();
+			tradeVO.setUs_id(us_id);
+			tradeVO.setTr_sell_us(itemVO.getUs_id());
+			tradeVO.setTr_item(itemVO.getIt_no());
+			tradeVO.setTr_buy_state(0);
+			tradeVO.setTr_sell_state(0);
+			tradeVO.setTr_price(itemVO.getIt_price());
+			iService.itemTrade(tradeVO);
+			
+			// 판매자에게 알람 보내기
+			AlarmVO alarmVO = new AlarmVO();
+			alarmVO.setUs_id(us_id);
+			alarmVO.setAl_reciver_id(itemVO.getUs_id());
+			alarmVO.setAl_content(itemVO.getIt_title()+"글을 예약하셨습니다.");
+			alarmVO.setAl_con("안읽음");
+			
+			
+			alResult = iService.alarmSend(alarmVO);
+			logger.debug("알람보내기 결과 alResult : " + alResult);
+			
+		}else { // 코인이 충분하지 않으면
+			return 0;
+		}
+		
+		return coinResult+itResult+alResult;
+	
+	}
+	
+	
+	// 알람 클릭시 
+	@ResponseBody
+	@RequestMapping(value = "/alarmList", method = RequestMethod.POST)
+	public List<AlarmVO> alarmList(HttpSession session) throws Exception {
+		logger.debug("/item/alarmList() 호출");
+		
+		// 세션 아이디
+		String us_id = (String)session.getAttribute("us_id");
+		
+		// 알람 조회
+		return iService.alarmList(us_id);
+		
+		
+		
+	}
+	
 	
 	
 }

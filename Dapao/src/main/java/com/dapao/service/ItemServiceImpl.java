@@ -8,12 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.dapao.domain.AlarmVO;
 import com.dapao.domain.FileVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.LoveVO;
 import com.dapao.domain.PayVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TotalVO;
+import com.dapao.domain.TradeVO;
 import com.dapao.domain.UserVO;
 import com.dapao.persistence.ItemDAOImpl;
 
@@ -193,12 +195,49 @@ public class ItemServiceImpl {
 	}
 	
 	
+	// 아이템 구매시(코인 - 구매가격)
+	public int purchase(UserVO purchaseVO) {
+		logger.debug("Service : purchase(UserVO purchaseVO) 호출");
+		return idao.purchase(purchaseVO);
+		
+	}
+	
+	// 글상태 변경 (판매중(0) -> 예약중(1))
+	public int itStateChange(Integer it_no) {
+		logger.debug("Service : itStateChange(Integer in_no) 호출");
+		return idao.itStateChange(it_no);
+		
+	}
+	
+	// 알람보내기 
+	public int alarmSend(AlarmVO alarmVO) {
+		logger.debug("Service : alarmSend(AlarmVO alarmVO) 호출");
+		return idao.alarmSend(alarmVO);
+		
+	}
+	
+	// 알람리스트 출력 
+	public List<AlarmVO> alarmList(String us_id) {
+		logger.debug("Service : alarmList(String us_id) 호출");
+		return idao.alarmList(us_id);
+		
+	}
+	
+	// 구매여부 확인 
+	public TradeVO checkPur(ItemVO purVO) {
+		logger.debug("Service : checkPur(ItemVO purVO) 호출");
+		return idao.checkPur(purVO);
+		
+	}
+	
+	// 안전결제 후 거래 테이블에 입력
+	public int itemTrade(TradeVO tradeVO) {
+		logger.debug("Service : itemTrade(TradeVO tradeVO) 호출");
+		return idao.itemTrade(tradeVO);
+		
+	}
 	
 
-	
-	
-	
-	
 	
 	
 	
