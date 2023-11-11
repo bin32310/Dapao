@@ -184,5 +184,45 @@
     <script src="${pageContext.request.contextPath }/resources/dist/js/app.min.js" type="text/javascript"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="${pageContext.request.contextPath }/resources/dist/js/demo.js" type="text/javascript"></script>
+ 
+ <script>
+ 
+	// 알람확인
+	$('#alarmClick').click(function(){
+		
+		var str ="";
+
+		$.ajax({
+			type : "post",
+			url : "/item/alarmList",
+			dataType : "JSON",
+			error: function(){
+				alert("알람확인실패");
+			},
+			success : function(data){
+				console.log("success");
+				
+				 $(data).each(function(idx,item){
+					
+					console.log(idx);
+					console.log(item);
+					// div 출력
+					// ${'#result'}.append(item.bno+"/"+item.title+"/"+item.title +"/"+"<hr>");
+					// <li><i class="fa fa-users text-aqua"></i> alarm </li>
+					str += "<li><i class=fa fa-users text-aqua></i>"+item.us_id+"님이 "+item.al_content+"</li>";
+					
+					
+				}); 
+				$('#alarmList').html(str);
+				alert("알람확인성공");
+				
+			} // success 끝	
+		});  // ajax 끝
+
+	});
+ 
+ </script>
   </body>
+ 
+  
 </html>

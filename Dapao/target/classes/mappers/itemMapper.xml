@@ -186,4 +186,38 @@
   	where us_id=#{us_id}
   </select>
   
+  <update id="purchase">
+  	update us set us_coin = us_coin - #{us_coin} 
+  	where us_id = #{us_id } 
+  </update>
+  
+  <update id="itStateChange">
+  	update item set it_state = 1 
+  	where it_no = #{it_no } 
+  </update>
+  
+  <insert id="alarmSend">
+  	insert into alarm(us_id, al_reciver_id, al_content, al_con) 
+  	values(#{us_id }, #{al_reciver_id }, #{al_content }, #{al_con })
+  </insert>
+  
+  <select id="alarmList" resultType="AlarmVO">
+  	select * from alarm 
+  	where al_reciver_id=#{us_id} 
+  	order by al_no desc limit 5
+  </select>
+  
+  <select id="checkPur" resultType="TradeVO">
+  	select * from trade 
+  	where us_id=#{us_id }
+  </select>
+  
+  <insert id="itemTrade">
+  	insert into trade(us_id, tr_sell_us, tr_item, tr_buy_state, tr_sell_state, tr_price)  
+  	values(#{us_id }, #{tr_sell_us }, #{tr_item }, #{tr_buy_state }, #{tr_sell_state }, #{tr_price })
+  </insert>
+  
+  
+  
+  
   </mapper>

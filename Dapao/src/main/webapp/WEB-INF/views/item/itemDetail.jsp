@@ -32,6 +32,22 @@
 				<input type="button" value="신고하기" onclick="location.href='/admin/ac/writeForm?it_no=${itemVO.it_no}';"> <br>
 			</c:if>
 			
+			<c:choose>
+				<c:when test="${itemVO.it_state == 0 }">
+					<input type="text" value="판매중"> <br>
+				</c:when>
+				<c:when test="${itemVO.it_state == 1 }">
+					<input type="text" value="예약중"> <br>
+				</c:when>
+				<c:when test="${itemVO.it_state == 2 }">
+					<input type="text" value="판매완료"> <br>
+				</c:when>
+				<c:otherwise>
+					alert("삭제된 글입니다.");
+					<c:redirect url="../user/userLogin"/>				
+				</c:otherwise>
+			</c:choose>
+			
 			<input type="hidden" value="${itemVO.it_no }" name="it_no"> <br>
 
 			
@@ -49,16 +65,28 @@
 			<input type="text" value="${sellerVO.us_addr }" name="us_addr"> <br> 
 			
 			<input type="hidden" value="${itemVO.us_id }" name="us_id"> <br>
-			
-			<c:if test="${empty us_id }">
+			 
+			<c:if test="${empty us_id && itemVO.it_state != 2 }">
 				<input type="button" value="로그인하고 구매하기" id="login_buy">
 			</c:if>
-			<c:if test="${!empty us_id && itemVO.us_id != us_id}">
+			<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state != 2 }">
 				<input type="button" value="찜" id="addLoveBtn"> 
 				<input type="hidden" value="${love}" id="love_value"> 
-				<input type="button" value="판다톡"> 
-				<input type="submit" value="바로구매"> 
+				<input type="button" value="판다톡" id="panda"> 
 			</c:if>
+			
+			<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state != 2 && tr_buyer == 3}">
+				<input type="button" value="구매하기" id="purchase"> 
+			</c:if>
+			<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state != 2 && tr_buyer == 0}">
+				<input type="button" value="구매확정" id="purchaseOK"> 
+				<input type="button" value="취소하기" id="cancleOK"> 
+			</c:if>
+			
+			<c:if test="${itemVO.it_state == 2  }">
+				<input type="button" value="판매 완료"> 
+			</c:if>
+			
 		
 		</form>
 	</fieldset>
@@ -101,6 +129,27 @@
 			</tr>
 		</c:forEach> 	
 	</table>
+	
+	
+<!-- Modal -->
+<div id="purchaseModal" class="modal fade" role="dialog">
+	<!-- <div class="modal-dialog modal-lg"> -->
+	<div class="modal-dialog ">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">구매하시겠습니까?</h4>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="modalYes">네</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+			</div>
+		</div>
+	</div>
+</div>
 	
 
 	
@@ -184,6 +233,7 @@ $(document).ready(function(){
 						console.log(result);
 						$('#love_value').attr("value",1);
 						$('#addLoveBtn').attr("value","찜취소");
+						alert("찜완료");
 						console.log(love_value);
 						
 					}else{ // 찜취소
@@ -191,6 +241,7 @@ $(document).ready(function(){
 						console.log(result);
 						$('#love_value').attr("value",0);
 						$('#addLoveBtn').attr("value","찜하기");
+						alert("찜취소");
 						console.log(love_value);
 					} //else
 				}
@@ -201,10 +252,73 @@ $(document).ready(function(){
 	
 	// 로그인하고 구매하기 버튼클릭
 	$('#login_buy').click(function(){
-		location.href='/user/userLogin';			
+		location.href='../user/userLogin';			
 	});
-
 	
+	// 판다톡 버튼클릭
+	$('#panda').click(function(){
+		
+		var us_state = ${us_state };
+		
+		if(us_state == 1){ // 정지
+			alert('정지기간에는 판다톡 이용할 수 없습니다.');
+		}else if(us_state == 0){ // 정상
+			
+			
+		}else{// 탈퇴
+			alert('정상적이지 않은 접근입니다.');
+		}		
+		
+	});
+	
+	// 구매하기 버튼클릭
+	$('#purchase').click(function(){
+		
+		var us_state = ${us_state };
+		var it_state = ${itemVO.it_state};
+		
+		if(us_state == 1){ // 정지
+			alert('정지기간에는 예약할 수 없습니다.');
+		}else if(us_state == 0){ // 정상
+			
+			if(it_state == 0){
+				$('#purchaseModal').modal("show");
+			}else if(it_state == 1){
+				alert('이미 예약된 상품입니다.');
+			}else if(it_state == 2){
+				alert('이미 판매된 상품입니다.');
+			}
+			else{
+				alert('정상적이지 않은 접근입니다.');
+			}
+			
+		}else{// 탈퇴
+			alert('정상적이지 않은 접근입니다.');
+		}	
+		
+	});
+	
+	$('#modalYes').click(function(){
+		
+		$.ajax({
+			type : "post",
+			url : "/item/purchase",
+			data : {"it_no" : it_no},
+			error: function(){
+				alert("결제 시도 실패");
+			},
+			success : function(result){
+				console.log("success");
+				if(result == 0){
+					alert("코인이 부족합니다.");
+					
+				}else{ // 구매성공
+						alert("결제성공. 거래가 끝나면 '구매확인' 버튼을 눌러주세요.");
+						location.reload();
+				} //else
+			} // success 끝	
+		}); // ajax 끝
+	});
 	
 });
 
