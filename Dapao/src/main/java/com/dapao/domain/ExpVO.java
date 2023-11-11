@@ -1,6 +1,7 @@
 package com.dapao.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -16,5 +17,6 @@ public class ExpVO {
 	private Date exp_regdate;
 	private String own_id;
 	private Integer exp_state;
-
+	
+	private List<EntVO> entList;
 }

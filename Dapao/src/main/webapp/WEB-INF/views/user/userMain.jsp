@@ -77,7 +77,61 @@
 			<input type="text" value="${item.it_title }" name="it_title"> <br>
 			<input type="text" value="${item.it_price }" name="it_price">
 		</a> 
-	</c:forEach>  
+	</c:forEach> 
+	
+	<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">체험단을 모집합니다</h4>
+			</div>
+			<div class="modal-body">
+				가게상호명 <br>
+				<h3 class="ent_name"></h3>
+				체험단 내용<br>
+				<h3 class="exp_content"></h3>
+				체험단 유의 사항<br>
+				<h3 class="exp_notice"></h3>
+				신청인원/체험단모집인원<br>
+				<h3 class="exp_psn_ch exp_psn"></h3>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.href='';">신청하기</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div> 
+
+<script type="text/javascript">
+$(function(){
+	$('#myModal').modal("show");
+	$.ajax({
+		url : "${contextPath}/ad/modalShow",
+		dataType : "json",
+		success : function(data){
+			console.log(data);
+			$.each(data,function(index,exp){
+				$.each(exp.entList,function(idx,ent){
+					$('.ent_name').append(ent.ent_name);
+				})
+				$('.exp_content').append(exp.exp_content);
+				$('.exp_notice').append(exp.exp_notice);
+				$('.exp_psn_ch').append(exp.exp_psn_ch);
+				$('.exp_psn').append("/"+exp.exp_psn);
+			});
+			
+		},
+		error : function(){
+			alert("@@@@@@@@@@@");
+		}
+	});//ajax
+ });//ready
+</script>
 	
 	<%@ include file="../include/userFooter.jsp" %>
 	
