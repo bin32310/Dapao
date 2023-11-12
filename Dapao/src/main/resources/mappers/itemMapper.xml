@@ -25,6 +25,7 @@
   	<result property="it_regdate" column="it_regdate"/> 
   	<result property="it_outdate" column="it_outdate"/> 
   	<result property="it_love" column="it_love"/> 
+  	<result property="tr_no" column="tr_no"/> 
   	<collection property="fileList" resultMap="fileMap"></collection>
   </resultMap>
   
@@ -186,13 +187,17 @@
   	where us_id=#{us_id}
   </select>
   
+  <select id="getTr_no" resultType="Integer">
+  	select max(tr_no) from trade 
+  </select>
+  
   <update id="purchase">
   	update us set us_coin = us_coin - #{us_coin} 
   	where us_id = #{us_id } 
   </update>
   
   <update id="itStateChange">
-  	update item set it_state = 1 
+  	update item set it_state = 1 , tr_no = #{tr_no } 
   	where it_no = #{it_no } 
   </update>
   
@@ -209,7 +214,7 @@
   
   <select id="checkPur" resultType="TradeVO">
   	select * from trade 
-  	where us_id=#{us_id }
+  	where tr_no=#{tr_no }
   </select>
   
   <insert id="itemTrade">
@@ -217,7 +222,60 @@
   	values(#{us_id }, #{tr_sell_us }, #{tr_item }, #{tr_buy_state }, #{tr_sell_state }, #{tr_price })
   </insert>
   
+  <update id="userPurchaseCancle">
+  	update trade set tr_buy_state = 2 
+  	where tr_no = #{tr_no}
+  </update>
   
+  <update id="sellerPurchaseCancle">
+  	update trade set tr_sell_state = 2 
+  	where tr_no = #{tr_no}
+  </update>
   
+  <update id="userPurchase">
+  	update trade set tr_buy_state = 1 
+  	where tr_no = #{tr_no}
+  </update>
+  
+  <update id="sellerPurchase">
+  	update trade set tr_sell_state = 1  
+  	where tr_no = #{tr_no}
+  </update>
+
+  <select id="sellerState" resultType="Integer">
+  	select tr_sell_state from trade 
+  	where tr_no = #{tr_no}
+  </select>
+  
+  <select id="buyerState" resultType="Integer">
+  	select tr_buy_state from trade 
+  	where tr_no = #{tr_no}
+  </select>
+  
+  <update id="itemCoinTo">
+  	update us set us_coin = us_coin + #{us_coin } 
+  	where us_id = #{us_id }
+  </update>
+  
+  <update id="itemSoldoutState">
+  	update item set it_state = 2 
+  	where it_no = #{it_no } 
+  </update>
+  
+  <update id="itemResellState">
+  	update item set it_state = 0, tr_no = 0 
+  	where it_no = #{it_no } 
+  </update>
+  
+  <update id="tradeDateUpdate">
+  	update trade set tr_date = sysdate() 
+  	where tr_no = #{tr_no } 
+  </update>
+  
+  <select id="buyerInfo" resultType="UserVO">
+  	select u.* from trade t join us u 
+  	on t.us_id = u.us_id 
+  	where t.tr_no = #{tr_no }
+  </select>
   
   </mapper>
