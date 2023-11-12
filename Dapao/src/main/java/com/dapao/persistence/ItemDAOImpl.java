@@ -195,10 +195,10 @@ public class ItemDAOImpl{
 		
 	}
 	
-	// 글상태 변경 (판매중(0) -> 예약중(1))
-	public int itStateChange(Integer it_no) {
-		logger.debug("DAOImpl : itStateChange(Integer it_no) 호출");
-		return sqlSession.update(NAMESPACE + ".itStateChange", it_no);
+	// 글상태 변경 (판매중(0) -> 예약중(1), 현재 거래 번호 업데이트)
+	public int itStateChange(ItemVO itemVO) {
+		logger.debug("DAOImpl : itStateChange(ItemVO itemVO) 호출");
+		return sqlSession.update(NAMESPACE + ".itStateChange", itemVO);
 		
 	}
 	
@@ -216,10 +216,17 @@ public class ItemDAOImpl{
 		
 	}
 	
-	// 구매여부 확인
-	public TradeVO checkPur(ItemVO purVO) {
-		logger.debug("DAOImpl : checkPur(ItemVO purVO) 호출");
-		return sqlSession.selectOne(NAMESPACE + ".checkPur", purVO);
+	// 구매여부 확인(trade에서 한개의 글 정보 불러오기)
+	public TradeVO checkPur(Integer tr_no) {
+		logger.debug("DAOImpl : checkPur(Integer tr_no) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".checkPur", tr_no);
+		
+	}
+	
+	// insert된 trade 테이블의 가장 최신 tr_no 조회
+	public Integer getTr_no() {
+		logger.debug("DAOImpl : getTr_no() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".getTr_no");
 		
 	}
 	
@@ -227,6 +234,83 @@ public class ItemDAOImpl{
 	public int itemTrade(TradeVO tradeVO) {
 		logger.debug("DAOImpl : itemTrade(TradeVO tradeVO) 호출");
 		return sqlSession.insert(NAMESPACE + ".itemTrade", tradeVO);
+		
+	}
+
+	// 구매자가 취소하기 버튼을 클릭하는 경우
+	public int userPurchaseCancle(Integer tr_no) {
+		logger.debug("DAOImpl : userPurchaseCancle(Integer tr_no) 호출");
+		return sqlSession.update(NAMESPACE + ".userPurchaseCancle", tr_no);
+		
+	}
+	
+	// 판매자가 취소하기 버튼을 클릭하는 경우
+	public int sellerPurchaseCancle(Integer tr_no) {
+		logger.debug("DAOImpl : sellerPurchaseCancle(Integer tr_no) 호출");
+		return sqlSession.update(NAMESPACE + ".sellerPurchaseCancle", tr_no);
+		
+	}
+	
+	// 구매자가 구매확정하기 버튼을 클릭하는 경우
+	public int userPurchase(Integer tr_no) {
+		logger.debug("DAOImpl : userPurchase(Integer tr_no) 호출");
+		return sqlSession.update(NAMESPACE + ".userPurchase", tr_no);
+		
+	}
+	
+	// 판매자가 구매확정하기 버튼을 클릭하는 경우
+	public int sellerPurchase(Integer tr_no) {
+		logger.debug("DAOImpl : sellerPurchase(Integer tr_no) 호출");
+		return sqlSession.update(NAMESPACE + ".sellerPurchase", tr_no);
+		
+	}
+	
+	// 구매자가 취소버튼 클릭하는 경우 - 예약했지만 취소하는 경우이므로 판매자의 버튼 상태 알아오기
+	public Integer sellerState(Integer tr_no) {
+		logger.debug("DAOImpl : sellerState(Integer tr_no) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".sellerState", tr_no);
+		
+	}
+	
+	// 판매자가 취소버튼 클릭하는 경우 - 예약했지만 취소하는 경우이므로 구매자의 버튼 상태 알아오기
+	public Integer buyerState(Integer tr_no) {
+		logger.debug("DAOImpl : buyerState(Integer tr_no) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".buyerState", tr_no);
+		
+	}
+	
+	// 둘다 취소해서 돈을 돌려줌 or 둘다 구매확정해서 돈을 입금해줌
+	public int itemCoinTo(UserVO userVO) {
+		logger.debug("DAOImpl : itemCoinTo(UserVO userVO) 호출");
+		return sqlSession.update(NAMESPACE + ".itemCoinTo", userVO);
+		
+	}
+
+	// 글상태 변경 (예약중 -> 판매중, 현재 거래번호 -> 0)
+	public int itemResellState(ItemVO itemVO) {
+		logger.debug("DAOImpl : itemResellState(ItemVO itemVO) 호출");
+		return sqlSession.update(NAMESPACE + ".itemResellState", itemVO);
+		
+	}
+	
+	// 글상태 변경 (예약중 -> 판매완료 )
+	public int itemSoldoutState(ItemVO itemVO) {
+		logger.debug("DAOImpl : itemSoldoutState(ItemVO itemVO) 호출");
+		return sqlSession.update(NAMESPACE + ".itemSoldoutState", itemVO);
+		
+	}
+	
+	// 예약이 취소되어 취소 Date를 Update
+	public int tradeDateUpdate(Integer tr_no) {
+		logger.debug("DAOImpl : tradeDateUpdate(Integer tr_no) 호출");
+		return sqlSession.update(NAMESPACE + ".tradeDateUpdate", tr_no);
+		
+	}
+	
+	// 판매자가 취소버튼을 눌러서 구매자의 정보 조회
+	public UserVO buyerInfo(Integer tr_no) {
+		logger.debug("DAOImpl : buyerInfo(Integer tr_no) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".buyerInfo", tr_no);
 		
 	}
 	

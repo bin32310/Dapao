@@ -22,6 +22,7 @@ public class ItemVO { /* itemDTO */
 	private Date it_regdate; // 글 등록시간
 	private Date it_outdate; // 글 삭제시간
 	private Integer it_love; // 상품 찜수
+	private Integer tr_no; // 현재 거래 번호 
 	
 	private List<FileVO> fileList; // 사진 
 	

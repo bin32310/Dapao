@@ -63,6 +63,7 @@
 						<img src="/imgfile/${love.it_img }" name="it_img" width="150px" height="150px"> <br>
 						<input type="text" value="${love.it_title }" name="it_title"> <br>
 						<input type="text" value="${love.it_price }" name="it_price">
+						<input type="text" value="${love.it_state }" name="it_state">
 					</a>
 				</form>
 			</fieldset>
@@ -76,6 +77,22 @@
 			<img src="/imgfile/${item.it_img }" name="it_img" width="150px" height="150px" > <br>
 			<input type="text" value="${item.it_title }" name="it_title"> <br>
 			<input type="text" value="${item.it_price }" name="it_price">
+			<input type="hidden" value="${item.it_state }" name="it_state">
+			<!-- 글 상태 표시 -->
+			<c:choose>
+				<c:when test="${item.it_state == 0 }">
+					<input type="text" value="판매중"> <br>
+				</c:when>
+				<c:when test="${item.it_state == 1 }">
+					<input type="text" value="예약중"> <br>
+				</c:when>
+				<c:when test="${item.it_state == 2 }">
+					<input type="text" value="판매완료"> <br>
+				</c:when>
+				<c:otherwise>
+					<input type="text" value="접근이상함"> <br>			
+				</c:otherwise>
+			</c:choose>
 		</a> 
 	</c:forEach> 
 	
@@ -109,6 +126,8 @@
 
 <script type="text/javascript">
 $(function(){
+	
+	
 	$('#myModal').modal("show");
 	$.ajax({
 		url : "${contextPath}/ad/modalShow",

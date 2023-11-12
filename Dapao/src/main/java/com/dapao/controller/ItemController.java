@@ -375,6 +375,9 @@ public class ItemController {
 		
 		// 내가 구매한건지 확인
 		TradeVO tradeVO = new TradeVO();
+		tradeVO.setTr_no(0);
+		tradeVO.setTr_buy_state(3);
+		tradeVO.setTr_sell_state(3);
 		int item_state = 0;
 		
 		// 찜
@@ -385,6 +388,7 @@ public class ItemController {
 		
 		// 세션 - 아이디
 		String us_id = (String) session.getAttribute("us_id");
+		logger.debug("세션 아이디 us_id : " + us_id);
 		if(us_id == null) { // 찜했는지 확인x
 			
 		}else {// 찜했는지 확인0
@@ -408,13 +412,7 @@ public class ItemController {
 		UserVO sellerVO = iService.sellerInfo(sellerId);
 		logger.debug("@@판매자 정보 : " + sellerVO);
 		model.addAttribute("sellerVO", sellerVO);
-			
-		
-		// 판매자 상점 리뷰 조회 
-//		List<ReviewVO> sellerRvVO = iService.sellerRv(itemVO);
-//		logger.debug("판매자 상점 리뷰 정보 : " + sellerRvVO);
-//		model.addAttribute("sellerRvVO", sellerRvVO);
-//		
+
 		
 		// 판매자 다른 물품
 		List<ItemVO> sellerItemVO = iService.sellerItem(itemVO);
@@ -430,48 +428,61 @@ public class ItemController {
 		// 조회수 증가를 체크 : on - 1 , off - 2
         if(session.getAttribute("itemView").equals("on")) {
              int viewcnt= iService.viewCnt(it_no);
-             logger.debug("viewcnt : " + viewcnt);
+             logger.debug("조회수 증가 체크 viewcnt : " + viewcnt);
             session.setAttribute("itemView", "off");
         }
         
         // 예약중인 물건일때 내가 구매한건지 확인
         // trade 테이블에 it_no이 존재하고, 아직 예약중일때 버튼 활성화
        item_state = itemVO.getIt_state();
-        if(item_state == 1) { //예약중인 물건일때 
+        if(item_state == 1 ) { //예약중인 물건일때 
+        	logger.debug("예약중인 글이다.");
         	
         	// 거래글정보 가져오기
-        	ItemVO purVO = new ItemVO();
-        	purVO.setIt_no(it_no);
-        	purVO.setUs_id(us_id);
-        	tradeVO = iService.checkPur(purVO);
+        	tradeVO = iService.checkPur(itemVO.getTr_no());
+        	logger.debug("거래글 정보 tradeVO : " + tradeVO);
         	
-        	
-        	// 거래 구매자 아이디
-        	String tr_id_buyer = tradeVO.getUs_id();
-        	// 거래 구매자의 아이디와 내 아이디가 같으면
-        	if(us_id.equals(tr_id_buyer)) {
+        	if(us_id == null) {
         		
-        		// session에 현재 거래 상태 저장 (0- 안전결제로 예약중 / 1- 거래완료 눌렀음 / 2- 취소 눌렀음)
-        		session.setAttribute("tr_buyer", tradeVO.getTr_buy_state());
+        		logger.debug("예약중인 글이지만 로그인을 한 상태가아니다");
+        		tradeVO.setTr_no(0);
+        		tradeVO.setTr_buy_state(3);
+        		tradeVO.setTr_sell_state(3);
+        		model.addAttribute("tradeVO", tradeVO);
+
         	}else {
-        		session.setAttribute("tr_buyer", 3);
+        		
+        		logger.debug("아이디가 존재한다");
+        		// 거래 구매자 아이디
+        		String tr_id_buyer = tradeVO.getUs_id();
+        		// 거래 구매자의 아이디와 내 아이디가 같으면
+        		if(us_id.equals(tr_id_buyer)) {
+        			logger.debug("거래 구매자의 아이디와 내 아이디가 같다");
+        		}else {
+        			logger.debug("거래 구매자의 아이디와 내 아이디가 다르다");
+        			tradeVO.setTr_no(0);
+        			tradeVO.setTr_buy_state(3);
+        		}
+        		
+        		// 거래 판매자 아이디
+        		String tr_id_seller = tradeVO.getTr_sell_us();
+        		// 거래 판매자의 아이디와 내 아이디가 같으면
+        		if(us_id.equals(tr_id_seller)) {
+        			logger.debug("거래 판매자의 아이디와 내 아이디가 같다");
+        		}else {
+        			logger.debug("거래 판매자의 아이디와 내 아이디가 다르다");
+        			tradeVO.setTr_sell_state(3);
+        		}
+        		
+        		model.addAttribute("tradeVO", tradeVO);
         	}
         	
-        	// 거래 판매자 아이디
-        	String tr_id_seller = tradeVO.getTr_sell_us();
-        	// 거래 판매자의 아이디와 내 아이디가 같으면
-        	if(us_id.equals(tr_id_seller)) {
-           	 
-           		// session에 현재 거래 상태 저장 (0- 안전결제로 예약중 / 1- 거래완료 눌렀음 / 2- 취소 눌렀음)
-           		session.setAttribute("tr_seller", tradeVO.getTr_sell_state());
-        	}else {
-        		session.setAttribute("tr_seller", 3);
-        	}
-        	
-        }else {
-        	
-        	session.setAttribute("tr_buyer", 3);
-        	session.setAttribute("tr_seller", 3);
+        }else { // 예약중인 글이 아닐때
+        	logger.debug("예약중인 글이 아니다");
+        	tradeVO.setTr_no(0);
+        	tradeVO.setTr_buy_state(3);
+        	tradeVO.setTr_sell_state(3);
+        	model.addAttribute("tradeVO", tradeVO);
         	
         }
 		
@@ -488,37 +499,7 @@ public class ItemController {
 		logger.debug("itemFile(int it_no) 실행)");
 		return new ResponseEntity<>(iService.itemFile(it_no),HttpStatus.OK);
 	}	
-	
-	
-	
-	// http://localhost:8088/item/itemDetail	
-	// 판매글상세 POST (받은 정보 + DB에서 정보 들고오기 => 결제 페이지로 이동)
-	@RequestMapping(value="/itemDetail", method = RequestMethod.POST )
-	public String itemDetailPOST(ItemVO itemVO,HttpSession session, Model model) {
-		
-		logger.debug("itemDetailPOST() 호출");
-		
-		// 전달정보 확인
-		logger.debug("@@판매글 정보 확인 itemVO : " + itemVO);
-		
-		// 사용자의 아이디 정보 => 세션영역에 있는 정보 가져오기
-		String us_id = (String) session.getAttribute("us_id");
-		logger.debug("@@세션 아이디 확인 us_id : " + us_id);
-		
-		// 서비스 -> DAO
-		// 결제에 필요한 정보 불러오기 매서드 실행
-		//UserVO userVO = uService.userInfo(us_id);
-		//logger.debug("@@회원정보 확인 userVO : " + userVO);
 
-		// 정보 이동
-		model.addAttribute("itemVO", itemVO);
-		model.addAttribute("userVO", uService.userInfo(us_id));
-		
-		// 정보를 가지고 결제 창으로 이동
-		return "redirect:/item/itemPay";
-	}
-	
-	
 
 	// 찜기능 GET - 찜 목록에 등록/삭제
 	@ResponseBody
@@ -654,11 +635,6 @@ public class ItemController {
 			session.setAttribute("us_coin", us_coin);
 			logger.debug("구매후 코인금액 확인 : " + us_coin);
 			
-			
-			// 글 상태 변경 (판매중 -> 예약중)
-			itResult = iService.itStateChange(it_no);
-			logger.debug("글상태변경 결과 itResult : " + itResult);
-			
 			// 거래 테이블에 기록(insert )
 			TradeVO tradeVO = new TradeVO();
 			tradeVO.setUs_id(us_id);
@@ -669,11 +645,19 @@ public class ItemController {
 			tradeVO.setTr_price(itemVO.getIt_price());
 			iService.itemTrade(tradeVO);
 			
+			// insert된 글의 tr_no 가져오기 
+			itemVO.setTr_no(iService.getTr_no());
+			
+			// 글 상태 변경 (판매중 -> 예약중 , 현재 거래 번호 업데이트)
+			itResult = iService.itStateChange(itemVO);
+			logger.debug("글상태변경 결과 itResult : " + itResult);
+			
+			
 			// 판매자에게 알람 보내기
 			AlarmVO alarmVO = new AlarmVO();
 			alarmVO.setUs_id(us_id);
 			alarmVO.setAl_reciver_id(itemVO.getUs_id());
-			alarmVO.setAl_content(itemVO.getIt_title()+"글을 예약하셨습니다.");
+			alarmVO.setAl_content(itemVO.getIt_title()+"을 예약했습니다.");
 			alarmVO.setAl_con("안읽음");
 			
 			
@@ -701,8 +685,217 @@ public class ItemController {
 		// 알람 조회
 		return iService.alarmList(us_id);
 		
+	}
+	
+	// 구매자 유저가 취소버튼 클릭시 
+	@ResponseBody
+	@RequestMapping(value = "/userPurchaseCancle", method = RequestMethod.POST)
+	public int purchaseCancle(HttpSession session, Integer it_no, Integer tr_no) throws Exception {
+		logger.debug("/item/purchaseCancle() 호출");
 		
+		// 세션 아이디
+		String us_id = (String)session.getAttribute("us_id");
 		
+		ItemVO itemVO = new ItemVO();
+		itemVO = iService.itemDetail(it_no);
+		
+		// 취소시 판매자(상대방)에게 알람
+		AlarmVO alarmVO = new AlarmVO();
+		alarmVO.setUs_id(us_id);
+		alarmVO.setAl_reciver_id(itemVO.getUs_id());
+		alarmVO.setAl_content(itemVO.getIt_title()+"을 취소했습니다.");
+		alarmVO.setAl_con("안읽음");
+		int alarmResult = iService.alarmSend(alarmVO);
+		logger.debug("alarmResult : " + alarmResult);
+		
+		// tr_buy_state 를 2(취소하기버튼)으로 변경
+		int buyStateResult = iService.userPurchaseCancle(tr_no);
+		logger.debug("buyStateResult : " + buyStateResult);
+		// tr_sell_state 상태확인 
+		int sellerState = iService.sellerState(tr_no);
+		logger.debug("sellerState : " + sellerState);
+		
+		// 만약 둘다 상태가 2라면 둘다 취소 버튼을 눌렀다는 뜻
+		if(sellerState == 2) {
+			
+			// 구매자한테 돈 돌려주기 
+			UserVO userVO = new UserVO();
+			userVO.setUs_id(us_id);
+			userVO.setUs_coin(itemVO.getIt_price());
+			int itemCoinResult = iService.itemCoinTo(userVO);
+			logger.debug("itemCoinResult : "+ itemCoinResult);
+			
+			// 글 상태 바꾸기 (예약중 -> 판매중)
+			int itemResell = iService.itemResellState(itemVO);
+			logger.debug(" itemResell : " + itemResell);
+			
+			// 취소 처리된 날짜 입력
+			int DateUpdate = iService.tradeDateUpdate(tr_no);
+			logger.debug(" DateUpdate : " + DateUpdate);
+			
+		}
+		
+		return sellerState;
+		
+	}
+	
+	// 판매자 유저가 취소버튼 클릭시 
+	@ResponseBody
+	@RequestMapping(value = "/sellerPurchaseCancle", method = RequestMethod.POST)
+	public int sellerPurchaseCancle(HttpSession session, Integer it_no, Integer tr_no) throws Exception {
+		logger.debug("/item/purchaseCancle() 호출");
+		
+		// 세션 아이디(판매자 아이디)
+		String us_id = (String)session.getAttribute("us_id");
+		
+		ItemVO itemVO = new ItemVO();
+		itemVO = iService.itemDetail(it_no);
+		
+		// 구매자 정보 불러오기
+		UserVO buyerVO = iService.buyerInfo(tr_no);
+		
+		// 취소시 구매자(상대방)에게 알람
+		AlarmVO alarmVO = new AlarmVO();
+		alarmVO.setUs_id(us_id);
+		alarmVO.setAl_reciver_id(buyerVO.getUs_id());
+		alarmVO.setAl_content(itemVO.getIt_title()+"을 취소했습니다.");
+		alarmVO.setAl_con("안읽음");
+		int alarmResult = iService.alarmSend(alarmVO);
+		logger.debug("alarmResult : " + alarmResult);
+		
+		// tr_sell_state 를 2(취소하기버튼)으로 변경
+		int sellerStateResult = iService.sellerPurchaseCancle(tr_no);
+		logger.debug("sellerStateResult : " + sellerStateResult);
+		// tr_buy_state 상태확인 
+		int buyerState = iService.buyerState(tr_no);
+		logger.debug("buyerState : " + buyerState);
+		
+		// 만약 둘다 상태가 2라면 둘다 취소 버튼을 눌렀다는 뜻
+		if(buyerState == 2) {
+			
+			// 구매자한테 돈 돌려주기 
+			UserVO userVO = new UserVO();
+			userVO.setUs_id(buyerVO.getUs_id());
+			userVO.setUs_coin(itemVO.getIt_price());
+			int itemCoinResult = iService.itemCoinTo(userVO);
+			logger.debug("itemCoinResult : "+ itemCoinResult);
+			
+			// 글 상태 바꾸기 (예약중 -> 판매중, 현재 거래번호 -> 0)
+			int itemResell = iService.itemResellState(itemVO);
+			logger.debug(" itemResell : " + itemResell);
+			
+			// 취소 처리된 날짜 입력
+			int DateUpdate = iService.tradeDateUpdate(tr_no);
+			logger.debug(" DateUpdate : " + DateUpdate);
+			
+		}
+		
+		return buyerState;
+		
+	}
+	
+	// 구매자 유저가 구매확정하기 버튼 클릭시 
+	@ResponseBody
+	@RequestMapping(value = "/userPurchaseOk", method = RequestMethod.POST)
+	public int userPurchaseOk(HttpSession session, Integer it_no, Integer tr_no) throws Exception {
+		logger.debug("/item/userPurchaseOk() 호출");
+		
+		// 세션 아이디(구매자 아이디)
+		String us_id = (String)session.getAttribute("us_id");
+		
+		ItemVO itemVO = new ItemVO();
+		itemVO = iService.itemDetail(it_no);
+		
+		// 구매확정시 판매자(상대방)에게 알람
+		AlarmVO alarmVO = new AlarmVO();
+		alarmVO.setUs_id(us_id);
+		alarmVO.setAl_reciver_id(itemVO.getUs_id());
+		alarmVO.setAl_content(itemVO.getIt_title()+"을 구매확정했습니다.");
+		alarmVO.setAl_con("안읽음");
+		int alarmResult = iService.alarmSend(alarmVO);
+		logger.debug("alarmResult : " + alarmResult);
+		
+		// tr_buy_state 를 1(구매확정하기버튼)로 변경
+		int buyStateResult = iService.userPurchase(tr_no);
+		logger.debug("buyStateResult : " + buyStateResult);
+		// tr_sell_state 상태확인 
+		int sellerState = iService.sellerState(tr_no);
+		logger.debug("sellerState : " + sellerState);
+		
+		// 만약 둘다 상태가 1이라면 둘다 구매확정하기 버튼을 눌렀다는 뜻
+		if(sellerState == 1) {
+			
+			// 판매자한테 돈 입금하기 
+			UserVO userVO = new UserVO();
+			userVO.setUs_id(itemVO.getUs_id());
+			userVO.setUs_coin(itemVO.getIt_price());
+			int itemCoinResult = iService.itemCoinTo(userVO);
+			logger.debug("itemCoinResult : "+ itemCoinResult);
+			
+			// 글 상태 바꾸기 (예약중 -> 판매완료)
+			int itemResell = iService.itemSoldoutState(itemVO);
+			logger.debug(" itemResell : " + itemResell);
+			
+			// 판매 완료된 날짜 입력
+			int DateUpdate = iService.tradeDateUpdate(tr_no);
+			logger.debug(" DateUpdate : " + DateUpdate);
+			
+		}
+		
+		return sellerState;
+	}
+	
+	// 판매자 유저가 구매확정하기 버튼 클릭시 
+	@ResponseBody
+	@RequestMapping(value = "/sellerPurchaseOk", method = RequestMethod.POST)
+	public int sellerPurchaseOk(HttpSession session, Integer it_no, Integer tr_no) throws Exception {
+		logger.debug("/item/sellerPurchaseOk() 호출");
+		
+		// 세션 아이디(구매자 아이디)
+		String us_id = (String)session.getAttribute("us_id");
+		ItemVO itemVO = new ItemVO();
+		itemVO = iService.itemDetail(it_no);
+		
+		// 구매자 정보 불러오기
+		UserVO buyerVO = iService.buyerInfo(tr_no);
+		
+		// 구매확정시 구매자(상대방)에게 알람
+		AlarmVO alarmVO = new AlarmVO();
+		alarmVO.setUs_id(us_id);
+		alarmVO.setAl_reciver_id(buyerVO.getUs_id());
+		alarmVO.setAl_content(itemVO.getIt_title()+"을 구매확정했습니다.");
+		alarmVO.setAl_con("안읽음");
+		int alarmResult = iService.alarmSend(alarmVO);
+		logger.debug("alarmResult : " + alarmResult);
+		
+		// tr_sell_state 를 1(구매확정하기버튼)로 변경
+		int sellerStateResult = iService.sellerPurchase(tr_no);
+		logger.debug("sellerStateResult : " + sellerStateResult);
+		// tr_buy_state 상태확인 
+		int buyerState = iService.buyerState(tr_no);
+		logger.debug("buyerState : " + buyerState);
+		
+		// 만약 둘다 상태가 1이라면 둘다 구매확정 버튼을 눌렀다는 뜻
+		if(buyerState == 1) {
+			
+			// 판매자한테 돈 입금하기 
+			UserVO userVO = new UserVO();
+			userVO.setUs_id(us_id);
+			userVO.setUs_coin(itemVO.getIt_price());
+			int itemCoinResult = iService.itemCoinTo(userVO);
+			logger.debug("itemCoinResult : "+ itemCoinResult);
+			
+			// 글 상태 바꾸기 (예약중 -> 판매완료)
+			int itemResell = iService.itemSoldoutState(itemVO);
+			logger.debug(" itemResell : " + itemResell);
+			
+			// 판매 완료된 날짜 입력
+			int DateUpdate = iService.tradeDateUpdate(tr_no);
+			logger.debug(" DateUpdate : " + DateUpdate);
+			
+		}
+		
+		return buyerState;
 	}
 	
 	

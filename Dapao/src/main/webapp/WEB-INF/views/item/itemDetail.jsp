@@ -26,12 +26,17 @@
 
 	<fieldset>
 		<form action=""  method="post">
+		
+			<c:if test="${!empty us_id }">
+				<input type="text" value="${us_id }" id="session_us_id">
+				<input type="text" value="${us_state }" id="session_us_state">
+			</c:if>
 
-			
 			<c:if test="${!empty us_id && itemVO.us_id != us_id}">
 				<input type="button" value="신고하기" onclick="location.href='../admin/acWriteForm?it_no=${itemVO.it_no}&us_id=${itemVO.us_id }';"> <br>
 			</c:if>
 			
+			<!-- 글 상태 표시 -->
 			<c:choose>
 				<c:when test="${itemVO.it_state == 0 }">
 					<input type="text" value="판매중"> <br>
@@ -66,23 +71,35 @@
 			
 			<input type="hidden" value="${itemVO.us_id }" name="us_id"> <br>
 			 
+			<!-- 로그인을 하지 않았을시 -->
 			<c:if test="${empty us_id && itemVO.it_state != 2 }">
 				<input type="button" value="로그인하고 구매하기" id="login_buy">
 			</c:if>
+			<!-- 찜 & 판다톡 -->
 			<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state != 2 }">
 				<input type="button" value="찜" id="addLoveBtn"> 
 				<input type="hidden" value="${love}" id="love_value"> 
 				<input type="button" value="판다톡" id="panda"> 
 			</c:if>
-			
-			<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state != 2 && tr_buyer == 3}">
+			<!-- 구매자도 판매자도 아닐때 -->
+			<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state != 2 && tradeVO.us_id != us_id}">
 				<input type="button" value="구매하기" id="purchase"> 
 			</c:if>
-			<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state != 2 && tr_buyer == 0}">
-				<input type="button" value="구매확정" id="purchaseOK"> 
-				<input type="button" value="취소하기" id="cancleOK"> 
+			<!-- 구매자가 예약 글에 들어옴 -->
+			<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state == 1 && tradeVO.us_id.equals(us_id)}">
+				<input type="button" value="구매확정하기" id="userPurchaseOK"> 
+				<input type="button" value="취소하기" id="userCancleOK"> 
 			</c:if>
-			
+			<!-- 판매자 본인의 글에 들어옴 -->
+			<c:if test="${!empty us_id && itemVO.us_id.equals(us_id) && itemVO.it_state == 1}">
+				<input type="button" value="구매확정하기" id="sellerPurchaseOK"> 
+				<input type="button" value="취소하기" id="sellerCancleOK"> 
+			</c:if>
+			<!-- 예약중인 글에 구매자나 판매가자 들어왔다면 -->
+			<c:if test="${tradeVO.tr_no != 0 }">
+				<input type="hidden" value="${tradeVO.tr_no }" name="tr_no">
+			</c:if>
+			<!-- 판매가 완료된 글이라면 -->
 			<c:if test="${itemVO.it_state == 2  }">
 				<input type="button" value="판매 완료"> 
 			</c:if>
@@ -95,8 +112,6 @@
 		상세 내용 <br>
 		<textarea rows="10" cols="10">${itemVO.it_content}</textarea>
 	</form>
-	
-	<br><hr><br>
 
 	
 	<br><hr><br>
@@ -131,7 +146,7 @@
 	</table>
 	
 	
-<!-- Modal -->
+<!-- 구매하기 버튼 클릭시 Modal -->
 <div id="purchaseModal" class="modal fade" role="dialog">
 	<!-- <div class="modal-dialog modal-lg"> -->
 	<div class="modal-dialog ">
@@ -145,6 +160,86 @@
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal" id="modalYes">네</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- user구매확정하기 버튼 클릭시 Modal -->
+<div id="userPurchaseOKModal" class="modal fade" role="dialog">
+	<!-- <div class="modal-dialog modal-lg"> -->
+	<div class="modal-dialog ">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">구매확정 하시겠습니까?(취소가 불가능하므로 신중하게 눌러주세요.)</h4>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="userPurchaseOKModalYes">네</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- seller구매확정하기 버튼 클릭시 Modal -->
+<div id="sellerPurchaseOKModal" class="modal fade" role="dialog">
+	<!-- <div class="modal-dialog modal-lg"> -->
+	<div class="modal-dialog ">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">구매확정 하시겠습니까?(취소가 불가능하므로 신중하게 눌러주세요.)</h4>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="sellerPurchaseOKModalYes">네</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- user취소하기 버튼 클릭시 Modal -->
+<div id="userCancleOKModal" class="modal fade" role="dialog">
+	<!-- <div class="modal-dialog modal-lg"> -->
+	<div class="modal-dialog ">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">취소 하시겠습니까?(취소가 불가능하므로 신중하게 눌러주세요.)</h4>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="userCancleOKModalYes">네</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- seller취소하기 버튼 클릭시 Modal -->
+<div id="sellerCancleOKModal" class="modal fade" role="dialog">
+	<!-- <div class="modal-dialog modal-lg"> -->
+	<div class="modal-dialog ">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">취소 하시겠습니까?(취소가 불가능하므로 신중하게 눌러주세요.)</h4>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="sellerCancleOKModalYes">네</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
 			</div>
 		</div>
@@ -176,6 +271,155 @@ $(document).ready(function(){
 		
 		$('#addLoveBtn').attr("value","찜취소");
 	}
+	
+	// 처음 예약중인 글일때 구매&취소 버튼 클릭여부 확인
+	// 예약글인지 확인
+	var it_state = ${itemVO.it_state };
+	
+	if(it_state == 1){
+		
+		// 구매자
+		var buyer_state = ${tradeVO.tr_buy_state };
+		
+		if(buyer_state == 1){ // 구매확정을 이미 누름
+			$('#userPurchaseOK').attr("value","구매확정완료");
+			$('#userPurchaseOK').attr("disabled","disabled");
+			$('#userCancleOK').attr("disabled","disabled");
+		}else if(buyer_state == 2){ // 취소버튼을 이미 누름
+			$('#userCancleOK').attr("value","취소하기완료");
+			$('#userPurchaseOK').attr("disabled","disabled");
+			$('#userCancleOK').attr("disabled","disabled");
+		}
+		
+		// 판매자
+		var seller_state = ${tradeVO.tr_sell_state }
+		
+		if(buyer_state == 1){ // 구매확정을 이미 누름
+			$('#sellerPurchaseOK').attr("value","구매확정완료");
+			$('#sellerPurchaseOK').attr("disabled","disabled");
+			$('#sellerCancleOK').attr("disabled","disabled");
+		}else if(buyer_state == 2){ // 취소버튼을 이미 누름
+
+			$('#sellerCancleOK').attr("value","취소하기완료");
+			$('#sellerPurchaseOK').attr("disabled","disabled");
+			$('#sellerCancleOK').attr("disabled","disabled");
+		}
+		
+	}
+	
+	// 구매확정하기 or 취소하기 버튼 클릭시
+	
+	// 구매자가 구매확정 버튼클릭
+	$('#userPurchaseOK').click(function(){
+		$('#userPurchaseOKModal').modal("show");
+	});
+	
+	$('#userPurchaseOKModalYes').click(function(){
+		var it_no = ${itemVO.it_no };
+		var tr_no = $("input[name='tr_no']").val();
+		
+		$.ajax({
+			type : "post",
+			url : "/item/userPurchaseOk",
+			data : {"it_no" : it_no, "tr_no" : tr_no} ,
+			dataType : "JSON",
+			error: function(){
+				alert("구매확정하기 실패");
+			},
+			success : function(){
+					alert("구매확정하기 완료");
+					location.reload();
+					
+				
+			} // success 끝	
+		}); // ajax 끝
+		
+	});
+		
+	
+	// 구매자가 취소하기 버튼클릭
+	$('#userCancleOK').click(function(){
+		$('#userCancleOKModal').modal("show");
+	});
+	
+	$('#userCancleOKModalYes').click(function(){
+		
+		var it_no = ${itemVO.it_no };
+		var tr_no = $("input[name='tr_no']").val();
+		
+		$.ajax({
+			type : "post",
+			url : "/item/userPurchaseCancle",
+			data : {"it_no" : it_no, "tr_no" : tr_no} ,
+			dataType : "JSON",
+			error: function(){
+				alert("취소하기 실패");
+			},
+			success : function(){
+					alert("취소하기 완료");
+					location.reload();
+					
+			} // success 끝	
+		}); // ajax 끝
+	});
+
+
+	// 판매자가 구매확정 버튼클릭
+		$('#sellerPurchaseOK').click(function(){
+			$('#sellerPurchaseOKModal').modal("show");
+	});
+	
+
+	$('#sellerPurchaseOKModalYes').click(function(){
+		
+		var it_no = ${itemVO.it_no };
+		var tr_no = $("input[name='tr_no']").val();
+		
+		$.ajax({
+			type : "post",
+			url : "/item/sellerPurchaseOk",
+			data : {"it_no" : it_no, "tr_no" : tr_no} ,
+			dataType : "JSON",
+			error: function(){
+				alert("구매확정하기 실패");
+			},
+			success : function(){
+					alert("구매확정하기 완료");
+					location.reload();
+					
+				
+			} // success 끝	
+		}); // ajax 끝
+		
+	});
+	
+	// 판매자가 취소하기 버튼클릭
+	$('#sellerCancleOK').click(function(){
+		$('#sellerCancleOKModal').modal("show");
+	});
+	
+	
+	$('#sellerCancleOKModalYes').click(function(){
+		
+		var it_no = ${itemVO.it_no };
+		var tr_no = $("input[name='tr_no']").val();
+		
+		$.ajax({
+			type : "post",
+			url : "/item/sellerPurchaseCancle",
+			data : {"it_no" : it_no, "tr_no" : tr_no} ,
+			dataType : "JSON",
+			error: function(){
+				alert("취소하기 실패");
+			},
+			success : function(){
+					alert("취소하기 완료");
+					location.reload();
+					
+				
+			} // success 끝	
+		}); // ajax 끝
+	});
 	
 	// 파일 확인
 	
@@ -255,20 +499,23 @@ $(document).ready(function(){
 		location.href='../user/userLogin';			
 	});
 	
+	
+	
 	// 판다톡 버튼클릭
 	$('#panda').click(function(){
 		
-		var us_state = ${us_state };
-		
-		if(us_state == 1){ // 정지
-			alert('정지기간에는 판다톡 이용할 수 없습니다.');
-		}else if(us_state == 0){ // 정상
+		if($("input[name='session_us_id']").val() != null){
+			var us_state = $("input[name='session_us_state']").val();
 			
-			
-		}else{// 탈퇴
-			alert('정상적이지 않은 접근입니다.');
-		}		
-		
+			if(us_state == 1){ // 정지
+				alert('정지기간에는 판다톡 이용할 수 없습니다.');
+			}else if(us_state == 0){ // 정상
+				
+				
+			}else{// 탈퇴
+				alert('정상적이지 않은 접근입니다.');
+			}		
+		}
 	});
 	
 	// 구매하기 버튼클릭

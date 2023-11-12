@@ -203,9 +203,9 @@ public class ItemServiceImpl {
 	}
 	
 	// 글상태 변경 (판매중(0) -> 예약중(1))
-	public int itStateChange(Integer it_no) {
-		logger.debug("Service : itStateChange(Integer in_no) 호출");
-		return idao.itStateChange(it_no);
+	public int itStateChange(ItemVO itemVO) {
+		logger.debug("Service : itStateChange(ItemVO itemVO) 호출");
+		return idao.itStateChange(itemVO);
 		
 	}
 	
@@ -224,9 +224,15 @@ public class ItemServiceImpl {
 	}
 	
 	// 구매여부 확인 
-	public TradeVO checkPur(ItemVO purVO) {
-		logger.debug("Service : checkPur(ItemVO purVO) 호출");
-		return idao.checkPur(purVO);
+	public TradeVO checkPur(Integer tr_no) {
+		logger.debug("Service : checkPur(Integer tr_no) 호출");
+		return idao.checkPur(tr_no);
+		
+	}
+	// insert된 trade 테이블의 가장 최신 tr_no 조회
+	public Integer getTr_no() {
+		logger.debug("Service : getTr_no() 호출");
+		return idao.getTr_no();
 		
 	}
 	
@@ -236,10 +242,85 @@ public class ItemServiceImpl {
 		return idao.itemTrade(tradeVO);
 		
 	}
+
+	// 구매자가 취소버튼 클릭하는 경우
+	public int userPurchaseCancle(Integer tr_no) {
+		logger.debug("Service : userPurchaseCancle(Integer tr_no) 호출");
+		return idao.userPurchaseCancle(tr_no);
+		
+	}
+	
+	// 판매자가 취소버튼 클릭하는 경우
+	public int sellerPurchaseCancle(Integer tr_no) {
+		logger.debug("Service : sellerPurchaseCancle(Integer tr_no) 호출");
+		return idao.sellerPurchaseCancle(tr_no);
+		
+	}
+	
+	// 구매자가 취소버튼 클릭하는 경우 - 예약했지만 취소하는 경우이므로 판매자의 버튼 상태 알아오기
+	public Integer sellerState(Integer tr_no) {
+		logger.debug("Service : sellerState(Integer tr_no) 호출");
+		return idao.sellerState(tr_no);
+		
+	}
+	
+	// 판매자가 취소버튼 클릭하는 경우 - 예약했지만 취소하는 경우이므로 구매자의 버튼 상태 알아오기
+	public Integer buyerState(Integer tr_no) {
+		logger.debug("Service : buyerState(Integer tr_no) 호출");
+		return idao.buyerState(tr_no);
+		
+	}
+	
+	// 구매자가 구매확정하기 버튼을 클릭하는 경우
+	public Integer userPurchase(Integer tr_no) {
+		logger.debug("Service : userPurchase(Integer tr_no) 호출");
+		return idao.userPurchase(tr_no);
+		
+	}
+	
+	// 판매자가 구매확정하기 버튼을 클릭하는 경우
+	public Integer sellerPurchase(Integer tr_no) {
+		logger.debug("Service : sellerPurchase(Integer tr_no) 호출");
+		return idao.sellerPurchase(tr_no);
+		
+	}
+	
+	// 둘다 취소해서 돈을 돌려줌  or 둘다 구매확정해서 돈을 입금해줌
+	public int itemCoinTo(UserVO userVO) {
+		logger.debug("Service : itemCoinTo(UserVO userVO) 호출");
+		return idao.itemCoinTo(userVO);
+		
+	}
+	
+	// 글상태 변경 (예약중 -> 판매중, 현재거래번호 -> 0)
+	public int itemResellState(ItemVO itemVO) {
+		logger.debug("Service : itemResellState(ItemVO itemVO) 호출");
+		return idao.itemResellState(itemVO);
+		
+	}
+	
+	// 글상태 변경 (예약중 -> 판매완료)
+	public int itemSoldoutState(ItemVO itemVO) {
+		logger.debug("Service : itemSoldoutState(ItemVO itemVO) 호출");
+		return idao.itemSoldoutState(itemVO);
+		
+	}
+
+	// 예약이 취소되어 취소 Date를 Update
+	public int tradeDateUpdate(Integer tr_no) {
+		logger.debug("Service : tradeDateUpdate(Integer tr_no) 호출");
+		return idao.tradeDateUpdate(tr_no);
+		
+	}
+	
+	// 판매자가 취소버튼을 눌러서 구매자의 정보 조회
+	public UserVO buyerInfo(Integer tr_no) {
+		logger.debug("Service : buyerInfo(Integer tr_no) 호출");
+		return idao.buyerInfo(tr_no);
+		
+	}
 	
 
-	
-	
 	
 
 }
