@@ -67,14 +67,13 @@ public class AdminDAOImpl{
 	}
 
 	// 회원관리 - 전체회원수 조회
-	public int getUserCount() throws Exception {
-		return sqlSession.selectOne(NAMESPACE + ".userCount");
+	public int getUserCount(Criteria cri) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".userCount",cri);
 	}
 
 	// 사업자 관리 - 사업자정보 리스트
 	public List<EntVO> ownerList(Criteria cri) throws Exception {
 		logger.debug(" DAO : ownerList() 호출");
-
 		return sqlSession.selectList(NAMESPACE + ".ownerList", cri);
 	}
 
@@ -97,9 +96,9 @@ public class AdminDAOImpl{
 	}
 	
 	// 사업자 관리 - 사업자 총개수 조회
-	public int ownerCount(String own_id) throws Exception {
+	public int ownerCount(Criteria cri) throws Exception {
 		logger.debug(" DAO : ownerList() 호출");
-		return sqlSession.selectOne(NAMESPACE + ".ownerCount");
+		return sqlSession.selectOne(NAMESPACE + ".ownerCount",cri);
 	}
 
 	// 사업자 관리 - 사업자 정지
@@ -109,9 +108,9 @@ public class AdminDAOImpl{
 	}
 
 	// FAQ&공지 관리 - notice 총 글개수 조회
-	public int noticeCount() throws Exception {
+	public int noticeCount(Criteria cri) throws Exception {
 		logger.debug("DAO : noticeCount() 호출");
-		return sqlSession.selectOne(NAMESPACE + ".noticeCount");
+		return sqlSession.selectOne(NAMESPACE + ".noticeCount",cri);
 	}
 
 	// FAQ&공지 관리 - notice 글 목록 리스트
@@ -169,9 +168,9 @@ public class AdminDAOImpl{
 	}
 
 	// FAQ&공지 관리 - FAQ 총 글개수 조회
-	public int FAQCount() throws Exception {
+	public int FAQCount(Criteria cri) throws Exception {
 		logger.debug("DAO : FAQCount()  호출");
-		return sqlSession.selectOne(NAMESPACE + ".FAQCount");
+		return sqlSession.selectOne(NAMESPACE + ".FAQCount",cri);
 	}
 
 	// 리뷰관리 - 리뷰리스트
@@ -181,9 +180,9 @@ public class AdminDAOImpl{
 	}
 
 	// 리뷰관리 - 리뷰 총 글개수 조회
-	public int reviewCount(Integer rv_no) throws Exception {
+	public int reviewCount(Criteria cri) throws Exception {
 		logger.debug("DAO : reviewCount(Integer rv_no) 호출");
-		return sqlSession.selectOne(NAMESPACE + ".reviewCount", rv_no);
+		return sqlSession.selectOne(NAMESPACE + ".reviewCount", cri);
 	}
 
 	// 리뷰관리 - 리뷰 1개정보 출력
@@ -199,9 +198,9 @@ public class AdminDAOImpl{
 	}
 	
 	// 회원상품관리 - 총 상품 글개수 조회
-	public int itemCount() throws Exception {
+	public int itemCount(Criteria cri) throws Exception {
 		logger.debug("itemCount() 호출");
-		return sqlSession.selectOne(NAMESPACE+".itemCount");
+		return sqlSession.selectOne(NAMESPACE+".itemCount",cri);
 	}
 	
 	// 회원상품관리  - 회원상품 목록 리스트
@@ -217,9 +216,9 @@ public class AdminDAOImpl{
 	}
 	
 	// 사업자상품관리 - 총 상품 글개수 조회
-	public int prodCount() throws Exception {
+	public int prodCount(Criteria cri) throws Exception {
 		logger.debug("prodCount() 호출");
-		return sqlSession.selectOne(NAMESPACE+".prodCount");
+		return sqlSession.selectOne(NAMESPACE+".prodCount",cri);
 	}
 	
 	// 사업자상품관리  - 사업자상품 목록 리스트
@@ -241,9 +240,9 @@ public class AdminDAOImpl{
 	}
 	
 	// 신고관리 - 신고 총 개수 조회
-	public int acCount(Integer ac_no) throws Exception {
-		logger.debug("DAO : acCount(Integer ac_no) 호출");
-		return sqlSession.selectOne(NAMESPACE+".acCount", ac_no);
+	public int acCount(Criteria cri) throws Exception {
+		logger.debug("DAO : acCount() 호출");
+		return sqlSession.selectOne(NAMESPACE+".acCount", cri);
 	}
 	
 	// 신고관리 - 신고 1개 글 정보
@@ -302,9 +301,9 @@ public class AdminDAOImpl{
 	}
 	
 	// 체험단관리 - 체험단 글개수 조회
-	public int expCount(Integer exp_no) throws Exception {
+	public int expCount(Criteria cri) throws Exception {
 		logger.debug("DAO :  expCount(Integer exp_no) 호출");
-		return sqlSession.selectOne(NAMESPACE+".expCount", exp_no);
+		return sqlSession.selectOne(NAMESPACE+".expCount", cri);
 	}
 	
 	// 체험단관리 - 체험단 글 1개 정보

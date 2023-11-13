@@ -44,7 +44,7 @@ public class AdminController {
 		// 페이징처리(페이지 블럭 처리 객체)
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
-		pageVO.setTotalCount(aService.getUserCount());
+		pageVO.setTotalCount(aService.getUserCount(cri));
 
 		model.addAttribute("pageVO", pageVO);
 
@@ -110,7 +110,7 @@ public class AdminController {
 		// 페이징 처리( 페이지 블럭 처리 객체 )
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
-		pageVO.setTotalCount(aService.ownerCount(own_id));
+		pageVO.setTotalCount(aService.ownerCount(cri));
 
 		// 페이징처리 정보도 뷰페이지로 전달
 		logger.debug("pageVO : " + pageVO);
@@ -215,7 +215,7 @@ public class AdminController {
 		// 페이징 처리( 페이지 블럭 처리 객체 )
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
-		pageVO.setTotalCount(aService.FAQCount());
+		pageVO.setTotalCount(aService.FAQCount(cri));
 
 		// 페이징처리 정보도 뷰페이지로 전달
 		logger.debug("pageVO : " + pageVO);
@@ -255,7 +255,7 @@ public class AdminController {
 		// 페이징 처리( 페이지 블럭 처리 객체 )
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
-		pageVO.setTotalCount(aService.noticeCount());
+		pageVO.setTotalCount(aService.noticeCount(cri));
 
 		// 페이징처리 정보도 뷰페이지로 전달
 		logger.debug("pageVO : " + pageVO);
@@ -290,13 +290,13 @@ public class AdminController {
 	// 리뷰관리 - 리뷰 리스트
 	// http://localhost:8088/admin/reviewList
 	@RequestMapping("/reviewList")
-	public void reviewList(Criteria cri, Model model, Integer rv_no) throws Exception {
+	public void reviewList(Criteria cri, Model model) throws Exception {
 		logger.debug("reviewList() 호출");
 
 		// 페이징 처리( 페이지 블럭 처리 객체 )
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
-		pageVO.setTotalCount(aService.reviewCount(rv_no));
+		pageVO.setTotalCount(aService.reviewCount(cri));
 
 		// 페이징처리 정보도 뷰페이지로 전달
 		logger.debug("pageVO : " + pageVO);
@@ -339,7 +339,7 @@ public class AdminController {
 		// 페이징 처리( 페이지 블럭 처리 객체 )
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
-		pageVO.setTotalCount(aService.itemCount());
+		pageVO.setTotalCount(aService.itemCount(cri));
 		
 		List<ItemVO> itemList = aService.itemList(cri);
 
@@ -348,12 +348,12 @@ public class AdminController {
 	
 	// 신고관리 - 신고 리스트
 	@RequestMapping("/acList")
-	public void acList(Criteria cri, Model model, Integer ac_no,Integer ac_item) throws Exception{
+	public void acList(Criteria cri, Model model, Integer ac_item) throws Exception{
 		logger.debug("acList()");
 		// 페이징 처리( 페이지 블럭 처리 객체 )
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
-		pageVO.setTotalCount(aService.acCount(ac_no));
+		pageVO.setTotalCount(aService.acCount(cri));
 
 		// 페이징처리 정보도 뷰페이지로 전달
 		logger.debug("pageVO : " + pageVO);
@@ -383,14 +383,14 @@ public class AdminController {
 	
 	
 	// 사업자상품관리리스트
-	// http://localhost:8088/admin/prodList?
+	// http://localhost:8088/admin/prodList
 	@RequestMapping(value="/prodList")
 	public void prodList(Criteria cri,Model model) throws Exception{
 		// 상품리스트정보 저장
 		// 페이징 처리( 페이지 블럭 처리 객체 )
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
-		pageVO.setTotalCount(aService.prodCount());
+		pageVO.setTotalCount(aService.prodCount(cri));
 
 		List<ProdVO> prodList = aService.prodList(cri);
 
@@ -450,12 +450,12 @@ public class AdminController {
 	// http://localhost:8088/admin/expList
 	// 체험단관리 - 체험단 리스트
 	@RequestMapping("/expList")
-	public void expList(Criteria cri, Model model, Integer exp_no,Integer ac_item) throws Exception{
+	public void expList(Criteria cri, Model model,Integer ac_item) throws Exception{
 		logger.debug("expList()");
 		// 페이징 처리( 페이지 블럭 처리 객체 )
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
-		pageVO.setTotalCount(aService.expCount(exp_no));
+		pageVO.setTotalCount(aService.expCount(cri));
 
 		// 페이징처리 정보도 뷰페이지로 전달
 		logger.debug("pageVO : " + pageVO);

@@ -57,8 +57,8 @@ public class AdminServiceImpl{
 	}
 	
 	// 회원관리 - 전체회원수조회
-	public int getUserCount() throws Exception {
-		return adao.getUserCount();
+	public int getUserCount(Criteria cri) throws Exception {
+		return adao.getUserCount(cri);
 	}
 	
 	// 사업자 관리 - 사업자정보 리스트
@@ -68,9 +68,9 @@ public class AdminServiceImpl{
 	}
 	
 	// 사업자 관리 - 사업자 총개수 조회
-	public int ownerCount(String own_id) throws Exception {
+	public int ownerCount(Criteria cri) throws Exception {
 		logger.debug("service : ownerCount() 호출 ");
-		return adao.ownerCount(own_id);
+		return adao.ownerCount(cri);
 	}
 	
 	// 사업자 관리 - 사업자 정보 출력
@@ -140,15 +140,15 @@ public class AdminServiceImpl{
 	}
 	
 	// FAQ&공지 관리 - FAQ 총 글개수 조회
-	public int FAQCount() throws Exception {
+	public int FAQCount(Criteria cri) throws Exception {
 		logger.debug("service : FAQCount() 호출");
-		return adao.FAQCount();
+		return adao.FAQCount(cri);
 	}
 	
 	//  FAQ&공지 관리 - notice 총 글개수 조회
-	public int noticeCount() throws Exception {
+	public int noticeCount(Criteria cri) throws Exception {
 		logger.debug("service : noticeCount() 호출");
-		return adao.noticeCount();
+		return adao.noticeCount(cri);
 	}
 	
 	//  FAQ&공지 관리 - notice 글 목록 리스트
@@ -170,9 +170,9 @@ public class AdminServiceImpl{
 	}
 	
 	// 리뷰관리 - 리뷰 총 글개수 조회
-	public int reviewCount(Integer rv_no) throws Exception {
+	public int reviewCount(Criteria cri) throws Exception {
 		logger.debug("service : reviewCount(Integer rv_no) 호출");
-		return adao.reviewCount(rv_no);
+		return adao.reviewCount(cri);
 	}
 	
 	// 리뷰관리 - 리뷰 1개정보 출력
@@ -188,9 +188,9 @@ public class AdminServiceImpl{
 	}
   
 	// 회원상품관리 - 총 상품 글개수 조회
-	public int itemCount() throws Exception {
+	public int itemCount(Criteria cri) throws Exception {
 		logger.debug("service : itemCount() 호출");
-		return adao.itemCount();
+		return adao.itemCount(cri);
 	}
 	
 	// 회원상품관리  - 회원상품 목록 리스트
@@ -206,9 +206,9 @@ public class AdminServiceImpl{
 	}
 	
 	// 사업자상품관리 - 총 상품 글개수 조회
-	public int prodCount() throws Exception {
+	public int prodCount(Criteria cri) throws Exception {
 		logger.debug("service : prodCount() 호출");
-		return adao.prodCount();
+		return adao.prodCount(cri);
 	}
 	
 	// 사업자상품관리 - 사업자상품 목록 리스트
@@ -230,9 +230,9 @@ public class AdminServiceImpl{
 	}
 	
 	// 신고관리 - 신고 총 개수 조회
-	public int acCount(Integer ac_no) throws Exception {
-		logger.debug("service : acCount(Integer ac_no) 호출");
-		return adao.acCount(ac_no);
+	public int acCount(Criteria cri) throws Exception {
+		logger.debug("service : acCount() 호출");
+		return adao.acCount(cri);
 	}
 	
 	// 신고관리 - 신고 1개 글 정보
@@ -284,9 +284,9 @@ public class AdminServiceImpl{
 	}
 	
 	// 체험단관리 - 체험단 글개수 조회
-	public int expCount(Integer exp_no) throws Exception {
-		logger.debug("service : expCount(Integer exp_no) 호출");
-		return adao.expCount(exp_no);
+	public int expCount(Criteria cri) throws Exception {
+		logger.debug("service : expCount() 호출");
+		return adao.expCount(cri);
 	}
 	
 	// 체험단관리 - 체험단 글 1개 정보

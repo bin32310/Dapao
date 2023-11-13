@@ -3,7 +3,14 @@
 
 <%@ include file="../include/header.jsp"%>
 
-
+<form action="/admin/userList" id="search">
+	<div class="search_wrap">
+		<div class="search_area">
+			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
+			<button id="searchBtn">Search</button>
+		</div>
+	</div>
+</form>
 <div class="box">
 	<div class="box-header with-border">
 		<h3 class="box-title">게시판 글목록</h3>
@@ -153,6 +160,22 @@
 .form-control[readonly] {
 	background-color: #fff;
 }
+
+.search_area {
+	display: inline-block;
+	margin-top: 30px;
+	margin-left: 260px;
+}
+
+.search_area input {
+	height: 30px;
+	width: 250px;
+}
+
+.search_area button {
+	width: 100px;
+	height: 32px;
+}
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -245,10 +268,13 @@
 				}
 			});
 		});
+		$('#searchBtn').click(function(){
+			var keyword = $('input[name=keyword]').val();
+			console.log(keyword);
+			$('#search').submit();
+		});
 
 	}); // jquery 끝
 </script>
-
-
 
 <%@ include file="../include/footer.jsp"%>
