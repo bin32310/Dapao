@@ -30,28 +30,41 @@
 	<!-- 회원관리 - 페이징처리 후 회원리스트 조회 -->
 	<select id="userListCri" resultType="UserVO">
 		select * from us
-		where us_id!='admin' order by us_id, us_regdate
+		where us_id!='admin' 
+		<if test="keyword != null">
+			and us_id like concat('%',#{keyword},'%') 
+		</if>
+		order by us_id, us_regdate
 		limit #{pageStart},#{pageSize}
 	</select>
 
 	<!-- 회원관리 - 전체회원수 조회 -->
 	<select id="userCount" resultType="int">
-		select count(*) from us
+		select count(*) from us 
+		<if test="keyword != null">
+			where us_id like concat('%',#{keyword},'%') 
+		</if>
 	</select>
 
 	<!-- 사업자관리 - 모든사업자정보출력 -->
 	<select id="ownerList" resultType="EntVO">
-		select * from ent
-		order by own_state
+		select * from ent 
+		<if test="keyword != null">
+			where own_name like CONCAT('%',#{keyword},'%') 
+		</if>
+		order by own_state 
 		limit #{pageStart},#{pageSize}
 	</select>
 
 	<!-- 사업자 총 개수 조회 -->
 	<select id="ownerCount" resultType="int">
 		<![CDATA[
-		select count(*) from ent
-		where own_id > 0
+		select count(*) from ent 
+		where own_id > 0 
 		]]>
+		<if test="keyword != null">
+			and own_name like CONCAT('%',#{keyword},'%') 
+		</if>
 	</select>
 
 	<!-- 사업자관리 - 사업자정보출력 -->
@@ -68,21 +81,24 @@
 	
 	<!-- 사업자 관리 - 승인요청 처리 -->
 	<update id="ownerApprove">
-		update ent set own_state=0
+		update ent set own_state=0 
 		where own_id=#{own_id}
 	</update>
   
 	<!-- 사업자 관리 - 사업자 탈퇴 -->
 	<update id="ownerInfoDelete">
-		update ent set own_state=2
+		update ent set own_state=2 
 		where own_id=#{own_id}
 	</update>
 
 	<!-- FAQ&공지 관리 - FAQ 리스트 -->
 	<select id="FAQList" resultType="CsVO">
-		select * from cs
-		where cs_board = 1
-		order by cs_no, cs_regdate
+		select * from cs 
+		where cs_board = 1 
+		<if test="keyword != null">
+			and cs_title like concat('%',#{keyword},'%') 
+		</if>
+		order by cs_no, cs_regdate 
 		limit #{pageStart},#{pageSize}
 	</select>
 
@@ -113,20 +129,29 @@
 
 	<!-- FAQ&공지 관리 - FAQ 글 총 개수 조회 -->
 	<select id="FAQCount" resultType="int">
-		select count(*) from cs where
-		cs_board=1
+		select count(*) from cs 
+		where cs_board=1 
+		<if test="keyword != null">
+			and cs_title like concat('%',#{keyword},'%') 
+		</if>
 	</select>
 
 	<!-- FAQ&공지 관리 - notice 글 총 개수 조회 -->
 	<select id="noticeCount" resultType="int">
 		select count(*) from cs
-		where cs_board=0
+		where cs_board=0 
+		<if test="keyword != null">
+			and cs_title like concat('%',#{keyword},'%') 
+		</if>
 	</select>
 
 	<!-- FAQ&공지 관리 - notice 리스트 -->
 	<select id="noticeList" resultType="CsVO">
 		select * from cs
-		where cs_board = 0
+		where cs_board = 0 
+		<if test="keyword != null">
+			and cs_title like concat('%',#{keyword},'%') 
+		</if>
 		order by cs_no, cs_regdate
 		limit #{pageStart},#{pageSize}
 	</select>
@@ -153,6 +178,9 @@
 	<!-- 리뷰관리 - 리뷰리스트 -->
 	<select id="reviewList" resultType="ReviewVO">
 		select * from review 
+		<if test="keyword != null">
+			where rv_no like concat('%',#{keyword},'%') 
+		</if>
 		order by rv_no, rv_regdate 
 		limit #{pageStart},#{pageSize}
 	</select>
@@ -161,8 +189,11 @@
 	<select id="reviewCount" resultType="int">
 		<![CDATA[
 		select count(*) from review 
-		where rv_no > 0
+		where rv_no > 0 
 		]]>
+		<if test="keyword != null">
+			and rv_no like concat('%',#{keyword},'%') 
+		</if>
 	</select>
 	
 	<!-- 리뷰관리 - 리뷰 글 1개정보 -->
@@ -178,12 +209,18 @@
 	
 	<!-- 회원상품관리 - 글 총 개수 조회 -->
 	<select id="itemCount" resultType="int">
-		select count(*) from item
+		select count(*) from item 
+		<if test="keyword != null">
+			where us_id like concat('%',#{keyword},'%') 
+		</if>
 	</select>	
 	
 	<!-- 회원상품관리 - 리스트조회 -->
 	<select id="itemList" resultType="ItemVO">
 		select * from item 
+		<if test="keyword != null">
+			where us_id like concat('%',#{keyword},'%') 
+		</if>
 		order by it_no, it_regdate 
 		limit #{pageStart},#{pageSize}
 	</select>
@@ -195,12 +232,18 @@
 	
 	<!-- 사업자상품관리 - 글 총 개수 조회 -->
 	<select id="prodCount" resultType="int">
-		select count(*) from product
+		select count(*) from product 
+		<if test="keyword != null">
+			where own_id like concat('%',#{keyword},'%') 
+		</if>
 	</select>	
 	
 	<!-- 회원상품관리 - 리스트조회 -->
 	<select id="prodList" resultType="ProdVO">
-		select * from product  
+		select * from product 
+		<if test="keyword != null">
+			where own_id like concat('%',#{keyword},'%') 
+		</if>
 		order by prod_no 
 		limit #{pageStart},#{pageSize}
 	</select>
@@ -213,6 +256,9 @@
 	<!-- 신고관리 - 신고리스트 -->
 	<select id="acList" resultType="AcVO">
 		select * from ac 
+		<if test="keyword != null">
+			where us_id like concat('%',#{keyword},'%') 
+		</if>
 		order by ac_no, ac_regdate 
 		limit #{pageStart},#{pageSize}
 	</select>
@@ -220,9 +266,12 @@
 	<!-- 신고관리 - 신고 총 개수 조회 -->
 	<select id="acCount" resultType="int">
 		<![CDATA[
-		select count(*) from cs 
-		where cs_no > 0
+		select count(*) from ac 
+		where ac_no > 0 
 		]]>
+		<if test="keyword != null">
+			and ac_no like concat('%',#{keyword},'%') 
+		</if>
 	</select>
 	
 	<!-- 신고관리 - 신고 1개 글 조회 -->
@@ -280,6 +329,9 @@
 	<!-- 체험단관리 - 체험단 리스트 -->
 	<select id="expList" resultType="ExpVO">
 		select * from exp 
+		<if test="keyword != null">
+			where exp_title like concat('%',#{keyword},'%') 
+		</if>
 		order by exp_no, exp_regdate 
 		limit #{pageStart},#{pageSize}
 	</select>
@@ -288,8 +340,11 @@
 	<select id="expCount" resultType="int">
 		<![CDATA[
 		select count(*) from exp 
-		where exp_no > 0
+		where exp_no > 0 
 		]]>
+		<if test="keyword != null">
+			and exp_title like concat('%',#{keyword},'%') 
+		</if>
 	</select>
 	
 	<!-- 체험단관리 - 체험단 글 1개 정보 -->

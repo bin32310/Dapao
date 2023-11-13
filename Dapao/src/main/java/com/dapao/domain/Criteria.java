@@ -7,6 +7,7 @@ public class Criteria /*기준*/{
 	
 	private int page;
 	private int pageSize;
+	private String keyword;
 	
 	public Criteria() {
 		this.page = 1;
@@ -43,11 +44,19 @@ public class Criteria /*기준*/{
 	public int getPageSize() {
 		return pageSize;
 	}
+	
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 
 	@Override
 	public String toString() {
-		return "Criteria [page=" + page + ", pageSize=" + pageSize + "]";
+		return "Criteria [page=" + page + ", pageSize=" + pageSize + ", keyword=" + keyword + "]";
 	}
-	
+
 }
 
