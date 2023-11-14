@@ -22,19 +22,19 @@
 <h1> 아이디 찾기 결과 페이지</h1>
 <h2> /user/userFindId2 </h2>
 
-${us_id}
-${userFindId}
+
 <script>
 
         var userFindId = '${sessionScope.userFindId}';
-        var us_id = ${us_id};
+        var us_id = '${us_id}';
         if(userFindId == 'success'){
  			 alert("고객님의 ID는 "+us_id+"입니다!");
  			 location.href="/user/userLogin";
       	  }
         if(userFindId == 'fail'){
-			 alert("나와라나와라 알럿~!");
-			/*  location.href="/user/userFindId"; */
+        	console.log("userFindId : "+userFindId);
+			 alert("정보를 다시 입력해주세요");
+			location.href="/user/userFindId";
 			
      	  }
         

@@ -11,15 +11,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dapao.domain.ItemVO;
+import com.dapao.domain.LoveVO;
+import com.dapao.domain.PayVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.UserVO;
 import com.dapao.service.UserServiceImpl;
-import com.mysql.cj.Session;
+
+
 
 /**
  *    1. 공통URI (~.me 대신 폴더명) / 각 기능별 URI 설정
@@ -36,7 +40,7 @@ import com.mysql.cj.Session;
 @RequestMapping("/mypage/*")
 public class MypageController {
    
-	
+   
       private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
       
       
@@ -62,11 +66,11 @@ public class MypageController {
          
          // 사용자의 아이디정보 => 세션에 있는 정보 가져오기  1.infoGET( HttpSession session)
          String us_id = (String) session.getAttribute("us_id"); // 2.
-         logger.debug(" us_id : " +us_id);
+         logger.debug(" us_id userInfo : " +us_id);
          
-         // 회원정보 조회 
          UserVO resultVO =   uService.userInfo(us_id);
-         logger.debug("resultVO"+resultVO);
+         logger.debug("resultVO userInfo123:"+ resultVO.getUs_pw());
+         logger.debug("resultVO userInfo1234:"+ resultVO.getUs_name());
          model.addAttribute("infoVO", resultVO);
          
          return "/mypage/userInfo";
@@ -82,6 +86,8 @@ public class MypageController {
          String us_id = (String) session.getAttribute("us_id");
          // 3. 그걸 바탕으로 서비스 ---> DAO 접근 --> DAO안에 회원정보 조회 동작 호출---> 그 정보를 뷰페이지로 전달하기위해 모델객체사용
          UserVO resultVO =  uService.userInfo(us_id); // --> 다음에 모델객체사용
+         
+         logger.debug(" resultVO!!!@@@@@@@@@@@@@@@@ : "+resultVO);
          model.addAttribute("vo", resultVO);
          
          // model.addAttribute(uService.userInfo(id));
@@ -95,18 +101,24 @@ public class MypageController {
          
       // 회원정보 수정 POST 방식
       @RequestMapping(value = "/userInfoUpdate",method = RequestMethod.POST)
-      public String userInfoUpdatePOST(UserVO userInfoUpdatevo) {
+      public String userInfoUpdatePOST(UserVO userInfoUpdatevo, @RequestParam("us_pw1") String us_pw1, Model model ) {
          logger.debug(" userInfoUpdatePOST() 호출");
          
          // 수정할 정보를 저장(파라메터) public String updatePOST(UserVO vo)
          logger.debug("vo "+userInfoUpdatevo);
+         logger.debug("us_pw 1@@@@@@@@@@@@@@@@@@@@@@@"+ us_pw1);
+         logger.debug(userInfoUpdatevo.getUs_pw());
+         //새 비밀번호 입력 입력확인
+         if(userInfoUpdatevo.getUs_pw().equals(us_pw1)) {
+        	 uService.userInfoUpdate(userInfoUpdatevo);
+        	 // 메인페이지로 이동  	 
+        	 return "redirect:/mypage/userInfo";
+         }
+         
+         
+         return "redirect:/mypage/userInfoUpdate";
          
          //서비스 -> DAO 회원정보 수정
-         uService.userInfoUpdate(userInfoUpdatevo);
-         // 메인페이지로 이동
-         
-         
-         return "redirect:/mypage/userInfo";
       }
       
       
@@ -152,21 +164,21 @@ public class MypageController {
       // 마이페이지 내 판매글 보기
       @RequestMapping(value = "/userSellList", method = RequestMethod.GET)
       public void userSellList(HttpSession session, Model model) throws Exception{
-		
-    		// 세션 아이디 확인
-			String us_id = (String)session.getAttribute("us_id");
-			logger.debug(" us_id : " +us_id);
-			
-			  List<ItemVO> resultVO =   uService.userSellList(us_id);
-			logger.debug("resultVO"+resultVO);
-	
-			model.addAttribute("userSellList", resultVO);
-    	  
-    	  /*
-		 * List<ItemVO> userSellList = null; userSellList =
-		 * uService.userSellList(us_id); model.addAttribute("userSellList",
-		 * userSellList);
-		 */
+      
+          // 세션 아이디 확인
+         String us_id = (String)session.getAttribute("us_id");
+         logger.debug(" us_id : " +us_id);
+         
+           List<ItemVO> resultVO =   uService.userSellList(us_id);
+         logger.debug("resultVO"+resultVO);
+   
+         model.addAttribute("userSellList", resultVO);
+         
+         /*
+       * List<ItemVO> userSellList = null; userSellList =
+       * uService.userSellList(us_id); model.addAttribute("userSellList",
+       * userSellList);
+       */
       
       }
       
@@ -174,20 +186,48 @@ public class MypageController {
       //마이페이지 내가 쓴 리뷰 목록
       @RequestMapping(value = "/userReview",method = RequestMethod.GET)
       public void userReview(HttpSession session, Model model)throws Exception{
+         
+         String rv_buy_id = (String)session.getAttribute("us_id");
+         logger.debug(" us_id  : " + rv_buy_id);
+         
+         List<ReviewVO> resultVO = uService.userReview(rv_buy_id);
+         logger.debug("resultVO" + resultVO);
+         
+         model.addAttribute("userReview", resultVO);
+         
+      }
+      
+      //마이페이지 내가 찜한 목록
+    //http://localhost:8088/mypage/userLoveList
+      @RequestMapping(value = "/userLoveList",method = RequestMethod.GET)
+      public void userLoveList(HttpSession session,Model model) throws Exception{
+         
+         String us_id = (String)session.getAttribute("us_id");
+         logger.debug(" us_id  : "+us_id);
+         List<LoveVO> resultVO = uService.userLoveList(us_id);
+         logger.debug(" resultVO  : "+resultVO);
+         model.addAttribute("userLoveList", resultVO);
+      }
+      
+      
+      //마이페이지 대나무페이 충전목록
+      // http://localhost:8088/mypage/userBuyCoin
+      @RequestMapping(value = "/userBuyCoin",method = RequestMethod.GET)
+      public void userBuyCoin(HttpSession session, Model model)throws Exception {
     	  
-    	  String rv_buy_id = (String)session.getAttribute("us_id");
-    	  logger.debug(" us_id  : " + rv_buy_id);
-    	  
-    	  List<ReviewVO> resultVO = uService.userReview(rv_buy_id);
-    	  logger.debug("resultVO" + resultVO);
-    	  
-    	  model.addAttribute("userReview", resultVO);
+    	  String us_id = (String)session.getAttribute("us_id");
+    	  logger.debug("us_id  : "+us_id);
+    	  List<PayVO> resultVO = uService.userBuyCoin(us_id); 
+    	  logger.debug("resultVO  :" + resultVO);
+    	  model.addAttribute("userBuyCoin", resultVO);
     	  
       }
       
       
-    	  
-      }
+      
+      
+      
+ }
       
       
       

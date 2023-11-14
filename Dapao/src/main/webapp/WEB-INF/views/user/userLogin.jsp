@@ -27,6 +27,21 @@
 	
 	
 	</fieldset>
+	
+	
+	<script>
+	 $(function(){
+		 $("#findPwBtn").click(function(){
+			 location.href='../user/userFindPw';
+			 
+		 });//findPwBtn
+		 
+		 
+		 
+	 });// function
+	
+	
+	</script>
 
 
 <!-- 로그인 -->
@@ -47,7 +62,7 @@
 	<input type="button" value="아이디찾기" 
 				onclick="location.href='/user/userFindId';">	
 		<input type="button" value="비밀번호찾기" 
-				onclick="location.href='/user/userFindPw';">	
+				id="findPwBtn">	
 	
 <%@ include file="../include/userFooter.jsp" %> 
 

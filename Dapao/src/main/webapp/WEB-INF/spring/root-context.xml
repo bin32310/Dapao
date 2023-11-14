@@ -56,4 +56,33 @@
 	<context:component-scan base-package="com.dapao.persistence"></context:component-scan>	
 	<!-- com.dapao.service 패키지 등록 -->
 	<context:component-scan base-package="com.dapao.service"></context:component-scan>	
+	
+	
+	<!-- Mail 인증관련 -->
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="jujuhong865@gmail.com" />
+		<property name="password" value="Hnj@12435" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	
 </beans>
+
+
+
+
+
+
