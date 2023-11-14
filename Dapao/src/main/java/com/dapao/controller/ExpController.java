@@ -1,6 +1,6 @@
 package com.dapao.controller;
 
-import java.security.cert.LDAPCertStoreParameters;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +25,12 @@ public class ExpController {
 	private ExpServiceImpl eService;
 	
 	// 사업자 - 체험단 신청페이지
-	// http://localhost:8089/exp/ownExp
+	// http://localhost:8088/exp/ownExp
 	@RequestMapping(value="/ownExp")
-	public void ownExp() throws Exception{
+	public void ownExp(HttpSession session) throws Exception{
 		logger.debug("사업자 - 체험단 신청 페이지");
+		
+		session.setAttribute("id", "1");
 	}
 	
 	// 사업자 - 체험단 신청 체험단테이블 데이터처리
