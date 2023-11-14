@@ -426,9 +426,15 @@ public class AdminController {
 	public void acWriteForm(ItemVO itemVo, ProdVO prodVo, HttpSession session, Model model) throws Exception{
 		logger.debug("acWriteForm()  호출");
 		String session_us_id = (String)session.getAttribute("us_id");
+		
+		// 가져온 피신고자 아이디로 피신고자 닉네임 조회
+		String us_id = itemVo.getUs_id();
+		String us_nickname = aService.getNickname(us_id);
+				
 		model.addAttribute("item", itemVo);
 		model.addAttribute("prod", prodVo);
 		model.addAttribute("us_id", session_us_id);
+		model.addAttribute("us_nickname", us_nickname);
 		
 	}
 	
@@ -436,15 +442,23 @@ public class AdminController {
 	@RequestMapping("acWrite")
 	public String acWrite(AcVO vo,String id) throws Exception{
 		logger.debug("acWrite() 호출");
-		logger.debug("vo",vo);
-		String ac_us_id = aService.acResultSelectUserId(vo);
-		String ac_own_id = aService.acResultSelectOwnerId(vo);
-		if (ac_own_id != null || ac_own_id == id) {
-			aService.acOwnerWrite(vo);
-		}else {
-			aService.acUserWrite(vo);
+		logger.debug("vo : "+vo);
+		logger.debug("id : "+id);
+//		String ac_us_id = aService.acResultSelectUserId(vo);
+//		String ac_own_id = aService.acResultSelectOwnerId(vo);
+//		if (ac_own_id != null || ac_own_id == id) {
+//			aService.acOwnerWrite(vo);
+//		}else {
+//			aService.acUserWrite(vo);
+//		}
+		
+		if(id.length()==10) {
+			
 		}
-		return "request:/admin/acList";
+		
+		
+		// redirect:/user/userMain
+		return "";
 	}
 	
 	// http://localhost:8088/admin/expList

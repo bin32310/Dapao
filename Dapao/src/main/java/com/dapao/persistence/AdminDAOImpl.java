@@ -294,6 +294,12 @@ public class AdminDAOImpl{
 		return sqlSession.insert(NAMESPACE+".acOwnerWrite",vo);
 	}
 	
+	// 신고관리 - us_id > us_nickname 출력
+	public String getNickname(String us_id) throws Exception{
+		logger.debug("DAO : getNickname(String us_id) 호출");
+		return sqlSession.selectOne(NAMESPACE+".getNickname", us_id);
+	}
+	
 	// 체험단관리 - 체험단 리스트
 	public List<ExpVO> expList(Criteria cri) throws Exception {
 		logger.debug("DAO :  expList(Criteria cri) 호출");
