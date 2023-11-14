@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,75 +9,102 @@
 </head>
 <body>
 
+<h1>비밀번호찾기 이메일인증</h1>
+<h1>user/userFindPw</h1>
 
-<!-- header -->
-<c:if test="${empty us_id }">
+		<c:if test="${empty us_id }">
 		<%@ include file="../include/userHeader.jsp" %>
 	</c:if>
 	<c:if test="${!empty us_id }">
 		<%@ include file="../include/userLoginHeader.jsp" %>
 	</c:if>
-	<!-- header -->
+	
+	
+	
+	<script type="text/javascript">
+	function back(){
+	      history.back();  // 뒤로가기
+	   }
+	
+	</script>
+	
+	<!-- 이메일인증 버튼 클릭 -->
+	<script type="text/javascript">
+		$("#sendEmail").click(function(){
+			const email = $("#us_id").val
+			console.log("회원 이메일 확인 : " + email);// console에서 확인 
+			const checkInput = $("#checkNum"); // 인증번호 입력하는 곳 
+			
+			$.ajax({
+				type : "get",
+				url : "/user/userFindPw,
+				success : function(data){
+					console.log("data : " + data);
+					checkInput.attr("disabled",false);
+					code = data; 
+					alert("인증번호가 전송되었습니다");
+				},
+				error : function(){
+					alert("인증번호 전송에 실패했습니다.");
+				}
+			});// mail ajax
+		});// sendEmail. click 
+		
+		$("#checkNum").blur(function(){
+			var inputCode = $(this).val();
+			var resultMsg = $("#mail_check_msg");
+			
+			if(inputCode == code){
+				resultMsg.html("인증번호가 일치합니다.");
+				resultMsg.css("color","green");
+				$("#sendEmail").attr("disabled",true);
+				$("#email").attr("readonly",true);
+			}else{
+				resultMsg.html("인증번호가 일치하지 않습니다. 다시 입력해 주세요.");
+				resultMag.css("color","red");
+			}
+			
+		});
+	
+	</script>
 	
 	
 	
 	
-<h1> 비밀번호 찾기(이메일 인증) 페이지</h1>
-<h2> /user/userFindPw </h2>
-
-<div class="form-group email-form">
-	 <label for="email">이메일</label>
-	 <div class="input-group">
-	<input type="text" class="form-control" name="us_email1" id="us_email1" placeholder="이메일" >
-	<select class="form-control" name="us_email2" id="us_email2" >
-	<option>@naver.com</option>
-	
-	<option>@gmail.com</option>
 	
 	
-	</select>
-	</div>   
-<div class="input-group-addon">
-	<button type="button" class="btn btn-primary" id="mail-Check-Btn">본인인증</button>
-</div>
-	<div class="mail-check-box">
-<input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" disabled="disabled" maxlength="6">
-</div>
-	<span id="mail-check-warn"></span>
-</div>
-
-
-
-<script>
-$('#mail-Check-Btn').click(function() {
-	const eamil = $('#us_email1').val() + $('#us_email2').val(); // 이메일 주소값 얻어오기!
-	console.log('완성된 이메일 : ' + eamil); // 이메일 오는지 확인
-	const checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
+	<form action="" method="post" id="userFindPw">
+			이메일 <input type="text" name="us_email" placeholder="이메일 형식으로 입력해주세요">
+			<button id="sendEmail">이메일 인증번호 보내기</button>
+			인증번호 <input type="text" name="checkNum"><br>
+			<input type="submit" value="비밀번호찾기">
+		</form>
+			 <button onclick="back()">뒤로가기</button>
 	
-	$.ajax({
-		type : 'get',
-		url : '<c:url value ="/user/mailCheck?email="/>'+eamil, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
-		success : function (data) {
-			console.log("data : " +  data);
-			checkInput.attr('disabled',false);
-			code =data;
-			alert('인증번호가 전송되었습니다.')
-		}			
-	}); // end ajax
-}); // end send eamil
-
-
-</script>
-
-
-
-
-
-
-
-<%@ include file="../include/userFooter.jsp" %>
-
-
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<%@ include file="../include/userFooter.jsp" %> 
 </body>
 </html>
