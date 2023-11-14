@@ -1,5 +1,11 @@
 package com.dapao.domain;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.dapao.domain.ProdVO;
+import com.dapao.domain.TradeVO;
+
 import lombok.Data;
 
 
@@ -27,8 +33,10 @@ import lombok.Data;
  *	totalCount = db조회 select count()
  * 
  */
+@Data
 public class PageVO {
 	
+
 	private int totalCount;	// 총 글의 수
 	private int startPage;	// 페이지 블럭 시작 번호
 	private int endPage;	// 페이지 블럭 끝 번호
@@ -39,9 +47,27 @@ public class PageVO {
 		
 	private Criteria cri;	// 페이지 정보, 페이지 사이즈 저장객체
 	
+	private ProdVO p_vo; // 상품
+	private TradeVO t_vo; // 주문
 	
 	// get/set
 		
+	public ProdVO getP_vo() {
+		return p_vo;
+	}
+
+	public void setP_vo(ProdVO p_vo) {
+		this.p_vo = p_vo;
+	}
+
+	public TradeVO getT_vo() {
+		return t_vo;
+	}
+
+	public void setT_vo(TradeVO t_vo) {
+		this.t_vo = t_vo;
+	}
+
 	public Criteria getCri() {
 		return cri;
 	}
@@ -62,7 +88,7 @@ public class PageVO {
 	
 	// 페이징처리에 필요한 정보를 계산하는 메서드
 	public void calcPageData() {
-		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@cri : "+cri);
 		endPage = (int)( Math.ceil(cri.getPage()/(double)displayPageNum)*displayPageNum );
 		startPage = (endPage-displayPageNum)+1;	
 		int tmpEndPage = (int)(Math.ceil(totalCount/(double)cri.getPageSize()));
@@ -79,6 +105,7 @@ public class PageVO {
 	public int getStartPage() {
 		return startPage;
 	}
+	
 	
 	public void setStartPage(int startPage) {
 		this.startPage = startPage;

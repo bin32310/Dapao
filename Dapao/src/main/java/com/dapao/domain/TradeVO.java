@@ -17,5 +17,6 @@ public class TradeVO {
 	private Integer tr_buy_state; // 거래여부_구매자
 	private Integer tr_sell_state; // 거래여부_판매자
 	private Date tr_date; // 거래 일시  
-
+	
+	private ProdVO prodVO; // join용
 }

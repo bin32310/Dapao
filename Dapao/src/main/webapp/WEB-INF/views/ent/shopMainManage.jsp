@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../include/header.jsp"%>
+<%@ include file="../include/entHeader.jsp"%>
 <link
 	href="${pageContext.request.contextPath }/resources/plugins/timepicker/bootstrap-timepicker.min.css"
 	rel="stylesheet" type="text/css" />
@@ -19,7 +19,7 @@
 	</div>
 
 
-	<form role="form" action="" method="post">
+	<form role="form" action="" method="post" enctype="multipart/form-data">
 
 		<div class="box-body">
 			<div class="form-group">
@@ -55,10 +55,13 @@
 					</div>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="exampleInputFile">File input</label> <input type="file"
-					id="exampleInputFile" name="ent_img">
-				<p class="help-block">Example block-level help text here.</p>
+			<div>
+				<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${ent[0].ent_img}">
+				<hr>
+				<button class="img_update" type="button"> 이미지 변경/추가</button>
+				<ul class="img_container">
+				
+				</ul>
 			</div>
 		</div>
 
@@ -73,6 +76,24 @@
 		$('.timepicker').timepicker({
 			showInputs : false
 		});
+		
+		// 이미지 변경
+		$('.img_update').click(function () {
+			$(".img_container").append("<li><input type='file' name='file'>"+
+					"<button class='removeBtn' type='button' onclick='del(this)'>삭제</button> </li>" );
+		});
+		
+// 		$('.remove').click(function () { 동적할당은 이걸로 안됨
+// // 			$(this).remove();
+// // 			$(this).parent().remove();
+// 			$(this).closest("li").remove();
+// 		});
+		 $(".img_container").on("click",".removeBtn",function(e){
+			 $(this).closest("li").remove();
+		 });
+		function del(e) {
+			$(e).remove();
+		}
 		
 		
 

@@ -231,7 +231,37 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>4.3.8.RELEASE</version>
 		</dependency>
+		
+		<!-- 파일업로드-->
+		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
+		</dependency>
 
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<!-- 파일업로드-->
+		<!-- 폰인증 -->
+		<!-- https://mvnrepository.com/artifact/net.nurigo/sdk -->
+		<dependency>
+			<groupId>net.nurigo</groupId>
+			<artifactId>javaSDK</artifactId>
+			<version>2.2</version>
+		</dependency>
+
+		<!-- 암호화 -->
+		<!-- https://mvnrepository.com/artifact/org.mindrot/jbcrypt -->
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.4</version>
+		</dependency>
+		
 
 		
 		<!-- @@@@@@@@@@외부 라이브러리 추가@@@@@@@@@@ -->  
