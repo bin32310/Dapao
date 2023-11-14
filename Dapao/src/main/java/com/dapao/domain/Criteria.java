@@ -1,8 +1,11 @@
 package com.dapao.domain;
 
+import lombok.Data;
+
 /**
  * 페이징 처리를 계산하는 기준의 정보를 저장
  */
+@Data
 public class Criteria /*기준*/{
 	
 	private int page;

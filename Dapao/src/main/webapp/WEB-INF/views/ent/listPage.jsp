@@ -9,11 +9,12 @@
 <!-- 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 
 
-
+<div>
+</div>
 
 <div class="container">
 	<div class="search_container">
-		<input type="button" value="상품등록" class="btn btn-success" data-toggle="modal" data-target="#modal-default" data-own_id="${own_id }" data-modal_cate=0>
+		<input type="button" value="상품등록" class="btn btn-success" data-toggle="modal" data-target="#modal-default" data-own_id="${ent.own_id }" data-modal_cate=0>
 		<form action="" method="post">
 			<table class="table table-hover">
 				<tr>
@@ -50,9 +51,8 @@
 					<tr>
 						<th>제품번호</th>
 						<th>상품명</th>
-						<th>제품중고여부</th>						
+						<th>제품상태</th>						
 						<th>가격</th>
-						<th>제품상태
 						<th>수정</th>
 					</tr>
 					<c:if test="${!empty plist }">
@@ -62,22 +62,8 @@
 								<td class="name_value">${list.prod_name }</td>
 								<td class="con_value">${list.prod_con }</td>
 								<td class="price_value">${list.prod_price }</td>
-								<td class="state_value">
-									<c:choose>
-										<c:when test="${list.prod_state == 0}">
-											등록
-										</c:when>
-										<c:when test="${list.prod_state == 1}">
-											매진
-										</c:when>
-										<c:otherwise>
-											삭제
-										</c:otherwise>
-									</c:choose>
-									
-								</td>
 								<td>
-									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default" 
+									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default" <%-- 										data-prod="${list }" --%>
 										data-prod_no="${list.prod_no }" data-prod_name="${list.prod_name }" data-prod_con="${list.prod_con }" data-prod_price="${list.prod_price }" data-prod_content="${list.prod_content }" data-prod_cate="${list.prod_cate }" data-prod_img="${list.prod_img }" data-own_id="${list.own_id }" data-modal_cate=1>수정</button>
 								</td>
 							</tr>
@@ -122,9 +108,9 @@
 					<div class="box-header with-border"></div>
 
 
-					<form role="form" action="/ent/productUpdate" enctype="multipart/form-data" method="post">
+					<form role="form" action="/ent/productUpdate" method="post">
+						<div class="test"></div>
 						<input type="hidden" name="own_id" id="own_id"> <input type="hidden" name="modal_cate" id="modal_cate">
-						<div class="prod_noDiv"></div>
 						<div class="box-body">
 							<div class="form-group">
 								<label for="prod_name">상품명</label> <input type="text" class="form-control" id="prod_name" name="prod_name">
@@ -150,9 +136,8 @@
 								</select>
 							</div>
 							<div class="form-group">
-								<label for="prod_img">상품이미지</label> <input type="file" id="prod_img" name="file" multiple="multiple">
-								<button type="button" class="btn_new_file">추가</button>
-								<div class="file_area"></div>
+								<label for="prod_img">상품이미지</label> <input type="file" id="prod_img" name="prod_img">
+								<p class="help-block">Example block-level help text here.</p>
 							</div>
 						</div>
 
@@ -170,10 +155,17 @@
 	</div>
 </div>
 <script type="text/javascript">
+	// 	var input = document.getElementById("search_name");
+	// 	input.value = null;
+		console.log('${own_id}');
 	$(function() {
-		$('#modal-default').on("show.bs.modal", function(e) { //모달켜지면
+		$('.bnt_modal').click(function() {
+			$('#modal-default').modal('show');
+		});
+		$('#modal-default').on("show.bs.modal", function(e) {
 			$('.box-title').remove();
-			$('#prod_no').remove();
+			$('#prod_id').remove();
+			// 			var prod = $(e.relatedTarget).data('prod');
 			console.log(e.relatedTarget);
 			var prod_no = $(e.relatedTarget).data('prod_no') * 1;
 			var prod_name = $(e.relatedTarget).data('prod_name');
@@ -184,10 +176,10 @@
 			var prod_img = $(e.relatedTarget).data('prod_img');
 			var own_id = $(e.relatedTarget).data('own_id') * 1;
 			var modal_cate = $(e.relatedTarget).data('modal_cate') * 1;
-// 			var img = prod_img.substring(prod_img.lastIndexOf("/")+1);
+			
 			console.log(prod_no);
 			console.log(own_id);
-			console.log(prod_img);
+			console.log(prod_con);
 			if (prod_con == '새상품') {
 				$('#p_radio2').attr("checked", true);
 			} else {
@@ -198,28 +190,18 @@
 			$('#prod_price').val(prod_price);
 			$('#prod_content').val(prod_content);
 			$('#prod_cate').val(prod_cate).prop("selected", true);
-// 			$('#prod_img').val(img);
+			// 			$('#prod_img').val(prod_img);
 			$('#own_id').val(own_id);
 			$('#modal_cate').val(modal_cate);
 
-			
+
 			if (modal_cate == 1) {
 				$('.box-header').append('<h3 class="box-title">상품 수정하기</h3>');
-				$('.prod_noDiv').append('<input type="hidden" name="prod_no" id="prod_no" value="">');
-				$('#prod_no').val(prod_no);
+				$('.test').append('<input type="hidden" name="prod_no" id="prod_no">');
 			} else {
 				$('.box-header').append('<h3 class="box-title">상품 등록하기</h3>')
 			}
-			
-			/*  첨부파일 추가,삭제 */
-			$('.btn_new_file').click(function(){ 
-				$('.file_area').append('<div class="form-inline">' 
-				+ '<input type="file" name="file" class="form-control">' 
-				+ ' <button type="button" class="btn_delete btn btn-sm">삭제</button>' + '</div>'); 
-				}); 
-			$('.file_area').on('click','.btn_delete', function(){ 
-				$(this).closest('div').remove(); 
-			});
+			$('#prod_no').val(prod_no);
 		});
 	});
 </script>
