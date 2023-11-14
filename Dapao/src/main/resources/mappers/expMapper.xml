@@ -5,10 +5,18 @@
 
 <mapper namespace="com.dapao.mapper.ExpMapper">
 
-	<!-- 사업자 - 체험단 신청 insert -->
+	<!-- 사업자 - 체험단 신청 체험단테이블 insert -->
 	<insert id="ownExp">
-		insert into exp (exp_title,exp_content,exp_psn,exp_notice,own_id) 
+		insert into exp
+		(exp_title,exp_content,exp_psn,exp_notice,own_id)
 		values (#{exp_title},#{exp_content},#{exp_psn},#{exp_notice},${own_id});
+	</insert>
+
+	<!-- 사업자 - 체험단 신청 - 결제테이블 insert -->
+	<insert id="ownExpPay">
+		insert into pay 
+		(imp_uid,pay_price,pay_kind,pay_con,pay_uid,pay_pg,pay_method,own_id) 
+		values (#{imp_uid},#{pay_price},#{pay_kind},#{pay_con},#{pay_uid},#{pay_pg},#{pay_method},#{own_id});
 	</insert>
 
 </mapper>
