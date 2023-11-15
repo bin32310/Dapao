@@ -48,11 +48,14 @@ public class EntController {
 
 	// http://localhost:8088/ent/shopMain
 	@RequestMapping(value = "/shopMain", method = RequestMethod.GET)
-	public void shopMainGET(HttpSession session, ReviewVO rVo, Model model) throws Exception {
+	public void shopMainGET(HttpSession session, ReviewVO rVo, Model model, String Ent_id) throws Exception {
 		logger.debug(" shopMainGET(EntVO eVO, ProdVO pVO, ReviewVO rVO, Model model) 호출 ");
 //		String own_id = "6";
-		String own_id = (String) session.getAttribute("own_id");
-
+		String own_id = Ent_id;
+		if(Ent_id == null) {
+			own_id = (String) session.getAttribute("own_id");
+		}
+		
 		EntVO eVo = new EntVO();
 		eVo.setOwn_id(own_id);
 		logger.debug("eService.listEnt(eVo): " + eService.listEnt(eVo));
@@ -63,11 +66,14 @@ public class EntController {
 			fileList[i] = plist.get(i).getProd_img().substring(plist.get(i).getProd_img().lastIndexOf("\\") + 1);
 //			fileList[i]=plist.get(i).getProd_img();
 			logger.debug(" fileList[i] : " + fileList[i]);
-
-//			logger.debug(" plist.get(i).getProd_img().split(\"@\"): "+plist.get(i).getProd_img().split("@"));
 		}
 		logger.debug("fileList : " + fileList);
 		String name = "상점 메인페이지";
+		
+		List<ReviewVO> rlist = eService.entReviewList(own_id);
+		logger.debug(" rlist : "+rlist);
+		
+		model.addAttribute("rlist", rlist);
 		model.addAttribute("fileList", fileList);
 		model.addAttribute("ent", eService.listEnt(eVo));
 		model.addAttribute("plist", plist);
@@ -507,7 +513,7 @@ public class EntController {
 		logger.debug(" entOrderGET() ");
 //		String own_id = (String) session.getAttribute("own_id");
 //		String own_id = "6";
-		String name = "주문관리";
+		String name = "광고문의/소개";
 		model.addAttribute("name", name);
 		logger.debug(" 연결된 뷰페이지(/views/entOrder.jsp)출력 ");
 	}

@@ -26,7 +26,7 @@
 		<result column="prod_name" property="prod_name" />
 		<result column="prod_price" property="prod_price" />
 	</resultMap>
-
+	<!-- 상점메인화면 수정 -->
 	<update id="entUpdate">
 		update ent
 		set ent_notice = #{ent_notice}, ent_info =
@@ -36,11 +36,15 @@
 		#{ent_ct}
 		where own_id = #{own_id}
 	</update>
+	<!-- 상점메인화면 수정 -->
+
+	<!-- 상점 리스트 -->
 	<select id="listEnt" resultType="EntVO">
 		select * from ent
 		where own_id =
 		#{own_id}
 	</select>
+	<!-- 상점 리스트 -->
 
 	<!-- 리뷰글 조회 -->
 	<select id="listReview" resultType="ReviewVO">
@@ -91,7 +95,8 @@
 		where tr_no = #{tr_no}
 	</delete>
 	<!-- 전달받은 주문 환불 -->
-<!-- 아이디중복확인 -->
+	
+	<!-- 아이디중복확인 -->
 	<select id="checkId" resultType="int">
 		select count(own_id) from ent 
 		where own_id=#{own_id}
@@ -122,4 +127,12 @@
 		select * from ent 
 		where own_id=#{own_id}
 	</select>
+	
+	<!-- 해당상점 리뷰조회 -->
+	<select id="entReviewList" resultType="ReviewVO">
+		select * from review 
+		where rv_own_id = #{own_id}
+	</select>
+	
+	
 </mapper>

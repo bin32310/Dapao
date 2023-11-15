@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.dapao.domain.EntVO;
 import com.dapao.domain.PageVO;
+import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TradeVO;
 import com.dapao.persistence.EntDAO;
 
@@ -84,5 +85,12 @@ public class EntServiceImpl implements EntService {
 		logger.debug("컨트롤러 -> ownInfo()서비스 호출");
 		return edao.ownInfo(own_id);
 	}
+	
+	@Override
+	public List<ReviewVO> entReviewList(String own_id) throws Exception {
+		logger.debug(" service -> entReviewList(String own_id) 호출 ");
+		return edao.entReviewList(own_id);
+	}
+	
 
 }

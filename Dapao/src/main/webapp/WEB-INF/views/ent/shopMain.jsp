@@ -1,7 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <%@ include file="../include/entHeader.jsp"%>
+
+<script src="/resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script type="text/javascript">
+$(function () {
+	$('.review_container').slimScroll({
+		height : '250px'
+	});
+	
+});
+</script>
 <div class="ent_container">
 	<div class="img_container">
 		<div class="ent_img">
@@ -27,8 +38,8 @@
 			<div class="tab-pane active" id="tab_1">${ent[0].ent_notice}</div>
 
 			<div class="tab-pane" id="tab_2">${ent[0].ent_info}</div>
-			
-			<div class="tab-pane" id="tab_3">${ent[0].ent_ot} - ${ent[0].ent_ct }</div>
+
+			<div class="tab-pane" id="tab_3">${ent[0].ent_ot}-${ent[0].ent_ct }</div>
 		</div>
 
 	</div>
@@ -49,34 +60,50 @@
 		</div>
 	</div>
 
-	<!-- 		<div class="review_container"> -->
-	<%-- 			<c:forEach items="${review }" var="rv"> --%>
-	<!-- 				<tr class="review"> -->
-	<%-- 					<td class="reviewer">${rv.buy }</td> --%>
-	<%-- 					<td class="review_content">${rv.content }</td> --%>
-	<!-- 				</tr> -->
-	<%-- 			</c:forEach> --%>
-	<!-- 		</div> -->
-</div>
-<div class="box box-danger">
-	<div class="box-header with-border">
-		<h3 class="box-title">제품 소개</h3>
-		<div class="box-tools pull-right">
-			<button type="button" class="btn btn-box-tool" data-widget="collapse">
-				<i class="fa fa-minus"></i>
-			</button>
+	<div class="review_container">
+		<div class="box box-success">
+			<div class="box-header ui-sortable-handle" style="cursor: move;">
+				<i class="fa fa-comments-o"></i>
+				<h3 class="box-title">리뷰</h3>
+			</div>
+			<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: auto;">
+				<div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: auto;">
+
+					<c:forEach items="${rlist }" var="rv">
+						<div class="item">
+							<img src="/resources/dist/img/user4-128x128.jpg" alt="user image">
+							<p class="name">${rv.rv_buy_id }</p>
+							<p class="message">${rv.rv_content }</p>
+							<c:forEach begin="1" end="${rv.rv_star }" step="1">★</c:forEach>
+						</div>
+					</c:forEach>
+
+				</div>
+				<div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 184.366px;"></div>
+				<div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+			</div>
+
 		</div>
 	</div>
+	<div class="box box-danger">
+		<div class="box-header with-border">
+			<h3 class="box-title">제품 소개</h3>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse">
+					<i class="fa fa-minus"></i>
+				</button>
+			</div>
+		</div>
 
-	<div class="box-body no-padding">
-		<ul class="users-list clearfix">
-			<c:forEach items="${plist }" var="prod">
-				<li><img src="${pageContext.request.contextPath }/ent/download?imageFileName=${prod.prod_img }">
-					<p>${prod.prod_img }</p>
-					<p>${prod.prod_name }</p> <span class="users-list-date">${prod.prod_content }</span></li>
-			</c:forEach>
-		</ul>
+		<div class="box-body no-padding">
+			<ul class="users-list clearfix">
+				<c:forEach items="${plist }" var="prod">
+					<li><img src="${pageContext.request.contextPath }/ent/download?imageFileName=${prod.prod_img }">
+						<p>${prod.prod_name }</p> <span class="users-list-date">${prod.prod_content }</span></li>
+				</c:forEach>
+			</ul>
 
+		</div>
 	</div>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a41c6623d85b187520b3d92f4b708850&libraries=services"></script>
@@ -125,5 +152,5 @@
 						}
 					});
 </script>
-<%@ include file="../include/footer.jsp"%>
 
+<%@ include file="../include/footer.jsp"%>
