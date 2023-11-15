@@ -78,7 +78,6 @@
 	</div>
 	<div>
 		<div id="msgArea" class="col">
-		
 		</div>
 		<div class="col-6">
 		<div class="input-group mb-3">

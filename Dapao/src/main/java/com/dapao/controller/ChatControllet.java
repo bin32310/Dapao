@@ -30,6 +30,7 @@ public class ChatControllet {
 //		return "chat";
 //	}
 	
+	
 	@MessageMapping("/chat4")
 	@SendTo("/topic")
 	public String sendMsg(@Payload Map<String, Object> data) {
@@ -37,6 +38,8 @@ public class ChatControllet {
 		return "chat4";
 	}
 	
+	// http://localhost:8088/websocket/chat
+	// http://localhost:8088/chat
 	@RequestMapping("/chat/{id}")
 	 public String chattingRoom(@PathVariable String id, HttpSession session, Model model){
 			id = session.getId();
