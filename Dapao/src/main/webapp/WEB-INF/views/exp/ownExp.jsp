@@ -7,13 +7,9 @@
 	border-radius: 3px;
 	background: #ffffff;
 	font-size: 20px; border-top : 3px solid #d2d6de;
-	margin-bottom: 20px;
-	width: 100%;
+	margin: 30px;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-	padding-top: 5%;
-	padding-left: 10%;
-	padding-right: 10%;
-	padding-bottom: 5%;
+	padding: 5%;
 	border-top: 3px solid #d2d6de;
 }
 

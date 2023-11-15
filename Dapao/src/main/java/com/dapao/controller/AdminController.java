@@ -444,21 +444,16 @@ public class AdminController {
 		logger.debug("acWrite() 호출");
 		logger.debug("vo : "+vo);
 		logger.debug("id : "+id);
-//		String ac_us_id = aService.acResultSelectUserId(vo);
-//		String ac_own_id = aService.acResultSelectOwnerId(vo);
-//		if (ac_own_id != null || ac_own_id == id) {
-//			aService.acOwnerWrite(vo);
-//		}else {
-//			aService.acUserWrite(vo);
-//		}
 		
-		if(id.length()==10) {
-			
+		if(!id.contains("-")) {	// 피신고자가 회원일경우
+			vo.setAc_us_id(id);
+			aService.acUserWrite(vo);
+		}else {					// 피신고자가 사업자일경우
+			vo.setAc_own_id(id);
+			aService.acOwnerWrite(vo);
 		}
 		
-		
-		// redirect:/user/userMain
-		return "";
+		return "redirect:/user/userMain";
 	}
 	
 	// http://localhost:8088/admin/expList

@@ -1,21 +1,52 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="../include/header.jsp" %>
-<h1>/admin/ownerList.jsp</h1>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="../include/header.jsp"%>
 
-<form action="/admin/ownerList" id="search">
-	<div class="search_wrap">
-		<div class="search_area">
+<style>
+.box-body {
+	padding-bottom: 7%;
+}
+
+#search {
+	float: right;
+	margin-bottom: 30px;
+}
+
+.boxList {
+	position: relative;
+	border-radius: 3px;
+	background: #ffffff;
+	border-top: 3px solid #d2d6de;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	margin: 30px;
+	font-size: 20px;
+}
+
+.pagination-sm>li>a {
+	font-size: 20px;
+	margin-bottom: 10%;
+}
+
+.box-title {
+	font-size: 30px;
+}
+
+.pContent {
+	margin: 0 0 -30px;
+	font-size: larger;
+	margin-top: 15px;
+}
+</style>
+
+
+<div class="boxList">
+	<div class="box-header with-board">
+		<p class="pContent">사업자 관리</p>
+		<form action="/admin/ownerList" id="search">
 			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
 			<button id="searchBtn">Search</button>
-		</div>
-	</div>
-</form>
-
-<div class="box">
-	<div class="box-header with-board">
-		<h3 class="box-title">사업자 관리</h3>
+		</form>
 	</div>
 	<div class="box-body">
 		<table class="table table-bordered">
@@ -227,103 +258,142 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('.ownInfo').click(
-				function() {
-					$('#myLargeModal').modal("show");
+		$('.ownInfo')
+				.click(
+						function() {
+							$('#myLargeModal').modal("show");
 
-					var ownId = $(this).text();
-					$.ajax({
-						url : "/admin/ownerInfo",
-						data : {
-							"own_id" : ownId
-						},
-						dataType : "json",
-						success : function(data) {
-							console.log(data)
-							$('input[name=own_id]').val(data.own_id)
-							$('input[name=own_name]').val(data.own_name)
-							$('input[name=own_pw]').val(data.own_pw)
-							$('input[name=own_tel]').val(data.own_tel)
-							$('input[name=own_email]').val(data.own_email)
-							$('input[name=own_state]').val(data.own_state)
-							$('input[name=ent_name]').val(data.ent_name)
-							$('input[name=ent_cate]').val(data.ent_cate)
-							$('input[name=ent_addr]').val(data.ent_addr)
-							$('input[name=ent_mo]').val(data.ent_mo)
-							$('input[name=ent_file]').val(data.ent_file)
-							$('input[name=ent_of]').val(data.ent_of)
-							$('input[name=ent_notice]').val(data.ent_notice)
-							$('input[name=ent_info]').val(data.ent_info)
-							$('input[name=ent_img]').val(data.ent_img)
-							$('input[name=ent_ot]').val(data.ent_ot)
-							$('input[name=ent_ct]').val(data.ent_ct)
-							$('input[name=ent_account]').val(data.ent_account)
-							$('input[name=ent_stop]').val(data.ent_stop)
+							var ownId = $(this).text();
+							$.ajax({
+								url : "/admin/ownerInfo",
+								data : {
+									"own_id" : ownId
+								},
+								dataType : "json",
+								success : function(data) {
+									console.log(data)
+									$('input[name=own_id]').val(data.own_id)
+									$('input[name=own_name]')
+											.val(data.own_name)
+									$('input[name=own_pw]').val(data.own_pw)
+									$('input[name=own_tel]').val(data.own_tel)
+									$('input[name=own_email]').val(
+											data.own_email)
+									$('input[name=own_state]').val(
+											data.own_state)
+									$('input[name=ent_name]')
+											.val(data.ent_name)
+									$('input[name=ent_cate]')
+											.val(data.ent_cate)
+									$('input[name=ent_addr]')
+											.val(data.ent_addr)
+									$('input[name=ent_mo]').val(data.ent_mo)
+									$('input[name=ent_file]')
+											.val(data.ent_file)
+									$('input[name=ent_of]').val(data.ent_of)
+									$('input[name=ent_notice]').val(
+											data.ent_notice)
+									$('input[name=ent_info]')
+											.val(data.ent_info)
+									$('input[name=ent_img]').val(data.ent_img)
+									$('input[name=ent_ot]').val(data.ent_ot)
+									$('input[name=ent_ct]').val(data.ent_ct)
+									$('input[name=ent_account]').val(
+											data.ent_account)
+									$('input[name=ent_stop]')
+											.val(data.ent_stop)
 
-						},
-						error : function() {
-							console.log("오류");
-						}
-					});// ownInfo click ajax
-					$('#stop').click(function() {
-						var own_stopdate = $('select[name=stop]').val();
-						$.ajax({
-							url : "/admin/ownerStop",
-							data : {
-								"own_id" : $('input[name=own_id]').val(),
-								"own_stopdate" : own_stopdate
-							},
-							dataType : "json",
-							success : function(data) {
-								if (data == 1) {
-									alert("정상적으로 정지가 부여되었습니다.");
-									location.replace("/admin/ownerList?page=${param.page}");
+								},
+								error : function() {
+									console.log("오류");
 								}
-							},
-							error : function(data) {
-								console.log("에러");
-							}
-						});
-					});
-					$(".update").click(function(){
-						$.ajax({
-							url : "/admin/ownerApprove",
-							data : {
-								"own_id" : $('input[name=own_id]').val()
-							},
-							dataType : "json",
-							success : function(data){
-									alert("승인완료")
-									location.replace("/admin/ownerList?page=${param.page}");
-							},
-							error : function() {
-								console.log("오류");
-							}
-						});//update click ajax
-					});//update click
-					$(".delete").click(function() {
-						$.ajax({
-							url : "/admin/ownerInfoDelete",
-							data : {
-								"own_id" : $('input[name=own_id]').val()
-							},
-							dataType : "json",
-							success : function(data) {
-									alert("탈퇴완료")
-									location.replace("/admin/ownerList?page=${param.page}");
-							},
-							error : function() {
-								console.log("오류");
-							}
-						});//delete click ajax
-					});// delete click
-				});// ownInfo click
-				
-				$('#searchBtn').click(function(){
-					var keyword = $('input[name=keyword]').val();
-					console.log(keyword);
-					$('#search').submit();
-				});
+							});// ownInfo click ajax
+							$('#stop')
+									.click(
+											function() {
+												var own_stopdate = $(
+														'select[name=stop]')
+														.val();
+												$
+														.ajax({
+															url : "/admin/ownerStop",
+															data : {
+																"own_id" : $(
+																		'input[name=own_id]')
+																		.val(),
+																"own_stopdate" : own_stopdate
+															},
+															dataType : "json",
+															success : function(
+																	data) {
+																if (data == 1) {
+																	alert("정상적으로 정지가 부여되었습니다.");
+																	location
+																			.replace("/admin/ownerList?page=${param.page}");
+																}
+															},
+															error : function(
+																	data) {
+																console
+																		.log("에러");
+															}
+														});
+											});
+							$(".update")
+									.click(
+											function() {
+												$
+														.ajax({
+															url : "/admin/ownerApprove",
+															data : {
+																"own_id" : $(
+																		'input[name=own_id]')
+																		.val()
+															},
+															dataType : "json",
+															success : function(
+																	data) {
+																alert("승인완료")
+																location
+																		.replace("/admin/ownerList?page=${param.page}");
+															},
+															error : function() {
+																console
+																		.log("오류");
+															}
+														});//update click ajax
+											});//update click
+							$(".delete")
+									.click(
+											function() {
+												$
+														.ajax({
+															url : "/admin/ownerInfoDelete",
+															data : {
+																"own_id" : $(
+																		'input[name=own_id]')
+																		.val()
+															},
+															dataType : "json",
+															success : function(
+																	data) {
+																alert("탈퇴완료")
+																location
+																		.replace("/admin/ownerList?page=${param.page}");
+															},
+															error : function() {
+																console
+																		.log("오류");
+															}
+														});//delete click ajax
+											});// delete click
+						});// ownInfo click
+
+		$('#searchBtn').click(function() {
+			var keyword = $('input[name=keyword]').val();
+			console.log(keyword);
+			$('#search').submit();
+		});
 	});//ready
 </script>
 <style>

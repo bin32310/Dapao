@@ -3,21 +3,50 @@
 
 <%@ include file="../include/header.jsp"%>
 
-<form action="/admin/userList" id="search">
-	<div class="search_wrap">
-		<div class="search_area">
+<style>
+.box-body{
+	padding-bottom: 7%;
+}
+
+#search {
+	float: right;
+	margin-bottom: 30px;
+}
+.boxList {
+	position: relative;
+	border-radius: 3px;
+	background: #ffffff;
+	border-top: 3px solid #d2d6de;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	margin: 30px;
+	font-size: 20px;
+}
+.pagination-sm>li>a{
+	font-size: 20px;
+	margin-bottom: 10%;
+}
+.box-title{
+	font-size: 30px;
+}
+.pContent{
+    margin: 0 0 -30px;
+    font-size: larger;
+    margin-top: 15px;
+}
+</style>
+
+<div class="boxList">
+	<div class="box-header with-border">
+		<p class="pContent">회원 관리</p>
+		<form action="/admin/userList" id="search">
 			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
 			<button id="searchBtn">Search</button>
-		</div>
-	</div>
-</form>
-<div class="box">
-	<div class="box-header with-border">
-		<h3 class="box-title">게시판 글목록</h3>
+		</form>
 	</div>
 	<div class="box-body">
 		<table class="table table-bordered">
-			<tbody>
+			<tbody id="tbody">
 				<tr>
 					<th>아이디</th>
 					<th>닉네임</th>
@@ -36,23 +65,22 @@
 						<td>${list.us_tel }</td>
 						<td>${list.us_account }</td>
 						<c:choose>
- 							<c:when test="${list.us_state eq '0'}">
+							<c:when test="${list.us_state eq '0'}">
 								<td>정상</td>
 							</c:when>
 							<c:when test="${list.us_state eq '1'}">
- 								<td>정지</td>
- 							</c:when>
+								<td>정지</td>
+							</c:when>
 							<c:when test="${list.us_state eq '2'}">
 								<td>탈퇴</td>
 							</c:when>
 						</c:choose>
-						
+
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
-
 	<div class="box-footer clearfix">
 		<ul class="pagination pagination-sm no-margin pull-right">
 			<c:if test="${pageVO.prev == true }">
@@ -268,7 +296,7 @@
 				}
 			});
 		});
-		$('#searchBtn').click(function(){
+		$('#searchBtn').click(function() {
 			var keyword = $('input[name=keyword]').val();
 			console.log(keyword);
 			$('#search').submit();
