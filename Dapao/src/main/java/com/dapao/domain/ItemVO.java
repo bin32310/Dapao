@@ -23,6 +23,10 @@ public class ItemVO { /* itemDTO */
 	private Date it_outdate; // 글 삭제시간
 	private Integer it_love; // 상품 찜수
 	private Integer tr_no; // 현재 거래 번호 
+	private Double it_latitude; // 작성시 위도
+	private Double it_longitude; // 작성시 경도 
+	
+	
 	
 	private List<FileVO> fileList; // 사진 
 	
