@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dapao.domain.EntVO;
 import com.dapao.domain.PageVO;
+import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TradeVO;
 
 public interface EntService {
@@ -34,5 +35,7 @@ public interface EntService {
 
 	// 정보조회
 	public EntVO ownInfo(String own_id) throws Exception;
-
+	
+	// 해당 상점 리뷰 조회
+	public List<ReviewVO> entReviewList(String own_id) throws Exception;
 }

@@ -1,31 +1,75 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../include/entHeader.jsp"%>
 
+<style>
+.ad_container {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
 
+.bg-aqua{
+	width: 40%;
+}
+.bg-yellow{
+	width: 40%;
+}
 
-<div class="small-box bg-aqua">
-	<div class="inner">
-		<h3>홈페이지 광고</h3>
+</style>
+<div class="ad_container">
+	<div class="small-box bg-aqua">
+		<div class="inner">
+			<h3>홈페이지 광고</h3>
+		</div>
+		<div class="icon">
+			<i class="fa fa-shopping-cart"></i>
+		</div>
+		<div class="small-box-footer icon-ad" data-toggle="modal" data-target="#modal-default">
+			신청하기 <i class="fa fa-arrow-circle-right"></i>
+		</div>
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<i class="fa fa-exclamation-circle"></i>
+				<h3 class="box-title">홈페이지 광고 소개</h3>
+			</div>
+
+			<div class="box-body">
+				<blockquote>
+					<p class="text-black"> 광고 소개 문구</p>
+				</blockquote>
+			</div>
+
+		</div>
+
 	</div>
-	<div class="icon">
-		<i class="fa fa-shopping-cart"></i>
+
+	<div class="small-box bg-yellow">
+		<div class="inner">
+			<h3>체험단 신청</h3>
+		</div>
+		<div class="icon">
+			<i class="ion ion-person-add"></i>
+		</div>
+		<a href="/exp/ownExp" class="small-box-footer"> 신청하기 <i class="fa fa-arrow-circle-right"></i>
+		</a>
+
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<i class="fa fa-exclamation-circle"></i>
+				<h3 class="box-title">체험단 소개</h3>
+			</div>
+
+			<div class="box-body">
+				<blockquote>
+					<p class="text-black">광고 소개 문구</p>
+				</blockquote>
+			</div>
+
+		</div>
+
 	</div>
-	<div class="small-box-footer icon-ad" data-toggle="modal" data-target="#modal-default">
-		신청하기 <i class="fa fa-arrow-circle-right"></i>
-	</div>
+
 </div>
-
-<div class="small-box bg-yellow">
-	<div class="inner">
-		<h3>체험단 신청</h3>
-	</div>
-	<div class="icon">
-		<i class="ion ion-person-add"></i>
-	</div>
-	<a href="#" class="small-box-footer"> 신청하기 <i class="fa fa-arrow-circle-right"></i>
-	</a>
-</div>
-
 
 
 
@@ -63,7 +107,7 @@
 
 <script type="text/javascript">
 	$(function() {
-		
+
 	});
 </script>
 

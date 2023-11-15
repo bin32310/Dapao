@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dapao.domain.EntVO;
 import com.dapao.domain.PageVO;
+import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TradeVO;
 
 import net.nurigo.java_sdk.api.Message;
@@ -96,5 +97,10 @@ public class EntDAOImpl implements EntDAO {
 		
 		return sqlSession.selectOne(NAMESPACE+".ownInfo",own_id);
 	}
+	@Override
+	public List<ReviewVO> entReviewList(String own_id) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".entReviewList", own_id);
+	}
+	
 	
 }
