@@ -5,22 +5,51 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+.box-body {
+	padding-bottom: 7%;
+}
 
+#search {
+	float: right;
+	margin-bottom: 30px;
+}
 
-<h1>/admin/FAQList.jsp</h1>
+.boxList {
+	position: relative;
+	border-radius: 3px;
+	background: #ffffff;
+	border-top: 3px solid #d2d6de;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	margin: 30px;
+	font-size: 20px;
+	border: 2px solid #68b22c;
+}
 
-<form action="/admin/FAQList" id="search">
-	<div class="search_wrap">
-		<div class="search_area">
+.pagination-sm>li>a {
+	font-size: 20px;
+	margin-bottom: 10%;
+}
+
+.box-title {
+	font-size: 30px;
+}
+
+.pContent {
+	margin: 0 0 -30px;
+	font-size: larger;
+	margin-top: 15px;
+}
+</style>
+
+<div class="boxList">
+	<div class="box-header with-board">
+		<p class="pContent">FAQ 관리</p>
+		<form action="/admin/FAQList" id="search">
 			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
 			<button id="searchBtn">Search</button>
-		</div>
-	</div>
-</form>
-
-<div class="box">
-	<div class="box-header with-board">
-		<h3 class="box-title">FAQ 목록</h3>
+		</form>
 	</div>
 	<div class="box-body">
 		<table class="table table-bordered">
@@ -174,16 +203,16 @@
 					$('input[name=cs_no]').val(data.cs_no)
 					$('input[name=cs_title]').val(data.cs_title)
 					$('input[name=cs_content]').val(data.cs_content)
-					if(data.cs_group == 0){
+					if (data.cs_group == 0) {
 						$('input[name=cs_group]').val("회원공지");
-					}else{
+					} else {
 						$('input[name=cs_group]').val("사업자공지");
 					}
-					if(data.cs_state == 0){
+					if (data.cs_state == 0) {
 						$('input[name=cs_state]').val("해제")
-					}else{
+					} else {
 						$('input[name=cs_state]').val("등록")
-					}					
+					}
 					$('input[name=cs_view]').val(data.cs_view)
 					$('input[name=cs_regdate]').val(data.cs_regdate)
 					$('input[name=cs_update]').val(data.cs_update)
@@ -192,8 +221,8 @@
 					console.log("오류");
 				}
 			});// cs_no click ajax
-			
-			$('.update').click(function(){
+
+			$('.update').click(function() {
 				$.ajax({
 					url : "/admin/csInfoUpdate",
 					data : {
@@ -212,97 +241,104 @@
 					}
 				});//update click ajax
 			});//update click
-			$('.upload').click(function(){
+			$('.upload').click(function() {
 				$.ajax({
 					url : "/admin/FAQUpload",
 					data : {
 						"cs_no" : $('input[name=cs_no]').val()
 					},
 					dataType : "json",
-					success : function(data){
+					success : function(data) {
 						console.log(data)
 						alert("FAQ - 등록완료")
 						location.replace("/admin/FAQList?page=${param.page}");
 					}
 				}); // upload click ajax
 			});// upload click
-			$('.remove').click(function(){
+			$('.remove').click(function() {
 				$.ajax({
 					url : "/admin/FAQRemove",
 					data : {
 						"cs_no" : $('input[name=cs_no]').val()
-					},dataType : "json",
-					success : function(data){
+					},
+					dataType : "json",
+					success : function(data) {
 						console.log(data)
 						alert("FAQ - 등록해제완료")
 						location.replace("/admin/FAQList?page=${param.page}");
 					}
-					
+
 				});// remove click ajax
 			});// remove click
 		});// cs_no click
-		
+
 		// FAQ 삭제버튼 클릭시
-		$('.delete').click(function(){
+		$('.delete').click(function() {
 			$.ajax({
-				url:"/admin/csDelete",
-				data:{"cs_no" : $('input[name=cs_no]').val()},
-				dataType:"json",
-				success:function(data){
+				url : "/admin/csDelete",
+				data : {
+					"cs_no" : $('input[name=cs_no]').val()
+				},
+				dataType : "json",
+				success : function(data) {
 					console.log(data);
 					console.log("성공");
 					location.replace("/admin/FAQList?page=${param.page}");
 				},
-				error:function(){
+				error : function() {
 					console.log("에러");
 				}
 			});
 		});
-		
+
 		// 등록/해제 버튼 클릭시 
-		$('.csState').click(function(){
+		$('.csState').click(function() {
 			var state = $(this).text();
-			console.log("state : "+state);
-			
-			if(state == '등록'){
-				alert("등록");	
-				console.log($(this).val());				
+			console.log("state : " + state);
+
+			if (state == '등록') {
+				alert("등록");
+				console.log($(this).val());
 				$.ajax({
-					url:"/admin/csUpload",
-					data:{"cs_no" : $(this).val()},
-					dataType:"json",
-					success:function(data){
-						console.log("성공결과 : "+data);
+					url : "/admin/csUpload",
+					data : {
+						"cs_no" : $(this).val()
+					},
+					dataType : "json",
+					success : function(data) {
+						console.log("성공결과 : " + data);
 						console.log("성공");
 						location.replace("/admin/FAQList?page=${param.page}");
 					},
-					error:function(){
+					error : function() {
 						console.log("에러");
 					}
 				});
 			}
-			
-			if(state == '해제'){
+
+			if (state == '해제') {
 				alert("해제");
 				console.log($(this).val());
 				$.ajax({
-					url:"/admin/csRemove",
-					data:{"cs_no":$(this).val()},
-					dataType:"json",
-					success:function(data){
-						console.log("성공결과 : "+data);
+					url : "/admin/csRemove",
+					data : {
+						"cs_no" : $(this).val()
+					},
+					dataType : "json",
+					success : function(data) {
+						console.log("성공결과 : " + data);
 						console.log("성공");
 						location.replace("/admin/FAQList?page=${param.page}");
 					},
-					error:function(){
+					error : function() {
 						console.log("에러");
 					}
-				});			
+				});
 			}
-		
+
 		}) // 등록/해제 버튼 클릭시
-		
-		$('#searchBtn').click(function(){
+
+		$('#searchBtn').click(function() {
 			var keyword = $('input[name=keyword]').val();
 			console.log(keyword);
 			$('#search').submit();

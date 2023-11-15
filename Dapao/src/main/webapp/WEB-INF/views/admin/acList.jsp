@@ -2,19 +2,63 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../include/header.jsp"%>
 
-	<h1>/admin/acList.jsp</h1>
-	
-<form action="/admin/acList" id="search">
-	<div class="search_wrap">
-		<div class="search_area">
+<style>
+.box-body {
+	padding-bottom: 7%;
+}
+
+#search {
+	float: right;
+	margin-bottom: 30px;
+}
+
+.boxList {
+	position: relative;
+	border-radius: 3px;
+	background: #ffffff;
+	border-top: 3px solid #d2d6de;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	margin: 30px;
+	font-size: 20px;
+}
+
+.pagination-sm>li>a {
+	font-size: 20px;
+	margin-bottom: 10%;
+}
+
+.box-title {
+	font-size: 30px;
+}
+
+.pContent {
+	margin: 0 0 -30px;
+	font-size: larger;
+	margin-top: 15px;
+}
+
+#searchBtn {
+	border-radius: 0.5em;
+	background-color: #14571f;
+	color: white;
+	border-color: #14571f;
+}
+
+#search2 {
+	border-radius: 0.5em;
+	border-color: #14571f;
+	background-color: white;
+}
+</style>
+
+<div class="boxList">
+	<div class="box-header with-board">
+		<p class="pContent">신고 관리</p>
+		<form action="/admin/acList" id="search">
 			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
 			<button id="searchBtn">Search</button>
-		</div>
-	</div>
-</form>
-<div class="box">
-	<div class="box-header with-board">
-		<h3 class="box-title">신고 리스트</h3>
+		</form>
 	</div>
 	<div class="box-body">
 		<table class="table table-bordered">
@@ -48,7 +92,7 @@
 							</c:when>
 						</c:choose>
 						<td>${vo.ac_result}</td>
-						</tr>
+					</tr>
 				</c:forEach>
 			</tbody>
 			<tfoot>
@@ -139,7 +183,6 @@
 
 
 <script type="text/javascript">
-	
 	$(function() {
 		$('.ac_no').click(function() {
 			$('#myLargeModal').modal("show");
@@ -172,7 +215,7 @@
 
 		// 접수 버튼 클릭시 
 		$('.acState').click(function() {
-			
+
 			$('#myLargeModal').modal("show");
 
 			$.ajax({
@@ -199,20 +242,19 @@
 					console.log("오류");
 				}
 			});// acState click ajax
-			
+
 		}) // 접수 버튼 클릭시
 
-	$('#ac_result').click(function() {
-			console.log("acStop : "+$('select[name=acStop]').val());
-			console.log("ac_no : "+$('input[name=ac_no]').val());
-			console.log("id : "+$('input[name=id]').val());
-			console.log("text : "+$('selected').text());
-			
+		$('#ac_result').click(function() {
+			console.log("acStop : " + $('select[name=acStop]').val());
+			console.log("ac_no : " + $('input[name=ac_no]').val());
+			console.log("id : " + $('input[name=id]').val());
+			console.log("text : " + $('selected').text());
 
 			var us_stopdate = $('select[name=acStop]').val();
 			var own_stopdate = $('select[name=acStop]').val();
-		
-			if($('select[name=acStop]').val() == 0){
+
+			if ($('select[name=acStop]').val() == 0) {
 				alert("정지기간을 선택해주세요");
 			}
 			if ($('select[name=acStop]').val() == 7) {
@@ -243,7 +285,7 @@
 				}
 			}); // ac_result click us ajax
 		}); // ac_result click
-		$('#searchBtn').click(function(){
+		$('#searchBtn').click(function() {
 			var keyword = $('input[name=keyword]').val();
 			console.log(keyword);
 			$('#search').submit();

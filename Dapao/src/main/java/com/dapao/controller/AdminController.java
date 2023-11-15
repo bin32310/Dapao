@@ -347,6 +347,7 @@ public class AdminController {
 	}
 	
 	// 신고관리 - 신고 리스트
+	// http://localhost:8088/admin/acList
 	@RequestMapping("/acList")
 	public void acList(Criteria cri, Model model, Integer ac_item) throws Exception{
 		logger.debug("acList()");

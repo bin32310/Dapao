@@ -34,13 +34,24 @@
     font-size: larger;
     margin-top: 15px;
 }
+#searchBtn{
+	border-radius: 0.5em;
+    background-color: #14571f;
+    color: white;
+    border-color: #14571f;
+}
+#search2{
+	border-radius: 0.5em;
+	border-color: #14571f;
+	background-color: white;
+}
 </style>
 
 <div class="boxList">
 	<div class="box-header with-border">
 		<p class="pContent">회원 관리</p>
 		<form action="/admin/userList" id="search">
-			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
+			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
 			<button id="searchBtn">Search</button>
 		</form>
 	</div>
