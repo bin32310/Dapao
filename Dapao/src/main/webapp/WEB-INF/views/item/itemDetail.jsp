@@ -312,6 +312,33 @@ input:focus{
 	font-weight: bold;
 }
 
+/* 글 수정 삭제 */
+#item_update{
+
+	border : none;
+	background-color : #FFB2D9;
+	width : 100px;
+	height : 100px;
+	color : white;
+	font-weight: bold;
+	font-size : 30px;
+	cursor: pointer;
+
+}
+
+#item_delete{
+	border : none;
+	background-color : #E1E1E1;
+	width : 100px;
+	height : 100px;
+	color : white;
+	font-weight: bold;
+	font-size : 30px;
+	cursor: pointer;
+
+}
+
+
 /* 판매자의 다른물건, 현재 페이지 물건의 같은 카테고리 물품 구역 */
 .itemSellsectionDiv{
 	margin-left:30px;
@@ -492,6 +519,8 @@ input:focus{
 				<!-- 내 판매글일 경우 -->
 				<c:if test="${!empty us_id && us_id.equals(itemVO.us_id) && itemVO.it_state != 2 }">
 					<input type="button" value="내 판매글 목록보기" id="my_sell_list">
+					<input type="button" value="수정" id="item_update">
+					<input type="button" value="삭제" id="item_delete">
 				</c:if>
 				<!-- 찜 & 판다톡 -->
 				<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state != 2 }">
