@@ -8,20 +8,34 @@
 <script type="text/javascript">
 	$(function() {
 		$('.review').slimScroll({
-
 			height : '250px',
-
 		});
-
 	});
 </script>
 <div class="box box-success">
 	<div class="box-header with-border"></div>
 	<div class="ent_container">
 		<div class="img_container">
-			<div class="ent_img">
-				<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${ent[0].ent_img}" width="1200px">
+			<div class="box-body">
+				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+					<ol class="carousel-indicators">
+						<c:forEach items="${imgList }" var="img">
+							<li data-target="#carousel-example-generic" data-slide-to="${status.count-1 }" class=""></li>
+						</c:forEach>
+					</ol>
+					<div class="carousel-inner">
+						<c:forEach items="${imgList }" var="img">
+							<div class="item">
+								<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${img}">
+							</div>
+						</c:forEach>
+					</div>
+					<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev"> <span class="fa fa-angle-left"></span>
+					</a> <a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> <span class="fa fa-angle-right"></span>
+					</a>
+				</div>
 			</div>
+
 			<div class="small-box bg-yellow">
 				<div class="inner">
 					<h3>체험단 신청</h3>
@@ -39,23 +53,23 @@
 				<li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">운영시간</a></li>
 			</ul>
 			<div class="tab-content">
-				<div class="tab-pane active" id="tab_1">${ent[0].ent_notice}</div>
+				<div class="tab-pane active" id="tab_1">${ent.ent_notice}</div>
 
-				<div class="tab-pane" id="tab_2">${ent[0].ent_info}</div>
+				<div class="tab-pane" id="tab_2">${ent.ent_info}</div>
 
-				<div class="tab-pane" id="tab_3">${ent[0].ent_ot}-${ent[0].ent_ct }</div>
+				<div class="tab-pane" id="tab_3">${ent.ent_ot}-${ent.ent_ct }</div>
 			</div>
 
 		</div>
 		<div class="notice_container"></div>
 		<div class="box box-success">
 			<div class="box-header with-border">
+				<i class="fa fa-map-marker"></i>
 				<h3 class="box-title">가게 위치</h3>
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse">
 						<i class="fa fa-minus"></i>
 					</button>
-
 				</div>
 			</div>
 
@@ -66,32 +80,38 @@
 
 		<div class="review_container">
 			<div class="box box-success">
-				<div class="box-header ui-sortable-handle" style="cursor: move;">
+				<div class="box-header with-border">
 					<i class="fa fa-comment"></i>
 					<h3 class="box-title">리뷰</h3>
-				</div>
-				<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: auto;">
-					<div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: auto;">
-						<div class="review">
-							<c:forEach items="${rlist }" var="rv">
-								<div class="item">
-									<img src="/resources/dist/img/user4-128x128.jpg" alt="user image">
-									<p class="name">${rv.rv_buy_id }</p>
-									<p class="message">${rv.rv_content }</p>
-									<c:forEach begin="1" end="${rv.rv_star }" step="1">★</c:forEach>
-								</div>
-							</c:forEach>
-						</div>
-
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
 					</div>
-					<!-- 				<div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 184.366px;"></div> -->
-					<!-- 				<div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div> -->
+				</div>
+				<div class="box-body no-padding">
+					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: auto;">
+						<div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: auto;">
+							<div class="review">
+								<c:forEach items="${rlist }" var="rv">
+									<div class="item">
+										<img src="/resources/dist/img/user4-128x128.jpg" alt="user image">
+										<p class="name">${rv.rv_buy_id }</p>
+										<p class="message">${rv.rv_content }</p>
+										<c:forEach begin="1" end="${rv.rv_star }" step="1">★</c:forEach>
+									</div>
+								</c:forEach>
+							</div>
+
+						</div>
+					</div>
 				</div>
 
 			</div>
 		</div>
 		<div class="box box-success">
 			<div class="box-header with-border">
+				<i class="fa fa-search"></i>
 				<h3 class="box-title">제품 소개</h3>
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse">
