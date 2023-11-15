@@ -1,38 +1,68 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="../include/header.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="../include/header.jsp"%>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+<style>
+.box-body {
+	padding-bottom: 7%;
+}
 
-<h1>/admin/reviewList.jsp</h1>
+#search {
+	float: right;
+	margin-bottom: 30px;
+}
 
-<form action="/admin/reviewList" id="search">
-	<div class="search_wrap">
-		<div class="search_area">
+.boxList {
+	position: relative;
+	border-radius: 3px;
+	background: #ffffff;
+	border-top: 3px solid #d2d6de;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	margin: 30px;
+	font-size: 20px;
+	border: 2px solid #68b22c;
+}
+
+.pagination-sm>li>a {
+	font-size: 20px;
+	margin-bottom: 10%;
+}
+
+.box-title {
+	font-size: 30px;
+}
+
+.pContent {
+	margin: 0 0 -30px;
+	font-size: larger;
+	margin-top: 15px;
+}
+</style>
+
+<div class="boxList">
+	<div class="box-header with-board">
+		<p class="pContent">리뷰 관리</p>
+		<form action="/admin/reviewList" id="search">
 			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
 			<button id="searchBtn">Search</button>
-		</div>
-	</div>
-</form>
-<div class="box">
-	<div class="box-header with-board">
-		<h3 class="box-title">리뷰 목록</h3>
+		</form>
 	</div>
 	<div class="box-body">
 		<table class="table table-bordered">
 			<thead>
 				<tr role="row">
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >리뷰 번호</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >판매자</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >구매자</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >별점</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >등록날짜</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >삭제날짜</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >리뷰상태</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">리뷰 번호</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">판매자</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">구매자</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">별점</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">등록날짜</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">삭제날짜</th>
+					<th class="sorting" tabindex="0" rowspan="1" colspan="1">리뷰상태</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -41,11 +71,9 @@
 						<td><a class="rv_no">${vo.rv_no }</a></td>
 						<td>${vo.rv_own_id+vo.rv_us_id}</td>
 						<td>${vo.rv_buy_id}</td>
-						<td>
-							<c:forEach begin="1" end="${vo.rv_star}" >
+						<td><c:forEach begin="1" end="${vo.rv_star}">
 								<label>⭐</label>
-							</c:forEach>
-						</td>
+							</c:forEach></td>
 						<td>${vo.rv_regdate }</td>
 						<td>${vo.rv_outdate }</td>
 						<c:choose>
@@ -60,7 +88,7 @@
 				</c:forEach>
 			</tbody>
 			<tfoot>
-				
+
 			</tfoot>
 		</table>
 	</div>
@@ -125,53 +153,68 @@
 	</div>
 </div>
 <script type="text/javascript">
-
 	$(function() {
-		$('.rv_no').click(function() {
-			$('#myLargeModal').modal("show");
+		$('.rv_no')
+				.click(
+						function() {
+							$('#myLargeModal').modal("show");
 
-			$.ajax({
-				url : "/admin/reviewInfo",
-				data : {
-					"rv_no" : $(this).text()
-				},
-				dataType : "json",
-				success : function(data) {
-					console.log(data)
-					$('input[name=rv_no]').val(data.rv_no)
-					if(data.rv_own_id == null || data.rv_own_id == ""){
-						$('input[name=rv_id]').val(data.rv_us_id)
-					}
-					if(data.rv_us_id == null || data.rv_us_id == ""){
-						$('input[name=rv_id]').val(data.rv_own_id)
-					}
-					$('input[name=rv_buy_id]').val(data.rv_buy_id)
-					$('input[name=rv_content]').text(data.rv_content)
-					
-				},
-				error : function() {
-					console.log("오류");
-				}
-			});// rv_no click ajax
-			
-			$('.delete').click(function(){
-				$.ajax({
-					url : "/admin/reviewDelete",
-					data : {
-						"rv_no" : $('input[name=rv_no]').val()
-					},
-					dataType : "json",
-					success : function(data) {
-						alert("삭제완료");
-						location.replace("/admin/reviewList?page=${param.page}");
-					},
-					error : function() {
-						console.log("오류");
-					}
-				});//delete click ajax
-			});//delete click
-		});// rv_no click
-		$('#searchBtn').click(function(){
+							$.ajax({
+								url : "/admin/reviewInfo",
+								data : {
+									"rv_no" : $(this).text()
+								},
+								dataType : "json",
+								success : function(data) {
+									console.log(data)
+									$('input[name=rv_no]').val(data.rv_no)
+									if (data.rv_own_id == null
+											|| data.rv_own_id == "") {
+										$('input[name=rv_id]').val(
+												data.rv_us_id)
+									}
+									if (data.rv_us_id == null
+											|| data.rv_us_id == "") {
+										$('input[name=rv_id]').val(
+												data.rv_own_id)
+									}
+									$('input[name=rv_buy_id]').val(
+											data.rv_buy_id)
+									$('input[name=rv_content]').text(
+											data.rv_content)
+
+								},
+								error : function() {
+									console.log("오류");
+								}
+							});// rv_no click ajax
+
+							$('.delete')
+									.click(
+											function() {
+												$
+														.ajax({
+															url : "/admin/reviewDelete",
+															data : {
+																"rv_no" : $(
+																		'input[name=rv_no]')
+																		.val()
+															},
+															dataType : "json",
+															success : function(
+																	data) {
+																alert("삭제완료");
+																location
+																		.replace("/admin/reviewList?page=${param.page}");
+															},
+															error : function() {
+																console
+																		.log("오류");
+															}
+														});//delete click ajax
+											});//delete click
+						});// rv_no click
+		$('#searchBtn').click(function() {
 			var keyword = $('input[name=keyword]').val();
 			console.log(keyword);
 			$('#search').submit();
