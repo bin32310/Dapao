@@ -1,9 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../include/header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../include/entHeader.jsp"%>
 
 <div class="box box-info">
-	<form action="">
-
+	<form action="" method="post">
+		<%-- 		<input type="hidden" name="own_id" value="${own_id }" > --%>
 		<table>
 			<tr>
 				<td>검색</td>
@@ -11,15 +13,16 @@
 			<tr>
 				<td colspan="2">
 					<div class="form-group">
-						<select class="form-control" id="cate">
-							<option>상품명</option>
-							<option>주문번호</option>
+						<select class="form-control" name="search_cate">
+							<option value="prod_name">상품명</option>
+							<option value="tr_no">주문번호</option>
 						</select>
-					</div> 
+					</div>
 				</td>
 				<td>
 					<div class="input-group margin">
-						<input type="text" class="form-control"> <span class="input-group-btn">
+						<input type="text" class="form-control" name="search"> <span
+							class="input-group-btn">
 							<button type="submit" class="btn btn-info btn-flat">Go!</button>
 						</span>
 					</div>
@@ -46,38 +49,76 @@
 					<tr>
 						<th>상품번호</th>
 						<th>상품명</th>
-						<th>결제상태</th>
-						<th>결제일</th>
+						<th>구매자</th>
+						<th>가격</th>
+						<th>관리</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td><a href="pages/examples/invoice.html">OR9842</a></td>
-						<td>Call of Duty IV</td>
-						<td><span class="label label-success">Shipped</span></td>
-						<td>
-							<div class="sparkbar" data-color="#00a65a" data-height="20">
-								<canvas width="34" height="20" style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas>
-							</div>
-						</td>
-					</tr>
-					
+					<c:forEach items="${tlist }" var="tlist">
+						<tr>
+							<td><a href="">${tlist.tr_no }</a></td>
+							<td>${tlist.prodVO.prod_name }</td>
+							<td><span class="label label-success">${tlist.tr_buy }</span></td>
+							<td>${tlist.prodVO.prod_price }</td>
+							<td>
+								<button type="button" class="btn btn-danger" data-toggle="modal"
+									data-target="#modal-danger" data-tr_no=${tlist.tr_no }>환불</button>
+							</td>
+						</tr>
+					</c:forEach>
+
 				</tbody>
 			</table>
 		</div>
 
 	</div>
-
-	<div class="box-footer clearfix">
-		<a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
-	</div>
-
 </div>
 
 
 
 
+<!-- modal -->
+<div class="modal modal-danger fade" id="modal-danger"
+	style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title">환불</h4>
+			</div>
+			<div class="modal-body">
+				<p>환불하시겠습니까?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline pull-left"
+					data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-outline" id="refund">환불하기</button>
+			</div>
+		</div>
 
+	</div>
+
+</div>
+<!-- modal -->
+
+<script type="text/javascript">
+$(function() {
+	$('#modal-danger').on("show.bs.modal", function(e) {
+		console.log(e);
+		var tr_no = $(e.relatedTarget).data('tr_no') * 1;
+		console.log(tr_no);
+		$('#refund').click(function() {
+			location.href='/ent/refund?tr_no='+tr_no;
+		});
+	});
+	
+	
+});
+</script>
 
 
 <%@ include file="../include/footer.jsp"%>

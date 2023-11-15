@@ -24,7 +24,8 @@ public class EntVO {
 	private String ent_notice; // 공지사항
 	private String ent_info; // 가게소개
 	private String ent_img; // 가게 이미지
-	private String ent_time; // 가게 운영시간
+	private String ent_ot; // 가게 운영시작시간
+	private String ent_ct; // 가게 운영끝시간
 	private Integer ent_account; // 신고 누적 횟수
 	private Integer ent_stop; // 정지 횟수
 	private Date own_stopdate; //사업자 정지기간
