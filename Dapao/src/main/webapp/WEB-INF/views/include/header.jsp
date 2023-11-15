@@ -359,8 +359,8 @@
 					<li class="treeview"><a href="#"> <i class="fa fa-shopping-cart"></i> <span>상품관리</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href=""><i class="fa fa-circle-o"></i> 회원 </a></li>
-							<li><a href=""><i class="fa fa-circle-o"></i> 사업자 </a></li>
+							<li><a href="/admin/itemList"><i class="fa fa-circle-o"></i> 회원 </a></li>
+							<li><a href="/admin/prodList"><i class="fa fa-circle-o"></i> 사업자 </a></li>
 						</ul></li>
 					<li class="treeview"><a href="#"> <i class="fa  fa-exclamation-circle"></i> <span>신고관리</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
@@ -368,7 +368,7 @@
 							<li><a href="/admin/acWriteForm"><i class="fa fa-circle-o"></i> 신고 글쓰기 </a></li>
 							<li><a href="/admin/acList"><i class="fa fa-circle-o"></i> 신고 목록 </a></li>
 						</ul></li>
-					<li><a href=""><i class="fa fa-twitch"></i> <span>체험단 신청관리</span></a></li>
+					<li><a href="/admin/expList"><i class="fa fa-twitch"></i> <span>체험단 신청관리</span></a></li>
 					<li class="treeview"><a href="#"> <i class="fa fa-file-text-o"></i> <span>공지사항</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
