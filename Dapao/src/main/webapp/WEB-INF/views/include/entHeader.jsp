@@ -29,7 +29,7 @@
 </head>
 <!-- jQuery 2.1.4 -->
 <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-<body class="skin-blue sidebar-mini">
+<body class="skin-green sidebar-mini">
 	<div class="wrapper">
 
 		<header class="main-header">
@@ -105,37 +105,32 @@
 					</div>
 					<div class="pull-left info">
 						<p>${sessionScope.own_id}</p>
-
-						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
 				</div>
 
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 					<li class="header">MAIN NAVIGATION</li>
-					<li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i> <span>상점메뉴</span> <i class="fa fa-angle-left pull-right"></i>
+					<li class="treeview"><a href="#"> <i class="fa fa-home"></i> <span>상점메뉴</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href="/ent/shopMain"><i class="fa fa-circle-o"></i> 상점 메인페이지 </a></li>
-							<li><a href="/ent/shopMainManage"><i class="fa fa-circle-o"></i> 상점 메인페이지 수정 </a></li>
+							<li><a href="/ent/shopMain"><i class="fa fa-home"></i> 상점 메인페이지 </a></li>
+							<li><a href="/ent/shopMainManage"><i class="fa fa-gavel"></i> 상점 메인페이지 수정 </a></li>
 						</ul></li>
-					<li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i> <span>상품/주문 관리</span> <i class="fa fa-angle-left pull-right"></i>
+					<li class="treeview"><a href="#"> <i class="fa fa-shopping-cart"></i> <span>상품/주문 관리</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href="/ent/productManage"><i class="fa fa-circle-o"></i> 상품등록/수정/조회</a></li>
-							<li><a href="/ent/entOrder"><i class="fa fa-circle-o"></i> 주문관리</a></li>
+							<li><a href="/ent/productManage"><i class="fa fa-cart-plus"></i> 상품등록/수정/조회</a></li>
+							<li><a href="/ent/entOrder"><i class="fa fa-line-chart"></i> 주문관리</a></li>
 						</ul></li>
-					<li class="treeview"><a href="#"> <i class="fa fa-pie-chart"></i> <span>판다톡 관리</span> <i class="fa fa-angle-left pull-right"></i>
+					<li class="treeview"><a href="#"> <i class="fa fa-paw"></i> <span>판다톡 관리</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
 							<li><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> 자주쓰는 문구</a></li>
 							<li><a href="../charts/morris.html"><i class="fa fa-circle-o"></i> 자동응답설정</a></li>
 						</ul></li>
-					<li class="treeview"><a href="#"> <i class="fa fa-pie-chart"></i> <span>광고 문의</span> <i class="fa fa-angle-left pull-right"></i>
-					</a>
-						<ul class="treeview-menu">
-							<li><a href="/ent/entAd"><i class="fa fa-circle-o"></i> 광고 문의</a></li>
-						</ul></li>
+					<li class="treeview"><a href="/ent/entAd"> <i class="fa fa-newspaper-o"></i> <span>광고 문의</span>
+					</a></li>
 						
 				</ul>
 			</section>
