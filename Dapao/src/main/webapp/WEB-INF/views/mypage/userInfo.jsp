@@ -23,7 +23,7 @@
 
 
    <!-- <button><a href="/mypage/userInfoUpdate">내프로필 수정 </a></button> -->
-   <button id="updateBtn">내프로필 수정</button>
+  
 
    <script type="text/javascript">
    var userTel ='${infoVO.us_pw}';
@@ -63,6 +63,7 @@
 
 
    <a href="/mypage/userSellList">판매 목록 </a>
+   <a href="/mypage/userBuyList">구매목록</a>
    <a href="/mypage/userBuyCoin">대나무페이 결제 목록 </a>
    <a href="/mypage/userReview">내가 쓴 리뷰 </a>
    <a href="/mypage/userCs">고객센터</a>
@@ -96,7 +97,7 @@
 
 
 
-
+ <button id="updateBtn">내프로필 수정</button> <br>
    <button>
       <a href="/mypage/userDelete"> 회원 탈퇴하기 </a>
    </button>

@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.dapao.domain.AcVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.LoveVO;
 import com.dapao.domain.PayVO;
 import com.dapao.domain.ReviewVO;
+import com.dapao.domain.TradeVO;
 import com.dapao.domain.UserVO;
 import com.dapao.service.UserServiceImpl;
 
@@ -223,7 +225,30 @@ public class MypageController {
     	  
       }
       
+      // 마이페이지 내 구매목록
+      // http://localhost:8088/mypage/userBuyList
+      @RequestMapping(value = "/userBuyList", method = RequestMethod.GET)
+      public void userBuyList(HttpSession session, Model model) throws Exception{
+    	  
+    	  String us_id = (String)session.getAttribute("us_id");
+    	  logger.debug("us_id   :" +us_id);
+    	  List<TradeVO> resultVO = uService.userBuyList(us_id);
+    	  logger.debug("result VO : " + resultVO);
+    	  model.addAttribute("userBuyList", resultVO);
+    	  
+      }
       
+      //마이페이지 내 신고목록
+      // http://localhost:8088/mypage/userCs
+      @RequestMapping(value = "/userCs",method = RequestMethod.GET)
+      public void userCs(HttpSession session, Model model) throws Exception{
+    	  
+    	  String us_id = (String)session.getAttribute("us_id");
+    	  logger.debug("us_id  : " +us_id);
+    	  List<AcVO> resultVO = uService.userCs(us_id);
+    	  logger.debug("resultVO : " + resultVO);
+    	  model.addAttribute("userCs", resultVO);
+      }
       
       
       
