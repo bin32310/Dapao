@@ -221,20 +221,23 @@ public class UserController {
        }
      
      
+	
+	  // 이메일 인증
+	
 	/*
-	 * // 이메일 인증
-	 * 
 	 * @GetMapping("/userFindPw")
 	 * 
 	 * @RequestBody public String sendEmail(String email) throws Exception{
 	 * logger.debug("이메일 인증요청 들어옴"); logger.debug("인증 이메일  :" + email);
 	 * 
-	 * return ""; }
+	 * return mss.joinEmail(email);
+	 * 
+	 * }
+	 * 
+	 * 
 	 */
-  
-     
-     
       
+     
 }
    
    

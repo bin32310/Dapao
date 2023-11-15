@@ -9,6 +9,7 @@
 </head>
 <body>
 
+
 		<c:if test="${empty us_id }">
 		<%@ include file="../include/userHeader.jsp" %>
 	</c:if>
@@ -16,20 +17,9 @@
 		<%@ include file="../include/userLoginHeader.jsp" %>
 	</c:if>
 	
-<!-- 간편로그인  -->
-
-	<fieldset>
-	<h4>간편 로그인</h4>
-		<form action="">
-			
-		
-		</form>
 	
 	
-	</fieldset>
-	
-	
-	<script>
+		<script>
 	 $(function(){
 		 $("#findPwBtn").click(function(){
 			 location.href='../user/userFindPw';
@@ -42,6 +32,52 @@
 	
 	
 	</script>
+	
+	
+	
+	
+	
+
+<div class="box box-info">
+<div class="box-header with-border">
+<h3 class="box-title">로그인</h3>
+</div>
+
+
+<form class="form-horizontal">
+<div class="box-body">
+<div class="form-group">
+<label for="inputEmail3" class="col-sm-2 control-label">아이디</label>
+<div class="col-sm-10">
+<input type="email" class="form-control" id="inputEmail3" placeholder="아이디를 입력해주세요" required="required">
+</div>
+</div>
+<div class="form-group">
+<label for="inputPassword3" class="col-sm-2 control-label">비밀번호</label>
+<div class="col-sm-10">
+<input type="password" class="form-control" id="inputPassword3" placeholder="비밀번호를 입력해주세요" required="required">
+</div>
+</div>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<div class="checkbox">
+<label>
+
+</label>
+</div>
+</div>
+</div>
+</div>
+
+<div class="box-footer">
+<button type="submit" class="btn btn-default">Cancel</button>
+<button type="submit" class="btn btn-info pull-right">Sign in</button>
+</div>
+
+</form>
+</div>
+	
+	
 
 
 <!-- 로그인 -->

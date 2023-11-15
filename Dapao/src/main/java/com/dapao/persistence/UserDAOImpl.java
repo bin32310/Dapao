@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.dapao.domain.AcVO;
 import com.dapao.domain.AdVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.ItemVO;
@@ -19,6 +20,7 @@ import com.dapao.domain.LoveVO;
 import com.dapao.domain.PayVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TotalVO;
+import com.dapao.domain.TradeVO;
 import com.dapao.domain.UserVO;
 
 
@@ -196,8 +198,17 @@ public class UserDAOImpl  {
    }
    
    
+   //마이페이지에서 내 구매목록 조회
+   public List<TradeVO> userBuyList(String us_id){
+	   logger.debug("us_id : "+us_id);
+	   return sqlSession.selectList(NAMESPACE+".userBuyList", us_id);
+   }
    
-   
+   // 마이페이지 내 신고목록 조회
+   public List<AcVO> userCs(String us_id){
+	   logger.debug("us_id  :" + us_id);
+	   return sqlSession.selectList(NAMESPACE+".userCs", us_id );
+   }
    
    
    

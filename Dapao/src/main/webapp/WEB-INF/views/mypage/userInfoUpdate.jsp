@@ -18,13 +18,13 @@
       <%@ include file="../include/userLoginHeader.jsp" %>
    </c:if>
    
-   
+  <!--  
       <a href="/mypage/userSellList">판매 목록 </a>
       <a href="/mypage/userBuy">구매 목록 </a>
       <a href="/mypage/userReview">내가 쓴 리뷰 </a>
       <a href="/mypage/userCs">고객센터</a>
       <a href="/mypage/userLoveList">찜 목록 </a> 
-      
+       -->
       <!-- 여기서부터 다시 해야함 -->
       
    <script type="text/javascript">
