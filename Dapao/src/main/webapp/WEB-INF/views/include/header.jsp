@@ -32,11 +32,11 @@
     <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <style>
 .skin-purple-light .main-header .navbar {
-	background-color: #14571f;
+	background-color: green;
 }
 
 .skin-purple-light .main-header .logo{
-	background-color: #14571f;
+	background-color: green;
 }
 
 
@@ -48,6 +48,20 @@
 	background-color: #f9fafc;
 }
 
+.pagination>.active>a, .pagination>.active>a:hover{
+	background-color: #14571f;
+    border-color: #14571f;
+}
+
+.skin-purple-light .main-header .logo:hover {
+    background-color: #14571f;
+}
+
+.skin-purple-light .main-header .navbar .sidebar-toggle:hover {
+    background-color: #14571f;
+}
+
+
 </style>
   <body class="skin-blue sidebar-mini">
     <div class="wrapper">
@@ -56,9 +70,9 @@
         <!-- Logo -->
         <a href="${pageContext.request.contextPath }/resources/index2.html" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>A</b>LT</span>
+          <span class="logo-mini"><img src="/resources/logo/logo.png" width="50" height="50"></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg">Dapao</span>
+          <span class="logo-lg"><img src="/resources/logo/logo.png" width="50" height="50">Dapao</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -262,15 +276,15 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="${pageContext.request.contextPath }/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                  <span class="hidden-xs">Alexander Pierce</span>
+                  <img src="${pageContext.request.contextPath }/resources/logo/user.png" class="user-image" alt="User Image"/>
+                  <span class="hidden-xs">관리자</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
                     <img src="${pageContext.request.contextPath }/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
                     <p>
-                      Alexander Pierce - Web Developer
+                      관리자 - Web Developer
                       <small>Member since Nov. 2012</small>
                     </p>
                   </li>
@@ -313,10 +327,10 @@
 				<!-- Sidebar user panel -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="${pageContext.request.contextPath }/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+						<img src="${pageContext.request.contextPath }/resources/logo/user.png" class="img-circle" alt="User Image" />
 					</div>
 					<div class="pull-left info">
-						<p>Alexander Pierce</p>
+						<p>관리자</p>
 
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
@@ -335,39 +349,39 @@
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 					<li class="header">MAIN NAVIGATION</li>
-					<li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i> <span>회원관리</span> <i class="fa fa-angle-left pull-right"></i>
+					<li class="treeview"><a href="#"> <i class="fa fa-user-plus"></i> <span>회원관리</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
     
 						<ul class="treeview-menu">
 							<li><a href="/admin/userList"><i class="fa fa-circle-o"></i> 회원관리 </a></li>
 							<li><a href="/admin/ownerList"><i class="fa fa-circle-o"></i> 사업자관리 </a></li>
 						</ul></li>
-					<li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i> <span>상품관리</span> <i class="fa fa-angle-left pull-right"></i>
+					<li class="treeview"><a href="#"> <i class="fa fa-shopping-cart"></i> <span>상품관리</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
 							<li><a href=""><i class="fa fa-circle-o"></i> 회원 </a></li>
 							<li><a href=""><i class="fa fa-circle-o"></i> 사업자 </a></li>
 						</ul></li>
-					<li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i> <span>신고관리</span> <i class="fa fa-angle-left pull-right"></i>
+					<li class="treeview"><a href="#"> <i class="fa  fa-exclamation-circle"></i> <span>신고관리</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
 							<li><a href="/admin/acWriteForm"><i class="fa fa-circle-o"></i> 신고 글쓰기 </a></li>
 							<li><a href="/admin/acList"><i class="fa fa-circle-o"></i> 신고 목록 </a></li>
 						</ul></li>
-					<li><a href=""><i class="fa fa-book"></i> <span>체험단 신청관리</span></a></li>
-					<li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i> <span>공지사항</span> <i class="fa fa-angle-left pull-right"></i>
+					<li><a href=""><i class="fa fa-twitch"></i> <span>체험단 신청관리</span></a></li>
+					<li class="treeview"><a href="#"> <i class="fa fa-file-text-o"></i> <span>공지사항</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
 							<li><a href="/admin/noticeWriteForm"><i class="fa fa-circle-o"></i> 공지사항 글쓰기 </a></li>
 							<li><a href="/admin/noticeList"><i class="fa fa-circle-o"></i> 공지사항 목록 </a></li>
 						</ul></li>
-					<li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i> <span>FAQ</span> <i class="fa fa-angle-left pull-right"></i>
+					<li class="treeview"><a href="#"> <i class="fa fa-list-ul"></i> <span>FAQ</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
 							<li><a href="/admin/FAQWriteForm"><i class="fa fa-circle-o"></i> FAQ 글쓰기 </a></li>
 							<li><a href="/admin/FAQList"><i class="fa fa-circle-o"></i> FAQ 목록 </a></li>
 						</ul></li>
-					<li><a href="/admin/reviewList"><i class="fa fa-book"></i> <span>리뷰관리</span></a></li>
+					<li><a href="/admin/reviewList"><i class="fa fa-heart"></i> <span>리뷰관리</span></a></li>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
