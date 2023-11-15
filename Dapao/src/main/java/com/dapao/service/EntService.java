@@ -12,7 +12,7 @@ public interface EntService {
 	public void entUpdate(EntVO vo);
 
 	// 특정 상점 정보 조회
-	public List<EntVO> listEnt(EntVO vo);
+	public EntVO listEnt(EntVO vo);
 
 	// 가게 주문 리스트 조회
 	public List<TradeVO> searchTrade(PageVO vo);

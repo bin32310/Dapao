@@ -1,7 +1,6 @@
 package com.dapao.domain;
 
 import java.sql.Date;
-import java.util.List;
 
 
 import lombok.Data;
@@ -29,6 +28,5 @@ public class EntVO {
 	private Integer ent_account; // 신고 누적 횟수
 	private Integer ent_stop; // 정지 횟수
 	private Date own_stopdate; //사업자 정지기간
-	
 
 }

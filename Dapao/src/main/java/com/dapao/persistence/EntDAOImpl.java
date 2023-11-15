@@ -31,9 +31,9 @@ public class EntDAOImpl implements EntDAO {
 		sqlSession.update(NAMESPACE+".entUpdate",vo );
 	}
 	@Override
-	public List<EntVO> listEnt(EntVO vo) {
+	public EntVO listEnt(EntVO vo) {
 		logger.debug(" DAO listEnt(String own_id) 호출 ");
-		return sqlSession.selectList(NAMESPACE+".listEnt", vo);
+		return sqlSession.selectOne(NAMESPACE+".listEnt", vo);
 	}
 	@Override
 	public List<TradeVO> searchTrade(PageVO vo) {
