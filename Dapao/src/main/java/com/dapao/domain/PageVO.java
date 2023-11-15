@@ -1,8 +1,5 @@
 package com.dapao.domain;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.dapao.domain.ProdVO;
 import com.dapao.domain.TradeVO;
 
@@ -51,40 +48,7 @@ public class PageVO {
 	private TradeVO t_vo; // 주문
 	
 	// get/set
-		
-	public ProdVO getP_vo() {
-		return p_vo;
-	}
-
-	public void setP_vo(ProdVO p_vo) {
-		this.p_vo = p_vo;
-	}
-
-	public TradeVO getT_vo() {
-		return t_vo;
-	}
-
-	public void setT_vo(TradeVO t_vo) {
-		this.t_vo = t_vo;
-	}
-
-	public Criteria getCri() {
-		return cri;
-	}
-
-	public void setCri(Criteria cri) {
-		this.cri = cri;
-	}
 	
-	
-	public int getTotalCount() {
-		return totalCount;
-	}
-
-	public void setTotalCount(int totalCount) {
-		this.totalCount = totalCount;
-		calcPageData();
-	}
 	
 	// 페이징처리에 필요한 정보를 계산하는 메서드
 	public void calcPageData() {
@@ -102,55 +66,16 @@ public class PageVO {
 		
 	} // calcPageData()
 	
-	public int getStartPage() {
-		return startPage;
-	}
 	
-	
-	public void setStartPage(int startPage) {
-		this.startPage = startPage;
-	}
-
-	public int getEndPage() {
-		return endPage;
-	}
-	
-	public void setEndPage(int endPage) {
-		this.endPage = endPage;
-	}
 
 	public boolean isPrev() {
 		return prev;
 	}
 
-	public void setPrev(boolean prev) {
-		this.prev = prev;
-	}
-
+	
 	public boolean isNext() {
 		return next;
 	}
-
-	public void setNext(boolean next) {
-		this.next = next;
-	}
-
-	public int getDisplayPageNum() {
-		return displayPageNum;
-	}
-
-	public void setDisplayPageNum(int displayPageNum) {
-		this.displayPageNum = displayPageNum;
-	}
-
-
-	@Override
-	public String toString() {
-		return "PageVO [totalCount=" + totalCount + ", startPage=" + startPage + ", endPage=" + endPage + ", prev="
-				+ prev + ", next=" + next + ", displayPageNum=" + displayPageNum + ", cri=" + cri + "]";
-	}
-	
-	
 	
 	
 	

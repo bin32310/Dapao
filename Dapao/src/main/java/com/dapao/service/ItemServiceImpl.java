@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.dapao.domain.AlarmVO;
+import com.dapao.domain.ExpusVO;
 import com.dapao.domain.FileVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.LoveVO;
@@ -320,7 +321,26 @@ public class ItemServiceImpl {
 		
 	}
 	
+	// 체험단리스트에 목록 추가
+	public int expApply(ExpusVO expusVO) {
+		logger.debug("Service : expApply(ExpusVO expusVO) 호출");
+		return idao.expApply(expusVO);
+		
+	}
+
+	// 체험단 신청 인원 +1
+	public int expCountUp(Integer exp_no) {
+		logger.debug("Service : expCountUp(Integer exp_no) 호출");
+		return idao.expCountUp(exp_no);
+		
+	}
+	
+	// 코인 환불
+	public int coinRefund(UserVO refundVO) {
+		logger.debug("Service : coinRefund(UserVO refundVO) 호출");
+		return idao.coinRefund(refundVO);
+		
+	}
 
 	
-
 }

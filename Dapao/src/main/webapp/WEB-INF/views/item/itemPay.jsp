@@ -8,8 +8,8 @@
 </head>
 <body>
 
-	<h1>/item/itemPay.jsp</h1>
-	<h1> 물건 안전 결제 창</h1>
+<!-- 	<h1>/item/itemPay.jsp</h1>
+	<h1> 물건 안전 결제 창</h1> -->
 	
 	<form action="">
 		<input type="image" >

@@ -9,16 +9,6 @@
 </head>
 <body>
 
-<script>
-
-        var login = '${login}';
-        console.log(login);
-
-        if(login == 'success'){
-            alert('로그인 성공');
-        }
-
-</script>
 
 
 <!-- 	
@@ -26,9 +16,8 @@
 		<h1> 유저 메인페이지</h1>
 -->
 
-	<c:if test="${us_id.equals('admin') }">
-		관리자페이지로 이동 
-	
+	<c:if test="${!empty us_id  && us_id.equals('admin') }">
+		<c:redirect url="../admin/userList"/>
 	</c:if>
 
 
@@ -37,6 +26,7 @@
 	</c:if>
 	<c:if test="${!empty us_id }">
 		<%@ include file="../include/userLoginHeader.jsp" %>
+		<input type="hidden" value="${us_id }" name="login"> 
 	</c:if>
 	
 	
@@ -46,7 +36,7 @@
 	<c:forEach var="ad" items="${adList}">
 		<fieldset>
 			<form>
-				<a href="../ent/ent?ent_id=${ad.own_id }">
+				<a href="../ent/shopMain?ent_id=${ad.own_id }">
 					<img src="/imgfile/${ad.ent_img }" name="ent_img" width="150px" height="150px"> <br>
 					<input type="text" value="${ad.ent_name }" name="ent_name">
 				</a>
@@ -127,7 +117,49 @@
 <script type="text/javascript">
 $(function(){
 	
-	
+	  var login = $("input[name='login']").val(); ;
+      console.log(login);
+
+      if(login == 'success'){
+          alert('로그인 성공');
+      }
+      
+      // 위치파악 
+      var latitude = 0.0;
+   	  var longitude = 0.0;
+      
+      function showPosition(pos){
+
+      	latitude = pos.coords.latitude;
+      	longitude = pos.coords.longitude;
+
+      }
+
+   	
+     if(navigator.geolocation){
+
+         navigator.geolocation.getCurrentPosition(showPosition);
+         $.ajax({
+ 			type : "post",
+ 			url : "/item/location",
+ 			data : {"latitude" : latitude , "longitude" : longitude} ,
+ 			dataType : "JSON",
+ 			error: function(){
+ 				alert("위치 파악 실패");
+ 			},
+ 			success : function(){
+ 					console.log(latitude);
+ 					console.log(longitude);
+ 				
+ 			} // success 끝	
+ 		}); // ajax 끝
+         
+
+     }else{
+         alert("브라우저가 Geolocation을 지원하지 않습니다.");
+
+     }
+     
 	$('#myModal').modal("show");
 	$.ajax({
 		url : "${contextPath}/ad/modalShow",
