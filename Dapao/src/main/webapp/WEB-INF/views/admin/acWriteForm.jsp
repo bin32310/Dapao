@@ -14,9 +14,7 @@
 					<label>신고자</label> <input type="text" class="form-control" name="us_id" value="${us_id }">
 				</div>
 				<div class="col-lg-6">
-					<label>피신고자</label> 
-					<input type="text" class="form-control" value="${us_nickname+prod.own_id }"> 
-					<input type="hidden" name="id" value="${item.us_id+prod.own_id }">
+					<label>피신고자</label> <input type="text" class="form-control" value="${us_nickname+prod.own_id }"> <input type="hidden" name="id" value="${item.us_id+prod.own_id }">
 				</div>
 			</div>
 			<div class="row">
@@ -66,7 +64,9 @@
 							&& $('#cs_content').val() == "") {
 						alert("내용을 입력해주세요");
 					}
+					alert("신고완료");
 				});
+
 	});//ready
 </script>
 <%@include file="../include/footer.jsp"%>
