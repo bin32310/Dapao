@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dapao.domain.AlarmVO;
+import com.dapao.domain.ExpusVO;
 import com.dapao.domain.FileVO;
 import com.dapao.domain.ItemVO;
 import com.dapao.domain.LoveVO;
@@ -107,7 +108,11 @@ public class ItemController {
 		model.addAttribute("cateItemVO", cateItemVO);
 		// 조회수 증가를 체크 : on - 1 , off - 2
 		session.setAttribute("itemView", "on");
-				
+		
+		// 어떤 카테고리인지 알려주기
+		model.addAttribute("it_cate_search", it_cate);
+		
+		
 		logger.debug("연결된 뷰페이지(views/item/itemCate.jsp)를 출력");
 		
 	}
@@ -127,11 +132,13 @@ public class ItemController {
 	
 	// 판매글 작성POST - 작성한 판매글 등록
 	@RequestMapping(value = "/itemWrite", method = RequestMethod.POST)
-	public String itemWritePOST(HttpSession session, ItemVO itemVO) throws Exception {
+	public String itemWritePOST(HttpSession session, ItemVO itemVO ) throws Exception {
 		logger.debug("itemWritePOST() 호출");
 		int itno=0;
 		// 세션 - 아이디
 		String us_id = (String) session.getAttribute("us_id");
+		Double latitude = (Double) session.getAttribute("latitude");
+		Double longitude = (Double) session.getAttribute("longitude");
 		itemVO.setUs_id(us_id);
 		logger.debug("@@판매글 정보 : " + itemVO);
 		
@@ -175,6 +182,8 @@ public class ItemController {
 		
 		int item_file_main = iService.itemFileMainInsert(vo);
 		logger.debug("대표 이미지 등록 완료 item_file_main : " + item_file_main);
+		
+		
 
 		logger.debug("연결된 뷰페이지(views/item/itemDetail.jsp)를 출력");
 		
@@ -184,6 +193,9 @@ public class ItemController {
 		return "redirect:/item/itemDetail?it_no="+it_no;
 		
 	}
+	
+	
+	
 	
 	// 날짜 폴더 만들기 위한 매서드( uploadAjaxAction 매서드보다 위에 선언하기 )
 	private String getFolder() {
@@ -406,10 +418,12 @@ public class ItemController {
 		logger.debug("@@판매글 정보 : " + itemVO);
 		model.addAttribute("itemVO", itemVO);
 		
-		String sellerId = itemVO.getUs_id();
+		List<FileVO> itemFileVO = iService.itemFile(itemVO.getIt_no());
+		model.addAttribute("itemFileVO",itemFileVO);
+		
 		
 		// 판매자 정보 조회
-		UserVO sellerVO = iService.sellerInfo(sellerId);
+		UserVO sellerVO = iService.sellerInfo(itemVO.getUs_id());
 		logger.debug("@@판매자 정보 : " + sellerVO);
 		model.addAttribute("sellerVO", sellerVO);
 
@@ -544,6 +558,22 @@ public class ItemController {
 		
 		model.addAttribute("yourInfo", yourVO);
 		model.addAttribute("yourItemVO", itemVO);
+		
+		
+		
+		
+	}
+	
+	// http://localhost:8088/item/itemFile
+	// itemDetail 페이지에서 파일 바꾸기 
+	@ResponseBody
+	@RequestMapping(value = "/itemFile", method = RequestMethod.POST)
+	public List<FileVO> itemFilePOST(Integer it_no, Model model) throws Exception {
+		logger.debug("itemFilePOST() 호출");
+		
+		
+		List<FileVO> itemFileVO = iService.itemFile(it_no);
+		return itemFileVO;
 		
 		
 		
@@ -896,6 +926,72 @@ public class ItemController {
 		}
 		
 		return buyerState;
+	}
+	
+	// 유저가 체험단 신청시 버튼 클릭시
+	@ResponseBody
+	@RequestMapping(value = "/userExpApply", method = RequestMethod.POST)
+	public int userExpApply(HttpSession session, Integer exp_no, String own_id) throws Exception {
+		logger.debug("/item/userExpApply() 호출");
+		
+		// 세션 아이디(체험단 신청하는 유저 아이디)
+		String us_id = (String)session.getAttribute("us_id");
+		
+		// expus 테이블에 목록 추가
+		ExpusVO expusVO = new ExpusVO();
+		expusVO.setUs_id(us_id);
+		expusVO.setExp_no(exp_no);
+		expusVO.setOwn_id(own_id);
+		int expApplyResult = iService.expApply(expusVO);
+		logger.debug("expApplyResult : " + expApplyResult);
+		
+		// exp 테이블에 신청인원 +1
+		int expCountUpResult = iService.expCountUp(exp_no);
+		logger.debug("expCountUpResult : " + expCountUpResult);
+		
+		
+		
+		return 0;
+	}
+	
+	
+	// 메인페이지에 왔을때 세션에 위도경도값 저장
+	@ResponseBody
+	@RequestMapping(value = "/location", method = RequestMethod.POST)
+	public int location(HttpSession session, String latitude , Double longitude) throws Exception {
+		logger.debug("/item/location() 호출");
+		logger.debug("latitude : "+latitude);
+		logger.debug("longitude : "+longitude);
+		// 위도
+		session.setAttribute("latitude", latitude);
+		// 경도 
+		session.setAttribute("longitude", longitude);
+		
+		return 0;
+	}
+	
+	// 환불하기 
+	@ResponseBody
+	@RequestMapping(value = "/coinRefund", method = RequestMethod.GET)
+	public int coinRefund(HttpSession session, Integer us_coin) throws Exception {
+		logger.debug("/item/coinRefund() 호출");
+		
+		String us_id = (String)session.getAttribute("us_id");
+		
+		UserVO refundVO = new UserVO();
+		refundVO.setUs_id(us_id);
+		refundVO.setUs_coin(us_coin);
+		logger.debug("us_id : " + us_id);
+		logger.debug("us_coin : " + us_coin);
+		
+		int result = iService.coinRefund(refundVO);
+		logger.debug("환불 결과 : " + result);
+		
+		int us_coin_re = (Integer)session.getAttribute("us_coin");
+		us_coin_re = us_coin_re - us_coin;
+		session.setAttribute("us_coin", us_coin_re);
+		
+		return result;
 	}
 	
 	

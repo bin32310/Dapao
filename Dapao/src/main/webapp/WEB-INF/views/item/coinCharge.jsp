@@ -15,43 +15,260 @@
 <script type="text/javascript" src="http://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 	
 <title>Insert title here</title>
+
+<style type="text/css">
+
+
+
+/* 현재 금액 */
+#nowCoinSection{
+
+	width: 800px;
+	height: 50px;
+	text-align: center;
+
+}
+
+#now_coin{
+
+	border : none;
+	font-size:20px;
+	width : 120px;
+	background-color: transparent;
+}
+
+#us_coin{
+
+	border: none;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: right;
+	width : 100px;
+	
+}
+
+.won{
+
+	font-weight: bold;
+	background-color: transparent;
+	border: none;
+	width: 20px;
+
+}
+
+
+
+/* 충전 금액 */
+#coinCahrgeText{
+
+	width : 600px;
+	background-color: transparent;
+	border: none;
+	font-size: 20px;
+	text-align: left;
+}
+
+
+.ppp{
+
+	border: none;
+	font-size: 20px;
+	width:150px;
+	height:50px;
+	text-align: left;
+	color:black;
+	background-color: transparent;
+}
+.blank{
+
+	background-color: transparent;
+	border: none;
+	width: 20px;
+}
+
+
+#pay_price{
+
+	background-color: white;
+
+}
+
+
+/* 환불하기 */
+#coin_refund{
+
+	border : none;
+	background-color: #A6A6A6;
+	width : 200px;
+	height : 30px;
+	color:white;
+	font-size: 20px;
+	text-align: center;
+	border-radius: 10px;
+}
+
+/* 카드로 충전하기 */
+#iamport1{
+	border : none;
+	background-color: #59DA50;
+	width : 200px;
+	height : 80px;
+	color:white;
+	font-size: 20px;
+	text-align: center;
+	border-radius: 10px;
+}
+
+/* 카페로 충전하기 */
+#iamport2{
+	border : none;
+	background-color: #FFBB00;
+	width : 250px;
+	height : 80px;
+	color:white;
+	font-size: 20px;
+	text-align: center;
+	border-radius: 10px;
+}
+
+/* 뒤로가기 */
+#iamport3{
+	border : none;
+	background-color: #A6A6A6;
+	width : 150px;
+	height : 80px;
+	color:white;
+	font-size: 20px;
+	text-align: center;
+	border-radius: 10px;
+}
+
+.box{
+
+	text-align: center;
+	border-top: none;
+	width: 100%;
+	height: 100%;
+
+}
+
+#contain{
+
+	float : center;
+	width : 800px;
+	height : 800px;
+	border: none;
+	padding-left : 20%;
+}
+
+#coin_charge_form{
+
+	width: 800px;
+	height: 600px;
+	
+}
+
+/* 대나무페이 환불  */
+.item_top_title{
+
+	border: none;
+	font-size: 30px;
+	color: black;
+	text-align: left;
+}
+
+
+
+</style>
 </head>
 <body>
 
 
 	
 	
-	<h1>/item/coinharge.jsp</h1>
+<!-- 	<h1>/item/coinharge.jsp</h1>
 	<h1> 대나무 페이 충전 </h1>
-	
-	현재 금액 <br>
-	<input type="text" value="${us_coin }"> <br> <br>
-	<a href="/item/coinRefund"> 환불하기 </a>
-	
-	<form action="" method="post" name="fr">
-	 
-		충전금액 :  <br>
-		5,000원<input type="radio" name="charge_price" value="5000" checked class="pp"> 
-		10,000원<input type="radio" name="charge_price" value="10000" class="pp"> <br>
-		20,000원<input type="radio" name="charge_price" value="20000" class="pp">
-		30,000원<input type="radio" name="charge_price" value="30000" class="pp"> <br>
-		50,000원<input type="radio" name="charge_price" value="50000" class="pp">
-		100,000원<input type="radio" name="charge_price" value="100000" class="pp"> <br>
-		200,000원<input type="radio" name="charge_price" value="200000" class="pp"> 
-		300,000원<input type="radio" name="charge_price" value="300000" class="pp"> <br>
-		직접입력하기<input type="radio" name="charge_price" value="0" id="price">
-		<input type="number" value="0" name="pay_price" id="pay_price" max="10"> <br>
-		<font id="checkP" size="2"></font>
+	 -->
+<div class="box">
 
-		<input type="button" value="카드로 충전하기" id="iamport1">
-		<input type="button" value="카카오페이로 충전하기" id="iamport2">
-	</form>
+	<input type="text" value="대나무페이 환불" class="item_top_title">
+	<hr>
 	
-	<input type="hidden" value="${userVO.us_name }" name="us_name" id="us_name">
-	<input type="hidden" value="${userVO.us_email }" name="us_email" id="us_email">
-	<input type="hidden" value="${userVO.us_tel }" name="us_tel" id="us_tel">
-	
-	
+	<div id="contain">	 
+		<div id="nowCoinSection">
+			<input type="text" value="현재 금액  : " id="now_coin"> 
+			<input type="text" value="${us_coin }" id="us_coin">
+			<input type="text" value="원" class="won">
+			<input type="text" value="" class="blank">
+			<input type="button" value="환불하기 " id="coin_refund">
+		</div>
+		<br><br>
+		<div id="coin_charge_form">
+			<form action="" method="post" name="fr">
+			 
+				<input type="text" value="충전금액" id="coinCahrgeText">   <br>
+				<input type="radio" name="charge_price" value="5000" checked class="pp">
+				<input type="text" value="5,000원  " class="ppp">
+				<input type="radio" name="charge_price" value="10000" class="pp">
+				<input type="text" value="     10,000원  " class="ppp"> <br>
+				<input type="radio" name="charge_price" value="20000" class="pp">
+				<input type="text" value="20,000원   "class="ppp">
+				<input type="radio" name="charge_price" value="30000" class="pp">
+				<input type="text" value="     30,000원  " class="ppp"> <br>
+				<input type="radio" name="charge_price" value="50000" class="pp">
+				<input type="text" value="50,000원  " class="ppp">
+				<input type="radio" name="charge_price" value="100000" class="pp">
+				<input type="text" value="     100,000원  " class="ppp"> <br>
+				<input type="radio" name="charge_price" value="200000" class="pp"> 
+				<input type="text" value="200,000원  " class="ppp">
+				<input type="radio" name="charge_price" value="300000" class="pp">
+				<input type="text" value="     300,000원  " class="ppp"> <br>
+				<input type="radio" name="charge_price" value="0" id="price">
+				<input type="text" value="직접입력하기  " class="ppp">
+				<input type="text" value="" class="blank">
+				<input type="number" value="0" name="pay_price" id="pay_price" max="10"> <br>
+				<font id="checkP" size="2"></font>
+				<br><br>
+				<input type="button" value="카드로 충전하기" id="iamport1">
+				<input type="button" value="카카오페이로 충전하기" id="iamport2">
+				<input type="button" value="뒤로가기" id="iamport3" onclick="back();">
+			</form>
+			
+			<input type="hidden" value="${userVO.us_name }" name="us_name" id="us_name">
+			<input type="hidden" value="${userVO.us_email }" name="us_email" id="us_email">
+			<input type="hidden" value="${userVO.us_tel }" name="us_tel" id="us_tel">
+		</div>
+	</div>
+</div>	
+
+<!-- 환불하기 버튼 클릭시 Modal -->
+<div id="coinRefundModal" class="modal fade" role="dialog">
+	<!-- <div class="modal-dialog modal-lg"> -->
+	<div class="modal-dialog ">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">환불받을 계좌를 입력해주세요</h4>
+				<h4 class="modal-content">은행</h4>
+				<input type="text" required="required">
+				<h4 class="modal-content">예금주</h4>
+				<input type="text"  required="required">
+				<h4 class="modal-content">계좌번호</h4>
+				<input type="text"  required="required">
+				<h4 class="modal-content">환불할 코인</h4>
+				<input type="number" id="us_coin_refund"  required="required">
+				
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="modalYes">환불하기</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소하기</button>
+			</div>
+		</div>
+	</div>
+</div>	
 	
 	<%@ include file="../include/footer.jsp" %>
 	
@@ -210,8 +427,73 @@
 			}  //function(rsp)
 		); //IMP.request_pay
 	} // requestPay 
-	} // payment	
+	} // payment
+	
+	var us_coin = 0;
+	var us_coin_refund = 0;
+	
+	$("#coin_refund").on("click",function(){
+		us_coin = $("#us_coin").val();
+		
+		
+		console.log(us_coin);
+		console.log(us_coin_refund);
+		
+		if(us_coin == 0){
+			alert('환불가능한 코인이 없습니다.');
+		}
+		else{
+			$('#coinRefundModal').modal("show");
+		}
+		
+		
+	});
+	
+	$('#modalYes').click(function(){
+		
+		us_coin_refund = $("#us_coin_refund").val();
+		
+		if(us_coin_refund == 0){
+			alert('다시 입력해주세요');
+			console.log(us_coin);
+			console.log(us_coin_refund);
+		}
+		else if(us_coin < us_coin_refund){
+			alert('코인이 부족합니다.');
+			console.log(us_coin);
+			console.log(us_coin_refund);
+		}
+		else{
+			
+			console.log(us_coin);
+			console.log(us_coin_refund);
+			
+			$.ajax({
+				type : "get",
+				url : "/item/coinRefund",
+				data : {"us_coin" : us_coin_refund},
+				error: function(){
+					alert("환불 실패");
+				},
+				success : function(result){
+						alert("환불 완료");
+						location.reload();
+					
+				} // success 끝	
+			}); // ajax 끝
+		}
+	}); // modalYes
+	
+	
+	function back(){
+		history.back();
+		
+	}
 }); //document
+
+
+
+
 </script>	
 	
 	
