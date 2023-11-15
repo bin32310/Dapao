@@ -29,6 +29,25 @@
   </head>
       <!-- jQuery 2.1.4 -->
     <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<style>
+.skin-purple-light .main-header .navbar {
+	background-color: #14571f;
+}
+
+.skin-purple-light .main-header .logo{
+	background-color: #14571f;
+}
+
+
+.main-sidebar{
+	box-shadow: 8px 0px 5px -2px #14571f94;
+}
+
+.content-wrapper{
+	background-color: #f9fafc;
+}
+
+</style>
   <body class="skin-blue sidebar-mini">
     <div class="wrapper">
       
@@ -286,6 +305,7 @@
         </nav>
       </header>
       <!-- Left side column. contains the logo and sidebar -->
+      <div>
       <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
 			<section class="sidebar">
@@ -316,6 +336,7 @@
 					<li class="header">MAIN NAVIGATION</li>
 					<li class="treeview"><a href="#"> <i class="fa fa-dashboard"></i> <span>회원관리</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
+    
 						<ul class="treeview-menu">
 							<li><a href="/admin/userList"><i class="fa fa-circle-o"></i> 회원관리 </a></li>
 							<li><a href="/admin/ownerList"><i class="fa fa-circle-o"></i> 사업자관리 </a></li>
