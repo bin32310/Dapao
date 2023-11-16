@@ -65,7 +65,7 @@
 	<!-- 로그인 하지 않았을 때 -->
 	<c:if test="${empty us_id }">
 	 	<c:forEach var="item" items="${itemList}">
-	 		<c:if test="${item.it_state != 2 }">
+	 		<c:if test="${item.it_state != 2 && item.it_state != 3  }">
 				<a href="../item/itemDetail?it_no=${item.it_no }">
 					<img src="/imgfile/${item.it_img }" name="it_img" width="150px" height="150px" > <br>
 					<input type="text" value="${item.it_title }" name="it_title"> <br>
@@ -81,6 +81,9 @@
 						</c:when>
 						<c:when test="${item.it_state == 2 }">
 							<input type="text" value="판매완료"> <br>
+						</c:when>
+						<c:when test="${item.it_state == 3 }">
+							<input type="text" value="삭제됨"> <br>
 						</c:when>
 						<c:otherwise>
 							<input type="text" value="접근이상함"> <br>			
@@ -93,7 +96,7 @@
 	<!-- 로그인 했을 때 -->
 	<c:if test="${!empty us_id }">
 	 	<c:forEach var="item" items="${itemList}">
-	 		<c:if test="${item.it_state != 2 && us_id != item.us_id }">
+	 		<c:if test="${item.it_state != 2 && item.it_state != 3 &&  us_id != item.us_id }">
 				<a href="../item/itemDetail?it_no=${item.it_no }">
 					<img src="/imgfile/${item.it_img }" name="it_img" width="150px" height="150px" > <br>
 					<input type="text" value="${item.it_title }" name="it_title"> <br>
@@ -109,6 +112,9 @@
 						</c:when>
 						<c:when test="${item.it_state == 2 }">
 							<input type="text" value="판매완료"> <br>
+						</c:when>
+						<c:when test="${item.it_state == 3 }">
+							<input type="text" value="삭제됨"> <br>
 						</c:when>
 						<c:otherwise>
 							<input type="text" value="접근이상함"> <br>			

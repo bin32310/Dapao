@@ -29,7 +29,7 @@
 				  
 		판매중인 물건 <br>		  
 		<c:forEach var="yi" items="${yourItemVO }">
-			<c:if test="${yi.it_state != 2 }">
+			<c:if test="${yi.it_state != 2 && yi.it_state != 3 }">
 				<img src="/imgfile/${yi.it_img }" name="it_img" width="150px" height="150px" > <br>
 				제목 : <input type="text" name="it_title" value = "${yi.it_title }"> <br>
 				가격 : <input type="text" name="it_price" value = "${yi.it_price }"><br>
