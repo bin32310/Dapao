@@ -113,6 +113,13 @@ public class ItemDAOImpl{
 		return sqlSession.selectOne(NAMESPACE + ".itemLove", itemLove );
 	}
 	
+	// 찜수 확인
+	public Integer loveCount(Integer it_no) {
+		logger.debug("DAOImpl : loveCount(Integer it_no) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".loveCount", it_no);
+		
+	}
+	
 	// 찜 등록
 	public int itemLoveInsert(LoveVO loveVO) {
 		
@@ -142,6 +149,8 @@ public class ItemDAOImpl{
 		return sqlSession.selectList(NAMESPACE + ".itemCate", it_cate);
 		
 	}
+	
+
 	
 	// 판매자 다른 물품
 	public List<ItemVO> sellerItem(ItemVO itemVO) {

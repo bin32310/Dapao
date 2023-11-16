@@ -121,6 +121,14 @@ public class ItemServiceImpl {
 		return idao.itemLoveInsert(loveVO);
 		
 	}
+
+	// 찜수 확인
+	public Integer loveCount(Integer it_no) {
+		
+		logger.debug("loveCount(Integer it_no) 호출");
+		return idao.loveCount(it_no);
+		
+	}
 	
 	// 찜 삭제
 	public int itemLoveDelete(LoveVO loveVO) {

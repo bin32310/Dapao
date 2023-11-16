@@ -123,6 +123,10 @@
   	where r.rv_buy_id=#{us_id}
   </select>
   
+  <select id="loveCount" resultType="Integer">
+  select count(*) from love 
+  where it_no=#{it_no }
+  </select>
   
   <select id="sellerInfo" resultType="UserVO">
   	select * from us 
