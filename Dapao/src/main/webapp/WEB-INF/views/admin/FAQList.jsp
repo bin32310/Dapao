@@ -1,36 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../include/header.jsp"%>
+<style>
+.csState{
+	border-radius: 0.3em;
+    background-color: aliceblue;
+    border: none;
+    color: green;
+}
+.csState:hover{
+	background-color: green;
+	color: white;
+}
+</style>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-
-<h1>/admin/FAQList.jsp</h1>
-
-<form action="/admin/FAQList" id="search">
-	<div class="search_wrap">
-		<div class="search_area">
-			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
-			<button id="searchBtn">Search</button>
-		</div>
-	</div>
-</form>
-
-<div class="box">
+<div class="boxList">
 	<div class="box-header with-board">
-		<h3 class="box-title">FAQ 목록</h3>
+		<p class="pContent">FAQ 관리</p>
+		<form action="/admin/FAQList" id="search">
+			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
+			<button id="searchBtn">Search</button>
+		</form>
 	</div>
 	<div class="box-body">
 		<table class="table table-bordered">
 			<thead>
-				<tr role="row">
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">글 번호</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">제목</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">등록일</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">등록형태</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">등록상태</th>
+				<tr>
+					<th>글 번호</th>
+					<th>제목</th>
+					<th>등록일</th>
+					<th>등록형태</th>
+					<th>등록상태</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -174,16 +174,16 @@
 					$('input[name=cs_no]').val(data.cs_no)
 					$('input[name=cs_title]').val(data.cs_title)
 					$('input[name=cs_content]').val(data.cs_content)
-					if(data.cs_group == 0){
+					if (data.cs_group == 0) {
 						$('input[name=cs_group]').val("회원공지");
-					}else{
+					} else {
 						$('input[name=cs_group]').val("사업자공지");
 					}
-					if(data.cs_state == 0){
+					if (data.cs_state == 0) {
 						$('input[name=cs_state]').val("해제")
-					}else{
+					} else {
 						$('input[name=cs_state]').val("등록")
-					}					
+					}
 					$('input[name=cs_view]').val(data.cs_view)
 					$('input[name=cs_regdate]').val(data.cs_regdate)
 					$('input[name=cs_update]').val(data.cs_update)
@@ -192,8 +192,8 @@
 					console.log("오류");
 				}
 			});// cs_no click ajax
-			
-			$('.update').click(function(){
+
+			$('.update').click(function() {
 				$.ajax({
 					url : "/admin/csInfoUpdate",
 					data : {
@@ -212,120 +212,110 @@
 					}
 				});//update click ajax
 			});//update click
-			$('.upload').click(function(){
+			$('.upload').click(function() {
 				$.ajax({
 					url : "/admin/FAQUpload",
 					data : {
 						"cs_no" : $('input[name=cs_no]').val()
 					},
 					dataType : "json",
-					success : function(data){
+					success : function(data) {
 						console.log(data)
 						alert("FAQ - 등록완료")
 						location.replace("/admin/FAQList?page=${param.page}");
 					}
 				}); // upload click ajax
 			});// upload click
-			$('.remove').click(function(){
+			$('.remove').click(function() {
 				$.ajax({
 					url : "/admin/FAQRemove",
 					data : {
 						"cs_no" : $('input[name=cs_no]').val()
-					},dataType : "json",
-					success : function(data){
+					},
+					dataType : "json",
+					success : function(data) {
 						console.log(data)
 						alert("FAQ - 등록해제완료")
 						location.replace("/admin/FAQList?page=${param.page}");
 					}
-					
+
 				});// remove click ajax
 			});// remove click
 		});// cs_no click
-		
+
 		// FAQ 삭제버튼 클릭시
-		$('.delete').click(function(){
+		$('.delete').click(function() {
 			$.ajax({
-				url:"/admin/csDelete",
-				data:{"cs_no" : $('input[name=cs_no]').val()},
-				dataType:"json",
-				success:function(data){
+				url : "/admin/csDelete",
+				data : {
+					"cs_no" : $('input[name=cs_no]').val()
+				},
+				dataType : "json",
+				success : function(data) {
 					console.log(data);
 					console.log("성공");
 					location.replace("/admin/FAQList?page=${param.page}");
 				},
-				error:function(){
+				error : function() {
 					console.log("에러");
 				}
 			});
 		});
-		
+
 		// 등록/해제 버튼 클릭시 
-		$('.csState').click(function(){
+		$('.csState').click(function() {
 			var state = $(this).text();
-			console.log("state : "+state);
-			
-			if(state == '등록'){
-				alert("등록");	
-				console.log($(this).val());				
+			console.log("state : " + state);
+
+			if (state == '등록') {
+				alert("등록");
+				console.log($(this).val());
 				$.ajax({
-					url:"/admin/csUpload",
-					data:{"cs_no" : $(this).val()},
-					dataType:"json",
-					success:function(data){
-						console.log("성공결과 : "+data);
+					url : "/admin/csUpload",
+					data : {
+						"cs_no" : $(this).val()
+					},
+					dataType : "json",
+					success : function(data) {
+						console.log("성공결과 : " + data);
 						console.log("성공");
 						location.replace("/admin/FAQList?page=${param.page}");
 					},
-					error:function(){
+					error : function() {
 						console.log("에러");
 					}
 				});
 			}
-			
-			if(state == '해제'){
+
+			if (state == '해제') {
 				alert("해제");
 				console.log($(this).val());
 				$.ajax({
-					url:"/admin/csRemove",
-					data:{"cs_no":$(this).val()},
-					dataType:"json",
-					success:function(data){
-						console.log("성공결과 : "+data);
+					url : "/admin/csRemove",
+					data : {
+						"cs_no" : $(this).val()
+					},
+					dataType : "json",
+					success : function(data) {
+						console.log("성공결과 : " + data);
 						console.log("성공");
 						location.replace("/admin/FAQList?page=${param.page}");
 					},
-					error:function(){
+					error : function() {
 						console.log("에러");
 					}
-				});			
+				});
 			}
-		
+
 		}) // 등록/해제 버튼 클릭시
-		
-		$('#searchBtn').click(function(){
+
+		$('#searchBtn').click(function() {
 			var keyword = $('input[name=keyword]').val();
 			console.log(keyword);
 			$('#search').submit();
 		});
 	});//ready
 </script>
-<style>
-.search_area {
-	display: inline-block;
-	margin-top: 30px;
-	margin-left: 260px;
-}
-
-.search_area input {
-	height: 30px;
-	width: 250px;
-}
-
-.search_area button {
-	width: 100px;
-	height: 32px;
-}
-</style>
 
 
 <%@include file="../include/footer.jsp"%>

@@ -15,10 +15,55 @@
 <%@ include file="../include/userLoginHeader.jsp" %>
 </c:if>
 
+</head>
+<body>
+
+<!-- 	<h1> /item/item_Write.jsp</h1>
+	<h1> 물건 판매글 등록 </h1> -->
+	
+	<fieldset>
+		<form action=""  method="post" id="form">
+		
+			이미지 사진 :
+			<input type="file" name="uploadFile" multiple required="required"> <br>
+			
+			<div id="uploadResult">
+				<ul>
+				
+				</ul>
+				
+			</div>
+			
+			제목 : <input type="text" value="" name="it_title" required="required"> <br>
+			가격 : <input type="number" value="" name="it_price" required="required"> <br>
+			내용 : <textarea rows="5" cols="10" name="it_content" required="required"></textarea> <br>
+			
+			상품 상태 :<input type="radio" value="중고" name="it_con" checked> 중고
+			<input type="radio" value="새상품" name="it_con"> 새상품 <br>
+			
+			카테고리 : 
+			<select name="it_cate" required="required">
+				<option value="">카테고리</option>
+				<option value="패션의류">패션의류</option>
+				<option value="유아용품">유아용품</option> 
+				<option value="가구생활">가구/생활</option> 
+				<option value="취미">취미</option> 
+				<option value="전자기기">전자기기</option> 
+				<option value="스포츠레저">스포츠/레저</option>
+				<option value="도서">도서</option> 
+			</select> <br>
+
+			<input type="button" value="등록하기" id="uploadBtn"> 
+			<input type="button" value="돌아가기" onclick="back();"> 
+		
+		</form>
+	</fieldset>
+	
 <script type="text/javascript">
 
 
 $(document).ready(function(){
+	
 	
 	// 첨부파일 공격에 대비하기 위한 업로드 파일 확장자 제한
 	// 특정 크기 이상의 파일 업로드 제한
@@ -100,10 +145,10 @@ $(document).ready(function(){
 					// filePath : 썸네일 파일 경로 + 파일명
 					// console.log(obj.fileName);
 					
-					input += "<input type='text' name='fileList["+i+"].fileName' value='"+obj.fileName+"'>";
-					input += "<input type='text' name='fileList["+i+"].uuid' value='"+obj.uuid+"'>";
-					input += "<input type='text' name='fileList["+i+"].uploadPath' value='"+obj.uploadPath+"'>";
-					input += "<input type='text' name='fileList["+i+"].image' value='"+obj.image+"'>";
+					input += "<input type='hidden' name='fileList["+i+"].fileName' value='"+obj.fileName+"'>";
+					input += "<input type='hidden' name='fileList["+i+"].uuid' value='"+obj.uuid+"'>";
+					input += "<input type='hidden' name='fileList["+i+"].uploadPath' value='"+obj.uploadPath+"'>";
+					input += "<input type='hidden' name='fileList["+i+"].image' value='"+obj.image+"'>";
 					
 					
 				}); // $(result).each(function(i,obj)) 닫음  
@@ -119,6 +164,9 @@ $(document).ready(function(){
 			
 			
 		}); // $.ajax 닫음 
+		
+		
+		
  
 	});
 });
@@ -131,57 +179,8 @@ $(document).ready(function(){
 		history.back(); 
 	}
 
-</script>
-
-
-</head>
-<body>
-
-
-
-	<h1> /item/item_Write.jsp</h1>
-	<h1> 물건 판매글 등록 </h1>
+</script>	
 	
-	<fieldset>
-		<form action=""  method="post" id="form">
-		
-			이미지 사진 :
-			<input type="file" name="uploadFile" multiple required> <br>
-			<input type="button" value="파일전송" > <br>
-			<div id="uploadResult">
-				<ul>
-				
-				</ul>
-				
-			</div>
-			
-			제목 : <input type="text" value="" name="it_title" required> <br>
-			가격 : <input type="number" value="" name="it_price" required> <br>
-			내용 : <input type="text" value="" name="it_content" required> <br>
-			
-			상품 상태 :<input type="radio" value="중고" name="it_con" checked> 중고
-			<input type="radio" value="새상품" name="it_con"> 새상품 <br>
-			
-			카테고리 : 
-			<select name="it_cate" required>
-				<option value="">카테고리</option>
-				<option value="패션의류">패션의류</option> 
-				<option value="뷰티잡화">뷰티/잡화</option> 
-				<option value="유아용품">유아용품</option> 
-				<option value="가구생활">가구/생활</option> 
-				<option value="취미">취미</option> 
-				<option value="전자기기">전자기기</option> 
-				<option value="스포츠레저">스포츠/레저</option> 
-				<option value="자동차">자동차</option> 
-				<option value="도서">도서</option> 
-			</select> <br>
-			
-
-			<input type="button" value="등록하기" id="uploadBtn"> 
-			<input type="button" value="돌아가기" onclick="back();"> 
-		
-		</form>
-	</fieldset>
 	
 <%@ include file="../include/footer.jsp" %>
 

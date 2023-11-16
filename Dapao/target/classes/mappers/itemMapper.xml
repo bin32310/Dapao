@@ -72,8 +72,8 @@
   </update>
   
   <insert id="itemWrite">
-	  insert into item(us_id,it_title,it_price,it_content,it_con,it_cate ) 
-	  values(#{us_id},#{it_title},#{it_price},#{it_content},#{it_con},#{it_cate})
+	  insert into item(us_id,it_title,it_price,it_content,it_con,it_cate, it_latitude, it_longitude ) 
+	  values(#{us_id},#{it_title},#{it_price},#{it_content},#{it_con},#{it_cate}, #{it_latitude}, #{it_longitude})
   </insert>
   
   <select id="itemWriteCheck" resultType="Integer">
@@ -166,7 +166,7 @@
   
   
   <select id="yourItem" resultType="ItemVO">
-  select it_img, it_title, it_no from item 
+  select * from item 
   where us_id=#{us_id} 
   order by it_no desc;
   </select>
@@ -277,5 +277,28 @@
   	on t.us_id = u.us_id 
   	where t.tr_no = #{tr_no }
   </select>
+  
+  <insert id="expApply">
+  insert into expus(exp_no, own_id, us_id ) 
+  values(#{exp_no}, #{own_id}, #{us_id} )
+  </insert>
+  
+  <update id="expCountUp">
+  	update exp set exp_psn_ch = exp_psn_ch+1 
+  	where exp_no = #{exp_no } 
+  </update>
+  
+  <update id="coinRefund">
+  	update us set us_coin = us_coin-#{us_coin} 
+  	where us_id = #{us_id } 
+  </update>
+  
+  <select id="yourReview" resultType="ToTalVO">
+  select * from review r join us u 
+  on r.rv_buy_id = u.us_id 
+  where r.rv_us_id = #{us_id }
+  </select>
+  
+  
   
   </mapper>

@@ -1,20 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../include/header.jsp"%>
-
-	<h1>/admin/acList.jsp</h1>
-	
-<form action="/admin/acList" id="search">
-	<div class="search_wrap">
-		<div class="search_area">
-			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
-			<button id="searchBtn">Search</button>
-		</div>
-	</div>
-</form>
-<div class="box">
+<style>
+.acState{
+	border-radius: 0.3em;
+    background-color: aliceblue;
+    border: none;
+    color: green;
+}
+.acState:hover{
+	background-color: green;
+	color: white;
+}
+</style>
+<div class="boxList">
 	<div class="box-header with-board">
-		<h3 class="box-title">신고 리스트</h3>
+		<p class="pContent">신고 관리</p>
+		<form action="/admin/acList" id="search">
+			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
+			<button id="searchBtn">Search</button>
+		</form>
 	</div>
 	<div class="box-body">
 		<table class="table table-bordered">
@@ -48,7 +53,7 @@
 							</c:when>
 						</c:choose>
 						<td>${vo.ac_result}</td>
-						</tr>
+					</tr>
 				</c:forEach>
 			</tbody>
 			<tfoot>
@@ -139,7 +144,6 @@
 
 
 <script type="text/javascript">
-	
 	$(function() {
 		$('.ac_no').click(function() {
 			$('#myLargeModal').modal("show");
@@ -172,7 +176,7 @@
 
 		// 접수 버튼 클릭시 
 		$('.acState').click(function() {
-			
+
 			$('#myLargeModal').modal("show");
 
 			$.ajax({
@@ -199,20 +203,19 @@
 					console.log("오류");
 				}
 			});// acState click ajax
-			
+
 		}) // 접수 버튼 클릭시
 
-	$('#ac_result').click(function() {
-			console.log("acStop : "+$('select[name=acStop]').val());
-			console.log("ac_no : "+$('input[name=ac_no]').val());
-			console.log("id : "+$('input[name=id]').val());
-			console.log("text : "+$('selected').text());
-			
+		$('#ac_result').click(function() {
+			console.log("acStop : " + $('select[name=acStop]').val());
+			console.log("ac_no : " + $('input[name=ac_no]').val());
+			console.log("id : " + $('input[name=id]').val());
+			console.log("text : " + $('selected').text());
 
 			var us_stopdate = $('select[name=acStop]').val();
 			var own_stopdate = $('select[name=acStop]').val();
-		
-			if($('select[name=acStop]').val() == 0){
+
+			if ($('select[name=acStop]').val() == 0) {
 				alert("정지기간을 선택해주세요");
 			}
 			if ($('select[name=acStop]').val() == 7) {
@@ -243,30 +246,13 @@
 				}
 			}); // ac_result click us ajax
 		}); // ac_result click
-		$('#searchBtn').click(function(){
+		$('#searchBtn').click(function() {
 			var keyword = $('input[name=keyword]').val();
 			console.log(keyword);
 			$('#search').submit();
 		});
 	});//ready
 </script>
-<style>
-.search_area {
-	display: inline-block;
-	margin-top: 30px;
-	margin-left: 260px;
-}
-
-.search_area input {
-	height: 30px;
-	width: 250px;
-}
-
-.search_area button {
-	width: 100px;
-	height: 32px;
-}
-</style>
 
 
 <%@include file="../include/footer.jsp"%>

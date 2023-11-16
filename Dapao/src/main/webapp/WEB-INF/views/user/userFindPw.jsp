@@ -37,7 +37,7 @@
 			
 			$.ajax({
 				type : "get",
-				url : "/user/userFindPw,
+				url : "/user/userFindPw",
 				success : function(data){
 					console.log("data : " + data);
 					checkInput.attr("disabled",false);

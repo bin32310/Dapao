@@ -28,8 +28,8 @@ public class EntServiceImpl implements EntService {
 	}
 
 	@Override
-	public List<EntVO> listEnt(EntVO vo) {
-		logger.debug(" service listEnt(String own_id) 호출 ");
+	public EntVO listEnt(EntVO vo) {
+		logger.debug(" service listEnt() 호출 ");
 		return edao.listEnt(vo);
 	}
 

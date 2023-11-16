@@ -9,16 +9,6 @@
 </head>
 <body>
 
-<script>
-
-        var login = '${login}';
-        console.log(login);
-
-        if(login == 'success'){
-            alert('로그인 성공');
-        }
-
-</script>
 
 
 <!-- 	
@@ -26,9 +16,8 @@
 		<h1> 유저 메인페이지</h1>
 -->
 
-	<c:if test="${us_id.equals('admin') }">
-		관리자페이지로 이동 
-	
+	<c:if test="${!empty us_id  && us_id.equals('admin') }">
+		<c:redirect url="../admin/userList"/>
 	</c:if>
 
 
@@ -37,6 +26,7 @@
 	</c:if>
 	<c:if test="${!empty us_id }">
 		<%@ include file="../include/userLoginHeader.jsp" %>
+		<input type="hidden" value="${us_id }" name="login"> 
 	</c:if>
 	
 	
@@ -46,7 +36,7 @@
 	<c:forEach var="ad" items="${adList}">
 		<fieldset>
 			<form>
-				<a href="../ent/ent?ent_id=${ad.own_id }">
+				<a href="../ent/shopMain?ent_id=${ad.own_id }">
 					<img src="/imgfile/${ad.ent_img }" name="ent_img" width="150px" height="150px"> <br>
 					<input type="text" value="${ad.ent_name }" name="ent_name">
 				</a>
@@ -72,30 +62,68 @@
 	
 	<h2> 인기 물건 둘러보기 </h2>
 	
- 	<c:forEach var="item" items="${itemList}">
-		<a href="../item/itemDetail?it_no=${item.it_no }">
-			<img src="/imgfile/${item.it_img }" name="it_img" width="150px" height="150px" > <br>
-			<input type="text" value="${item.it_title }" name="it_title"> <br>
-			<input type="text" value="${item.it_price }" name="it_price">
-			<input type="hidden" value="${item.it_state }" name="it_state">
-			<!-- 글 상태 표시 -->
-			<c:choose>
-				<c:when test="${item.it_state == 0 }">
-					<input type="text" value="판매중"> <br>
-				</c:when>
-				<c:when test="${item.it_state == 1 }">
-					<input type="text" value="예약중"> <br>
-				</c:when>
-				<c:when test="${item.it_state == 2 }">
-					<input type="text" value="판매완료"> <br>
-				</c:when>
-				<c:otherwise>
-					<input type="text" value="접근이상함"> <br>			
-				</c:otherwise>
-			</c:choose>
-		</a> 
-	</c:forEach> 
-	
+	<!-- 로그인 하지 않았을 때 -->
+	<c:if test="${empty us_id }">
+	 	<c:forEach var="item" items="${itemList}">
+	 		<c:if test="${item.it_state != 2 && item.it_state != 3  }">
+				<a href="../item/itemDetail?it_no=${item.it_no }">
+					<img src="/imgfile/${item.it_img }" name="it_img" width="150px" height="150px" > <br>
+					<input type="text" value="${item.it_title }" name="it_title"> <br>
+					<input type="text" value="${item.it_price }" name="it_price">
+					<input type="hidden" value="${item.it_state }" name="it_state">
+					<!-- 글 상태 표시 -->
+					<c:choose>
+						<c:when test="${item.it_state == 0 }">
+							<input type="text" value="판매중"> <br>
+						</c:when>
+						<c:when test="${item.it_state == 1 }">
+							<input type="text" value="예약중"> <br>
+						</c:when>
+						<c:when test="${item.it_state == 2 }">
+							<input type="text" value="판매완료"> <br>
+						</c:when>
+						<c:when test="${item.it_state == 3 }">
+							<input type="text" value="삭제됨"> <br>
+						</c:when>
+						<c:otherwise>
+							<input type="text" value="접근이상함"> <br>			
+						</c:otherwise>
+					</c:choose>
+				</a> 
+			</c:if>
+		</c:forEach>
+	</c:if>	 
+	<!-- 로그인 했을 때 -->
+	<c:if test="${!empty us_id }">
+	 	<c:forEach var="item" items="${itemList}">
+	 		<c:if test="${item.it_state != 2 && item.it_state != 3 &&  us_id != item.us_id }">
+				<a href="../item/itemDetail?it_no=${item.it_no }">
+					<img src="/imgfile/${item.it_img }" name="it_img" width="150px" height="150px" > <br>
+					<input type="text" value="${item.it_title }" name="it_title"> <br>
+					<input type="text" value="${item.it_price }" name="it_price">
+					<input type="hidden" value="${item.it_state }" name="it_state">
+					<!-- 글 상태 표시 -->
+					<c:choose>
+						<c:when test="${item.it_state == 0 }">
+							<input type="text" value="판매중"> <br>
+						</c:when>
+						<c:when test="${item.it_state == 1 }">
+							<input type="text" value="예약중"> <br>
+						</c:when>
+						<c:when test="${item.it_state == 2 }">
+							<input type="text" value="판매완료"> <br>
+						</c:when>
+						<c:when test="${item.it_state == 3 }">
+							<input type="text" value="삭제됨"> <br>
+						</c:when>
+						<c:otherwise>
+							<input type="text" value="접근이상함"> <br>			
+						</c:otherwise>
+					</c:choose>
+				</a> 
+			</c:if>
+		</c:forEach> 
+	</c:if>	
 	<!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
@@ -127,7 +155,51 @@
 <script type="text/javascript">
 $(function(){
 	
-	
+	  var login = $("input[name='login']").val(); ;
+      console.log(login);
+
+      if(login == 'success'){
+          alert('로그인 성공');
+      }
+      
+      // 위치파악 
+      var latitude = 0.0;
+   	  var longitude = 0.0;
+      
+       function showPosition(pos){
+
+      	latitude = pos.coords.latitude;
+      	longitude = pos.coords.longitude;
+
+        
+		 $.ajax({
+	 			type : "post",
+	 			url : "/item/location",
+	 			data : {"latitude" : latitude , "longitude" : longitude} ,
+	 			dataType : "JSON",
+	 			error: function(){
+	 				alert("위치 파악 실패");
+	 			},
+	 			success : function(){
+ 					console.log(${latitude}+"#333");
+ 					console.log(${longitude}+"#333");
+	 				
+	 			} // success 끝	
+	 		}); // ajax 끝
+
+      }
+
+   	
+     if(navigator.geolocation){
+
+         navigator.geolocation.getCurrentPosition(showPosition);
+         
+
+     }else{
+         alert("브라우저가 Geolocation을 지원하지 않습니다.");
+
+     } 
+     
 	$('#myModal').modal("show");
 	$.ajax({
 		url : "${contextPath}/ad/modalShow",

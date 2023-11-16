@@ -8,7 +8,7 @@ import lombok.Data;
 public class AcVO {
 	
 	private Integer ac_no; // 신고번호
-	private Integer us_id; // 신고자 아이디
+	private String us_id; // 신고자 아이디
 	private String ac_own_id; // 피신고자_사업자
 	private String ac_us_id; // 피신고자_유저
 	private String ac_cate; // 신고사유

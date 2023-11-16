@@ -36,6 +36,8 @@ import com.dapao.domain.TradeVO;
 import com.dapao.service.EntService;
 import com.dapao.service.ProdService;
 
+import net.coobird.thumbnailator.Thumbnails;
+
 @Controller
 @RequestMapping(value = "/ent/*")
 public class EntController {
@@ -52,10 +54,10 @@ public class EntController {
 		logger.debug(" shopMainGET(EntVO eVO, ProdVO pVO, ReviewVO rVO, Model model) 호출 ");
 //		String own_id = "6";
 		String own_id = Ent_id;
-		if(Ent_id == null) {
+		if (Ent_id == null) {
 			own_id = (String) session.getAttribute("own_id");
 		}
-		
+
 		EntVO eVo = new EntVO();
 		eVo.setOwn_id(own_id);
 		logger.debug("eService.listEnt(eVo): " + eService.listEnt(eVo));
@@ -65,17 +67,36 @@ public class EntController {
 		for (int i = 0; i < plist.size(); i++) {
 			fileList[i] = plist.get(i).getProd_img().substring(plist.get(i).getProd_img().lastIndexOf("\\") + 1);
 //			fileList[i]=plist.get(i).getProd_img();
-			logger.debug(" fileList[i] : " + fileList[i]);
+			logger.debug(" fileList[i] : " + fileList[i].toString());
 		}
 		logger.debug("fileList : " + fileList);
 		String name = "상점 메인페이지";
-		
+
 		List<ReviewVO> rlist = eService.entReviewList(own_id);
-		logger.debug(" rlist : "+rlist);
-		
+		logger.debug(" rlist : " + rlist);
+		EntVO entList = eService.listEnt(eVo);
+		logger.debug("entList : " + entList);
+		int idx = 1;
+		if (entList != null) {
+			if (entList.getEnt_img() != null || !entList.getEnt_img().equals("")) {
+				idx = entList.getEnt_img().indexOf(",") + 1;
+			}
+		}
+		String[] imgList = new String[idx];
+		for (int i = 0; i < idx; i++) {
+			imgList[i] = "null";
+		}
+		if (entList != null) {
+			if (!entList.getEnt_img().equals(null) || !entList.getEnt_img().equals("")) {
+				String img = entList.getEnt_img();
+				imgList = img.split(","); // 합쳐진 이미지 ,로 나눠서 저장
+				logger.debug(" imgList : " + imgList);
+			}
+		}
+		model.addAttribute("imgList", imgList);
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("fileList", fileList);
-		model.addAttribute("ent", eService.listEnt(eVo));
+		model.addAttribute("ent", entList);
 		model.addAttribute("plist", plist);
 		model.addAttribute("name", name);
 
@@ -103,8 +124,8 @@ public class EntController {
 
 	// http://localhost:8088/ent/shopMainManage
 	@RequestMapping(value = "/shopMainManage", method = RequestMethod.POST)
-	public void shopMainManagePOST(EntVO eVo, Model model, HttpSession session,
-			MultipartHttpServletRequest mhsr, HttpServletResponse response) throws IllegalStateException, IOException {
+	public void shopMainManagePOST(EntVO eVo, Model model, HttpSession session, MultipartHttpServletRequest mhsr,
+			HttpServletResponse response) throws IllegalStateException, IOException {
 		logger.debug(" shopMainManagePOST(EntVO eVo, Model model) 호출 ");
 //		String own_id = "6";
 		String own_id = (String) session.getAttribute("own_id");
@@ -156,7 +177,7 @@ public class EntController {
 
 	// http://localhost:8088/ent/productManage
 	@RequestMapping(value = "/productManage", method = RequestMethod.POST)
-	public void productManagePOST(ProdVO vo, Model model, Criteria cri,HttpSession session) throws Exception {
+	public void productManagePOST(ProdVO vo, Model model, Criteria cri, HttpSession session) throws Exception {
 		logger.debug(" productManagerPOST() ");
 		String name = "상품 조회/수정/등록";
 		String own_id = (String) session.getAttribute("own_id");
@@ -167,10 +188,10 @@ public class EntController {
 		vo.setOwn_id(own_id);
 		pVo.setP_vo(vo);
 		int prod_num = pService.getProdList(vo.getOwn_id());
-		logger.debug("prod_num : "+prod_num);
+		logger.debug("prod_num : " + prod_num);
 		pVo.setTotalCount(prod_num);
-		logger.debug(" @@@@@@@@@@@pVo.getpageStart: "+pVo.getCri().getPageStart());
-		logger.debug(" @@@@@@@@@@@pVo.getpageSize: "+pVo.getCri().getPageSize());
+		logger.debug(" @@@@@@@@@@@pVo.getpageStart: " + pVo.getCri().getPageStart());
+		logger.debug(" @@@@@@@@@@@pVo.getpageSize: " + pVo.getCri().getPageSize());
 		List<ProdVO> plist = pService.searchProd(pVo);
 		Integer modal_cate = 0;
 		model.addAttribute("plist", plist);
@@ -212,12 +233,12 @@ public class EntController {
 
 	// http://localhost:8088/ent/entOrder
 	@RequestMapping(value = "/entOrder", method = RequestMethod.POST)
-	public void entOrderPOST(PageVO vo, String search_cate, String search, 
-			HttpSession session, Model model) throws Exception {
+	public void entOrderPOST(PageVO vo, String search_cate, String search, HttpSession session, Model model)
+			throws Exception {
 		logger.debug(" entOrderPOST(PageVO vo, String search, Model model) 호출 ");
 		String own_id = (String) session.getAttribute("own_id");
 //		String own_id = "6";
-		if(vo.getCri() == null) {
+		if (vo.getCri() == null) {
 			Criteria cri = new Criteria();
 			vo.setCri(cri);
 		}
@@ -292,10 +313,10 @@ public class EntController {
 			mf.transferTo(new File(saveFile));
 			logger.debug("이미지 생성됨");
 		}
-		logger.debug("@@@@@@@@@@@String.join(\",\", imgList) :"+String.join(",", imgList));
+		logger.debug("@@@@@@@@@@@String.join(\",\", imgList) :" + String.join(",", imgList));
 		vo.setProd_img(String.join(",", imgList));
-		logger.debug("vo : "+vo);
-		
+		logger.debug("vo : " + vo);
+
 		if (modal_cate == 1) {
 			pService.updateProd(vo);
 			logger.debug(" update ");
@@ -315,7 +336,7 @@ public class EntController {
 		String own_id = (String) session.getAttribute("own_id");
 		PageVO vo = new PageVO();
 		vo.setCri(cri);
-		logger.debug("vo : "+vo);
+		logger.debug("vo : " + vo);
 		logger.debug(" own_id : " + own_id);
 		String name = "상품 조회/수정/등록";
 		ProdVO pVo = new ProdVO();
@@ -370,51 +391,82 @@ public class EntController {
 		in.close();
 	}
 
+
+	// 파일 썸네일 다운로드 처리
+	@RequestMapping(value = "/thumbDownload", method = RequestMethod.GET)
+	public void fileThumbDownloadGET(@RequestParam("fileName") String fileName, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		logger.debug(" fileThumbDownloadGET(@RequestParam(\"fileName\") 호출 ");
+		String path = "F:\\upload";
+		// 다운로드할 폴더 (= 업로드한 폴더)에 있는 파일정보
+//				String downFile = request.getRealPath("\\upload")+"\\"+fileName;
+		String downFile = path + "\\" + fileName;
+		logger.debug(" 다운로드할 파일 : " + downFile);
+
+		// 다운로드할 파일을 준비
+		File file = new File(downFile);
+		// 업로드 했던(다운로드할) 파일의 확장자 확인
+		// "itwill.jpg"
+		int lastIdx = fileName.lastIndexOf(".");
+		// 파일의 확장자를 제외한 이름을 저장
+
+		String thumbName = fileName.substring(0, lastIdx);
+		// 파일명이 한글일때 인코딩문제 해결
+		thumbName = URLEncoder.encode(fileName, "UTF-8");
+		File thumbNail = new File(path + "\\thumbnail\\" + thumbName + ".png");
+		// 출력객체
+		OutputStream out = response.getOutputStream();
+
+		if (file.exists()) {
+			// 썸네일 파일을 생성X 바로 화면에 출력
+			Thumbnails.of(file).size(50, 50).outputFormat("png").toOutputStream(out);
+		}
+
+		// 다운로드 정보를 응답설정
+		// => 모든 파일이 일반적인 다운로드형태로 표시
+		response.setHeader("Cache-Control", "no-cache");
+		response.addHeader("Content-disposition", "attachment; fileName=" + fileName);
+		// 자원해제
+		out.close();
+
+	}
+
 	// 휴대폰 본인인증
 	@RequestMapping(value = "/entPhoneCk", method = RequestMethod.GET)
 	@ResponseBody
 	public String sendSMS(@RequestParam("phone") String userPhoneNumber) throws Exception { // 휴대폰 문자보내기
-		int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
-			eService.certifiedPhoneNumber(userPhoneNumber,randomNumber);
-		
+		int randomNumber = (int) ((Math.random() * (9999 - 1000 + 1)) + 1000);// 난수 생성
+
+		eService.certifiedPhoneNumber(userPhoneNumber, randomNumber);
+
 		return Integer.toString(randomNumber);
 	}
-		
+
 	// 아이디 중복체크
-	@RequestMapping(value = "/entCheckId", method = RequestMethod.POST )
+	@RequestMapping(value = "/entCheckId", method = RequestMethod.POST)
 	@ResponseBody
-	public int checkId(@RequestParam("own_id") String own_id) throws Exception{
+	public int checkId(@RequestParam("own_id") String own_id) throws Exception {
 		int cnt = eService.checkId(own_id);
 		return cnt;
 	}
-		
-		
+
 	// http://localhost:8088/ent/entJoin
 	@RequestMapping(value = "/entJoin", method = RequestMethod.GET)
 	public void entJoinGET() {
 		logger.debug("GET() 호출");
+
 		logger.debug("연결된 view 페이지 호출 (/views/ent/entJoin.jsp)");
 
 	}
 
 	@RequestMapping(value = "/entJoin", method = RequestMethod.POST)
-	public String entJoinPOST(EntVO vo, MultipartFile ent_file, HttpServletResponse response) throws Exception {
+	public String entJoinPOST(/* @ModelAttribute */ EntVO vo) throws Exception {
 		logger.debug("entJoinPOST() 호출");
 		// 전달정보 저장(회원가입 정보)
 		logger.debug("vo : " + vo);
 		String own_pw = BCrypt.hashpw(vo.getOwn_pw(), BCrypt.gensalt());
-			
+
 		vo.setOwn_pw(own_pw);
-		logger.debug("vo.pw : @@@@@@@@@@@@@@@@@@@@@@@@"+vo.getOwn_pw());
-		
-		String oFileName = ent_file.getOriginalFilename();
-		String fileName = UUID.randomUUID().toString()+"_"+oFileName;
-		
-		logger.debug("fileName : @@@@@@@@@@@@@@@@@@@@@@"+fileName);
-		
-		vo.setEnt_file(fileName);
-		
-		ent_file.transferTo(new File("\\upload"+fileName));
 
 		// DAOImpl -> DB에 정보 저장
 		// mdao.insertMember(vo);
@@ -425,16 +477,16 @@ public class EntController {
 		// 로그인 페이지로 이동(redirect)
 		return "redirect:/ent/entLogin";
 	}
-		
+
 	// 주소검색,입력
-	@RequestMapping(value = "/jusoPopup",method = RequestMethod.GET)
+	@RequestMapping(value = "/jusoPopup", method = RequestMethod.GET)
 	public void entMapGET() throws Exception {
-			
+
 	}
-		
-	@RequestMapping(value = "/jusoPopup",method = RequestMethod.POST)
+
+	@RequestMapping(value = "/jusoPopup", method = RequestMethod.POST)
 	public void entMapPOST() throws Exception {
-			
+
 	}
 	// 주소검색,입력
 
@@ -448,76 +500,39 @@ public class EntController {
 	@RequestMapping(value = "/entLogin", method = RequestMethod.POST)
 	public String entLoginPOST(EntVO vo, HttpSession session, RedirectAttributes rAttr) throws Exception {
 		logger.debug("entLoginPOST() 호출");
-		logger.debug("vo : " + vo);		
-		
-		
+		logger.debug("vo : " + vo);
+
 		EntVO resultVO = eService.entLogin(vo);
 		logger.debug("resultVO : " + resultVO);
 
-		logger.debug("vopw @@@@@@@@@@@@@@@@@@@@@@@@@@ " + vo.getOwn_pw());
-
 		// 로그인 실패
-		if (!BCrypt.checkpw(vo.getOwn_pw(), resultVO.getOwn_pw())) {
-			rAttr.addAttribute("result","fail");
+		if (resultVO == null) {
+			rAttr.addAttribute("result", "fail");
 			return "redirect:/ent/entLogin";
 		}
-		
-		// 아이디상태에 따른 처리
-		if(BCrypt.checkpw(vo.getOwn_pw(), resultVO.getOwn_pw())) {
-				
-			if(resultVO.getOwn_state() == 1) {
-				rAttr.addAttribute("result","1");
+
+		if (resultVO != null) {
+
+			if (resultVO.getOwn_state() == 1) {
+				rAttr.addAttribute("result", "1");
 				return "redirect:/ent/entLogin";
-			}else if(resultVO.getOwn_state() == 2) {
-				rAttr.addAttribute("result","2");
+			} else if (resultVO.getOwn_state() == 2) {
+				rAttr.addAttribute("result", "2");
 				return "redirect:/ent/entLogin";
-			}else if(resultVO.getOwn_state() == 3) {
-				rAttr.addAttribute("result","3");
+			} else if (resultVO.getOwn_state() == 3) {
+				rAttr.addAttribute("result", "3");
 				return "redirect:/ent/entLogin";
-			}else {
+			} else {
 				// 로그인 성공 아이디 세션에 저장
 				session.setAttribute("own_id", resultVO.getOwn_id());
 			}
-				
+
+
 		}
 
 		return "redirect:/ent/entMain";
 	}
 
-	// http://localhost:8088/ent/entMain
-	@RequestMapping(value = "/entMain", method = RequestMethod.GET)
-	public void entMainGET(HttpSession session) throws Exception {
-		logger.debug("entMainGET() 호출");
-		logger.debug("연결된 view 페이지 호출 (/views/etn/entMain.jsp)");
-	}
-		
-	@RequestMapping(value = "/entLogout", method = { RequestMethod.GET, RequestMethod.POST })
-	public String entLogoutGET(HttpSession session) {
-		logger.debug("logoutGET() 호출");
-
-		// 로그아웃 처리 => 세션정보 초기화
-		session.invalidate();
-		// 메인페이지로 이동
-
-		return "redirect:/ent/entMain";
-	}
-		
-	// http://localhost:8088/ent/entMain
-	@RequestMapping(value = "/ownInfo", method = RequestMethod.GET)
-	public void ownInfoGET(HttpSession session, Model model) throws Exception{
-		logger.debug("ownInfoGET() 호출");
-			
-		// 사용자 아이디 정보 저장
-		logger.debug(session.getAttribute("own_id")+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		String own_id = (String)session.getAttribute("own_id");
-				
-		model.addAttribute(eService.ownInfo(own_id));
-				
-	}
-		
-	@RequestMapping(value = "/ownDelete", method = RequestMethod.GET )
-	public void ownDelete() {
-		
 	}
 
 	@RequestMapping(value = "/entAd", method = RequestMethod.GET)

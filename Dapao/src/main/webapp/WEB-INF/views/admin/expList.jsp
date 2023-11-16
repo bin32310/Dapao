@@ -1,20 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="../include/header.jsp" %>
-<h1>/admin/expList.jsp</h1>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="../include/header.jsp"%>
 
-<form action="/admin/expList" id="search">
-	<div class="search_wrap">
-		<div class="search_area">
-			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
-			<button id="searchBtn">Search</button>
-		</div>
-	</div>
-</form>
-<div class="box">
+<div class="boxList">
 	<div class="box-header with-board">
-		<h3 class="box-title">체험단 관리</h3>
+		<p class="pContent">체험단 관리</p>
+		<form action="/admin/expList" id="search">
+			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2"> 
+			<button id="searchBtn">Search</button>
+		</form>
 	</div>
 	<div class="box-body">
 		<table class="table table-bordered">
@@ -161,92 +155,75 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('.exp_no').click(
-				function() {
-					$('#myLargeModal').modal("show");
+		$('.exp_no').click(function() {
+			$('#myLargeModal').modal("show");
 
-					$.ajax({
-						url : "/admin/expInfo",
-						data : {
-							"exp_no" : $(this).text()
-						},
-						dataType : "json",
-						success : function(data) {
-							console.log(data)
-							$('input[name=exp_no]').val(data.exp_no)
-							$('input[name=own_id]').val(data.own_id)
-							$('input[name=exp_title]').val(data.exp_title)
-							$('input[name=exp_content]').val(data.exp_content)
-							$('input[name=exp_psn]').val(data.exp_psn)
-							$('input[name=exp_psn_ch]').val(data.exp_psn_ch)
-							$('input[name=exp_notice]').val(data.exp_notice)
-							$('input[name=exp_state]').val(data.exp_state)
-							$('input[name=exp_regdate]').val(data.exp_regdate)
-						},
-						error : function() {
-							console.log("오류");
-						}
-					});// exp_no click ajax
-					$('.update').click(function() {
-						var ad_date = $('select[name=update]').val();
-						console.log("ad_date : "+ad_date);
-						$.ajax({
-							url : "/admin/expAdInsert",
-							data : {
-								"exp_no" : $('input[name=exp_no]').val(),
-								"ad_date" : ad_date,
-								"own_id" : $('input[name=own_id]').val()
-							},
-							dataType : "json",
-							success : function(data) {
-								alert("정상적으로 광고 승인되었습니다.");
-								location.replace("/admin/expList");
+			$.ajax({
+				url : "/admin/expInfo",
+				data : {
+					"exp_no" : $(this).text()
+				},
+				dataType : "json",
+				success : function(data) {
+					console.log(data)
+					$('input[name=exp_no]').val(data.exp_no)
+					$('input[name=own_id]').val(data.own_id)
+					$('input[name=exp_title]').val(data.exp_title)
+					$('input[name=exp_content]').val(data.exp_content)
+					$('input[name=exp_psn]').val(data.exp_psn)
+					$('input[name=exp_psn_ch]').val(data.exp_psn_ch)
+					$('input[name=exp_notice]').val(data.exp_notice)
+					$('input[name=exp_state]').val(data.exp_state)
+					$('input[name=exp_regdate]').val(data.exp_regdate)
+				},
+				error : function() {
+					console.log("오류");
+				}
+			});// exp_no click ajax
+			$('.update').click(function() {
+				var ad_date = $('select[name=update]').val();
+				console.log("ad_date : " + ad_date);
+				$.ajax({
+					url : "/admin/expAdInsert",
+					data : {
+						"exp_no" : $('input[name=exp_no]').val(),
+						"ad_date" : ad_date,
+						"own_id" : $('input[name=own_id]').val()
+					},
+					dataType : "json",
+					success : function(data) {
+						alert("정상적으로 광고 승인되었습니다.");
+						location.replace("/admin/expList");
 
-							},
-							error : function(data) {
-								console.log("에러");
-							}
-						}); // 승인 ajax
-					});// 승인 click
-					$('.delete').click(function(){
-						$.ajax({
-							url : "/admin/expReturn",
-							data:{
-								"exp_no" : $('input[name=exp_no]').val(),
-								"exp_state" : $('input[name=exp_state]').val()
-								},
-							dataType : "json",
-							success : function(data){
-								alert("반려되었습니다.")
-								location.replace("/admin/expList");
-							}
-						})// 반려 ajax
-					})// 반려 click
-				});// exp_no click
-				
-		$('#searchBtn').click(function(){
+					},
+					error : function(data) {
+						console.log("에러");
+					}
+				}); // 승인 ajax
+			});// 승인 click
+			$('.delete').click(function() {
+				$.ajax({
+					url : "/admin/expReturn",
+					data : {
+						"exp_no" : $('input[name=exp_no]').val(),
+						"exp_state" : $('input[name=exp_state]').val()
+					},
+					dataType : "json",
+					success : function(data) {
+						alert("반려되었습니다.")
+						location.replace("/admin/expList");
+					}
+				})// 반려 ajax
+			})// 반려 click
+		});// exp_no click
+
+		$('#searchBtn').click(function() {
 			var keyword = $('input[name=keyword]').val();
 			console.log(keyword);
 			$('#search').submit();
 		});
 	});//ready
 </script>
-<style>
-.search_area {
-	display: inline-block;
-	margin-top: 30px;
-	margin-left: 260px;
-}
 
-.search_area input {
-	height: 30px;
-	width: 250px;
-}
-
-.search_area button {
-	width: 100px;
-	height: 32px;
-}
-</style>
 
 <%@include file="../include/footer.jsp"%>

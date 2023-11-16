@@ -1,37 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="../include/header.jsp" %>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-
-<h1>/admin/noticeList.jsp</h1>
-
-<form action="/admin/noticeList" id="search">
-	<div class="search_wrap">
-		<div class="search_area">
-			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
-			<button id="searchBtn">Search</button>
-		</div>
-	</div>
-</form>
-<div class="box">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../include/header.jsp" %>
+<style>
+.csState{
+	border-radius: 0.3em;
+    background-color: aliceblue;
+    border: none;
+    color: green;
+}
+.csState:hover{
+	background-color: green;
+	color: white;
+}
+</style>
+<div class="boxList">
 	<div class="box-header with-board">
-		<h3 class="box-title">notice 목록</h3>
+		<p class="pContent">공지사항 관리</p>
+		<form action="/admin/noticeList" id="search">
+			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
+			<button id="searchBtn">Search</button>
+		</form>
 	</div>
 	<div class="box-body">
 		<table class="table table-bordered">
 			<thead>
 				<tr role="row">
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >글 번호</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >제목</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >등록일</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" >등록형태</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" width="7%" >등록상태</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" width="5%"></th>
+					<th>글 번호</th>
+					<th>제목</th>
+					<th>등록일</th>
+					<th>등록형태</th>
+					<th>등록상태</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -54,21 +53,21 @@
 							</c:when>
 							<c:when test="${list.cs_state eq '1' }">
 								<td>등록</td>
-							</c:when>						
+							</c:when>
 						</c:choose>
 						<c:choose>
 							<c:when test="${list.cs_state eq '0' }">
-							<td><button type="button" class="csState" value="${list.cs_no }">등록</button></td>
+								<td><button type="button" class="csState" value="${list.cs_no }">등록</button></td>
 							</c:when>
 							<c:when test="${list.cs_state eq '1' }">
-							<td><button type="button" class="csState" value="${list.cs_no }">해제</button></td>
+								<td><button type="button" class="csState" value="${list.cs_no }">해제</button></td>
 							</c:when>
 						</c:choose>
 					</tr>
 				</c:forEach>
 			</tbody>
 			<tfoot>
-				
+
 			</tfoot>
 		</table>
 	</div>
@@ -160,146 +159,159 @@
 </div>
 
 <script type="text/javascript">
-
 	$(function() {
-		$('.cs_no').click(function() {
-			$('#myLargeModal').modal("show");
+		$('.cs_no')
+				.click(
+						function() {
+							$('#myLargeModal').modal("show");
 
+							$.ajax({
+								url : "/admin/csInfo",
+								data : {
+									"cs_no" : $(this).text()
+								},
+								dataType : "json",
+								success : function(data) {
+									console.log(data)
+									$('input[name=cs_no]').val(data.cs_no)
+									$('input[name=cs_title]')
+											.val(data.cs_title)
+									$('input[name=cs_content]').val(
+											data.cs_content)
+									if (data.cs_group == 0) {
+										$('input[name=cs_group]').val("회원공지");
+									} else {
+										$('input[name=cs_group]').val("사업자공지");
+									}
+									if (data.cs_state == 0) {
+										$('input[name=cs_state]').val("해제")
+									} else {
+										$('input[name=cs_state]').val("등록")
+									}
+									$('input[name=cs_view]').val(data.cs_view)
+									$('input[name=cs_regdate]').val(
+											data.cs_regdate)
+									$('input[name=cs_update]').val(
+											data.cs_update)
+								},
+								error : function() {
+									console.log("오류");
+								}
+							});// cs_no click ajax
+
+							// 공지사항 수정버튼 클릭시
+							$('.update')
+									.click(
+											function() {
+												alert("@@@@");
+												$
+														.ajax({
+															url : "/admin/csInfoUpdate",
+															data : {
+																"cs_no" : $(
+																		'input[name=cs_no]')
+																		.val(),
+																"cs_title" : $(
+																		'input[name=cs_title]')
+																		.val(),
+																"cs_content" : $(
+																		'input[name=cs_content]')
+																		.val(),
+															},
+															dataType : "json",
+															success : function(
+																	data) {
+																console
+																		.log(data)
+																alert("수정완료");
+																location
+																		.replace("/admin/noticeList?page=${param.page}");
+															},
+															error : function() {
+																console
+																		.log("오류");
+															}
+														});// update click ajax
+											});// update click
+						});// cs_no click
+
+		// 공지사항 삭제버튼 클릭시
+		$('.delete').click(function() {
 			$.ajax({
-				url : "/admin/csInfo",
+				url : "/admin/csDelete",
 				data : {
-					"cs_no" : $(this).text()
+					"cs_no" : $('input[name=cs_no]').val()
 				},
 				dataType : "json",
 				success : function(data) {
-					console.log(data)
-					$('input[name=cs_no]').val(data.cs_no)
-					$('input[name=cs_title]').val(data.cs_title)
-					$('input[name=cs_content]').val(data.cs_content)
-					if(data.cs_group == 0){
-						$('input[name=cs_group]').val("회원공지");
-					}else{
-						$('input[name=cs_group]').val("사업자공지");
-					}
-					if(data.cs_state == 0){
-						$('input[name=cs_state]').val("해제")
-					}else{
-						$('input[name=cs_state]').val("등록")
-					}					
-					$('input[name=cs_view]').val(data.cs_view)
-					$('input[name=cs_regdate]').val(data.cs_regdate)
-					$('input[name=cs_update]').val(data.cs_update)
-				},
-				error : function() {
-					console.log("오류");
-				}
-			});// cs_no click ajax
-			
-			// 공지사항 수정버튼 클릭시
-			$('.update').click(function(){
-				alert("@@@@");
-				$.ajax({
-					url : "/admin/csInfoUpdate",
-					data : {
-						"cs_no" : $('input[name=cs_no]').val(),
-						"cs_title" : $('input[name=cs_title]').val(),
-						"cs_content" : $('input[name=cs_content]').val(),
-					},
-					dataType : "json",
-					success : function(data) {
-						console.log(data)
-						alert("수정완료");
-						location.replace("/admin/noticeList?page=${param.page}");
-					},
-					error : function() {
-						console.log("오류");
-					}
-				});// update click ajax
-			});// update click
-		});// cs_no click
-		
-		// 공지사항 삭제버튼 클릭시
-		$('.delete').click(function(){
-			$.ajax({
-				url:"/admin/csDelete",
-				data:{"cs_no" : $('input[name=cs_no]').val()},
-				dataType:"json",
-				success:function(data){
 					console.log(data);
 					console.log("성공");
 					location.replace("/admin/noticeList?page=${param.page}");
 				},
-				error:function(){
+				error : function() {
 					console.log("에러");
 				}
 			});
 		});
-		
+
 		// 등록/해제 버튼 클릭시 
-		$('.csState').click(function(){
-			var state = $(this).text();
-			console.log("state : "+state);
-			
-			if(state == '등록'){
-				alert("등록");	
-				console.log($(this).val());				
-				$.ajax({
-					url:"/admin/csUpload",
-					data:{"cs_no" : $(this).val()},
-					dataType:"json",
-					success:function(data){
-						console.log("성공결과 : "+data);
-						console.log("성공");
-						location.replace("/admin/noticeList?page=${param.page}");
-					},
-					error:function(){
-						console.log("에러");
-					}
-				});
-			}
-			if(state == '해제'){
-				alert("해제");
-				console.log($(this).val());
-				$.ajax({
-					url:"/admin/csRemove",
-					data:{"cs_no":$(this).val()},
-					dataType:"json",
-					success:function(data){
-						console.log("성공결과 : "+data);
-						console.log("성공");
-						location.replace("/admin/noticeList?page=${param.page}");
-					},
-					error:function(){
-						console.log("에러");
-					}
-				});
-				
-			}
-		
-		}) // 등록/해제 버튼 클릭 시
-		$('#searchBtn').click(function(){
+		$('.csState')
+				.click(
+						function() {
+							var state = $(this).text();
+							console.log("state : " + state);
+
+							if (state == '등록') {
+								alert("등록");
+								console.log($(this).val());
+								$
+										.ajax({
+											url : "/admin/csUpload",
+											data : {
+												"cs_no" : $(this).val()
+											},
+											dataType : "json",
+											success : function(data) {
+												console.log("성공결과 : " + data);
+												console.log("성공");
+												location
+														.replace("/admin/noticeList?page=${param.page}");
+											},
+											error : function() {
+												console.log("에러");
+											}
+										});
+							}
+							if (state == '해제') {
+								alert("해제");
+								console.log($(this).val());
+								$
+										.ajax({
+											url : "/admin/csRemove",
+											data : {
+												"cs_no" : $(this).val()
+											},
+											dataType : "json",
+											success : function(data) {
+												console.log("성공결과 : " + data);
+												console.log("성공");
+												location
+														.replace("/admin/noticeList?page=${param.page}");
+											},
+											error : function() {
+												console.log("에러");
+											}
+										});
+
+							}
+
+						}) // 등록/해제 버튼 클릭 시
+		$('#searchBtn').click(function() {
 			var keyword = $('input[name=keyword]').val();
 			console.log(keyword);
 			$('#search').submit();
 		});
 	});// jquery
 </script>
-<style>
-.search_area {
-	display: inline-block;
-	margin-top: 30px;
-	margin-left: 260px;
-}
-
-.search_area input {
-	height: 30px;
-	width: 250px;
-}
-
-.search_area button {
-	width: 100px;
-	height: 32px;
-}
-</style>
 
 <%@include file="../include/footer.jsp"%>
