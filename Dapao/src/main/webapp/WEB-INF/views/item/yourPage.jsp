@@ -52,8 +52,8 @@ img[name=it_img] {
 }
 
 img {
-	width: 150px;
-	height: 150px;
+	width: 200px;
+	height: 200px;
 }
 
 .price {
@@ -87,7 +87,7 @@ input[type=text] {
 	border-style: none;
 }
 
-input[id=inputcolor]{
+input[class=inputcolor]{
 	background-color: #f7f7f7;
 }
 
@@ -99,6 +99,17 @@ input[name=it_price]{
 	font-size: 20px;
 	text-align: center;
 }
+
+#us_addr,#review{
+width : 300px;
+
+}
+
+img[name=it_img]{
+	width: 150px;
+	height: 150px;
+}
+
 </style>
 <body>
 
@@ -113,34 +124,34 @@ input[name=it_price]{
 		<h1>상대방 프로필</h1> -->
 
 	<a href="/user/userBuy">구매 목록 </a>
-	<div class="profile">
+	<div class="profile"><!-- 1 -->
 		<label>프로필 사진</label><br>
 		<img src="/resources/itemIMG/pro.png" name="it_img" id="img">
-		<div class="item">
-			닉네임 : <input type="text" name="us_name" value="${yourInfo.us_nickname }" id="inputcolor"><br> 
-			주소 : <input type="text" name="us_addr" value="${yourInfo.us_addr }" id="inputcolor"><br>
-		</div>
-	</div>
-	<div class="box-body" id="box-body">
-		<div class="products">
+		<div class="item"><!-- 2 -->
+			닉네임 : <input type="text" name="us_name" value="${yourInfo.us_nickname }" class="inputcolor" readonly><br> 
+			주소 : <input type="text" name="us_addr" value="${yourInfo.us_addr }" class="inputcolor" id="us_addr" readonly><br>
+		</div><!-- 2 -->
+	</div><!-- 1 -->
+	<div class="box-body" id="box-body"><!-- 1 -->
+		<div class="products"><!-- 2 -->
 			<label id="title">판매중인 물건</label> <br>
-			<div class="box">
+			<div class="box"><!-- 3 -->
 				<c:forEach var="yi" items="${yourItemVO }">
-					<div class="item2">
-						<c:if test="${yi.it_state != 2 && yi.it_state != 3 }">
-							<img src="/imgfile/${yi.it_img }" name="it_img" width="150px" height="150px">
-							<div class="product">
-								<input type="text" name="it_title" value="${yi.it_title }" id="inputcolor">
-							</div>
-							<div class="price">
-								<input type="text" name="it_price" value="${yi.it_price }" id="inputcolor">
-							</div>
-						</c:if>
-					</div>
+					<c:if test="${yi.it_state != 2 && yi.it_state != 3 }">
+						<div class="item2"><!-- 4 -->
+							<img src="/imgfile/${yi.it_img }" name="it_img" >
+							<div class="product"><!-- 5 -->
+								<input type="text" name="it_title" value="${yi.it_title }" class="inputcolor" readonly>
+							</div><!-- 5 -->
+							<div class="price"><!-- 6 -->
+								<input type="text" name="it_price" value="${yi.it_price }원" class="inputcolor" readonly>
+							</div><!-- 6 -->
+						</div><!-- 4 -->
+					</c:if>
 				</c:forEach>
-			</div>
-		</div>
-	</div>
+			</div><!-- 3 -->
+		</div><!-- 2 -->
+	</div><!-- 2 -->
 	<hr>
 	<div class="box-body">
 		<div class="products">
@@ -149,13 +160,13 @@ input[name=it_price]{
 				<c:forEach var="rv" items="${reviewVO}">
 						<div class="review">
 							<div class="nickname">
-								닉네임 : <input type="text" name="us_name" value="${rv.us_nickname }" id="inputcolor">
+								닉네임 : <input type="text" name="us_name" value="${rv.us_nickname }" class="inputcolor" readonly>
 							</div>
 							<div class="reviewstar">
-								별점 : <input type="text" name="rv_star" value="${rv.rv_star }" id="inputcolor">
+								별점 : <input type="text" name="rv_star" value="${rv.rv_star }" class="inputcolor" readonly>
 							</div>
 							<div class="reviewcontent">
-								리뷰내용 : <input type="text" name="rv_content" value="${rv.rv_content }" id="inputcolor">
+								리뷰내용 : <input type="text" name="rv_content" value="${rv.rv_content }" class="inputcolor" id="review" readonly>
 							</div>
 						</div>
 				</c:forEach>

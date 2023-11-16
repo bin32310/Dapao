@@ -34,7 +34,7 @@ body{
 /* 물건 하나의 공간 */
 .item_container_text{
  	width : 230px;
-	height : 300px;
+	height : 290px;
 	float: left; 
 	border: none;
 	padding-left : 10px;
@@ -69,21 +69,22 @@ body{
 	color:black;
 	cursor: pointer;
 	text-align: center;
-	
+	font-weight: bold;
 }
 
 .it_price{
 	border: none;
-	width : 146px;
+	width : 126px;
 	background-color: transparent;
 	color:black;
 	cursor: pointer;
+	font-weight: bold;
 	
 }
 
 .it_state{
 	border: none; 
-	width : 50px;
+	width : 70px;
 	text-align: right;
 	background-color: transparent;
 	color:black;
@@ -121,6 +122,10 @@ body{
 	text-align: left;
 	border: none; 
 	width : auto;
+	color : black;
+	margin-left: 10px;
+	font-weight: bold;
+	
 }
 
 </style>
@@ -130,52 +135,67 @@ body{
 
 <!-- 	<h1>/item/itemCateSearch.jsp</h1>
 	<h1>검색시 나타나는 페이지</h1> -->
-	<br><a id="cate"> 카테고리 ></a> ${it_cate_search} <hr><br>
-	<div id="container"> <!-- 1 -->
-		<div class="item_container"> <!-- 2 -->
+	<br>
+	<a id="cate"> 카테고리 > ${it_cate_search}</a>
+	<hr>
+	<br>
+	<div id="container">
+		<!-- 1 -->
+		<div class="item_container">
+			<!-- 2 -->
 			<c:forEach var="it" items="${cateItemVO}">
 				<c:if test="${it.it_state != 3 }">
-						<div class="item_container_text"> <!-- 3 -->
-							<a href="../item/itemDetail?it_no=${it.it_no }">
-								<img src="/imgfile/${it.it_img }" class="itemVODivIMG"> <br>
-								<input type="text" value="${it.it_title}" class="it_title">  <br>
-								<input type="hidden" value="${it.it_state }" name="it_state">
-								
-								<div id="price_state_text"><!-- 4 -->
-									<input type="text" value="${it.it_price}" class="it_price">
-									<!-- 글 상태 표시 -->
-									<c:choose>
-										<c:when test="${it.it_state == 0 }">
-											<input type="text" value="판매중" class="it_state"> <br>
-										</c:when>
-										<c:when test="${it.it_state == 1 }">
-											<input type="text" value="예약중" class="it_state"> <br>
-										</c:when>
-										<c:when test="${it.it_state == 2 }">
-											<input type="text" value="판매완료" class="it_state"> <br>
-										</c:when>
-										<c:when test="${it.it_state == 3 }">
-											<input type="text" value="삭제됨" class="it_state"> <br>
-										</c:when>
-										<c:otherwise>
-											<input type="text" value="접근이상함" class="it_state"> <br>			
-										</c:otherwise>
-									</c:choose>
-								</div> <!-- 4 -->
-								<div> <!-- 5 -->
-									<input type="text" value="등록날짜  " class="it_regdate_text">
-									<input type="text" value="${it.it_regdate}" class="it_regdate">
-								</div> <!-- 5 -->
-							</a>
-						<!-- </div> --> <!-- 3 -->
-					
-					</c:if>
-				</div> <!-- 3 -->
+					<div class="item_container_text">
+						<!-- 3 -->
+						<a href="../item/itemDetail?it_no=${it.it_no }"> <img
+							src="/imgfile/${it.it_img }" class="itemVODivIMG"> <br>
+							<input type="text" value="${it.it_title}" class="it_title">
+							<br> <input type="hidden" value="${it.it_state }"
+							name="it_state">
+
+							<div id="price_state_text">
+								<!-- 4 -->
+								<input type="text" value="${it.it_price}원" class="it_price">
+								<!-- 글 상태 표시 -->
+								<c:choose>
+									<c:when test="${it.it_state == 0 }">
+										<input type="text" value="판매중" class="it_state">
+										<br>
+									</c:when>
+									<c:when test="${it.it_state == 1 }">
+										<input type="text" value="예약중" class="it_state">
+										<br>
+									</c:when>
+									<c:when test="${it.it_state == 2 }">
+										<input type="text" value="판매완료" class="it_state">
+										<br>
+									</c:when>
+									<c:when test="${it.it_state == 3 }">
+										<input type="text" value="삭제됨" class="it_state">
+										<br>
+									</c:when>
+									<c:otherwise>
+										<input type="text" value="접근이상함" class="it_state">
+										<br>
+									</c:otherwise>
+								</c:choose>
+							</div> <!-- 4 -->
+							<div>
+								<!-- 5 -->
+								<input type="text" value="등록날짜  " class="it_regdate_text">
+								<input type="text" value="${it.it_regdate}" class="it_regdate">
+							</div> <!-- 5 -->
+						</a>
+					</div>
+					<!-- 3 -->
+				</c:if>
 			</c:forEach>
-		</div> <!-- 2 -->
-	</div> <!-- 1 -->
-<br>
-<%@ include file="../include/userFooter.jsp" %>
+		</div>
+		<!-- 2 -->
+	</div>
+	<!-- 1 -->
+	<br>
+	<%@ include file="../include/userFooter.jsp" %>
 	
 
 

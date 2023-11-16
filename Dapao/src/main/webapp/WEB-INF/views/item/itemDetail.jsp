@@ -91,6 +91,7 @@ input:focus{
 	text-align: left;
 	border: none; 
 	width : auto;
+	font-weight: bold;
 }
 
 #item_cate, #cate : hover{
@@ -226,6 +227,7 @@ input:focus{
 #item_addr{
  	text-align : left;
 	border: none; 
+	width: 300px;
 
 }
 
@@ -434,7 +436,7 @@ input:focus{
 	color : white;
 	font-weight: bold;
 	font-size : 30px;
-
+	cursor: auto;
 }
 
 

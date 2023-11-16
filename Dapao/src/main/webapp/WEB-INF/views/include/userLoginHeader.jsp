@@ -30,7 +30,7 @@
       <!-- jQuery 2.1.4 -->
     <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 
-  <body class="skin-blue sidebar-mini">
+  <body class="skin-blue-light sidebar-mini">
     <div class="wrapper">
       
       <header class="main-header">
@@ -218,11 +218,17 @@
           
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
-            <li class="header">메뉴</li>
+           <li class="header">메뉴</li>
             <li class="treeview">
-              <a href="../item/itemWrite">
+              <a href="../user/userLogin">
                 <i class="fa fa-edit"></i>
                 <span>판매글작성</span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="../mypage/userInfo">
+                <i class="fa fa-user"></i>
+                <span>마이페이지</span>
               </a>
             </li>
           </ul>
@@ -287,9 +293,8 @@
             </li>
             
             <li class="header">기타</li>
-            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>공지사항</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>FAQ</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>QnA</span></a></li>
+           	<li><a href="../cs/userNoticeList"><i class="fa fa-circle-o text-red"></i> <span>공지사항</span></a></li>
+            <li><a href="../cs/userFAQList"><i class="fa fa-circle-o text-yellow"></i> <span>FAQ</span></a></li>
           </ul>
         </section>
         <!-- /.sidebar -->
