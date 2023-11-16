@@ -28,8 +28,15 @@
 
 </head>
 <style>
-.navbar-nav p{
-	text-shadow:1px 1px 1px #000;
+.navbar-nav p {
+	text-shadow: 1px 1px 1px #000;
+}
+.main-footer {
+    background: #fff;
+    padding: 15px;
+    color: #444;
+    border-top: 1px solid #d2d6de;
+    margin-left: auto;
 }
 </style>
 <!-- jQuery 2.1.4 -->
@@ -137,14 +144,14 @@
 							<li><a href="/ent/productManage"><i class="fa fa-cart-plus"></i> 상품등록/수정/조회</a></li>
 							<li><a href="/ent/entOrder"><i class="fa fa-line-chart"></i> 주문관리</a></li>
 						</ul></li>
-					<!-- 					<li class="treeview"><a href="#"> <i class="fa fa-paw"></i> <span>판다톡 관리</span> <i class="fa fa-angle-left pull-right"></i> -->
-					<!-- 					</a> -->
-					<!-- 						<ul class="treeview-menu"> -->
-					<!-- 							<li><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> 자주쓰는 문구</a></li> -->
-					<!-- 							<li><a href="../charts/morris.html"><i class="fa fa-circle-o"></i> 자동응답설정</a></li> -->
-					<!-- 						</ul></li> -->
 					<li class="treeview"><a href="/ent/entAd"> <i class="fa fa-newspaper-o"></i> <span>광고 문의</span>
 					</a></li>
+					<li class="treeview"><a href="#"> <i class="fa fa-paw"></i> <span>고객지원</span> <i class="fa fa-angle-left pull-right"></i>
+					</a>
+						<ul class="treeview-menu">
+							<li><a href="/cs/ownNoticeList"><i class="fa fa-bullhorn"></i> 공지사항</a></li>
+							<li><a href="/cs/ownFAQList"><i class="fa fa-info-circle"></i> FAQ</a></li>
+						</ul></li>
 
 				</ul>
 			</section>
@@ -162,19 +169,17 @@
 					<li><a href="">${name }</a></li>
 				</ol>
 			</section>
-			
-			
-			
-			
-<script type="text/javascript">
-$('a').hover(function() {
-	$(this).css("cursor", "pointer");
-});
-$('.info > a').hover(function() {
-	$(this).css("color", "#2BBD26");
-}, function() {
-	$(this).css('color', 'black');
-});
 
 
-</script>
+
+
+			<script type="text/javascript">
+				$('a').hover(function() {
+					$(this).css("cursor", "pointer");
+				});
+				$('.info > a').hover(function() {
+					$(this).css("color", "#2BBD26");
+				}, function() {
+					$(this).css('color', 'black');
+				});
+			</script>

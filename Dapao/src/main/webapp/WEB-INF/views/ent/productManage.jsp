@@ -19,12 +19,15 @@
 						<td>카테고리</td>
 						<td><select name="prod_cate" class="form-control">
 								<option value="">선택</option>
-								<option value="category1">카테고리1</option>
-								<option value="category2">카테고리2</option>
-								<option value="category3">카테고리3</option>
-								<option value="category4">카테고리4</option>
-								<option value="category5">카테고리5</option>
-								<option value="category6">카테고리6</option>
+								<option value="패션의류">패션의류</option>
+								<option value="뷰티잡화">뷰티잡화</option>
+								<option value="유아용품">유아용품</option>
+								<option value="가구/생활">가구/생활</option>
+								<option value="취미">취미</option>
+								<option value="전자기기">전자기기</option>
+								<option value="스포츠/레저">스포츠/레저</option>
+								<option value="자동차">자동차</option>
+								<option value="도서">도서</option>
 						</select></td>
 						<td>상품상태</td>
 						<td colspan="2"><input type="radio" name="prod_con" value="중고" id="radio1"><label for="radio1">중고</label> <input type="radio" name="prod_con" value="새상품" id="radio2"><label for="radio2">새상품</label></td>
@@ -132,12 +135,15 @@
 							</div>
 							<div class="form-group">
 								<label>Select</label> <select class="form-control" id="prod_cate" name="prod_cate">
-									<option value="category1">option 1</option>
-									<option value="category2">option 2</option>
-									<option value="category3">option 3</option>
-									<option value="category4">option 4</option>
-									<option value="category5">option 5</option>
-									<option value="category6">option 6</option>
+									<option value="패션의류">패션의류</option>
+									<option value="뷰티잡화">뷰티잡화</option>
+									<option value="유아용품">유아용품</option>
+									<option value="가구/생활">가구/생활</option>
+									<option value="취미">취미</option>
+									<option value="전자기기">전자기기</option>
+									<option value="스포츠/레저">스포츠/레저</option>
+									<option value="자동차">자동차</option>
+									<option value="도서">도서</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -164,63 +170,51 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#modal-default')
-				.on(
-						"show.bs.modal",
-						function(e) { //모달켜지면
-							$('.box-title').remove();
-							$('#prod_no').remove();
-							console.log(e.relatedTarget);
-							var prod_no = $(e.relatedTarget).data('prod_no') * 1;
-							var prod_name = $(e.relatedTarget)
-									.data('prod_name');
-							var prod_con = $(e.relatedTarget).data('prod_con');
-							var prod_price = $(e.relatedTarget).data(
-									'prod_price');
-							var prod_content = $(e.relatedTarget).data(
-									'prod_content');
-							var prod_cate = $(e.relatedTarget)
-									.data('prod_cate');
-							var prod_img = $(e.relatedTarget).data('prod_img');
-							var own_id = $(e.relatedTarget).data('own_id') * 1;
-							var modal_cate = $(e.relatedTarget).data(
-									'modal_cate') * 1;
-							// 			var img = prod_img.substring(prod_img.lastIndexOf("/")+1);
-							console.log(prod_no);
-							console.log(own_id);
-							console.log(prod_img);
-							if (prod_con == '새상품') {
-								$('#p_radio2').attr("checked", true);
-							} else {
-								$('#p_radio1').attr("checked", true);
-							}
+		$('#modal-default').on("show.bs.modal",function(e) { //모달켜지면
+			$('.box-title').remove();
+			$('#prod_no').remove();
+			console.log(e.relatedTarget);
+			var prod_no = $(e.relatedTarget).data('prod_no') * 1;
+			var prod_name = $(e.relatedTarget).data('prod_name');
+			var prod_con = $(e.relatedTarget).data('prod_con');
+			var prod_price = $(e.relatedTarget).data('prod_price');
+			var prod_content = $(e.relatedTarget).data('prod_content');
+			var prod_cate = $(e.relatedTarget).data('prod_cate');
+			var prod_img = $(e.relatedTarget).data('prod_img');
+			var own_id = $(e.relatedTarget).data('own_id') * 1;
+			var modal_cate = $(e.relatedTarget).data('modal_cate') * 1;
+// 			var img = prod_img.substring(prod_img.lastIndexOf("/")+1);
+			console.log(prod_no);
+			console.log(own_id);
+			console.log(prod_img);
+							
+			if (prod_con == '새상품') {
+				$('#p_radio2').attr("checked", true);
+			} else {
+				$('#p_radio1').attr("checked", true);
+			}
 
-							$('#prod_name').val(prod_name);
-							$('#prod_price').val(prod_price);
-							$('#prod_content').val(prod_content);
-							$('#prod_cate').val(prod_cate).prop("selected",
-									true);
-							// 			$('#prod_img').val(img);
-							$('#own_id').val(own_id);
-							$('#modal_cate').val(modal_cate);
+			$('#prod_name').val(prod_name);
+			$('#prod_price').val(prod_price);
+			$('#prod_content').val(prod_content);
+			$('#prod_cate').val(prod_cate).prop("selected",true);
+// 			$('#prod_img').val(img);
+			$('#own_id').val(own_id);
+			$('#modal_cate').val(modal_cate);
 
-							if (modal_cate == 1) {
-								$('.box-header').append(
-										'<h3 class="box-title">상품 수정하기</h3>');
-								$('.prod_noDiv')
-										.append(
-												'<input type="hidden" name="prod_no" id="prod_no" value="">');
-								$('#prod_no').val(prod_no);
-							} else {
-								$('.box-header').append(
-										'<h3 class="box-title">상품 등록하기</h3>')
-							}
+			if (modal_cate == 1) {
+				$('.box-header').append('<h3 class="box-title">상품 수정하기</h3>');
+				$('.prod_noDiv').append('<input type="hidden" name="prod_no" id="prod_no" value="">');
+				$('#prod_no').val(prod_no);
+			} else {
+				$('.box-header').append('<h3 class="box-title">상품 등록하기</h3>');
+			}
 
-						});
+		});
 		$('.pagination li a').hover(function() {
 			$(this).css('color', 'red');
 			$(this).css("cursor", "pointer");
-		}, function() {
+		},function() {
 			$(this).css('color', 'white');
 		});
 
@@ -230,7 +224,7 @@
 				return false;
 			}
 		});
-		
+		console.log('123');
 	});
 </script>
 <%@ include file="../include/footer.jsp"%>
