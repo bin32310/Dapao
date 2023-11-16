@@ -36,8 +36,7 @@
 			
 			제목 : <input type="text" value="" name="it_title" required="required"> <br>
 			가격 : <input type="number" value="" name="it_price" required="required"> <br>
-			내용 :<!--  <input type="text" value="" name="it_content" required> <br> -->
-			<textarea rows="5" cols="10" name="it_content" required="required"></textarea> <br>
+			내용 : <textarea rows="5" cols="10" name="it_content" required="required"></textarea> <br>
 			
 			상품 상태 :<input type="radio" value="중고" name="it_con" checked> 중고
 			<input type="radio" value="새상품" name="it_con"> 새상품 <br>
