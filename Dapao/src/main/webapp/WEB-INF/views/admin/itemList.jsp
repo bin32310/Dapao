@@ -1,55 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../include/header.jsp"%>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
-.box-body {
-	padding-bottom: 7%;
+.itState{
+	border-radius: 0.3em;
+    background-color: aliceblue;
+    border: none;
+    color: green;
 }
-
-#search {
-	float: right;
-	margin-bottom: 30px;
-}
-
-.boxList {
-	position: relative;
-	border-radius: 3px;
-	background: #ffffff;
-	border-top: 3px solid #d2d6de;
-	margin-bottom: 20px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-	margin: 30px;
-	font-size: 20px;
-	border: 2px solid #68b22c;
-}
-
-.pagination-sm>li>a {
-	font-size: 20px;
-	margin-bottom: 10%;
-}
-
-.box-title {
-	font-size: 30px;
-}
-
-.pContent {
-	margin: 0 0 -30px;
-	font-size: larger;
-	margin-top: 15px;
+.itState:hover{
+	background-color: green;
+	color: white;
 }
 </style>
-
-
 
 <div class="boxList">
 	<div class="box-header with-board">
 		<p class="pContent">회원 상품 관리</p>
 		<form action="/admin/itemList" id="search">
-			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
+			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
 			<button id="searchBtn">Search</button>
 		</form>
 
@@ -58,14 +27,14 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr role="row">
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">글 번호</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">회원 아이디</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">상품 카테고리</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">가격</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">상품상태</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" width="7%">판매상태</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" width="12%">날짜정보</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1" width="5%"></th>
+					<th>글 번호</th>
+					<th>회원 아이디</th>
+					<th>상품 카테고리</th>
+					<th>가격</th>
+					<th>상품상태</th>
+					<th width="7%">판매상태</th>
+					<th width="12%">날짜정보</th>
+					<th width="7%"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -113,15 +82,15 @@
 		<ul class="pagination pagination-sm no-margin pull-right">
 
 			<c:if test="${pageVO.prev }">
-				<li><a href="/admin/itemList?page=${pageVO.startPage-1 } ">←</a></li>
+				<li><a href="temList?page=${pageVO.startPage-1 } ">←</a></li>
 			</c:if>
 
 			<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
-				<li ${pageVO.cri.page == i? 'class="active"':'' }><a href="/admin/itemList?page=${i }">${i }</a></li>
+				<li ${pageVO.cri.page == i? 'class="active"':'' }><a href="itemList?page=${i }">${i }</a></li>
 			</c:forEach>
 
 			<c:if test="${pageVO.next }">
-				<li><a href="/admin/itemList?page=${pageVO.endPage+1 }">→</a></li>
+				<li><a href="itemList?page=${pageVO.endPage+1 }">→</a></li>
 			</c:if>
 		</ul>
 	</div>
@@ -141,7 +110,7 @@
 				dataType : "json",
 				success : function(data) {
 					console.log("성공 / 결과 : " + data);
-					location.replace("/admin/itemList?page=${param.page}");
+					location.replace("itemList?page=${param.page}");
 				},
 				error : function() {
 					console.log("에러");
@@ -155,23 +124,6 @@
 		});
 	});
 </script>
-<style>
-.search_area {
-	display: inline-block;
-	margin-top: 30px;
-	margin-left: 260px;
-}
-
-.search_area input {
-	height: 30px;
-	width: 250px;
-}
-
-.search_area button {
-	width: 100px;
-	height: 32px;
-}
-</style>
 
 
 <%@include file="../include/footer.jsp"%>

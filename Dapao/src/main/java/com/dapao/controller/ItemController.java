@@ -27,6 +27,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -138,18 +139,12 @@ public class ItemController {
 		int itno=0;
 		// 세션 - 아이디
 		String us_id = (String) session.getAttribute("us_id");
-//		String latitudeString = (String) session.getAttribute("latitude");
-//		String longitudeString= (String) session.getAttribute("longitude");
-//		
-//		Double latitude = Double.parseDouble(latitudeString);
-//		Double longitude  = Double.parseDouble(longitudeString);
-//		logger.debug("latitude : " + latitude);
-//		logger.debug("longitude : " + longitude);
+		double it_latitude = (double) session.getAttribute("latitude");
+		double it_longitude = (double) session.getAttribute("longitude");
+
 		itemVO.setUs_id(us_id);
-//		itemVO.setIt_latitude(latitude);
-//		itemVO.setIt_longitude(longitude);
-		itemVO.setIt_latitude(0.0);
-		itemVO.setIt_longitude(0.0);
+		itemVO.setIt_latitude(it_latitude);
+		itemVO.setIt_longitude(it_longitude);
 		logger.debug("@@판매글 정보 : " + itemVO);
 		
 		// 서비스 -> DAO 호출 : 판매글  작성 등록
@@ -972,28 +967,17 @@ public class ItemController {
 	// 메인페이지에 왔을때 세션에 위도경도값 저장
 	@ResponseBody
 	@RequestMapping(value = "/location", method = {RequestMethod.GET,RequestMethod.POST})
-	public int location(HttpSession session, String latitudeString , Double longitudeString) throws Exception {
+	public int location(HttpSession session, @RequestParam("latitude") double latitude , @RequestParam("longitude") double longitude) throws Exception {
 		logger.debug("/item/location() 호출");
-		logger.debug("String형 latitude : "+latitudeString);
-		logger.debug("String형 longitude : "+longitudeString);
 		
-		
-		//Double latitude = Double.parseDouble(latitudeString);
-		//Double longitude = Double.parseDouble(longitudeString);
-		//logger.debug("Double형 latitude : "+ latitude);
-		//logger.debug("Double형 longitude : "+ latitude);
+		logger.debug("latitude : "+ latitude);
+		logger.debug("longitude : "+ latitude);
 		
 		// 위도
-		//session.setAttribute("latitude", latitude);
+		session.setAttribute("latitude", latitude);
 		// 경도 
-		//session.setAttribute("longitude", longitude);
-		
-		ItemVO itemVO = new ItemVO();
-		itemVO.setIt_no(1);
-		//itemVO.setIt_latitude(latitude);
-		//itemVO.setIt_longitude(longitude);
-		
-		
+		session.setAttribute("longitude", longitude);
+	
 		return 1;
 	}
 	
