@@ -1,62 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../include/header.jsp"%>
-
 <style>
-.box-body {
-	padding-bottom: 7%;
+.acState{
+	border-radius: 0.3em;
+    background-color: aliceblue;
+    border: none;
+    color: green;
 }
-
-#search {
-	float: right;
-	margin-bottom: 30px;
-}
-
-.boxList {
-	position: relative;
-	border-radius: 3px;
-	background: #ffffff;
-	border-top: 3px solid #d2d6de;
-	margin-bottom: 20px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-	margin: 30px;
-	font-size: 20px;
-}
-
-.pagination-sm>li>a {
-	font-size: 20px;
-	margin-bottom: 10%;
-}
-
-.box-title {
-	font-size: 30px;
-}
-
-.pContent {
-	margin: 0 0 -30px;
-	font-size: larger;
-	margin-top: 15px;
-}
-
-#searchBtn {
-	border-radius: 0.5em;
-	background-color: #14571f;
+.acState:hover{
+	background-color: green;
 	color: white;
-	border-color: #14571f;
-}
-
-#search2 {
-	border-radius: 0.5em;
-	border-color: #14571f;
-	background-color: white;
 }
 </style>
-
 <div class="boxList">
 	<div class="box-header with-board">
 		<p class="pContent">신고 관리</p>
 		<form action="/admin/acList" id="search">
-			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
+			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
 			<button id="searchBtn">Search</button>
 		</form>
 	</div>
@@ -292,23 +253,6 @@
 		});
 	});//ready
 </script>
-<style>
-.search_area {
-	display: inline-block;
-	margin-top: 30px;
-	margin-left: 260px;
-}
-
-.search_area input {
-	height: 30px;
-	width: 250px;
-}
-
-.search_area button {
-	width: 100px;
-	height: 32px;
-}
-</style>
 
 
 <%@include file="../include/footer.jsp"%>

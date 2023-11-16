@@ -1,50 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@include file="../include/header.jsp"%>
-
-<style>
-.box-body {
-	padding-bottom: 7%;
-}
-
-#search {
-	float: right;
-	margin-bottom: 30px;
-}
-
-.boxList {
-	position: relative;
-	border-radius: 3px;
-	background: #ffffff;
-	border-top: 3px solid #d2d6de;
-	margin-bottom: 20px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-	margin: 30px;
-	font-size: 20px;
-}
-
-.pagination-sm>li>a {
-	font-size: 20px;
-	margin-bottom: 10%;
-}
-
-.box-title {
-	font-size: 30px;
-}
-
-.pContent {
-	margin: 0 0 -30px;
-	font-size: larger;
-	margin-top: 15px;
-}
-</style>
-
+<%@ include file="../include/header.jsp" %>
 
 <div class="boxList">
 	<div class="box-header with-board">
 		<p class="pContent">사업자 관리</p>
 		<form action="/admin/ownerList" id="search">
-			<input type="text" name="keyword" value="${pageVO.cri.keyword }">
+			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
 			<button id="searchBtn">Search</button>
 		</form>
 	</div>
@@ -52,12 +14,12 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr role="row">
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">사업자 아이디</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">사업자 이름</th>
-					<th class="sorting_desc" tabindex="0" rowspan="1" colspan="1">주소</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">전화번호</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">신고 누적</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">사업자 상태</th>
+					<th>사업자 아이디</th>
+					<th>사업자 이름</th>
+					<th>주소</th>
+					<th>전화번호</th>
+					<th>신고 누적</th>
+					<th>사업자 상태</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -396,21 +358,5 @@
 		});
 	});//ready
 </script>
-<style>
-.search_area {
-	display: inline-block;
-	margin-top: 30px;
-	margin-left: 260px;
-}
 
-.search_area input {
-	height: 30px;
-	width: 250px;
-}
-
-.search_area button {
-	width: 100px;
-	height: 32px;
-}
-</style>
 <%@include file="../include/footer.jsp"%>
