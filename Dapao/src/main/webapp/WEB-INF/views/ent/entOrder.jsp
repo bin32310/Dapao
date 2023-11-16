@@ -121,4 +121,4 @@
 </script>
 
 
-<%@ include file="../include/footer.jsp"%>
+<%@ include file="../include/entFooter.jsp"%>

@@ -110,8 +110,10 @@
 
 <script type="text/javascript">
 	$(function() {
+		var own_id = '${own_id}';
+		console.log(own_id);
 		$('.small-box-footer').click(function() {
-			if(${own_id == null}){
+			if(own_id == null){
 				alert('로그인 이후 사용해주세요');
 				return false;
 			}
@@ -122,8 +124,8 @@
 		}, function() {
 			$(this).css('color', 'white');
 		});
-
+		console.log('');
 	});
 </script>
 
-<%@ include file="../include/footer.jsp"%>
+<%@ include file="../include/entFooter.jsp"%>
