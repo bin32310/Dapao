@@ -454,6 +454,7 @@ input:focus{
 		
 			<c:if test="${!empty us_id }">
 				<input type="hidden" value="${us_id }" id="session_us_id">
+				<input type="hidden" value="${us_state }"  id="session_us_state"> <br>
 			</c:if>
 			<c:if test="${itemVO.it_state == 3 }">
 				<c:redirect url="../user/userMain"/>
@@ -546,7 +547,7 @@ input:focus{
 					</c:if>
 					<!-- 판매자 본인의 글에 들어옴 -->
 					<c:if test="${!empty us_id && itemVO.us_id.equals(us_id) && itemVO.it_state == 1}">
-						<input type="button" value="구매확정하기" id="sellerPurchaseOK"> 
+						<input type="button" value="구매확정" id="sellerPurchaseOK"> 
 						<input type="button" value="취소" id="sellerCancleOK"> 
 					</c:if>
 					<!-- 예약중인 글에 구매자나 판매가자 들어왔다면 -->
@@ -941,6 +942,7 @@ $(document).ready(function(){
 						$('#addLoveBtn').css("background-color","#FFA7A7");
 						alert("찜완료");
 						console.log(love_value);
+						location.reload();
 						
 					}else{ // 찜취소
 								
@@ -949,6 +951,7 @@ $(document).ready(function(){
 						$('#addLoveBtn').css("background-color","#E1E1E1");
 						alert("찜취소");
 						console.log(love_value);
+						location.reload();
 					} //else
 				}
 			} // success 끝	
@@ -975,6 +978,19 @@ $(document).ready(function(){
 				alert('정지기간에는 판다톡 이용할 수 없습니다.');
 			}else if(us_state == 0){ // 정상
 				
+				$.ajax({
+					type : "get",
+					url : "/websocket/chat",
+					data : {"us_id" : session_us_id},
+					error: function(){
+						alert("채팅 연결 실패");
+					},
+					success : function(result){
+							console.log("success");
+							alert("채팅 연결 성공");
+								
+					} // success 끝	
+				}); // ajax 끝
 				
 			}else{// 탈퇴
 				alert('탈퇴한 회원은 채팅이 불가합니다.');

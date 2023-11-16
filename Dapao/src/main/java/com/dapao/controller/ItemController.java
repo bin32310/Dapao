@@ -420,6 +420,7 @@ public class ItemController {
 
 		// 판매글 조회
 		ItemVO itemVO = iService.itemDetail(it_no);
+		itemVO.setIt_love(iService.loveCount(it_no));
 		logger.debug("@@판매글 정보 : " + itemVO);
 		model.addAttribute("itemVO", itemVO);
 		
@@ -726,7 +727,7 @@ public class ItemController {
 		
 	}
 	
-	// 구매자 유저가 취소버튼 클릭시 
+	// 구매자 유저가 취소버튼 클릭시 (1)
 	@ResponseBody
 	@RequestMapping(value = "/userPurchaseCancle", method = RequestMethod.POST)
 	public int purchaseCancle(HttpSession session, Integer it_no, Integer tr_no) throws Exception {
@@ -778,7 +779,7 @@ public class ItemController {
 		
 	}
 	
-	// 판매자 유저가 취소버튼 클릭시 
+	// 판매자 유저가 취소버튼 클릭시 (2)
 	@ResponseBody
 	@RequestMapping(value = "/sellerPurchaseCancle", method = RequestMethod.POST)
 	public int sellerPurchaseCancle(HttpSession session, Integer it_no, Integer tr_no) throws Exception {
@@ -833,7 +834,7 @@ public class ItemController {
 		
 	}
 	
-	// 구매자 유저가 구매확정하기 버튼 클릭시 
+	// 구매자 유저가 구매확정하기 버튼 클릭시 (3)
 	@ResponseBody
 	@RequestMapping(value = "/userPurchaseOk", method = RequestMethod.POST)
 	public int userPurchaseOk(HttpSession session, Integer it_no, Integer tr_no) throws Exception {
@@ -884,7 +885,7 @@ public class ItemController {
 		return sellerState;
 	}
 	
-	// 판매자 유저가 구매확정하기 버튼 클릭시 
+	// 판매자 유저가 구매확정하기 버튼 클릭시 (4)
 	@ResponseBody
 	@RequestMapping(value = "/sellerPurchaseOk", method = RequestMethod.POST)
 	public int sellerPurchaseOk(HttpSession session, Integer it_no, Integer tr_no) throws Exception {
