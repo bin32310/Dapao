@@ -25,7 +25,7 @@
 		<form action=""  method="post" id="form">
 		
 			이미지 사진 :
-			<input type="file" name="uploadFile" multiple required> <br>
+			<input type="file" name="uploadFile" multiple required="required"> <br>
 			
 			<div id="uploadResult">
 				<ul>
@@ -34,25 +34,23 @@
 				
 			</div>
 			
-			제목 : <input type="text" value="" name="it_title" required> <br>
-			가격 : <input type="number" value="" name="it_price" required> <br>
+			제목 : <input type="text" value="" name="it_title" required="required"> <br>
+			가격 : <input type="number" value="" name="it_price" required="required"> <br>
 			내용 :<!--  <input type="text" value="" name="it_content" required> <br> -->
-			<textarea rows="5" cols="10" name="it_content"></textarea> <br>
+			<textarea rows="5" cols="10" name="it_content" required="required"></textarea> <br>
 			
 			상품 상태 :<input type="radio" value="중고" name="it_con" checked> 중고
 			<input type="radio" value="새상품" name="it_con"> 새상품 <br>
 			
 			카테고리 : 
-			<select name="it_cate" required>
+			<select name="it_cate" required="required">
 				<option value="">카테고리</option>
-				<option value="패션의류">패션의류</option> 
-				<option value="뷰티잡화">뷰티/잡화</option> 
+				<option value="패션의류">패션의류</option>
 				<option value="유아용품">유아용품</option> 
 				<option value="가구생활">가구/생활</option> 
 				<option value="취미">취미</option> 
 				<option value="전자기기">전자기기</option> 
-				<option value="스포츠레저">스포츠/레저</option> 
-				<option value="자동차">자동차</option> 
+				<option value="스포츠레저">스포츠/레저</option>
 				<option value="도서">도서</option> 
 			</select> <br>
 
