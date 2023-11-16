@@ -31,7 +31,42 @@
   </head>
       <!-- jQuery 2.1.4 -->
     <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-  <body class="skin-blue sidebar-mini">
+
+<style>
+.skin-purple-light .main-header .navbar {
+	background-color: green;
+}
+
+.skin-purple-light .main-header .logo{
+	background-color: green;
+}
+
+
+.main-sidebar{
+	box-shadow: 8px 0px 5px -2px #14571f94;
+}
+
+.content-wrapper{
+	background-color: #f9fafc;
+}
+
+.pagination>.active>a, .pagination>.active>a:hover{
+	background-color: #14571f;
+    border-color: #14571f;
+}
+
+.skin-purple-light .main-header .logo:hover {
+    background-color: #14571f;
+}
+
+.skin-purple-light .main-header .navbar .sidebar-toggle:hover {
+    background-color: #14571f;
+}
+
+
+</style>
+  <body class="skin-purple-light sidebar-mini">
+
     <div class="wrapper">
     
       <header class="main-header">
