@@ -62,30 +62,62 @@
 	
 	<h2> 인기 물건 둘러보기 </h2>
 	
- 	<c:forEach var="item" items="${itemList}">
-		<a href="../item/itemDetail?it_no=${item.it_no }">
-			<img src="/imgfile/${item.it_img }" name="it_img" width="150px" height="150px" > <br>
-			<input type="text" value="${item.it_title }" name="it_title"> <br>
-			<input type="text" value="${item.it_price }" name="it_price">
-			<input type="hidden" value="${item.it_state }" name="it_state">
-			<!-- 글 상태 표시 -->
-			<c:choose>
-				<c:when test="${item.it_state == 0 }">
-					<input type="text" value="판매중"> <br>
-				</c:when>
-				<c:when test="${item.it_state == 1 }">
-					<input type="text" value="예약중"> <br>
-				</c:when>
-				<c:when test="${item.it_state == 2 }">
-					<input type="text" value="판매완료"> <br>
-				</c:when>
-				<c:otherwise>
-					<input type="text" value="접근이상함"> <br>			
-				</c:otherwise>
-			</c:choose>
-		</a> 
-	</c:forEach> 
-	
+	<!-- 로그인 하지 않았을 때 -->
+	<c:if test="${empty us_id }">
+	 	<c:forEach var="item" items="${itemList}">
+	 		<c:if test="${item.it_state != 2 }">
+				<a href="../item/itemDetail?it_no=${item.it_no }">
+					<img src="/imgfile/${item.it_img }" name="it_img" width="150px" height="150px" > <br>
+					<input type="text" value="${item.it_title }" name="it_title"> <br>
+					<input type="text" value="${item.it_price }" name="it_price">
+					<input type="hidden" value="${item.it_state }" name="it_state">
+					<!-- 글 상태 표시 -->
+					<c:choose>
+						<c:when test="${item.it_state == 0 }">
+							<input type="text" value="판매중"> <br>
+						</c:when>
+						<c:when test="${item.it_state == 1 }">
+							<input type="text" value="예약중"> <br>
+						</c:when>
+						<c:when test="${item.it_state == 2 }">
+							<input type="text" value="판매완료"> <br>
+						</c:when>
+						<c:otherwise>
+							<input type="text" value="접근이상함"> <br>			
+						</c:otherwise>
+					</c:choose>
+				</a> 
+			</c:if>
+		</c:forEach>
+	</c:if>	 
+	<!-- 로그인 했을 때 -->
+	<c:if test="${!empty us_id }">
+	 	<c:forEach var="item" items="${itemList}">
+	 		<c:if test="${item.it_state != 2 && us_id != item.us_id }">
+				<a href="../item/itemDetail?it_no=${item.it_no }">
+					<img src="/imgfile/${item.it_img }" name="it_img" width="150px" height="150px" > <br>
+					<input type="text" value="${item.it_title }" name="it_title"> <br>
+					<input type="text" value="${item.it_price }" name="it_price">
+					<input type="hidden" value="${item.it_state }" name="it_state">
+					<!-- 글 상태 표시 -->
+					<c:choose>
+						<c:when test="${item.it_state == 0 }">
+							<input type="text" value="판매중"> <br>
+						</c:when>
+						<c:when test="${item.it_state == 1 }">
+							<input type="text" value="예약중"> <br>
+						</c:when>
+						<c:when test="${item.it_state == 2 }">
+							<input type="text" value="판매완료"> <br>
+						</c:when>
+						<c:otherwise>
+							<input type="text" value="접근이상함"> <br>			
+						</c:otherwise>
+					</c:choose>
+				</a> 
+			</c:if>
+		</c:forEach> 
+	</c:if>	
 	<!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
@@ -128,7 +160,7 @@ $(function(){
       var latitude = 0.0;
    	  var longitude = 0.0;
       
-      function showPosition(pos){
+/*       function showPosition(pos){
 
       	latitude = pos.coords.latitude;
       	longitude = pos.coords.longitude;
@@ -158,7 +190,7 @@ $(function(){
      }else{
          alert("브라우저가 Geolocation을 지원하지 않습니다.");
 
-     }
+     } */
      
 	$('#myModal').modal("show");
 	$.ajax({

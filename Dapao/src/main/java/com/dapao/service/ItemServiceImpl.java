@@ -341,6 +341,14 @@ public class ItemServiceImpl {
 		return idao.coinRefund(refundVO);
 		
 	}
+	
+	// 상대방 리뷰
+	public List<TotalVO> yourReview(String us_id) {
+		logger.debug("Service : yourReview(String us_id) 호출");
+		return idao.yourReview(us_id);
+		
+	}
+	
 
 	
 }

@@ -336,6 +336,13 @@ public class ItemDAOImpl{
 		
 	}
 	
+	// 상대방 리뷰
+	public List<TotalVO> yourReview(String us_id) {
+		logger.debug("DAOImpl : yourReview(String us_id) 호출");
+		return sqlSession.selectList(NAMESPACE + ".yourReview", us_id);
+		
+	}
+	
 	
 	
 	

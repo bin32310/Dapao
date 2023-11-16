@@ -166,7 +166,7 @@
   
   
   <select id="yourItem" resultType="ItemVO">
-  select it_img, it_title, it_no from item 
+  select * from item 
   where us_id=#{us_id} 
   order by it_no desc;
   </select>
@@ -292,6 +292,12 @@
   	update us set us_coin = us_coin-#{us_coin} 
   	where us_id = #{us_id } 
   </update>
+  
+  <select id="yourReview" resultType="ToTalVO">
+  select * from review r join us u 
+  on r.rv_buy_id = u.us_id 
+  where r.rv_us_id = #{us_id }
+  </select>
   
   
   

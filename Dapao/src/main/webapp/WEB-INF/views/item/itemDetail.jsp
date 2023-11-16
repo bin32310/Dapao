@@ -150,9 +150,9 @@ input:focus{
 /* 내 판매글 목록보기 */
 #my_sell_list{
 	
-	border : none;
-	background-color : #59DA50;
-	width : 500px;
+	border : 6px solid green;
+	background-color : green;
+	width : 503px;
 	height : 50px;
 	color : white;
 	font-weight: bold;
@@ -315,11 +315,11 @@ input:focus{
 /* 글 수정 삭제 */
 #item_update{
 
-	border : none;
-	background-color : #FFB2D9;
-	width : 100px;
-	height : 100px;
-	color : white;
+	border : 3px solid green;
+	background-color : #ecf0f5;
+	width : 250px;
+	height : 50px;
+	color : black;
 	font-weight: bold;
 	font-size : 30px;
 	cursor: pointer;
@@ -327,11 +327,11 @@ input:focus{
 }
 
 #item_delete{
-	border : none;
-	background-color : #E1E1E1;
-	width : 100px;
-	height : 100px;
-	color : white;
+	border : 3px solid green;
+	background-color :##ecf0f5;
+	width : 250px;
+	height : 50px;
+	color : black;
 	font-weight: bold;
 	font-size : 30px;
 	cursor: pointer;
@@ -518,7 +518,7 @@ input:focus{
 				</c:if>
 				<!-- 내 판매글일 경우 -->
 				<c:if test="${!empty us_id && us_id.equals(itemVO.us_id) && itemVO.it_state != 2 }">
-					<input type="button" value="내 판매글 목록보기" id="my_sell_list">
+					<input type="button" value="내 판매글 목록보기" id="my_sell_list"> <br><br>
 					<input type="button" value="수정" id="item_update">
 					<input type="button" value="삭제" id="item_delete">
 				</c:if>
@@ -561,7 +561,7 @@ input:focus{
 	<hr>
 	<div id="it_content_div">
 		<input type="text" value="상세 내용" id="it_content_title"> <br>
-		<input type="text" value="${itemVO.it_content}" readonly id="it_content">
+		<textarea readonly id="it_content">${itemVO.it_content}</textarea>
 	</div>
 
 	
