@@ -172,9 +172,11 @@ public class UserController {
 
    
    
+      // 아이디 찾기 뷰페이지 보내주는 GET
+   @RequestMapping(value = "/userFindId", method = RequestMethod.GET)
+   public void userFindIdGET(HttpSession session, UserVO vo, Model model) throws Exception { 
       
-      
-      
+   }   
       // 아이디 찾기 POST 
    
      @RequestMapping(value = "/userFindId", method = RequestMethod.POST)
@@ -222,21 +224,7 @@ public class UserController {
      
      
 	
-	  // 이메일 인증
 	
-	/*
-	 * @GetMapping("/userFindPw")
-	 * 
-	 * @RequestBody public String sendEmail(String email) throws Exception{
-	 * logger.debug("이메일 인증요청 들어옴"); logger.debug("인증 이메일  :" + email);
-	 * 
-	 * return mss.joinEmail(email);
-	 * 
-	 * }
-	 * 
-	 * 
-	 */
-      
      
 }
    
