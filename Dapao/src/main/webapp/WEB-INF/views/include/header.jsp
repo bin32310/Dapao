@@ -63,7 +63,7 @@
 
 
 </style>
-  <body class="skin-blue sidebar-mini">
+  <body class="skin-purple-light sidebar-mini">
     <div class="wrapper">
       
       <header class="main-header">
