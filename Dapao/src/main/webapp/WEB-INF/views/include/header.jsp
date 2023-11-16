@@ -18,7 +18,8 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins 
          folder instead of downloading all of them to reduce the load. -->
     <link href="${pageContext.request.contextPath }/resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-
+	<!-- adminList style -->
+	<link href="${pageContext.request.contextPath }/resources/css/adminList.css" rel="stylesheet" type="text/css"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,42 +31,9 @@
   </head>
       <!-- jQuery 2.1.4 -->
     <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-<style>
-.skin-purple-light .main-header .navbar {
-	background-color: green;
-}
-
-.skin-purple-light .main-header .logo{
-	background-color: green;
-}
-
-
-.main-sidebar{
-	box-shadow: 8px 0px 5px -2px #14571f94;
-}
-
-.content-wrapper{
-	background-color: #f9fafc;
-}
-
-.pagination>.active>a, .pagination>.active>a:hover{
-	background-color: #14571f;
-    border-color: #14571f;
-}
-
-.skin-purple-light .main-header .logo:hover {
-    background-color: #14571f;
-}
-
-.skin-purple-light .main-header .navbar .sidebar-toggle:hover {
-    background-color: #14571f;
-}
-
-
-</style>
   <body class="skin-blue sidebar-mini">
     <div class="wrapper">
-      
+    
       <header class="main-header">
         <!-- Logo -->
         <a href="${pageContext.request.contextPath }/resources/index2.html" class="logo">

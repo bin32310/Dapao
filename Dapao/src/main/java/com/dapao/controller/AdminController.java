@@ -60,7 +60,6 @@ public class AdminController {
 
 		// 페이지정보 view페이지전달
 		model.addAttribute("userList", userList);
-		session.setAttribute("viewcntck", "on");
 	}
 
 	// 회원관리 - 회원개인정보출력
@@ -332,7 +331,7 @@ public class AdminController {
 	}
 	
 	// 회원상품관리리스트
-	// http://localhost:8088/admin/itemList
+	// http://localhost:8088/admin/itemList?page=1
 	@RequestMapping(value="/itemList")
 	public void itemList(Criteria cri,Model model) throws Exception{
 		// 상품리스트정보 저장
@@ -341,8 +340,14 @@ public class AdminController {
 		pageVO.setCri(cri);
 		pageVO.setTotalCount(aService.itemCount(cri));
 		
+		model.addAttribute("pageVO", pageVO);
+		
+		// 페이지 이동시 받아온 페이지번호
+		if(cri.getPage()>pageVO.getEndPage()) {
+			cri.setPage(pageVO.getEndPage());
+		}
+		
 		List<ItemVO> itemList = aService.itemList(cri);
-
 		model.addAttribute("itemList", itemList);	
 	}
 	
@@ -392,9 +397,14 @@ public class AdminController {
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
 		pageVO.setTotalCount(aService.prodCount(cri));
+		
+		model.addAttribute("pageVO", pageVO);
+		
+		if(cri.getPage()>pageVO.getEndPage()) {
+			cri.setPage(pageVO.getEndPage());
+		}
 
 		List<ProdVO> prodList = aService.prodList(cri);
-
 		model.addAttribute("prodList", prodList);	
 		
 	}
@@ -488,12 +498,7 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value="/prodDelete")
 	public int prodDelete(@RequestParam("prod_no") Integer prod_no) throws Exception{
-		// 회원상품테이블 상태변경(update)	
-		
-	
-		
-		return aService.prodDelete(prod_no);
-		
+		return aService.prodDelete(prod_no);	
 	}
 	
 	// 체험단관리 - 체험단 글 1개 정보
