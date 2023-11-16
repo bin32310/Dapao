@@ -57,7 +57,7 @@ public class EntController {
 		if (Ent_id == null) {
 			own_id = (String) session.getAttribute("own_id");
 		}
-
+		
 		EntVO eVo = new EntVO();
 		eVo.setOwn_id(own_id);
 		logger.debug("eService.listEnt(eVo): " + eService.listEnt(eVo));
@@ -116,6 +116,25 @@ public class EntController {
 		eVo.setOwn_id(own_id);
 		logger.debug(" eVO: " + eVo);
 		logger.debug("eService.listEnt(eVo): " + eService.listEnt(eVo));
+		EntVO entList = eService.listEnt(eVo);
+		int idx = 1;
+		if (entList != null) {
+			if (entList.getEnt_img() != null || !entList.getEnt_img().equals("")) {
+				idx = entList.getEnt_img().indexOf(",") + 1;
+			}
+		}
+		String[] imgList = new String[idx];
+		for (int i = 0; i < idx; i++) {
+			imgList[i] = "null";
+		}
+		if (entList != null) {
+			if (!entList.getEnt_img().equals(null) || !entList.getEnt_img().equals("")) {
+				String img = entList.getEnt_img();
+				imgList = img.split(","); // 합쳐진 이미지 ,로 나눠서 저장
+				logger.debug(" imgList : " + imgList);
+			}
+		}
+		model.addAttribute("imgList", imgList);
 		model.addAttribute("ent", eService.listEnt(eVo));
 		model.addAttribute("name", name);
 //		session.setAttribute("own_id", own_id);
@@ -135,7 +154,8 @@ public class EntController {
 		List<MultipartFile> fileList = mhsr.getFiles("file");
 		logger.debug(" fileList : " + fileList);
 		ArrayList<String> imgList = new ArrayList<String>();
-		String path = "C:\\upload"; // 경로
+//		String path = "C:\\upload"; // 경로
+		String path = "F:\\upload"; // 경로
 		File dir = new File(path);
 		if (!dir.isDirectory()) {
 			dir.mkdirs();
@@ -155,6 +175,7 @@ public class EntController {
 		}
 		eVo.setEnt_img(String.join(",", imgList));
 		eService.entUpdate(eVo);
+		
 		logger.debug("eService.listEnt(eVo): " + eService.listEnt(eVo));
 		model.addAttribute("ent", eService.listEnt(eVo));
 		model.addAttribute("name", name);
@@ -163,13 +184,30 @@ public class EntController {
 
 	// http://localhost:8088/ent/productManage
 	@RequestMapping(value = "/productManage", method = RequestMethod.GET)
-	public void productManageGET(HttpSession session, Model model) {
+	public void productManageGET(Criteria cri,HttpSession session, Model model) throws Exception {
 		logger.debug(" productManageGET()");
 		logger.debug(" 연결된 뷰페이지(/views/ent/productManage.jsp)출력 ");
 		String own_id = (String) session.getAttribute("own_id");
 //		String own_id = "6";
 		Integer modal_cate = 0;
+		PageVO vo = new PageVO();
+		ProdVO pVo = new ProdVO();
 		String name = "상품 조회/수정/등록";
+		pVo.setOwn_id(own_id);
+		if(cri != null) {
+			vo.setP_vo(pVo);
+			vo.setCri(cri);
+			vo.setTotalCount(pService.getProdList(own_id));
+			List<ProdVO> plist = pService.searchProd(vo);
+			model.addAttribute("plist", plist);
+			model.addAttribute("pageVO", vo);
+		}
+		logger.debug(" vo : " + vo);
+
+		// 리스트 사이즈 확인
+
+		// Model 객체에 리스트 정보를 저장
+		
 		session.setAttribute("modal_cate", modal_cate);
 //		session.setAttribute("own_id", "6");
 		model.addAttribute("name", name);
@@ -181,6 +219,7 @@ public class EntController {
 		logger.debug(" productManagerPOST() ");
 		String name = "상품 조회/수정/등록";
 		String own_id = (String) session.getAttribute("own_id");
+		logger.debug("own_id : "+own_id);
 //		String own_id = "6";
 		logger.debug(" vo : " + vo);
 		PageVO pVo = new PageVO();
@@ -200,23 +239,6 @@ public class EntController {
 		model.addAttribute("name", name);
 		logger.debug(" 연결된 뷰페이지(/views/ent/productManage.jsp)출력 ");
 	}
-//	@RequestMapping(value = "/productAd", method = RequestMethod.GET)
-//	@ResponseBody
-//	public List<ProdVO> productAdGET(ModelAndView mav,PageVO pVo,HttpSession session) throws Exception {
-//		logger.debug(" productManagerPOST() ");
-//		String own_id = (String) session.getAttribute("own_id");
-////		String own_id = "6";
-//		ProdVO vo = new ProdVO();
-//		logger.debug(" vo : " + vo);
-//		vo.setOwn_id(own_id);
-//		pVo.setP_vo(vo);
-//		pVo.setTotalCount(pService.getProdList(vo.getOwn_id()));
-//		logger.debug(" pVo : " + pVo);
-//		List<ProdVO> plist = pService.searchProd(pVo);
-////		model.addAttribute("pageVO", pVo);
-//		mav.addObject("pageVO", pVo);
-//		return plist;
-//	}
 
 	// http://localhost:8088/ent/entOrder
 	// http://localhost:8088/ent/entOrder?own_id=6
@@ -269,7 +291,13 @@ public class EntController {
 			logger.debug("주문번호 주문조회");
 			// 검색조건이 주문번호일 경우
 			TradeVO tVo = new TradeVO();
+			if(search == null || search.equals("")) {
+				model.addAttribute("name", name);
+				return;
+			}
 			Integer tr_no = Integer.parseInt(search);
+			
+			
 			tVo.setTr_no(tr_no);
 			vo.setP_vo(pVo);
 			vo.setT_vo(tVo);
@@ -286,23 +314,27 @@ public class EntController {
 	}
 
 	@RequestMapping(value = "/productUpdate", method = RequestMethod.POST)
-	public String productUpdatePOST(ProdVO vo, Integer modal_cate, Model model, final MultipartHttpServletRequest mhsr,
+	public String productUpdatePOST(ProdVO vo,  HttpSession session, Integer modal_cate, 
+			Model model, final MultipartHttpServletRequest mhsr,
 			HttpServletResponse response) throws Exception {
 		logger.debug(" productUpdatePOST() 호출 ");
 		logger.debug(" vo : " + vo);
 		logger.debug(" modal_cate : " + modal_cate);
 		String name = "상품 조회/수정/등록";
+		String own_id = (String) session.getAttribute("own_id");
+		vo.setOwn_id(own_id);
 		List<MultipartFile> fileList = mhsr.getFiles("file");
 		ArrayList<String> imgList = new ArrayList<String>();
 //		String path = mhsr.getServletContext().getRealPath("\\upload"); // 경로
-		String path = "C:\\upload"; // 경로
+//		String path = "C:\\upload"; // 경로
+		String path = "F:\\upload"; // 경로
 		File dir = new File(path);
 		if (!dir.isDirectory()) {
 			dir.mkdirs();
 		}
 		logger.debug(" path : " + path);
 		for (MultipartFile mf : fileList) {
-			String genId = UUID.randomUUID().toString(); // 중복 처리 
+			String genId = UUID.randomUUID().toString(); // 중복 처리
 			String originFileName = mf.getOriginalFilename(); // 원본 파일 명
 
 			String saveFile = path + "\\" + genId + "_" + originFileName; // 저장할 경로
@@ -368,7 +400,8 @@ public class EntController {
 			HttpServletRequest req) throws Exception {
 		// String downFile = CURR_IMAGE_REPO_PATH + "\\" + imageFileName;
 //		String downFile = req.getRealPath("/upload") + "\\" + imageFileName;
-		String downFile = "C:\\upload" + "\\" + imageFileName;
+//		String downFile = "C:\\upload" + "\\" + imageFileName;
+		String downFile = "F:\\upload" + "\\" + imageFileName;
 		logger.debug(" downFile : " + downFile);
 		File file = new File(downFile);
 
@@ -390,7 +423,6 @@ public class EntController {
 		out.close();
 		in.close();
 	}
-
 
 	// 파일 썸네일 다운로드 처리
 	@RequestMapping(value = "/thumbDownload", method = RequestMethod.GET)
@@ -527,11 +559,44 @@ public class EntController {
 				session.setAttribute("own_id", resultVO.getOwn_id());
 			}
 
-
 		}
 
 		return "redirect:/ent/entMain";
 	}
+
+	// http://localhost:8088/ent/entMain
+	@RequestMapping(value = "/entMain", method = RequestMethod.GET)
+	public void entMainGET(HttpSession session) throws Exception {
+		logger.debug("entMainGET() 호출");
+		logger.debug("연결된 view 페이지 호출 (/views/etn/entMain.jsp)");
+	}
+
+	@RequestMapping(value = "/entLogout", method = { RequestMethod.GET, RequestMethod.POST })
+	public String entLogoutGET(HttpSession session) {
+		logger.debug("logoutGET() 호출");
+
+		// 로그아웃 처리 => 세션정보 초기화
+		session.invalidate();
+		// 메인페이지로 이동
+
+		return "redirect:/ent/entMain";
+	}
+
+	// http://localhost:8088/ent/entMain
+	@RequestMapping(value = "/ownInfo", method = RequestMethod.GET)
+	public void ownInfoGET(HttpSession session, Model model) throws Exception {
+		logger.debug("ownInfoGET() 호출");
+
+		// 사용자 아이디 정보 저장
+		logger.debug(session.getAttribute("own_id") + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		String own_id = (String) session.getAttribute("own_id");
+
+		model.addAttribute(eService.ownInfo(own_id));
+
+	}
+
+	@RequestMapping(value = "/ownDelete", method = RequestMethod.GET)
+	public void ownDelete() {
 
 	}
 
@@ -544,7 +609,5 @@ public class EntController {
 		model.addAttribute("name", name);
 		logger.debug(" 연결된 뷰페이지(/views/entOrder.jsp)출력 ");
 	}
-	
-	
 
 }
