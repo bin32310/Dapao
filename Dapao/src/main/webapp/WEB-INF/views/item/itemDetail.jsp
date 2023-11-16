@@ -245,9 +245,10 @@ input:focus{
 	top : 0px;
 	left : 0px;
 	text-align:inherit;
-	border: none;
+	border: 1px solide block;
 	width : 1300px;
 	height: 200px;
+	background-color: transparent;
 
 }
 
@@ -452,155 +453,159 @@ input:focus{
 			<c:if test="${!empty us_id }">
 				<input type="hidden" value="${us_id }" id="session_us_id">
 			</c:if>
+			<c:if test="${itemVO.it_state == 3 }">
+				<c:redirect url="../user/userMain"/>
+			</c:if>
 
-
-			<input type="hidden" value="${itemVO.it_no }" name="it_no" > <br>
-			<a id="cate">카테고리 ></a> <input type="text" value="${itemVO.it_cate }" name="it_cate" readonly id="item_cate">
-			
-			<br><hr><br>
 			
 			
-			<div id="item_detail_main_img">
-				<img src="/resources/itemIMG/back.png" id="img_back">
-	 			<img  src="/imgfile/${itemVO.it_img }" id="item_main_img">
- 				<img src="/resources/itemIMG/forward.png" id="img_next">
- 			</div>
- 			<div id="item_write">
-	 			
-	 			<!-- 글 상태 표시 -->
-				<c:choose>
-					<c:when test="${itemVO.it_state == 0 }">
-						<input type="text" value="판매중" readonly class="item_state" > <br>
-					</c:when>
-					<c:when test="${itemVO.it_state == 1 }">
-						<input type="text" value="예약중" readonly class="item_state" > <br>
-					</c:when>
-					<c:when test="${itemVO.it_state == 2 }">
-						<input type="text" value="판매완료" readonly class="item_state" > <br>
-					</c:when>
-					<c:otherwise>
-						alert("삭제된 글입니다.");
-						<c:redirect url="../user/userLogin"/>				
-					</c:otherwise>
-				</c:choose>
-				<input type="text" value="${itemVO.it_title }" name="it_title" readonly id="item_title"> <br>
- 				<input type="text" value="${itemVO.it_price }원" name="it_price" readonly id="item_price"> <br>
-				<c:if test="${!empty us_id && itemVO.us_id != us_id}">
-					<input type="button" value="신고하기" onclick="location.href='../admin/acWriteForm?it_no=${itemVO.it_no}&us_id=${itemVO.us_id }';" id="it_ac"> <br>
-				</c:if>
-	 			<br>
+				<input type="hidden" value="${itemVO.it_no }" name="it_no" > <br>
+				<a id="cate">카테고리 ></a> <input type="text" value="${itemVO.it_cate }" name="it_cate" readonly id="item_cate">
 				
-				<input type="text" value="찜" id="it_love_text">
-				<input type="text" value="${itemVO.it_love }" name="it_love" readonly id="item_love"> |
-				 
-				<input type="text" value="조회수" id="it_view_text">
-				<input type="text" value="${itemVO.it_view }" name="it_view" readonly id="item_view">  |
-								 
-				<input type="text" value="등록일" id="it_regdate_text">
-				<input type="text" value="${itemVO.it_regdate }" name="it_regdate" readonly id="item_regdate"> <br><br>
+				<br><hr><br>
 				
 				
-				<input type="text" value="▷ 판매자  : " class="item_text" readonly> 
-				<input type="text" value="${sellerVO.us_nickname }" name="us_id" readonly id="item_us_id">
-				<a href="/item/yourPage?us_id=${itemVO.us_id }" ><input type="text" value="판매자 프로필 보기" id="your_pro"></a> <br><br>
-				
-				<input type="text" value="▷ 상품상태  : " class="item_text" readonly> 
-				<input type="text" value="${itemVO.it_con }" name="it_con" readonly id="item_con"> <br><br>
-				
-				<input type="text" value="▷ 거주지  : " class="item_text" readonly> 
-				<input type="text" value="${sellerVO.us_addr }" name="us_addr" readonly id="item_addr"> <br><br>
-				
-				<input type="hidden" value="${itemVO.us_id }" name="us_id"> <br>
-				 
-				<!-- 로그인을 하지 않았을시 -->
-				<c:if test="${empty us_id && itemVO.it_state != 2 }">
-					<input type="button" value="로그인하고 구매하기" id="login_buy">
-				</c:if>
-				<!-- 내 판매글일 경우 -->
-				<c:if test="${!empty us_id && us_id.equals(itemVO.us_id) && itemVO.it_state != 2 }">
-					<input type="button" value="내 판매글 목록보기" id="my_sell_list"> <br><br>
-					<input type="button" value="수정" id="item_update">
-					<input type="button" value="삭제" id="item_delete">
-				</c:if>
-				<!-- 찜 & 판다톡 -->
-				<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state != 2 }">
-					<input type="button" value="찜" id="addLoveBtn"> 
-					<input type="hidden" value="${love}" id="love_value"> 
-					<input type="button" value="판다톡" id="panda"> 
-				</c:if>
-				<!-- 구매자도 판매자도 아닐때 -->
-				<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state != 2 && tradeVO.us_id != us_id}">
-					<input type="button" value="구매하기" id="purchase"> 
-				</c:if>
-				<!-- 구매자가 예약 글에 들어옴 -->
-				<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state == 1 && tradeVO.us_id.equals(us_id)}">
-					<input type="button" value="구매확정" id="userPurchaseOK">
-					<input type="button" value="취소" id="userCancleOK"> 
-				</c:if>
-				<!-- 판매자 본인의 글에 들어옴 -->
-				<c:if test="${!empty us_id && itemVO.us_id.equals(us_id) && itemVO.it_state == 1}">
-					<input type="button" value="구매확정하기" id="sellerPurchaseOK"> 
-					<input type="button" value="취소" id="sellerCancleOK"> 
-				</c:if>
-				<!-- 예약중인 글에 구매자나 판매가자 들어왔다면 -->
-				<c:if test="${tradeVO.tr_no != 0 }">
-					<input type="hidden" value="${tradeVO.tr_no }" name="tr_no">
-				</c:if>
-				<!-- 판매가 완료된 글이라면 -->
-				<c:if test="${itemVO.it_state == 2  }">
-					<input type="button" value="판매 완료" id="item_soldout"> 
-				</c:if>
-			</div>
+				<div id="item_detail_main_img">
+					<img src="/resources/itemIMG/back.png" id="img_back">
+		 			<img  src="/imgfile/${itemVO.it_img }" id="item_main_img">
+	 				<img src="/resources/itemIMG/forward.png" id="img_next">
+ 				</div>
+			
+ 				<div id="item_write">
+		 			<!-- 글 상태 표시 -->
+					<c:choose>
+						<c:when test="${itemVO.it_state == 0 }">
+							<input type="text" value="판매중" readonly class="item_state" > <br>
+						</c:when>
+						<c:when test="${itemVO.it_state == 1 }">
+							<input type="text" value="예약중" readonly class="item_state" > <br>
+						</c:when>
+						<c:when test="${itemVO.it_state == 2 }">
+							<input type="text" value="판매완료" readonly class="item_state" > <br>
+						</c:when>
+						<c:otherwise>
+							alert("삭제된 글입니다.");
+							<c:redirect url="../user/userLogin"/>				
+						</c:otherwise>
+					</c:choose>
+					<input type="text" value="${itemVO.it_title }" name="it_title" readonly id="item_title"> <br>
+	 				<input type="text" value="${itemVO.it_price }원" name="it_price" readonly id="item_price"> <br>
+					<c:if test="${!empty us_id && itemVO.us_id != us_id}">
+						<input type="button" value="신고하기" onclick="location.href='../admin/acWriteForm?it_no=${itemVO.it_no}&us_id=${itemVO.us_id }';" id="it_ac"> <br>
+					</c:if>
+		 			<br>
+					
+					<input type="text" value="찜" id="it_love_text">
+					<input type="text" value="${itemVO.it_love }" name="it_love" readonly id="item_love"> |
+					 
+					<input type="text" value="조회수" id="it_view_text">
+					<input type="text" value="${itemVO.it_view }" name="it_view" readonly id="item_view">  |
+									 
+					<input type="text" value="등록일" id="it_regdate_text">
+					<input type="text" value="${itemVO.it_regdate }" name="it_regdate" readonly id="item_regdate"> <br><br>
+					
+					
+					<input type="text" value="▷ 판매자  : " class="item_text" readonly> 
+					<input type="text" value="${sellerVO.us_nickname }" name="us_id" readonly id="item_us_id">
+					<a href="/item/yourPage?us_id=${itemVO.us_id }" ><input type="text" value="판매자 프로필 보기" id="your_pro"></a> <br><br>
+					
+					<input type="text" value="▷ 상품상태  : " class="item_text" readonly> 
+					<input type="text" value="${itemVO.it_con }" name="it_con" readonly id="item_con"> <br><br>
+					
+					<input type="text" value="▷ 거주지  : " class="item_text" readonly> 
+					<input type="text" value="${sellerVO.us_addr }" name="us_addr" readonly id="item_addr"> <br><br>
+					
+					<input type="hidden" value="${itemVO.us_id }" name="us_id"> <br>
+					 
+					<!-- 로그인을 하지 않았을시 -->
+					<c:if test="${empty us_id && itemVO.it_state != 2 }">
+						<input type="button" value="로그인하고 구매하기" id="login_buy">
+					</c:if>
+					<!-- 내 판매글일 경우 -->
+					<c:if test="${!empty us_id && us_id.equals(itemVO.us_id) && itemVO.it_state != 2 }">
+						<input type="button" value="내 판매글 목록보기" id="my_sell_list"> <br><br>
+						<input type="button" value="수정" id="item_update">
+						<input type="button" value="삭제" id="item_delete">
+					</c:if>
+					<!-- 찜 & 판다톡 -->
+					<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state != 2 }">
+						<input type="button" value="찜" id="addLoveBtn"> 
+						<input type="hidden" value="${love}" id="love_value"> 
+						<input type="button" value="판다톡" id="panda"> 
+					</c:if>
+					<!-- 구매자도 판매자도 아닐때 -->
+					<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state != 2 && tradeVO.us_id != us_id}">
+						<input type="button" value="구매하기" id="purchase"> 
+					</c:if>
+					<!-- 구매자가 예약 글에 들어옴 -->
+					<c:if test="${!empty us_id && itemVO.us_id != us_id && itemVO.it_state == 1 && tradeVO.us_id.equals(us_id)}">
+						<input type="button" value="구매확정" id="userPurchaseOK">
+						<input type="button" value="취소" id="userCancleOK"> 
+					</c:if>
+					<!-- 판매자 본인의 글에 들어옴 -->
+					<c:if test="${!empty us_id && itemVO.us_id.equals(us_id) && itemVO.it_state == 1}">
+						<input type="button" value="구매확정하기" id="sellerPurchaseOK"> 
+						<input type="button" value="취소" id="sellerCancleOK"> 
+					</c:if>
+					<!-- 예약중인 글에 구매자나 판매가자 들어왔다면 -->
+					<c:if test="${tradeVO.tr_no != 0 }">
+						<input type="hidden" value="${tradeVO.tr_no }" name="tr_no">
+					</c:if>
+					<!-- 판매가 완료된 글이라면 -->
+					<c:if test="${itemVO.it_state == 2  }">
+						<input type="button" value="판매 완료" id="item_soldout"> 
+					</c:if>
+				</div>
 		
-		</form>
+			</form>
 	
-	</div>
+		</div>	
 	
-	
-	
-	<hr>
-	<div id="it_content_div">
-		<input type="text" value="상세 내용" id="it_content_title"> <br>
-		<textarea readonly id="it_content">${itemVO.it_content}</textarea>
-	</div>
-
-	
-	<hr>
-	<div class="itemSellsectionDiv">
-		<a class="item_detail_subtitle">판매자의 다른 상품 둘러보기</a><br>
-		<div>
-			<c:forEach var="si" items="${sellerItemVO}">
-				<form action="" class="sellerItemVOListDiv">
-					<input type="hidden" value="${si.it_no }" name="it_no"> <br>
-					<!-- <td  id ="uploadSeller"> -->
-					<a href="../item/itemDetail?it_no=${si.it_no }">
-						<img src="/imgfile/${si.it_img }" >
-						<input type="text" value="${si.it_title }" name="it_title" readonly>
-					</a>
-				</form>		
-			</c:forEach>
+		
+		
+		<hr>
+		<div id="it_content_div">
+			<input type="text" value="상세 내용" id="it_content_title"> <br><br>
+			<textarea readonly id="it_content">${itemVO.it_content}</textarea>
 		</div>
-	</div>
 	
-	<hr>
-	
-	<div class="itemSellsectionDiv">
-		<a class="item_detail_subtitle">같은 카테고리 상품 둘러보기</a><br>
-		<div>
-			<c:forEach var="sc" items="${sameCateVO}">
-				<form action="" class="cateItemVOListDiv">
-					<input type="hidden" value="${sc.it_no }" name="it_no"> <br>
-					<!-- <td id ="uploadCate"> -->
-					<a href="../item/itemDetail?it_no=${sc.it_no }">
-						<img src="/imgfile/${sc.it_img }">
-						<input type="text" value="${sc.it_title }" name="it_title" readonly>
-					</a>
-				</form>
-			</c:forEach> 	
+		
+		<hr>
+		<div class="itemSellsectionDiv">
+			<a class="item_detail_subtitle">판매자의 다른 상품 둘러보기</a><br>
+			<div>
+				<c:forEach var="si" items="${sellerItemVO}">
+					<form action="" class="sellerItemVOListDiv">
+						<input type="hidden" value="${si.it_no }" name="it_no"> <br>
+						<!-- <td  id ="uploadSeller"> -->
+						<a href="../item/itemDetail?it_no=${si.it_no }">
+							<img src="/imgfile/${si.it_img }" >
+							<input type="text" value="${si.it_title }" name="it_title" readonly>
+						</a>
+					</form>		
+				</c:forEach>
+			</div>
 		</div>
-	</div>
-	
-	<br><br><br><br>
+		
+		<hr>
+		
+		<div class="itemSellsectionDiv">
+			<a class="item_detail_subtitle">같은 카테고리 상품 둘러보기</a><br>
+			<div>
+				<c:forEach var="sc" items="${sameCateVO}">
+					<form action="" class="cateItemVOListDiv">
+						<input type="hidden" value="${sc.it_no }" name="it_no"> <br>
+						<!-- <td id ="uploadCate"> -->
+						<a href="../item/itemDetail?it_no=${sc.it_no }">
+							<img src="/imgfile/${sc.it_img }">
+							<input type="text" value="${sc.it_title }" name="it_title" readonly>
+						</a>
+					</form>
+				</c:forEach> 	
+			</div>
+		</div>
+		
+		<br><br><br><br>
 </div>	
 <!-- 구매하기 버튼 클릭시 Modal -->
 <div id="purchaseModal" class="modal fade" role="dialog">
