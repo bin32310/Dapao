@@ -37,6 +37,7 @@ import com.dapao.domain.ItemVO;
 import com.dapao.domain.LoveVO;
 import com.dapao.domain.PayVO;
 import com.dapao.domain.ReviewVO;
+import com.dapao.domain.TotalVO;
 import com.dapao.domain.TradeVO;
 import com.dapao.domain.UserVO;
 import com.dapao.service.ItemServiceImpl;
@@ -137,16 +138,18 @@ public class ItemController {
 		int itno=0;
 		// 세션 - 아이디
 		String us_id = (String) session.getAttribute("us_id");
-		String latitudeString = (String) session.getAttribute("latitude");
-		String longitudeString= (String) session.getAttribute("longitude");
-		
-		Double latitude = Double.parseDouble(latitudeString);
-		Double longitude  = Double.parseDouble(longitudeString);
-		logger.debug("latitude : " + latitude);
-		logger.debug("longitude : " + longitude);
+//		String latitudeString = (String) session.getAttribute("latitude");
+//		String longitudeString= (String) session.getAttribute("longitude");
+//		
+//		Double latitude = Double.parseDouble(latitudeString);
+//		Double longitude  = Double.parseDouble(longitudeString);
+//		logger.debug("latitude : " + latitude);
+//		logger.debug("longitude : " + longitude);
 		itemVO.setUs_id(us_id);
-		itemVO.setIt_latitude(latitude);
-		itemVO.setIt_longitude(longitude);
+//		itemVO.setIt_latitude(latitude);
+//		itemVO.setIt_longitude(longitude);
+		itemVO.setIt_latitude(0.0);
+		itemVO.setIt_longitude(0.0);
 		logger.debug("@@판매글 정보 : " + itemVO);
 		
 		// 서비스 -> DAO 호출 : 판매글  작성 등록
@@ -563,8 +566,12 @@ public class ItemController {
 		List<ItemVO> itemVO = iService.yourItem(us_id);
 		logger.debug("@@itemVO : " + itemVO );
 		
+		List<TotalVO> reviewVO = iService.yourReview(us_id);
+		logger.debug("reviewVO : " + reviewVO);
+		
 		model.addAttribute("yourInfo", yourVO);
 		model.addAttribute("yourItemVO", itemVO);
+		model.addAttribute("reviewVO",reviewVO);
 		
 		
 		

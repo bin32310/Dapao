@@ -36,7 +36,8 @@
 			
 			제목 : <input type="text" value="" name="it_title" required> <br>
 			가격 : <input type="number" value="" name="it_price" required> <br>
-			내용 : <input type="text" value="" name="it_content" required> <br>
+			내용 :<!--  <input type="text" value="" name="it_content" required> <br> -->
+			<textarea rows="5" cols="10" name="it_content"></textarea> <br>
 			
 			상품 상태 :<input type="radio" value="중고" name="it_con" checked> 중고
 			<input type="radio" value="새상품" name="it_con"> 새상품 <br>
@@ -147,10 +148,10 @@ $(document).ready(function(){
 					// filePath : 썸네일 파일 경로 + 파일명
 					// console.log(obj.fileName);
 					
-					input += "<input type='text' name='fileList["+i+"].fileName' value='"+obj.fileName+"'>";
-					input += "<input type='text' name='fileList["+i+"].uuid' value='"+obj.uuid+"'>";
-					input += "<input type='text' name='fileList["+i+"].uploadPath' value='"+obj.uploadPath+"'>";
-					input += "<input type='text' name='fileList["+i+"].image' value='"+obj.image+"'>";
+					input += "<input type='hidden' name='fileList["+i+"].fileName' value='"+obj.fileName+"'>";
+					input += "<input type='hidden' name='fileList["+i+"].uuid' value='"+obj.uuid+"'>";
+					input += "<input type='hidden' name='fileList["+i+"].uploadPath' value='"+obj.uploadPath+"'>";
+					input += "<input type='hidden' name='fileList["+i+"].image' value='"+obj.image+"'>";
 					
 					
 				}); // $(result).each(function(i,obj)) 닫음  
