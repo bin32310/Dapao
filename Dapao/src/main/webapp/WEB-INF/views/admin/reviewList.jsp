@@ -2,13 +2,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../include/header.jsp"%>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 <div class="boxList">
 	<div class="box-header with-board">
-		<p class="pContent">리뷰 관리</p>
+		<p class="pContent"><lable id="adlable">리뷰 관리</label></p>
 		<form action="/admin/reviewList" id="search">
 			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
 			<button id="searchBtn">Search</button>
@@ -31,7 +27,14 @@
 				<c:forEach var="vo" items="${vo }">
 					<tr role="row" class="odd">
 						<td><a class="rv_no">${vo.rv_no }</a></td>
-						<td>${vo.rv_own_id+vo.rv_us_id}</td>
+						<td>
+							<c:if test="${vo.rv_own_id} != null">
+	                     			${vo.rv_own_id}
+	                  		</c:if>
+	                  		<c:if test="${vo.rv_us_id} != null">
+	                     			${vo.rv_us_id}
+	                 		 </c:if>
+	                  	</td>
 						<td>${vo.rv_buy_id}</td>
 						<td><c:forEach begin="1" end="${vo.rv_star}">
 								<label>⭐</label>

@@ -206,7 +206,7 @@ public class AdminController {
 	}
 
 	// FAQ/공지관리 - FAQ 리스트
-	// http://localhost:8088/admin/FAQList
+	// http://localhost:8088/admin/FAQList?page=1
 	@RequestMapping("/FAQList")
 	public void FAQList(Criteria cri, Model model) throws Exception {
 		logger.debug("FAQList() 호출");

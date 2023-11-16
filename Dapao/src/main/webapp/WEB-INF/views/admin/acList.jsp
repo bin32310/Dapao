@@ -40,7 +40,14 @@
 					<tr role="row" class="odd">
 						<td><a class="ac_no">${vo.ac_no }</a></td>
 						<td>${vo.us_id }</td>
-						<td>${vo.ac_own_id+vo_ac_us_id }</td>
+						<td>
+							<c:if test="${vo.ac_own_id} != null">
+	                     			${vo.ac_own_id}
+	                  		</c:if>
+	                  		<c:if test="${vo.ac_us_id} != null">
+	                     			${vo.ac_us_id}
+	                 		 </c:if>							
+						</td>
 						<td>${vo.ac_cate }</td>
 						<td>${vo.ac_item }</td>
 						<td>${vo.ac_regdate}</td>
