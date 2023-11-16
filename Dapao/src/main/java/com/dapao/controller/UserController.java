@@ -188,7 +188,7 @@ public class UserController {
      
         String us_info="0";
         us_info=  uService.userFindId(vo);
-        logger.debug("@@@@"+us_info);
+        logger.debug("us_info    : "+us_info);
       
         
         logger.debug("info  :  "+us_info);
@@ -223,9 +223,60 @@ public class UserController {
        }
      
      
+	//비밀번호찾기 뷰페이지 열어주는
+	@RequestMapping(value = "/userFindPw", method = RequestMethod.GET)
+	 public void userFindPwGET(HttpSession session, UserVO vo, Model model) throws Exception { 
+	      
+	   }   
 	
 	
+	
+	 // 비밀번호 찾기 POST 
+	   
+    @RequestMapping(value = "/userFindPw", method = RequestMethod.POST)
+    public String userFindPwPOST(HttpSession session, UserVO vo, Model model) throws Exception { 
+       logger.debug(" userFindPw2POST()  호출 ");
+    logger.debug(" 연결된 뷰페이지로 이동 ");
+    
+    logger.debug("vo : "+vo);
+    
+       String us_info="0";
+       us_info=  uService.userFindPw(vo);
+       logger.debug("!!!!!!!!!!!!!"+us_info);
      
+       
+       logger.debug("info !!!!!!!!!!!!! :  "+us_info);
+    
+      if(us_info == null) {
+         session.setAttribute("userFindPw", "fail");   
+        
+         
+      }
+      
+      
+   
+         model.addAttribute("us_pw",us_info);
+         session.setAttribute("userFindPw", "success");   
+        
+      
+      return "redirect:/user/userFindPw2";
+      
+     
+   
+  
+    }
+	
+    
+    // 비밀번호 찾기 GET
+    @RequestMapping(value = "/userFindPw2", method = RequestMethod.GET)
+     public void userFindPw2(@ModelAttribute("us_pw") String us_pw, Model model) throws Exception {
+       
+          
+          model.addAttribute(us_pw);
+       
+      }
+    
+	
 }
    
    

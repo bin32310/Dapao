@@ -171,7 +171,12 @@ logger.debug("sellList(String us_id) 호출");
 	   return udao.userCs(us_id);
    }
    
-   
+   //비밀번호 찾기
+   public String userFindPw(UserVO vo) {
+	   logger.debug("userFindPw(String us_pw)  호출");
+	   
+	   return udao.userFindPw(vo);
+   }
    
    
 }

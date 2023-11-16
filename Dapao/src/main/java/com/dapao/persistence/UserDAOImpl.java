@@ -210,7 +210,12 @@ public class UserDAOImpl  {
 	   return sqlSession.selectList(NAMESPACE+".userCs", us_id );
    }
    
-   
+   // 비밀번호 찾기
+   public String userFindPw(UserVO vo) {
+	   System.out.println("DAOImpl : getuserFindPw vo " + vo);
+	   
+	   return sqlSession.selectOne(NAMESPACE+".userFindPw",vo);
+   }
    
    
 }
