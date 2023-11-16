@@ -95,10 +95,10 @@
 					</th>
 					<td>
 						<p>
+							<input type="text" class="form-control" name="post" required="required" id="zipNo" placeholder="우편번호"><br>
 							<button class="btn btn-default" type="button" onclick="goPopup();">
 								<i class="fa fa-search">주소검색</i>
 							</button>
-							<input type="text" class="form-control" name="post" required="required" id="zipNo" placeholder="우편번호"><br>
 							<input type="text" class="form-control" name="ent_addr" required="required" id="roadFullAddr" placeholder="상세주소"><br>
 						</p>
 					</td>
@@ -116,7 +116,7 @@
 						<label for="ent_file">사업자등록증</label>
 					</th>
 					<td>
-						<input type="file" name="ent_file" required="required" id="ent_file" multiple="multiple">
+						<input type="text" name="ent_file" required="required" id="ent_file">
 					</td>
 				</tr>
 			</table>
@@ -215,10 +215,12 @@
 					$('.id_ok').css("display","none");
 					$('.id_no').css("display","inline-block");
 					$('.id_ck').css("display","none");
+					$("#own_id").focus();
 				}else if(own_id.length != 12){
 					$('.id_ok').css("display","none");
 					$('.id_no').css("display","none");
-					$('.id_ck').css("display","inline-block");	
+					$('.id_ck').css("display","inline-block");
+					$("#own_id").focus();	
 				}else{
 					$('.id_ok').css("display","none");
 					$('.id_no').css("display","none");
@@ -255,6 +257,7 @@
 		if($("#own_pwC").val() == "") {
 			$("#pwc2").css("color", "red");
 	        $("#pwc2").text("비밀번호 확인해주세요!");
+	        $("#own_pwC").focus();
 	        password_check = false;
 		}
 		else if(password == true && $("#own_pw").val() == $("#own_pwC").val()) {
@@ -264,6 +267,7 @@
 		}else {
 			$("#pwc2").css("color", "red");
 			$("#pwc2").text("비밀번호를 다시 확인해주세요");
+			$("#own_pwC").val("").focus();;
 			password_check = false;
 		}
 	}); // pw

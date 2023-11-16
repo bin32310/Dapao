@@ -1,14 +1,6 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/entHeader.jsp"%>
-<!-- <link rel="stylesheet" -->
-<!-- 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-<!-- <script -->
-<!-- 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
-<!-- <script -->
-<!-- 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
-
-
 
 <div class="box box-success">
 	<div class="box-header with-border"></div>
@@ -40,7 +32,7 @@
 					</tr>
 
 				</table>
-				<input type="hidden" name="own_id" value="${own_id }"> <input type="submit" value="조회하기" class="btn btn-info">
+				<input type="hidden" name="own_id" value="${own_id }"> <input type="submit" value="조회하기" class="btn btn-success">
 			</form>
 		</div>
 
@@ -83,22 +75,23 @@
 
 					</tbody>
 				</table>
+				<c:if test="${plist != null }">
+					<div class="box-footer clearfix">
+						<ul class="pagination pagination-sm no-margin pull-center">
+							<c:if test="${pageVO.prev }">
+								<li><a href="/ent/listPage?page=${pageVO.startPage-1 }">«</a></li>
+							</c:if>
 
-				<div class="box-footer clearfix">
-					<ul class="pagination pagination-sm no-margin pull-center">
-						<c:if test="${pageVO.prev }">
-							<li><a href="/ent/listPage?page=${pageVO.startPage-1 }">«</a></li>
-						</c:if>
+							<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+								<li ${pageVO.cri.page == i? 'class="active"':'' }><a href="/ent/productManage?page=${i }">${i }</a></li>
+							</c:forEach>
 
-						<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
-							<li ${pageVO.cri.page == i? 'class="active"':'' }><a href="/ent/listPage?page=${i }">${i }</a></li>
-						</c:forEach>
-
-						<c:if test="${pageVO.next }">
-							<li><a href="/ent/listPage?page=${pageVO.endPage+1 }">»</a></li>
-						</c:if>
-					</ul>
-				</div>
+							<c:if test="${pageVO.next }">
+								<li><a href="/ent/listPage?page=${pageVO.endPage+1 }">»</a></li>
+							</c:if>
+						</ul>
+					</div>
+				</c:if>
 			</div>
 
 		</div>
@@ -116,7 +109,7 @@
 				<h4 class="modal-title">상품 등록/수정하기</h4>
 			</div>
 			<div class="modal-body">
-				<div class="box box-primary">
+				<div class="box box-success">
 					<div class="box-header with-border"></div>
 
 
@@ -155,7 +148,7 @@
 						</div>
 
 						<div class="box-footer">
-							<button type="submit" class="btn btn-primary">Submit</button>
+							<button type="submit" class="btn btn-success">Submit</button>
 						</div>
 					</form>
 				</div>
@@ -167,6 +160,8 @@
 
 	</div>
 </div>
+
+
 <script type="text/javascript">
 	$(function() {
 		$('#modal-default')
@@ -221,22 +216,21 @@
 										'<h3 class="box-title">상품 등록하기</h3>')
 							}
 
-							/*  첨부파일 추가,삭제 */
-							$('.btn_new_file')
-									.click(
-											function() {
-												$('.file_area')
-														.append(
-																'<div class="form-inline">'
-																		+ '<input type="file" name="file" class="form-control">'
-																		+ ' <button type="button" class="btn_delete btn btn-sm">삭제</button>'
-																		+ '</div>');
-											});
-							$('.file_area').on('click', '.btn_delete',
-									function() {
-										$(this).closest('div').remove();
-									});
 						});
+		$('.pagination li a').hover(function() {
+			$(this).css('color', 'red');
+			$(this).css("cursor", "pointer");
+		}, function() {
+			$(this).css('color', 'white');
+		});
+
+		$('.btn-success').click(function() {
+			if(${own_id == null}){
+				alert('로그인 이후 사용해주세요');
+				return false;
+			}
+		});
+		
 	});
 </script>
 <%@ include file="../include/footer.jsp"%>

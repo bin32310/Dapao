@@ -27,14 +27,20 @@
     <![endif]-->
 
 </head>
+<style>
+.navbar-nav p{
+	text-shadow:1px 1px 1px #000;
+}
+</style>
 <!-- jQuery 2.1.4 -->
 <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-<body class="skin-green sidebar-mini">
+
+<body class="skin-green-light sidebar-mini">
 	<div class="wrapper">
 
 		<header class="main-header">
 			<!-- Logo -->
-			<a href="/ent/entMain" class="logo"> <!-- logo for regular state and mobile devices --> <span class="logo-lg">Dapao</span>
+			<a href="/ent/entMain" class="logo"> <!-- logo for regular state and mobile devices --> <span class="logo-lg"><img src="/resources/logo/logo.png" width="50" height="50">Dapao</span>
 			</a>
 			<!-- Header Navbar: style can be found in header.less -->
 			<nav class="navbar navbar-static-top" role="navigation">
@@ -44,7 +50,7 @@
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
 						<!-- User Account: style can be found in dropdown.less -->
-						<li class="dropdown user user-menu"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="${pageContext.request.contextPath }/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image" /> <c:choose>
+						<li class="dropdown user user-menu"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="${pageContext.request.contextPath }/resources/logo/user2.jpg" class="user-image" alt="User Image" /> <c:choose>
 									<c:when test="${empty sessionScope.own_id }">
 										<span class="hidden-xs">Guest</span>
 									</c:when>
@@ -55,35 +61,36 @@
 						</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
-								<li class="user-header"><img src="${pageContext.request.contextPath }/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" /> <c:choose>
+								<li class="user-header"><img src="${pageContext.request.contextPath }/resources/logo/user2.jpg" class="img-circle" alt="User Image" /> <c:choose>
 										<c:when test="${empty sessionScope.own_id }">
 											<p>Guest</p>
+											<p class=text-mute>로그인해주세요</p>
 										</c:when>
 										<c:otherwise>
 											<p>${sessionScope.own_id}</p>
+											<p class=text-mute>환영합니다!</p>
 										</c:otherwise>
 									</c:choose></li>
 								<!-- Menu Body -->
-								<li class="user-body"></li>
 								<!-- Menu Footer-->
 								<li class="user-footer">
 									<div class="pull-left">
 										<c:choose>
 											<c:when test="${empty sessionScope.own_id }">
-												<a href="/ent/entLogin" class="btn btn-default btn-flat">로그인</a>
+												<a href="/ent/entLogin" class="btn btn-success btn-flat">로그인</a>
 											</c:when>
 											<c:otherwise>
-												<a href="/ent/entLogout" class="btn btn-default btn-flat">로그아웃</a>
+												<a href="/ent/entLogout" class="btn btn-success btn-flat">로그아웃</a>
 											</c:otherwise>
 										</c:choose>
 									</div>
 									<div class="pull-right">
 										<c:choose>
 											<c:when test="${empty sessionScope.own_id }">
-												<a href="/ent/entJoin" class="btn btn-default btn-flat">회원가입</a>
+												<a href="/ent/entJoin" class="btn btn-success btn-flat">회원가입</a>
 											</c:when>
 											<c:otherwise>
-												<a href="/ent/entMain" class="btn btn-default btn-flat">마이페이지</a>
+												<a href="/ent/entMain" class="btn btn-success btn-flat">내 정보</a>
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -101,10 +108,17 @@
 				<!-- Sidebar user panel -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="${pageContext.request.contextPath }/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+						<img src="${pageContext.request.contextPath }/resources/logo/user2.jpg" class="img-circle" alt="User Image" />
 					</div>
 					<div class="pull-left info">
-						<p>${sessionScope.own_id}</p>
+						<c:if test="${empty sessionScope.own_id }">
+							<p>Guest</p>
+							<a href="/ent/entLogin">로그인해주세요</a>
+						</c:if>
+						<c:if test="${!empty sessionScope.own_id }">
+							<p>${sessionScope.own_id}</p>
+							<a href="/ent/entMain">내 정보</a>
+						</c:if>
 					</div>
 				</div>
 
@@ -123,15 +137,15 @@
 							<li><a href="/ent/productManage"><i class="fa fa-cart-plus"></i> 상품등록/수정/조회</a></li>
 							<li><a href="/ent/entOrder"><i class="fa fa-line-chart"></i> 주문관리</a></li>
 						</ul></li>
-					<li class="treeview"><a href="#"> <i class="fa fa-paw"></i> <span>판다톡 관리</span> <i class="fa fa-angle-left pull-right"></i>
-					</a>
-						<ul class="treeview-menu">
-							<li><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> 자주쓰는 문구</a></li>
-							<li><a href="../charts/morris.html"><i class="fa fa-circle-o"></i> 자동응답설정</a></li>
-						</ul></li>
+					<!-- 					<li class="treeview"><a href="#"> <i class="fa fa-paw"></i> <span>판다톡 관리</span> <i class="fa fa-angle-left pull-right"></i> -->
+					<!-- 					</a> -->
+					<!-- 						<ul class="treeview-menu"> -->
+					<!-- 							<li><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> 자주쓰는 문구</a></li> -->
+					<!-- 							<li><a href="../charts/morris.html"><i class="fa fa-circle-o"></i> 자동응답설정</a></li> -->
+					<!-- 						</ul></li> -->
 					<li class="treeview"><a href="/ent/entAd"> <i class="fa fa-newspaper-o"></i> <span>광고 문의</span>
 					</a></li>
-						
+
 				</ul>
 			</section>
 
@@ -144,7 +158,23 @@
 			<section class="content-header">
 				<h1>${name }</h1>
 				<ol class="breadcrumb">
-					<li><a href="/ent/entMain"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="/ent/entMain"><i class="fa fa-home"></i> Home</a></li>
 					<li><a href="">${name }</a></li>
 				</ol>
 			</section>
+			
+			
+			
+			
+<script type="text/javascript">
+$('a').hover(function() {
+	$(this).css("cursor", "pointer");
+});
+$('.info > a').hover(function() {
+	$(this).css("color", "#2BBD26");
+}, function() {
+	$(this).css('color', 'black');
+});
+
+
+</script>

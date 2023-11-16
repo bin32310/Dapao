@@ -1,17 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/entHeader.jsp"%>
+<style>
+.cate {
+	padding-top: 15px;
+}
+</style>
 
 <div class="box box-success">
 	<div class="box-header with-border"></div>
 	<form action="" method="post">
 		<%-- 		<input type="hidden" name="own_id" value="${own_id }" > --%>
 		<table>
-			
-			<tr>
-				<td colspan="2">
+
+			<tr class="search_container">
+				<td colspan="2" class="cate">
 					<div class="form-group">
-						<select class="form-control" name="search_cate">
+						<select class="form-control" name="search_cate" id="se_cate">
 							<option value="prod_name">상품명</option>
 							<option value="tr_no">주문번호</option>
 						</select>
@@ -19,7 +24,7 @@
 				</td>
 				<td>
 					<div class="input-group margin">
-						<input type="text" class="form-control" name="search"> <span class="input-group-btn">
+						<input type="text" class="form-control" name="search" id="search"> <span class="input-group-btn">
 							<button type="submit" class="btn btn-success btn-flat">Go!</button>
 						</span>
 					</div>
@@ -32,9 +37,6 @@
 		<div class="box-tools pull-right">
 			<button type="button" class="btn btn-box-tool" data-widget="collapse">
 				<i class="fa fa-minus"></i>
-			</button>
-			<button type="button" class="btn btn-box-tool" data-widget="remove">
-				<i class="fa fa-times"></i>
 			</button>
 		</div>
 	</div>
@@ -107,6 +109,12 @@
 			$('#refund').click(function() {
 				location.href = '/ent/refund?tr_no=' + tr_no;
 			});
+		});
+		$('.btn-success').click(function() {
+			if(${own_id == null}){
+				alert('로그인 이후 사용해주세요');
+				return false;
+			}
 		});
 
 	});

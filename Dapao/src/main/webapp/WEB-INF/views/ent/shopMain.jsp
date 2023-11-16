@@ -5,12 +5,32 @@
 <%@ include file="../include/entHeader.jsp"%>
 
 <script src="/resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<style>
+.box-body {
+	display: flex;
+	justify-content: center;
+}
+.item{
+	width: 400px;
+	height: 400px;
+}
+.carousel-inner>.item>img{
+	width: 400px;
+	height: 400px;
+}
+.users-list>li img{
+	width: 400px;
+	height: 300px;
+}
+</style>
 <script type="text/javascript">
 	$(function() {
 		$('.review').slimScroll({
-			height : '250px',
+			height : '250px'
 		});
+		
 	});
+	
 </script>
 <div class="box box-success">
 	<div class="box-header with-border"></div>
@@ -19,16 +39,28 @@
 			<div class="box-body">
 				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 					<ol class="carousel-indicators">
-						<c:forEach items="${imgList }" var="img">
-							<li data-target="#carousel-example-generic" data-slide-to="${status.count-1 }" class=""></li>
-						</c:forEach>
+						<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+						<c:if test="${imgList[1] != null }">
+							<li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
+						</c:if>
+						<c:if test="${imgList[2] != null }">
+							<li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
+						</c:if>
 					</ol>
 					<div class="carousel-inner">
-						<c:forEach items="${imgList }" var="img">
+						<div class="item active">
+							<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${imgList[0]}" alt="First slide" width="400px" height="400px">
+						</div>
+						<c:if test="${imgList[1] != null }">
 							<div class="item">
-								<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${img}">
+								<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${imgList[1]}" alt="Second slide" width="400px" height="400px">
 							</div>
-						</c:forEach>
+						</c:if>
+						<c:if test="${imgList[2] != null }">
+							<div class="item">
+								<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${imgList[2]}" alt="Third slide" width="400px" height="400px">
+							</div>
+						</c:if>
 					</div>
 					<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev"> <span class="fa fa-angle-left"></span>
 					</a> <a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> <span class="fa fa-angle-right"></span>
@@ -61,7 +93,6 @@
 			</div>
 
 		</div>
-		<div class="notice_container"></div>
 		<div class="box box-success">
 			<div class="box-header with-border">
 				<i class="fa fa-map-marker"></i>
@@ -123,8 +154,8 @@
 			<div class="box-body no-padding">
 				<ul class="users-list clearfix">
 					<c:forEach items="${plist }" var="prod">
-						<li><img src="${pageContext.request.contextPath }/ent/download?imageFileName=${prod.prod_img }">
-							<p>${prod.prod_name }</p> <span class="users-list-date">${prod.prod_content }</span></li>
+						<li><img src="${pageContext.request.contextPath }/ent/download?imageFileName=${prod.prod_img }" width="300px" height="300px">
+							<p>${prod.prod_name }</p> <span class="users-list-date">${prod.prod_price }원</span></li>
 					</c:forEach>
 				</ul>
 
@@ -147,11 +178,13 @@
 	var geocoder = new kakao.maps.services.Geocoder();
 
 	// 주소로 좌표를 검색합니다
-	// 	geocoder.addressSearch(${ent[0].ent_addr}, function(result, status) {
 	geocoder
 			.addressSearch(
-					'부산시 영도구 영선대로 34',
+					'${ent.ent_addr}',
 					function(result, status) {
+						// 	geocoder.addressSearch(
+						// 					'부산시 영도구 영선대로 34',
+						// 					function(result, status) {
 
 						// 정상적으로 검색이 완료됐으면 
 						if (status === kakao.maps.services.Status.OK) {
@@ -168,8 +201,8 @@
 							// 인포윈도우로 장소에 대한 설명을 표시합니다
 							var infowindow = new kakao.maps.InfoWindow(
 									{
-										// 			content: '<div style="width:150px;text-align:center;padding:6px 0;">${ent[0].ent_name}</div>'
-										content : '<div style="width:150px;text-align:center;padding:6px 0;">검색한 위치</div>'
+										content : '<div style="width:150px;text-align:center;padding:6px 0;">${ent.ent_name}</div>'
+									// 										content : '<div style="width:150px;text-align:center;padding:6px 0;">검색한 위치</div>'
 									});
 							infowindow.open(map, marker);
 

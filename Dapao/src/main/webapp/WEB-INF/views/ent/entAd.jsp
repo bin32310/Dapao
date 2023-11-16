@@ -110,6 +110,18 @@
 
 <script type="text/javascript">
 	$(function() {
+		$('.small-box-footer').click(function() {
+			if(${own_id == null}){
+				alert('로그인 이후 사용해주세요');
+				return false;
+			}
+		});
+		$('.small-box-footer').hover(function() {
+			$(this).css('color', '#2BBD26');
+			$(this).css("cursor", "pointer");
+		}, function() {
+			$(this).css('color', 'white');
+		});
 
 	});
 </script>
