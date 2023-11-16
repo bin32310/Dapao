@@ -6,11 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
-<body>
 
-<h1>비밀번호찾기 이메일인증</h1>
-<h1>user/userFindPw</h1>
 
 		<c:if test="${empty us_id }">
 		<%@ include file="../include/userHeader.jsp" %>
@@ -21,12 +17,12 @@
 	
 	
 	
-	<script type="text/javascript">
-	function back(){
-	      history.back();  // 뒤로가기
-	   }
 	
-	</script>
+</head>
+<body>
+
+
+
 	
 	<!-- 이메일인증 버튼 클릭 -->
 	<script type="text/javascript">
@@ -71,12 +67,26 @@
 	
 	
 	
-	
+	<!-- 
 	
 	<form action="" method="post" id="userFindPw">
 			이메일 <input type="text" name="us_email" placeholder="이메일 형식으로 입력해주세요">
 			<button id="sendEmail">이메일 인증번호 보내기</button>
 			인증번호 <input type="text" name="checkNum"><br>
+			<input type="submit" value="비밀번호찾기">
+		</form>
+			 <button onclick="back()">뒤로가기</button>
+	
+	
+	
+	 -->
+	
+		
+	
+	<form action="" method="post" id="userFindPw">
+			아이디<input type="text" name="us_id"><br>
+			이메일 <input type="text" name="us_email" placeholder="이메일 형식으로 입력해주세요">
+			
 			<input type="submit" value="비밀번호찾기">
 		</form>
 			 <button onclick="back()">뒤로가기</button>
@@ -91,7 +101,12 @@
 	
 	
 	
+	<script type="text/javascript">
+	function back(){
+	      history.back();  // 뒤로가기
+	   }
 	
+	</script>
 	
 	
 	
