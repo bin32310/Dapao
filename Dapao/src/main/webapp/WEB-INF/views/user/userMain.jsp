@@ -166,10 +166,26 @@ $(function(){
       var latitude = 0.0;
    	  var longitude = 0.0;
       
-/*       function showPosition(pos){
+       function showPosition(pos){
 
       	latitude = pos.coords.latitude;
       	longitude = pos.coords.longitude;
+
+        
+		 $.ajax({
+	 			type : "post",
+	 			url : "/item/location",
+	 			data : {"latitude" : latitude , "longitude" : longitude} ,
+	 			dataType : "JSON",
+	 			error: function(){
+	 				alert("위치 파악 실패");
+	 			},
+	 			success : function(){
+ 					console.log(${latitude}+"#333");
+ 					console.log(${longitude}+"#333");
+	 				
+	 			} // success 끝	
+	 		}); // ajax 끝
 
       }
 
@@ -177,26 +193,12 @@ $(function(){
      if(navigator.geolocation){
 
          navigator.geolocation.getCurrentPosition(showPosition);
-         $.ajax({
- 			type : "post",
- 			url : "/item/location",
- 			data : {"latitude" : latitude , "longitude" : longitude} ,
- 			dataType : "JSON",
- 			error: function(){
- 				alert("위치 파악 실패");
- 			},
- 			success : function(){
- 					console.log(latitude);
- 					console.log(longitude);
- 				
- 			} // success 끝	
- 		}); // ajax 끝
          
 
      }else{
          alert("브라우저가 Geolocation을 지원하지 않습니다.");
 
-     } */
+     } 
      
 	$('#myModal').modal("show");
 	$.ajax({
