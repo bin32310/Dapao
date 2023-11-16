@@ -55,7 +55,7 @@
 					</th>
 					<td>
 						<p>
-							<input id="phone" type="text" name="phone" title="전화번호 입력" required/>
+							<input id="phone" type="text" name="own_tel" title="전화번호 입력" required/>
 							<span id="phoneChk" class="doubleChk btn btn-info">인증번호 보내기</span> <br/>
 							<input id="phone2" type="text" name="phone2" title="인증번호 입력" disabled required/>
 							<span id="phoneChk2" class="doubleChk btn btn-info">본인인증</span> <br>
@@ -95,11 +95,11 @@
 					</th>
 					<td>
 						<p>
-							<input type="text" class="form-control" name="post" required="required" id="zipNo" placeholder="우편번호"><br>
 							<button class="btn btn-default" type="button" onclick="goPopup();">
 								<i class="fa fa-search">주소검색</i>
 							</button>
-							<input type="text" class="form-control" name="address" required="required" id="roadFullAddr" placeholder="상세주소"><br>
+							<input type="text" class="form-control" name="post" required="required" id="zipNo" placeholder="우편번호"><br>
+							<input type="text" class="form-control" name="ent_addr" required="required" id="roadFullAddr" placeholder="상세주소"><br>
 						</p>
 					</td>
 				</tr>							
@@ -116,7 +116,7 @@
 						<label for="ent_file">사업자등록증</label>
 					</th>
 					<td>
-						<input type="text" name="ent_file" required="required" id="ent_file">
+						<input type="file" name="ent_file" required="required" id="ent_file" multiple="multiple">
 					</td>
 				</tr>
 			</table>
@@ -207,20 +207,18 @@
 			type:'post',
 			data:{own_id:own_id},
 			success:function(cnt){
-				if(cnt != 1 && own_id.length == 10){
+				if(cnt != 1 && own_id.length == 12){
 					$('.id_ok').css("display","inline-block");
 					$('.id_no').css("display","none");
 					$('.id_ck').css("display","none");
-				}else if(cnt == 1 && own_id.length == 10){
+				}else if(cnt == 1 && own_id.length == 12){
 					$('.id_ok').css("display","none");
 					$('.id_no').css("display","inline-block");
 					$('.id_ck').css("display","none");
-					$("#own_id").focus();
-				}else if(own_id.length != 10){
+				}else if(own_id.length != 12){
 					$('.id_ok').css("display","none");
 					$('.id_no').css("display","none");
-					$('.id_ck').css("display","inline-block");
-					$("#own_id").focus();	
+					$('.id_ck').css("display","inline-block");	
 				}else{
 					$('.id_ok').css("display","none");
 					$('.id_no').css("display","none");
@@ -257,7 +255,6 @@
 		if($("#own_pwC").val() == "") {
 			$("#pwc2").css("color", "red");
 	        $("#pwc2").text("비밀번호 확인해주세요!");
-	        $("#own_pwC").focus();
 	        password_check = false;
 		}
 		else if(password == true && $("#own_pw").val() == $("#own_pwC").val()) {
@@ -267,7 +264,6 @@
 		}else {
 			$("#pwc2").css("color", "red");
 			$("#pwc2").text("비밀번호를 다시 확인해주세요");
-			$("#own_pwC").val("").focus();;
 			password_check = false;
 		}
 	}); // pw

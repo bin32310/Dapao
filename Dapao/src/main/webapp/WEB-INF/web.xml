@@ -44,7 +44,7 @@
 		<async-supported>true</async-supported>
 		
 		<multipart-config>
-			<location>F:\\upload</location> <!-- 파일 업로드 경로 -->
+			<location></location> <!-- 파일 업로드 경로 -->
 			<max-file-size>20971520</max-file-size> <!-- 파일 최대 크기 1MB * 20 -->
 			<max-request-size>41943040</max-request-size> <!-- 한꺼번에 올릴 수 있는 최대 크기 40MB -->
 			<file-size-threshold>20971520</file-size-threshold> <!-- 특정 사이즈 메모리 사용 20MB -->

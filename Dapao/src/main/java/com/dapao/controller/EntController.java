@@ -281,7 +281,7 @@ public class EntController {
 		}
 		logger.debug(" path : " + path);
 		for (MultipartFile mf : fileList) {
-			String genId = UUID.randomUUID().toString(); // 중복 처리
+			String genId = UUID.randomUUID().toString(); // 중복 처리 
 			String originFileName = mf.getOriginalFilename(); // 원본 파일 명
 
 			String saveFile = path + "\\" + genId + "_" + originFileName; // 저장할 경로
@@ -371,142 +371,154 @@ public class EntController {
 	}
 
 	// 휴대폰 본인인증
-		@RequestMapping(value = "/entPhoneCk", method = RequestMethod.GET)
-		@ResponseBody
-		public String sendSMS(@RequestParam("phone") String userPhoneNumber) throws Exception { // 휴대폰 문자보내기
-			int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
-
+	@RequestMapping(value = "/entPhoneCk", method = RequestMethod.GET)
+	@ResponseBody
+	public String sendSMS(@RequestParam("phone") String userPhoneNumber) throws Exception { // 휴대폰 문자보내기
+		int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
 			eService.certifiedPhoneNumber(userPhoneNumber,randomNumber);
+		
+		return Integer.toString(randomNumber);
+	}
+		
+	// 아이디 중복체크
+	@RequestMapping(value = "/entCheckId", method = RequestMethod.POST )
+	@ResponseBody
+	public int checkId(@RequestParam("own_id") String own_id) throws Exception{
+		int cnt = eService.checkId(own_id);
+		return cnt;
+	}
+		
+		
+	// http://localhost:8088/ent/entJoin
+	@RequestMapping(value = "/entJoin", method = RequestMethod.GET)
+	public void entJoinGET() {
+		logger.debug("GET() 호출");
+		logger.debug("연결된 view 페이지 호출 (/views/ent/entJoin.jsp)");
+
+	}
+
+	@RequestMapping(value = "/entJoin", method = RequestMethod.POST)
+	public String entJoinPOST(EntVO vo, MultipartFile ent_file, HttpServletResponse response) throws Exception {
+		logger.debug("entJoinPOST() 호출");
+		// 전달정보 저장(회원가입 정보)
+		logger.debug("vo : " + vo);
+		String own_pw = BCrypt.hashpw(vo.getOwn_pw(), BCrypt.gensalt());
 			
-			return Integer.toString(randomNumber);
-		}
+		vo.setOwn_pw(own_pw);
+		logger.debug("vo.pw : @@@@@@@@@@@@@@@@@@@@@@@@"+vo.getOwn_pw());
 		
-		// 아이디 중복체크
-		@RequestMapping(value = "/entCheckId", method = RequestMethod.POST )
-		@ResponseBody
-		public int checkId(@RequestParam("own_id") String own_id) throws Exception{
-			int cnt = eService.checkId(own_id);
-			return cnt;
-		}
+		String oFileName = ent_file.getOriginalFilename();
+		String fileName = UUID.randomUUID().toString()+"_"+oFileName;
 		
+		logger.debug("fileName : @@@@@@@@@@@@@@@@@@@@@@"+fileName);
 		
-		// http://localhost:8088/ent/entJoin
-		@RequestMapping(value = "/entJoin", method = RequestMethod.GET)
-		public void entJoinGET() {
-			logger.debug("GET() 호출");
+		vo.setEnt_file(fileName);
+		
+		ent_file.transferTo(new File("\\upload"+fileName));
 
-			logger.debug("연결된 view 페이지 호출 (/views/ent/entJoin.jsp)");
+		// DAOImpl -> DB에 정보 저장
+		// mdao.insertMember(vo);
+		eService.entJoin(vo);
 
-		}
+		logger.debug("회원가입 완료!");
 
-		@RequestMapping(value = "/entJoin", method = RequestMethod.POST)
-		public String entJoinPOST(/* @ModelAttribute */ EntVO vo) throws Exception {
-			logger.debug("entJoinPOST() 호출");
-			// 전달정보 저장(회원가입 정보)
-			logger.debug("vo : " + vo);
-			String own_pw = BCrypt.hashpw(vo.getOwn_pw(), BCrypt.gensalt());
+		// 로그인 페이지로 이동(redirect)
+		return "redirect:/ent/entLogin";
+	}
+		
+	// 주소검색,입력
+	@RequestMapping(value = "/jusoPopup",method = RequestMethod.GET)
+	public void entMapGET() throws Exception {
 			
-			vo.setOwn_pw(own_pw);
+	}
+		
+	@RequestMapping(value = "/jusoPopup",method = RequestMethod.POST)
+	public void entMapPOST() throws Exception {
+			
+	}
+	// 주소검색,입력
 
-			// DAOImpl -> DB에 정보 저장
-			// mdao.insertMember(vo);
-			eService.entJoin(vo);
+	// http://localhost:8088/ent/entLogin
+	@RequestMapping(value = "/entLogin", method = RequestMethod.GET)
+	public void entLoginGET() throws Exception {
+		logger.debug("entLoginGET() 호출");
+		logger.debug("연결된 view 페이지 호출 (/views/etn/entLogin.jsp)");
+	}
 
-			logger.debug("회원가입 완료!");
+	@RequestMapping(value = "/entLogin", method = RequestMethod.POST)
+	public String entLoginPOST(EntVO vo, HttpSession session, RedirectAttributes rAttr) throws Exception {
+		logger.debug("entLoginPOST() 호출");
+		logger.debug("vo : " + vo);		
+		
+		
+		EntVO resultVO = eService.entLogin(vo);
+		logger.debug("resultVO : " + resultVO);
 
-			// 로그인 페이지로 이동(redirect)
+		logger.debug("vopw @@@@@@@@@@@@@@@@@@@@@@@@@@ " + vo.getOwn_pw());
+
+		// 로그인 실패
+		if (!BCrypt.checkpw(vo.getOwn_pw(), resultVO.getOwn_pw())) {
+			rAttr.addAttribute("result","fail");
 			return "redirect:/ent/entLogin";
 		}
 		
-		// 주소검색,입력
-		@RequestMapping(value = "/jusoPopup",method = RequestMethod.GET)
-		public void entMapGET() throws Exception {
-			
-		}
-		
-		@RequestMapping(value = "/jusoPopup",method = RequestMethod.POST)
-		public void entMapPOST() throws Exception {
-			
-		}
-		// 주소검색,입력
-
-		// http://localhost:8088/ent/entLogin
-		@RequestMapping(value = "/entLogin", method = RequestMethod.GET)
-		public void entLoginGET() throws Exception {
-			logger.debug("entLoginGET() 호출");
-			logger.debug("연결된 view 페이지 호출 (/views/etn/entLogin.jsp)");
-		}
-
-		@RequestMapping(value = "/entLogin", method = RequestMethod.POST)
-		public String entLoginPOST(EntVO vo, HttpSession session, RedirectAttributes rAttr) throws Exception {
-			logger.debug("entLoginPOST() 호출");
-			logger.debug("vo : " + vo);
-
-			EntVO resultVO = eService.entLogin(vo);
-			logger.debug("resultVO : " + resultVO);
-
-			// 로그인 실패
-			if (resultVO == null) {
-				rAttr.addAttribute("result","fail");
+		// 아이디상태에 따른 처리
+		if(BCrypt.checkpw(vo.getOwn_pw(), resultVO.getOwn_pw())) {
+				
+			if(resultVO.getOwn_state() == 1) {
+				rAttr.addAttribute("result","1");
 				return "redirect:/ent/entLogin";
+			}else if(resultVO.getOwn_state() == 2) {
+				rAttr.addAttribute("result","2");
+				return "redirect:/ent/entLogin";
+			}else if(resultVO.getOwn_state() == 3) {
+				rAttr.addAttribute("result","3");
+				return "redirect:/ent/entLogin";
+			}else {
+				// 로그인 성공 아이디 세션에 저장
+				session.setAttribute("own_id", resultVO.getOwn_id());
 			}
+				
+		}
+
+		return "redirect:/ent/entMain";
+	}
+
+	// http://localhost:8088/ent/entMain
+	@RequestMapping(value = "/entMain", method = RequestMethod.GET)
+	public void entMainGET(HttpSession session) throws Exception {
+		logger.debug("entMainGET() 호출");
+		logger.debug("연결된 view 페이지 호출 (/views/etn/entMain.jsp)");
+	}
+		
+	@RequestMapping(value = "/entLogout", method = { RequestMethod.GET, RequestMethod.POST })
+	public String entLogoutGET(HttpSession session) {
+		logger.debug("logoutGET() 호출");
+
+		// 로그아웃 처리 => 세션정보 초기화
+		session.invalidate();
+		// 메인페이지로 이동
+
+		return "redirect:/ent/entMain";
+	}
+		
+	// http://localhost:8088/ent/entMain
+	@RequestMapping(value = "/ownInfo", method = RequestMethod.GET)
+	public void ownInfoGET(HttpSession session, Model model) throws Exception{
+		logger.debug("ownInfoGET() 호출");
 			
-			if(resultVO != null) {
+		// 사용자 아이디 정보 저장
+		logger.debug(session.getAttribute("own_id")+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		String own_id = (String)session.getAttribute("own_id");
 				
-				if(resultVO.getOwn_state() == 1) {
-					rAttr.addAttribute("result","1");
-					return "redirect:/ent/entLogin";
-				}else if(resultVO.getOwn_state() == 2) {
-					rAttr.addAttribute("result","2");
-					return "redirect:/ent/entLogin";
-				}else if(resultVO.getOwn_state() == 3) {
-					rAttr.addAttribute("result","3");
-					return "redirect:/ent/entLogin";
-				}else {
-					// 로그인 성공 아이디 세션에 저장
-					session.setAttribute("own_id", resultVO.getOwn_id());
-				}
+		model.addAttribute(eService.ownInfo(own_id));
 				
-			}
-
-			return "redirect:/ent/entMain";
-		}
-
-		// http://localhost:8088/ent/entMain
-		@RequestMapping(value = "/entMain", method = RequestMethod.GET)
-		public void entMainGET(HttpSession session) throws Exception {
-			logger.debug("entMainGET() 호출");
-			logger.debug("연결된 view 페이지 호출 (/views/etn/entMain.jsp)");
-		}
+	}
 		
-		@RequestMapping(value = "/entLogout", method = { RequestMethod.GET, RequestMethod.POST })
-		public String entLogoutGET(HttpSession session) {
-			logger.debug("logoutGET() 호출");
-
-			// 로그아웃 처리 => 세션정보 초기화
-			session.invalidate();
-			// 메인페이지로 이동
-
-			return "redirect:/ent/entMain";
-		}
+	@RequestMapping(value = "/ownDelete", method = RequestMethod.GET )
+	public void ownDelete() {
 		
-		// http://localhost:8088/ent/entMain
-		@RequestMapping(value = "/ownInfo", method = RequestMethod.GET)
-		public void ownInfoGET(HttpSession session, Model model) throws Exception{
-			logger.debug("ownInfoGET() 호출");
-				
-			// 사용자 아이디 정보 저장
-			logger.debug(session.getAttribute("own_id")+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-			String own_id = (String)session.getAttribute("own_id");
-				
-			model.addAttribute(eService.ownInfo(own_id));
-				
-		}
-		
-		@RequestMapping(value = "/ownDelete", method = RequestMethod.GET )
-		public void ownDelete() {
-			
-		}
+	}
 
 	@RequestMapping(value = "/entAd", method = RequestMethod.GET)
 	public void entAdGET(HttpSession session, Model model) {
@@ -517,5 +529,7 @@ public class EntController {
 		model.addAttribute("name", name);
 		logger.debug(" 연결된 뷰페이지(/views/entOrder.jsp)출력 ");
 	}
+	
+	
 
 }
