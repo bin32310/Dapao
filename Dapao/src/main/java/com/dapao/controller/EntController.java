@@ -302,7 +302,7 @@ public class EntController {
 		}
 		logger.debug(" path : " + path);
 		for (MultipartFile mf : fileList) {
-			String genId = UUID.randomUUID().toString(); // 중복 처리
+			String genId = UUID.randomUUID().toString(); // 중복 처리 
 			String originFileName = mf.getOriginalFilename(); // 원본 파일 명
 
 			String saveFile = path + "\\" + genId + "_" + originFileName; // 저장할 경로
@@ -390,6 +390,7 @@ public class EntController {
 		out.close();
 		in.close();
 	}
+
 
 	// 파일 썸네일 다운로드 처리
 	@RequestMapping(value = "/thumbDownload", method = RequestMethod.GET)
@@ -526,44 +527,11 @@ public class EntController {
 				session.setAttribute("own_id", resultVO.getOwn_id());
 			}
 
+
 		}
 
 		return "redirect:/ent/entMain";
 	}
-
-	// http://localhost:8088/ent/entMain
-	@RequestMapping(value = "/entMain", method = RequestMethod.GET)
-	public void entMainGET(HttpSession session) throws Exception {
-		logger.debug("entMainGET() 호출");
-		logger.debug("연결된 view 페이지 호출 (/views/etn/entMain.jsp)");
-	}
-
-	@RequestMapping(value = "/entLogout", method = { RequestMethod.GET, RequestMethod.POST })
-	public String entLogoutGET(HttpSession session) {
-		logger.debug("logoutGET() 호출");
-
-		// 로그아웃 처리 => 세션정보 초기화
-		session.invalidate();
-		// 메인페이지로 이동
-
-		return "redirect:/ent/entMain";
-	}
-
-	// http://localhost:8088/ent/entMain
-	@RequestMapping(value = "/ownInfo", method = RequestMethod.GET)
-	public void ownInfoGET(HttpSession session, Model model) throws Exception {
-		logger.debug("ownInfoGET() 호출");
-
-		// 사용자 아이디 정보 저장
-		logger.debug(session.getAttribute("own_id") + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		String own_id = (String) session.getAttribute("own_id");
-
-		model.addAttribute(eService.ownInfo(own_id));
-
-	}
-
-	@RequestMapping(value = "/ownDelete", method = RequestMethod.GET)
-	public void ownDelete() {
 
 	}
 
@@ -576,5 +544,7 @@ public class EntController {
 		model.addAttribute("name", name);
 		logger.debug(" 연결된 뷰페이지(/views/entOrder.jsp)출력 ");
 	}
+	
+	
 
 }

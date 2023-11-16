@@ -112,7 +112,7 @@
 	<!-- 로그인 -->
 	<select id="entLogin" resultType="EntVO">
 		select * from ent
-		where own_id=#{own_id} and own_pw=#{own_pw}
+		where own_id=#{own_id}
 	</select>
 	
 	<!-- 아이디 조회 -->
