@@ -56,52 +56,101 @@
     	 sock.onclose = function (event) {
           };
 
-         
-		sock.onmessage = function(event) {
-			var data = event.data;
-			console.log(data);
-			var sessionId = null; //데이터를 보낸 사람
-			var message = null;
-			var arr = data.split(":");
-			var cur_session = '${us_id}';
-			for (var i = 0; i < arr.length; i++) {
-				console.log('arr[' + i + ']: '+cur_session);
-			}
-			console.log(cur_session)
-			sessionId = arr[0];
-			message = arr[1];
-
-			if (sessionId == cur_session) {
-				if(message == null){
-					var str = "<div class='col-6'>";
-					str += "<div class='alert alert-warning'>";
-					str += "<b>" + sessionId +"</b>";
-					str += "</div></div>";
-					$("#msgArea").append(str);
-				}else{
-					var str = "<div class='col-6'>";
+         if('${us_id}' != null && '${us_id}' != ""){
+			sock.onmessage = function(event) {
+				var data = event.data;
+				console.log(data);
+				var sessionId = null; //데이터를 보낸 사람
+				var message = null;
+				var arr = data.split(":");
+				var cur_session = '${us_id}';
+				for (var i = 0; i < arr.length; i++) {
+					console.log('arr[' + i + ']: '+cur_session);
+				}
+				console.log(cur_session)
+				sessionId = arr[0];
+				message = arr[1];
+	
+				if (sessionId == cur_session) {
+					if(message == null){
+						var str = "<div class='col-6'>";
 						str += "<div class='alert alert-warning'>";
-						str += "<b>" + sessionId + " : " + message + "</b>";
+						str += "<b>" + sessionId +"</b>";
 						str += "</div></div>";
 						$("#msgArea").append(str);
-				}
-
-			} else {
-				if(message == null){
-					var str = "<div class='col-6'>";
-					str += "<div class='alert alert-secondary'>";
-					str += "<b>" + sessionId +"</b>";
-					str += "</div></div>";
-					$("#msgArea").append(str);
-				}else{
-					var str = "<div class='col-6'>";
-						str += "<div class='alert alert-warning'>";
-						str += "<b>" + sessionId + " : " + message + "</b>";
+					}else{
+						var str = "<div class='col-6'>";
+							str += "<div class='alert alert-warning'>";
+							str += "<b>" + sessionId + " : " + message + "</b>";
+							str += "</div></div>";
+							$("#msgArea").append(str);
+					}
+	
+				} else {
+					if(message == null){
+						var str = "<div class='col-6'>";
+						str += "<div class='alert alert-secondary'>";
+						str += "<b>" + sessionId +"</b>";
 						str += "</div></div>";
 						$("#msgArea").append(str);
+					}else{
+						var str = "<div class='col-6'>";
+							str += "<div class='alert alert-warning'>";
+							str += "<b>" + sessionId + " : " + message + "</b>";
+							str += "</div></div>";
+							$("#msgArea").append(str);
+					}
 				}
 			}
-		}
+         }
+
+         if('${ent_name}' != null && '${ent_name}' != ""){
+			sock.onmessage = function(event) {
+				var data = event.data;
+				console.log(data);
+				var sessionId = null; //데이터를 보낸 사람
+				var message = null;
+				var arr = data.split(":");
+				var cur_session = '${ent_name}';
+				for (var i = 0; i < arr.length; i++) {
+					console.log('arr[' + i + ']: '+cur_session);
+				}
+				console.log(cur_session)
+				sessionId = arr[0];
+				message = arr[1];
+	
+				if (sessionId == cur_session) {
+					if(message == null){
+						var str = "<div class='col-6'>";
+						str += "<div class='alert alert-warning'>";
+						str += "<b>" + sessionId +"</b>";
+						str += "</div></div>";
+						$("#msgArea").append(str);
+					}else{
+						var str = "<div class='col-6'>";
+							str += "<div class='alert alert-warning'>";
+							str += "<b>" + sessionId + " : " + message + "</b>";
+							str += "</div></div>";
+							$("#msgArea").append(str);
+					}
+	
+				} else {
+					if(message == null){
+						var str = "<div class='col-6'>";
+						str += "<div class='alert alert-secondary'>";
+						str += "<b>" + sessionId +"</b>";
+						str += "</div></div>";
+						$("#msgArea").append(str);
+					}else{
+						var str = "<div class='col-6'>";
+							str += "<div class='alert alert-warning'>";
+							str += "<b>" + sessionId + " : " + message + "</b>";
+							str += "</div></div>";
+							$("#msgArea").append(str);
+					}
+				}
+			}
+         }
 	});
 
 	function send() {
