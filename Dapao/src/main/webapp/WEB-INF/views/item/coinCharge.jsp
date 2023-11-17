@@ -18,7 +18,11 @@
 
 <style type="text/css">
 
+.box{
 
+	background-color: transparent;
+
+}
 
 /* 현재 금액 */
 #nowCoinSection{
@@ -44,6 +48,7 @@
 	font-weight: bold;
 	text-align: right;
 	width : 100px;
+	background-color: transparent;
 	
 }
 
@@ -78,7 +83,11 @@
 	text-align: left;
 	color:black;
 	background-color: transparent;
+	
+
 }
+
+
 .blank{
 
 	background-color: transparent;
@@ -175,6 +184,12 @@
 	font-size: 30px;
 	color: black;
 	text-align: left;
+	background-color: transparent;
+}
+
+hr{
+
+color: black;
 }
 
 
@@ -191,15 +206,15 @@
 	 -->
 <div class="box">
 
-	<input type="text" value="대나무페이 환불" class="item_top_title">
+	<input type="text" value="대나무페이 환불" class="item_top_title" readonly disabled="disabled">
 	<hr>
 	
 	<div id="contain">	 
 		<div id="nowCoinSection">
-			<input type="text" value="현재 금액  : " id="now_coin"> 
-			<input type="text" value="${us_coin }" id="us_coin">
-			<input type="text" value="원" class="won">
-			<input type="text" value="" class="blank">
+			<input type="text" value="현재 금액  : " id="now_coin" readonly disabled="disabled"> 
+			<input type="text" value="${us_coin }" id="us_coin" readonly disabled="disabled">
+			<input type="text" value="원" class="won" readonly disabled="disabled">
+			<input type="text" value="" class="blank" readonly disabled="disabled">
 			<input type="button" value="환불하기 " id="coin_refund">
 		</div>
 		<br><br>
@@ -208,23 +223,23 @@
 			 
 				<input type="text" value="충전금액" id="coinCahrgeText">   <br>
 				<input type="radio" name="charge_price" value="5000" checked class="pp">
-				<input type="text" value="5,000원  " class="ppp">
+				<input type="text" value="5,000원  " class="ppp" readonly disabled="disabled">
 				<input type="radio" name="charge_price" value="10000" class="pp">
-				<input type="text" value="     10,000원  " class="ppp"> <br>
+				<input type="text" value="     10,000원  " class="ppp" readonly disabled="disabled"> <br>
 				<input type="radio" name="charge_price" value="20000" class="pp">
-				<input type="text" value="20,000원   "class="ppp">
+				<input type="text" value="20,000원   "class="ppp" readonly>
 				<input type="radio" name="charge_price" value="30000" class="pp">
-				<input type="text" value="     30,000원  " class="ppp"> <br>
+				<input type="text" value="     30,000원  " class="ppp" readonly disabled="disabled"> <br>
 				<input type="radio" name="charge_price" value="50000" class="pp">
-				<input type="text" value="50,000원  " class="ppp">
+				<input type="text" value="50,000원  " class="ppp" readonly>
 				<input type="radio" name="charge_price" value="100000" class="pp">
-				<input type="text" value="     100,000원  " class="ppp"> <br>
+				<input type="text" value="     100,000원  " class="ppp" readonly disabled="disabled"> <br>
 				<input type="radio" name="charge_price" value="200000" class="pp"> 
-				<input type="text" value="200,000원  " class="ppp">
+				<input type="text" value="200,000원  " class="ppp" readonly disabled="disabled">
 				<input type="radio" name="charge_price" value="300000" class="pp">
-				<input type="text" value="     300,000원  " class="ppp"> <br>
+				<input type="text" value="     300,000원  " class="ppp" readonly disabled="disabled"> <br>
 				<input type="radio" name="charge_price" value="0" id="price">
-				<input type="text" value="직접입력하기  " class="ppp">
+				<input type="text" value="직접입력하기  " class="ppp" readonly disabled="disabled">
 				<input type="text" value="" class="blank">
 				<input type="number" value="0" name="pay_price" id="pay_price" max="10"> <br>
 				<font id="checkP" size="2"></font>
@@ -270,7 +285,7 @@
 	</div>
 </div>	
 	
-	<%@ include file="../include/footer.jsp" %>
+	<%@ include file="../include/userFooter.jsp" %>
 	
 <script type="text/javascript">
 
