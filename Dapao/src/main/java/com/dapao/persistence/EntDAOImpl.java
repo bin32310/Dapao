@@ -2,6 +2,7 @@ package com.dapao.persistence;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONObject;
@@ -12,57 +13,56 @@ import org.springframework.stereotype.Repository;
 
 import com.dapao.domain.EntVO;
 import com.dapao.domain.PageVO;
+import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TradeVO;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
-@Repository
-public class EntDAOImpl implements EntDAO {
+@Repository(value = "entDAO")
+public class EntDAOImpl{
 	
 	private static final Logger logger = LoggerFactory.getLogger(EntDAOImpl.class);
 	@Autowired
 	private SqlSession sqlSession;
 	private static final String NAMESPACE = "com.dapao.mapper.EntMapper";
-	@Override
-	public void entUpdate(EntVO vo) {
+	public void entUpdate(EntVO vo) throws Exception {
 		logger.debug(" DAO -> EntUpdate(EntVO vo) 호출 ");
 		sqlSession.update(NAMESPACE+".entUpdate",vo );
 	}
-	@Override
-	public EntVO listEnt(EntVO vo) {
+	public EntVO listEnt(EntVO vo) throws Exception{
 		logger.debug(" DAO listEnt(String own_id) 호출 ");
 		return sqlSession.selectOne(NAMESPACE+".listEnt", vo);
 	}
-	@Override
-	public List<TradeVO> searchTrade(PageVO vo) {
+	public List<TradeVO> searchTrade(PageVO vo) throws Exception{
 		logger.debug("DAO listTrade(String own_id) 호출 ");
 		return sqlSession.selectList(NAMESPACE+".searchTrade", vo);
 	}
-	@Override
-	public int searchTradeCount(PageVO vo) {
+	public int searchTradeCount(PageVO vo) throws Exception{
 		logger.debug(" DAO searchTradeCount(PageVO vo) 호출 ");
 		return sqlSession.selectOne(NAMESPACE+".searchTradeCount", vo);
 	}
-	@Override
-	public void refund(TradeVO vo) {
+	// 구매 환불
+	public void refund(TradeVO vo) throws Exception{
 		logger.debug(" DAO refund(TradeVO vo) 호출 ");
 		sqlSession.delete(NAMESPACE+".refund", vo);
 	}
-	@Override
+	// 환불 확정
+	public void tradeRefund(TradeVO vo) throws Exception{
+		logger.debug(" DAO refund(TradeVO vo) 호출 ");
+		sqlSession.delete(NAMESPACE+".refund", vo);
+	}
 	public void entJoin(EntVO vo) throws Exception {
 		logger.debug("DAOImpl entJoin() 실행 ");
 		sqlSession.insert(NAMESPACE+".entJoin",vo);
 		
 	}
-	@Override
 	public EntVO entLogin(EntVO vo) throws Exception {
 		logger.debug("DAOImpl entLogin() 실행");
 		
 		return sqlSession.selectOne(NAMESPACE+".entLogin",vo);
 	}
-	@Override
 	public void certifiedPhoneNumber(String userPhoneNumber, int randomNumber) throws Exception {
 		String api_key = "NCSGDCUBZEFNPZLV";
 	    String api_secret = "I17GY2WCK9VFSXGOIWUIHIA55VTEHNLS";
@@ -85,21 +85,34 @@ public class EntDAOImpl implements EntDAO {
 	      }
 		
 	}
-	@Override
 	public Integer checkId(String own_id) throws Exception {
 		
 		return sqlSession.selectOne(NAMESPACE+".checkId", own_id);
 	}
 	
-	@Override
 	public EntVO ownInfo(String own_id) throws Exception {
 		logger.debug("DAOImpl ownInfo() 실행"); 
 		
 		return sqlSession.selectOne(NAMESPACE+".ownInfo",own_id);
 	}
-	@Override
 	public List<ReviewVO> entReviewList(String own_id) throws Exception {
 		return sqlSession.selectList(NAMESPACE+".entReviewList", own_id);
+	}
+	// 제품 구매
+	public void purchase(Map map) throws Exception{
+		logger.debug(" purchase(ProdVO vo) 실행 ");
+		int result = sqlSession.insert(NAMESPACE+".purchase",map);
+		if(result != 1) {
+			logger.debug(" 구매 실패 ");
+			return;
+		}
+		
+	}
+	// 구매 확정 
+	public void tradePurchase(String tr_no) throws Exception{
+		logger.debug(" tradePurchase(String tr_no) 호출 ");
+		sqlSession.update(NAMESPACE+".tradePurchase", tr_no);
+		
 	}
 	
 	

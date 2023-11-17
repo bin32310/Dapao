@@ -10,44 +10,38 @@ import org.springframework.stereotype.Service;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.PageVO;
 import com.dapao.domain.ProdVO;
-import com.dapao.persistence.ProdDAO;
+import com.dapao.persistence.ProdDAOImpl;
 
 @Service
 public class ProdServiceImpl implements ProdService{
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProdServiceImpl.class);
 	@Autowired
-	private ProdDAO pdao;
-	@Override
+	private ProdDAOImpl pdao;
 	public List<ProdVO> searchProd(PageVO vo) throws Exception{
 		logger.debug(" service searchProd(PageVO vo) 호출 ");
 		return pdao.searchProd(vo);
 	}
 	
-	@Override
 	public List<ProdVO> listProd(EntVO vo) {
 		logger.debug(" service listProd(EntVO vo) 호출 ");
 		return pdao.listProd(vo);
 	}
 
-	@Override
 	public void updateProd(ProdVO vo) throws Exception {
 		logger.debug(" updateProd(ProdVO vo) 호출 ");
 		pdao.updateProd(vo);
 	}
-	@Override
 	public void insertProd(ProdVO vo) throws Exception {
 		logger.debug(" insertPord(ProdVO vo) 호출 ");
 		pdao.insertProd(vo);
 	}
 
-	@Override
 	public int getProdList(String own_id) throws Exception {
 		logger.debug(" getProdList(String own_id) 호출 ");
 		return pdao.getProdList(own_id);
 	}
 
-	@Override
 	public List<ProdVO> getListPage(PageVO vo) throws Exception {
 		logger.debug("  getListPage(ProdVO vo) 호출 ");
 		return pdao.getListPage(vo);

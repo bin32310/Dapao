@@ -2,11 +2,12 @@ package com.dapao.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,8 +34,8 @@ import com.dapao.domain.PageVO;
 import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TradeVO;
-import com.dapao.service.EntService;
-import com.dapao.service.ProdService;
+import com.dapao.service.EntServiceImpl;
+import com.dapao.service.ProdServiceImpl;
 
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -44,20 +45,19 @@ public class EntController {
 
 	private static final Logger logger = LoggerFactory.getLogger(EntController.class);
 	@Autowired
-	private ProdService pService;
+	private ProdServiceImpl pService;
 	@Autowired
-	private EntService eService;
+	private EntServiceImpl eService;
 
 	// http://localhost:8088/ent/shopMain
 	@RequestMapping(value = "/shopMain", method = RequestMethod.GET)
 	public void shopMainGET(HttpSession session, ReviewVO rVo, Model model, String Ent_id) throws Exception {
 		logger.debug(" shopMainGET(EntVO eVO, ProdVO pVO, ReviewVO rVO, Model model) 호출 ");
-//		String own_id = "6";
 		String own_id = Ent_id;
 		if (Ent_id == null) {
 			own_id = (String) session.getAttribute("own_id");
 		}
-		
+//		String us_id = (String) session.getAttribute("us_id");
 		EntVO eVo = new EntVO();
 		eVo.setOwn_id(own_id);
 		logger.debug("eService.listEnt(eVo): " + eService.listEnt(eVo));
@@ -70,12 +70,15 @@ public class EntController {
 			logger.debug(" fileList[i] : " + fileList[i].toString());
 		}
 		logger.debug("fileList : " + fileList);
-		String name = "상점 메인페이지";
 
 		List<ReviewVO> rlist = eService.entReviewList(own_id);
 		logger.debug(" rlist : " + rlist);
 		EntVO entList = eService.listEnt(eVo);
 		logger.debug("entList : " + entList);
+		String name="";
+		if(entList != null) {
+			name = entList.getEnt_name();
+		}
 		int idx = 1;
 		if (entList != null) {
 			if (entList.getEnt_img() != null || !entList.getEnt_img().equals("")) {
@@ -107,7 +110,7 @@ public class EntController {
 
 	// http://localhost:8088/ent/shopMainManage
 	@RequestMapping(value = "/shopMainManage", method = RequestMethod.GET)
-	public void shopMainManageGET(HttpSession session, Model model) {
+	public void shopMainManageGET(HttpSession session, Model model) throws Exception {
 		logger.debug(" shopMainManageGET(EntVO eVo, Model model) 호출 ");
 //		String own_id = "6";
 		String own_id = (String) session.getAttribute("own_id");
@@ -144,7 +147,7 @@ public class EntController {
 	// http://localhost:8088/ent/shopMainManage
 	@RequestMapping(value = "/shopMainManage", method = RequestMethod.POST)
 	public void shopMainManagePOST(EntVO eVo, Model model, HttpSession session, MultipartHttpServletRequest mhsr,
-			HttpServletResponse response) throws IllegalStateException, IOException {
+			HttpServletResponse response) throws Exception {
 		logger.debug(" shopMainManagePOST(EntVO eVo, Model model) 호출 ");
 //		String own_id = "6";
 		String own_id = (String) session.getAttribute("own_id");
@@ -241,30 +244,72 @@ public class EntController {
 	}
 
 	// http://localhost:8088/ent/entOrder
-	// http://localhost:8088/ent/entOrder?own_id=6
 	@RequestMapping(value = "/entOrder", method = RequestMethod.GET)
-	public void entOrderGET(HttpSession session, Model model) {
+	public void entOrderGET(HttpSession session, Model model,PageVO vo,
+			String search_cate, String search) throws Exception {
 		logger.debug(" entOrderGET() ");
-//		String own_id = (String) session.getAttribute("own_id");
-		String own_id = "6";
+		String own_id = (String) session.getAttribute("own_id");
 		String name = "주문관리";
-		model.addAttribute("own_id", own_id);
+		ProdVO pVo = new ProdVO();
+		TradeVO tVo = new TradeVO();
+		logger.debug(" vo : "+vo);
+		pVo.setOwn_id(own_id);
+		List<TradeVO> tlist;
+		if(vo.getCri() != null) {
+			if (search_cate.contains("prod")) {
+				// 검색조건이 상품명일경우
+				logger.debug("상품명 주문조회");
+				pVo.setProd_name(search);
+				Integer tr_no = null; // 안넣으면 비교를 못함
+				tVo.setTr_no(tr_no);
+				vo.setT_vo(tVo);
+				vo.setP_vo(pVo);
+				vo.setTotalCount(eService.searchTradeCount(vo));
+				logger.debug(" pageVo " + vo);
+				
+				// trade게시판 own_id이 가지고 있는 검색한 상품명을 검색
+				tlist = eService.searchTrade(vo);
+				logger.debug(" tlist : " + tlist);
+				model.addAttribute("tlist", tlist);
+
+			} else if (search_cate.contains("tr_no")) {
+				logger.debug("주문번호 주문조회");
+				// 검색조건이 주문번호일 경우
+				if(search == null || search.equals("")) {
+					model.addAttribute("name", name);
+					return;
+				}
+				Integer tr_no = Integer.parseInt(search);
+				
+				
+				tVo.setTr_no(tr_no);
+				vo.setP_vo(pVo);
+				vo.setT_vo(tVo);
+				vo.setTotalCount(eService.searchTradeCount(vo));
+				logger.debug(" pageVo " + vo);
+ 				// own_id이 받은 검색한 주문번호에 해당하는 것을 검색
+				tlist = eService.searchTrade(vo);
+				model.addAttribute("tlist", tlist);
+			}
+		}
+		model.addAttribute("search_cate", search_cate);
+		model.addAttribute("search", search);
+		model.addAttribute("pageVO", vo);
 		model.addAttribute("name", name);
 		logger.debug(" 연결된 뷰페이지(/views/entOrder.jsp)출력 ");
 	}
 
 	// http://localhost:8088/ent/entOrder
 	@RequestMapping(value = "/entOrder", method = RequestMethod.POST)
-	public void entOrderPOST(PageVO vo, String search_cate, String search, HttpSession session, Model model)
+	public void entOrderPOST(String search_cate, String search,
+			HttpSession session, Model model, Criteria cri)
 			throws Exception {
 		logger.debug(" entOrderPOST(PageVO vo, String search, Model model) 호출 ");
 		String own_id = (String) session.getAttribute("own_id");
-//		String own_id = "6";
-		if (vo.getCri() == null) {
-			Criteria cri = new Criteria();
-			vo.setCri(cri);
-		}
+		PageVO vo = new PageVO();
+		vo.setCri(cri);
 		ProdVO pVo = new ProdVO();
+		TradeVO tVo = new TradeVO();
 		String name = "주문관리";
 		logger.debug(" pageVo " + vo);
 		logger.debug(" own_id : " + own_id);
@@ -275,13 +320,13 @@ public class EntController {
 			// 검색조건이 상품명일경우
 			logger.debug("상품명 주문조회");
 			pVo.setProd_name(search);
-			TradeVO tVo = new TradeVO();
 			Integer tr_no = null; // 안넣으면 비교를 못함
 			tVo.setTr_no(tr_no);
 			vo.setT_vo(tVo);
 			vo.setP_vo(pVo);
 			vo.setTotalCount(eService.searchTradeCount(vo));
 			logger.debug(" pageVo " + vo);
+			
 			// trade게시판 own_id이 가지고 있는 검색한 상품명을 검색
 			tlist = eService.searchTrade(vo);
 			logger.debug(" tlist : " + tlist);
@@ -290,23 +335,27 @@ public class EntController {
 		} else if (search_cate.contains("tr_no")) {
 			logger.debug("주문번호 주문조회");
 			// 검색조건이 주문번호일 경우
-			TradeVO tVo = new TradeVO();
 			if(search == null || search.equals("")) {
+				logger.debug("검색 내용 없음");
 				model.addAttribute("name", name);
 				return;
 			}
 			Integer tr_no = Integer.parseInt(search);
-			
+			logger.debug(" tr_no : "+tr_no);
 			
 			tVo.setTr_no(tr_no);
 			vo.setP_vo(pVo);
 			vo.setT_vo(tVo);
 			vo.setTotalCount(eService.searchTradeCount(vo));
 			logger.debug(" pageVo " + vo);
+			logger.debug(" p_vo : "+vo.getP_vo());
 			// own_id이 받은 검색한 주문번호에 해당하는 것을 검색
 			tlist = eService.searchTrade(vo);
+			logger.debug("tlist : "+tlist);
 			model.addAttribute("tlist", tlist);
 		}
+		model.addAttribute("search_cate", search_cate);
+		model.addAttribute("search", search);
 		model.addAttribute("name", name);
 		model.addAttribute("pageVO", vo);
 
@@ -361,38 +410,14 @@ public class EntController {
 		return "redirect:/ent/productManage";
 	}
 
-	@RequestMapping(value = "/listPage", method = RequestMethod.GET)
-	public void listPageGET(Criteria cri, Model model, HttpSession session) throws Exception {
-		logger.debug(" listPageGET() 호출 ");
-		// 페이징처리( 페이지 블럭 처리 객체)
-		String own_id = (String) session.getAttribute("own_id");
-		PageVO vo = new PageVO();
-		vo.setCri(cri);
-		logger.debug("vo : " + vo);
-		logger.debug(" own_id : " + own_id);
-		String name = "상품 조회/수정/등록";
-		ProdVO pVo = new ProdVO();
-		pVo.setOwn_id(own_id);
-		vo.setP_vo(pVo);
-		vo.setTotalCount(pService.getProdList(own_id));
-		logger.debug("TotalCount : " + vo.getTotalCount());
-		logger.debug(" vo : " + vo);
-		List<ProdVO> plist = pService.searchProd(vo);
-
-		// 리스트 사이즈 확인
-		logger.debug(" 글 개수 : " + plist.size());
-
-		// Model 객체에 리스트 정보를 저장
-		model.addAttribute("plist", plist);
-		model.addAttribute("pageVO", vo);
-		model.addAttribute("name", name);
-	}
-
 	@RequestMapping(value = "/refund", method = RequestMethod.GET)
-	public String refundGET(TradeVO vo) {
+	public void refundGET(TradeVO vo) throws Exception {
 		logger.debug(" refundGET(TradeVO vo) 호출 ");
-		eService.refund(vo);
-		return "redirect:/ent/entOrder";
+		logger.debug(" vo : "+vo);
+//		eService.refund(vo); // 코인환불
+//		logger.debug(" 환불 성공 ");
+		eService.tradeRefund(vo); // 환불확정 상태로 업데이트
+		logger.debug(" 환불 확정 ");
 	}
 
 	@RequestMapping(value = "/download")
@@ -599,7 +624,7 @@ public class EntController {
 	public void ownDelete() {
 
 	}
-
+	//광고페이지
 	@RequestMapping(value = "/entAd", method = RequestMethod.GET)
 	public void entAdGET(HttpSession session, Model model) {
 		logger.debug(" entOrderGET() ");
@@ -609,5 +634,31 @@ public class EntController {
 		model.addAttribute("name", name);
 		logger.debug(" 연결된 뷰페이지(/views/entOrder.jsp)출력 ");
 	}
+	
+	// 손님이 가게 상품결제
+	@RequestMapping(value = "/purchase", method = RequestMethod.GET)
+	public void purchaseGET(HttpSession session, ProdVO vo) throws Exception {
+		logger.debug(" purchaseGET 호출 ");
+		logger.debug(" vo : "+vo);
+		Map<String,Object>map = new HashMap<String,Object>();
+		
+//		String us_id = (String) session.getAttribute("us_id");
+		String us_id = "test1";
+		logger.debug("us_id : "+us_id);
+		String own_id = (String) session.getAttribute("own_id");
+		logger.debug("own_id : "+own_id);
+		Integer prod_no = vo.getProd_no();
+		Integer prod_price = vo.getProd_price();
+
+		map.put("us_id", us_id);
+		map.put("own_id", own_id);
+		map.put("prod_no", prod_no);
+		map.put("prod_price", prod_price);
+		logger.debug(" map : "+map);
+		eService.purchase(map);
+		logger.debug(" 결제 완료 ");
+//		eService.tradePurchase(tr_no);
+	}
+	
 
 }

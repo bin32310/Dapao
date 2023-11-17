@@ -10,10 +10,13 @@
 		<result column="tr_no" property="tr_no" />
 		<result column="tr_sell_ent" property="tr_sell_ent" />
 		<result column="tr_sell_us" property="tr_sell_us" />
-		<result column="tr_buy" property="tr_buy" />
+		<result column="us_id" property="us_id" />
 		<result column="tr_prod" property="tr_prod" />
 		<result column="tr_item" property="tr_item" />
 		<result column="tr_price" property="tr_price" />
+		<result column="tr_buy_state" property="tr_buy_state" />
+		<result column="tr_sell_state" property="tr_sell_state" />
+		<result column="tr_date" property="tr_date" />
 		<collection property="prodVO" resultMap="prodVO" />
 
 		<!-- 1 : 다 관계의 경우 데이터 매핑시켜준다. association => 1 : 1 관계 collection => 1 : 
@@ -72,30 +75,37 @@
 	<!-- 페이징된 검색조건에 따른 주문리스트 조회 -->
 	<select id="searchTrade" parameterType="TradeVO"
 		resultMap="resultMap">
-		select t.tr_no, t.us_id, t.tr_prod, p.prod_name,p.prod_price
-		from
-		trade t inner join product p
-		on t.tr_prod=p.prod_no
-		where p.own_id=
-		#{p_vo.own_id}
+		select * 
+		from trade t inner join product p 
+		on t.tr_prod=p.prod_no 
+		where p.own_id= #{p_vo.own_id} 
 		<if test='p_vo.prod_name != null and p_vo.prod_name != ""'>
-			AND p.prod_name like concat('%',#{p_vo.prod_name},'%')
+			AND p.prod_name like CONCAT('%',#{p_vo.prod_name},'%') 
 		</if>
 		<if test='t_vo.tr_no != null and t_vo.tr_no != ""'>
-			AND t.tr_no = #{t_vo.tr_no}
+			AND t.tr_no = #{t_vo.tr_no} 
 		</if>
-		order by tr_no
-		limit #{cri.pageStart},#{cri.pageSize}
+		order by t.tr_no 
+		limit #{cri.pageStart},#{cri.pageSize} 
 	</select>
 	<!-- 페이징된 검색조건에 따른 주문리스트 조회 -->
 
-	<!-- 전달받은 주문 환불 -->
-	<delete id="refund">
-		delete from trade
+	<!-- 주문 환불 코인이동 -->
+	<update id="refund">
+		update us u, ent e
+		set u.us_coin = u.us_coin+#{tr_price}, 
+		e.ent_coin = e.ent_coin-#{tr_price} 
+		where e.own_id=#{tr_sell_ent} 
+		and u.us_id=#{us_id}
+	</update>
+	<!-- 주문 환불 코인이동 -->
+	<!-- 주문 환불 확정 -->
+	<update id="tradeRefund">
+		update trade
+		set tr_sell_state = 2
 		where tr_no = #{tr_no}
-	</delete>
-	<!-- 전달받은 주문 환불 -->
-	
+	</update>
+	<!-- 주문 환불 확정 -->
 	<!-- 아이디중복확인 -->
 	<select id="checkId" resultType="int">
 		select count(own_id) from ent 
@@ -133,6 +143,18 @@
 		select * from review 
 		where rv_own_id = #{own_id}
 	</select>
-	
+	<!-- 상점에서 주문 -->
+	<insert id="purchase" parameterType="map">
+		insert into trade(us_id, tr_sell_ent, tr_prod, tr_price) 
+		values(#{us_id},#{own_id},#{prod_no},#{prod_price})
+	</insert>
+	<!-- 상점에서 주문 -->
+	<!-- 판매완료 -->
+	<update id="tradePurchase">
+		update trade
+		set tr_sell_buy = 1
+		where tr_no = #{tr_no}
+	</update>
+	<!-- 판매완료 -->
 	
 </mapper>

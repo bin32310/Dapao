@@ -10,7 +10,7 @@ public class ProdVO {
 	
 	private Integer prod_no;
 	private String prod_name;
-	private String prod_price;
+	private Integer prod_price;
 	private String prod_con;
 	private String prod_content;
 	private String prod_cate;

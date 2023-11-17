@@ -88,7 +88,7 @@
 				<h4 class="modal-title">상품 광고 등록</h4>
 			</div>
 			<div class="modal-body">
-				<div class="box box-primary">
+				<div class="box box-success">
 					<div class="box-header with-border"></div>
 					<div class="form-group">
 						<label>업로드 기한</label> <select class="form-control" name="ad_upload">
