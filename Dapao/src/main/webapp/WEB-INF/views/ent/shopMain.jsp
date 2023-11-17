@@ -98,7 +98,7 @@
 
 		</div>
 		<div class="chat">
-			<button>판타톡</button>
+			<button>판다톡</button>
 		</div>
 		<div class="box box-success">
 			<div class="box-header with-border">
@@ -245,9 +245,9 @@
 		$('.prodPick').hover(function () {
 			$(this).css("cursor", "pointer");
 		});
-		$('.chat').click(function () { //판다톡
-			location.href="/websocket/chat"+${own_id};
-		});
+	    $('.chat').click(function () { //판다톡
+	        location.href="/websocket/chat";
+	     });
 		$('#modal-success').on("show.bs.modal",function(e) { //모달켜지면
 			
 			console.log(e);

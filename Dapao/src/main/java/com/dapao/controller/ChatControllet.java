@@ -33,7 +33,7 @@ public class ChatControllet {
         }  
 		
 		if(ent_name != null){
-			logger.debug("own_id : "+ent_name);
+			logger.debug("ent_name : "+ent_name);
 			return "redirect:/websocket/chat/"+ent_name;
 		}  
 		

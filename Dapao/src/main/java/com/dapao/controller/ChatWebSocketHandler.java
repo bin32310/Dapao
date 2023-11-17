@@ -33,6 +33,8 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		String us_id = (String)session.getAttributes().get("us_id");
 		String ent_name = (String)session.getAttributes().get("ent_name");
+		logger.debug("us_id"+us_id);
+		logger.debug("ent_name"+ent_name);
 		if (us_id != null) {
 			logger.debug(us_id+"님 접속하셨습니다");
 			sessionList.add(session);
