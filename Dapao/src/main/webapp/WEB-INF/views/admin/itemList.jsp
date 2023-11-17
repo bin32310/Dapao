@@ -40,19 +40,24 @@
 			<tbody>
 				<c:forEach var="list" items="${itemList }">
 					<tr role="row" class="odd">
-						<td><a class="it_no">${list.it_no }</a></td>
+						<td>
+						<c:if test="${list.it_state != '3' }">
+							<a href="/item/itemDetail?it_no=${list.it_no }" class="it_no">${list.it_no }</a>
+						</c:if>
+						<c:if test="${list.it_state == '3' }">${list.it_no }</c:if>					
+						</td>
 						<td>${list.us_id }</td>
 						<td>${list.it_cate }</td>
 						<td>${list.it_price }</td>
-						<td>${list.it_con }</td>
+						<td id="con">${list.it_con }</td>
 						<c:choose>
 							<c:when test="${list.it_state eq '0' }">
 								<td>판매중</td>
 							</c:when>
-							<c:when test="${list.it_state eq '1' }">
+							<c:when test="${list.it_state eq '2' }">
 								<td>판매완료</td>
 							</c:when>
-							<c:when test="${list.it_state eq '2' }">
+							<c:when test="${list.it_state eq '3' }">
 								<td>삭제</td>
 							</c:when>
 						</c:choose>
@@ -60,10 +65,10 @@
 							<c:when test="${list.it_state eq '0' }">
 								<td>등록 ${list.it_regdate }</td>
 							</c:when>
-							<c:when test="${list.it_state eq '1' }">
+							<c:when test="${list.it_state eq '2' }">
 								<td>판매 ${list.it_outdate }</td>
 							</c:when>
-							<c:when test="${list.it_state eq '2' }">
+							<c:when test="${list.it_state eq '3' }">
 								<td>삭제 ${list.it_outdate }</td>
 							</c:when>
 						</c:choose>
@@ -123,6 +128,8 @@
 			$('#search').submit();
 		});
 	});
+
+	
 </script>
 
 

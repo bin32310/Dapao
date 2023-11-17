@@ -1,18 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../include/header.jsp"%>
-<style>
-.csState{
-	border-radius: 0.3em;
-    background-color: aliceblue;
-    border: none;
-    color: green;
-}
-.csState:hover{
-	background-color: green;
-	color: white;
-}
-</style>
 
 <div class="boxList">
 	<div class="box-header with-board">
@@ -114,43 +102,43 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">내용</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_content"><br>
+						<textarea class="form-control" name="cs_content" id="cs_content" rows="10"></textarea>
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">등록형태</label>
+				<div class="form-group2">
+					<label class="col-sm-2 control-label cs_group">등록형태</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_group"><br>
+						<input type="text" class="form-control cs_group" name="cs_group" readonly><br>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">등록상태</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_state"><br>
+						<input type="text" class="form-control" name="cs_state" readonly><br>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">조회수</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_view"><br>
+						<input type="text" class="form-control" name="cs_view" readonly><br>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">게시일</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_regdate"><br>
+						<input type="text" class="form-control" name="cs_regdate" readonly><br>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">수정일</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_update"><br>
+						<input type="text" class="form-control" name="cs_update" readonly><br>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" name="update" class="update">수정</button>
-				<button type="button" name="update" class="delete">삭제</button>
+				<button type="button" name="update" class="btn btn-default update">수정</button>
+				<button type="button" name="update" class="btn btn-default delete">삭제</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
@@ -173,7 +161,7 @@
 					console.log(data)
 					$('input[name=cs_no]').val(data.cs_no)
 					$('input[name=cs_title]').val(data.cs_title)
-					$('input[name=cs_content]').val(data.cs_content)
+					$('#cs_content').val(data.cs_content)
 					if (data.cs_group == 0) {
 						$('input[name=cs_group]').val("회원공지");
 					} else {

@@ -200,7 +200,7 @@ public class MypageController {
       }
       
       //마이페이지 내가 찜한 목록
-    //http://localhost:8088/mypage/userLoveList
+     //http://localhost:8088/mypage/userLoveList
       @RequestMapping(value = "/userLoveList",method = RequestMethod.GET)
       public void userLoveList(HttpSession session,Model model) throws Exception{
          

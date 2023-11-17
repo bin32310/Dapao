@@ -243,7 +243,7 @@ public class AdminController {
 	public String FAQWrite(CsVO vo) throws Exception {
 		logger.debug("FAQWrite() 호출");
 		aService.FAQWrite(vo);
-		return "redirect:/admin/FAQList";
+		return "redirect:/admin/FAQList?page=1";
 	}
 
 	// FAQ/공지관리 - 공지사항 리스트
@@ -283,7 +283,7 @@ public class AdminController {
 	public String noticeWrite(CsVO vo) throws Exception {
 		logger.debug("FAQWrite() 호출");
 		aService.noticeWrite(vo);
-		return "redirect:/admin/noticeList";
+		return "redirect:/admin/noticeList?page=1";
 	}
 
 	// 리뷰관리 - 리뷰 리스트
