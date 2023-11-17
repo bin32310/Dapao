@@ -235,6 +235,12 @@ background-color: green;
 	
 }
 
+.skin-blue-light .main-header .navbar : hover, .skin-blue-light .main-header .logo : hover{
+
+background-color: #005500;
+	
+}
+
 .skin-blue-light .main-header .navbar{
 background-color: green;
 
@@ -250,6 +256,22 @@ background-color: green;
 
 }
 
+.skin-blue-light .main-header li.user-header{
+background-color: green;
+}
+
+.pagination>.active>a, .pagination>.active>a:hover{
+	background-color: #005500;
+    border-color: #005500;
+}
+
+.skin-blue-light .main-header .logo:hover {
+    background-color: #005500;
+}
+
+.skin-blue-light .main-header .navbar .sidebar-toggle:hover {
+    background-color: #005500;
+}
 
 </style>
  

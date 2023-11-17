@@ -37,7 +37,7 @@
         <!-- Logo -->
         <a href="../user/userMain" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>A</b>LT</span>
+          <span class="logo-mini"><img src="/resources/logo/logo.png" width="50" height="50"></span>
           <!-- logo for regular state and mobile devices -->
           <span class="logo-lg"><img src="/resources/logo/logo.png" width="50" height="50">Dapao</span>
         </a>
@@ -53,86 +53,12 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <!-- Messages: style can be found in dropdown.less-->
-              <li class="dropdown messages-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-envelope-o"></i>
-                  <span class="label label-success">4</span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="header">You have 4 messages</li>
-                  <li>
-                    <!-- inner menu: contains the actual data -->
-                    <ul class="menu">
-                      <li><!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="${pageContext.request.contextPath }/resources/dist/img/user7-128x128.jpg" class="img-circle" alt="User Image"/>
-                          </div>
-                          <h4>
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li><!-- end message -->
-                      <li>
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="${pageContext.request.contextPath }/resources/dist/img/user3-128x128.jpg" class="img-circle" alt="user image"/>
-                          </div>
-                          <h4>
-                            AdminLTE Design Team
-                            <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="${pageContext.request.contextPath }/resources/dist/img/user4-128x128.jpg" class="img-circle" alt="user image"/>
-                          </div>
-                          <h4>
-                            Developers
-                            <small><i class="fa fa-clock-o"></i> Today</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="${pageContext.request.contextPath }/resources/dist/img/user3-128x128.jpg" class="img-circle" alt="user image"/>
-                          </div>
-                          <h4>
-                            Sales Department
-                            <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="${pageContext.request.contextPath }/resources/dist/img/user4-128x128.jpg" class="img-circle" alt="user image"/>
-                          </div>
-                          <h4>
-                            Reviewers
-                            <small><i class="fa fa-clock-o"></i> 2 days</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="footer"><a href="#">See All Messages</a></li>
-                </ul>
-              </li>
+
               <!-- Notifications: style can be found in dropdown.less -->
               <li class="dropdown notifications-menu" id="alarmClick">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
                   <i class="fa fa-bell-o" ></i>
-                  <span class="label label-warning">10</span>
+                  <span class="label label-warning">  </span>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="header">My Alarm</li>
@@ -151,13 +77,13 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="${pageContext.request.contextPath }/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+                  <img src="${pageContext.request.contextPath }/resources/itemIMG/pro.png" class="user-image"  ="User Image"/>
                   <span class="hidden-xs">${us_nickname }</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="${pageContext.request.contextPath }/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+                    <img src="${pageContext.request.contextPath }/resources/itemIMG/pro.png" class="img-circle" alt="User Image" />
                     <p>
                       ${us_nickname } <br>
                      	${us_id }
@@ -197,7 +123,7 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="${pageContext.request.contextPath }/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+              <img src="${pageContext.request.contextPath }/resources/itemIMG/pro.png" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
             <a href="../mypage/userInfo"><p>${us_nickname }( ${us_id } )</p></a>
@@ -208,7 +134,7 @@
           <!-- search form -->
           <form action="../item/itemSearch" method="get" class="sidebar-form">
             <div class="input-group">
-              <input type="text" name="it_title" class="form-control" placeholder="Search..."/>
+              <input type="text" name="it_title" class="form-control" placeholder="Search"/>
               <span class="input-group-btn">
                 <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
