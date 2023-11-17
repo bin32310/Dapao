@@ -166,7 +166,7 @@
                   <!-- Menu Body -->
                   <li class="user-body">
                     <div class="col-xs-4 text-center">
-                      <a href="../item/coinCharge">판다톡</a>
+                      <a href="../websocket/chat?us_id=${us_id }">판다톡</a>
                     </div>
                     <div class="col-xs-4 text-center">
                       <a href="../item/coinCharge">대나무페이</a>
