@@ -94,13 +94,14 @@
 .it_con_text_old{
 	border : none;
 	font-size: 20px;
-	width : 50px;
+	width : 100px;
 	background-color: transparent;
 }
 
 .it_con_text_new{
 	border : none;
 	font-size: 20px;
+	width : 100px;
 	background-color: transparent;
 }
 
@@ -139,6 +140,7 @@
 
 }
 
+
 </style>
 
 </head>
@@ -173,10 +175,10 @@
 				<hr>
 				
 				<input type="text" value="상태" class="it_text">
-				<input type="radio" value="중고상품" name="it_con" checked class="it_con_text_old">   
-				<input type="text" value="중고" class="it_con_text">
-				<input type="radio" value="새상품" name="it_con" class="it_con_text_new"> 
-				<input type="text" value="새상품" class="it_con_text"> <br>
+				<input type="radio" value="중고상품" name="it_con" checked >   
+				<input type="text" value="중고상품" class="it_con_text_old">
+				<input type="radio" value="새상품" name="it_con" > 
+				<input type="text" value="새상품" class="it_con_text_new"> <br>
 				<hr>
 
 				<input type="text" value="카테고리" class="it_text">
@@ -325,7 +327,7 @@ $(document).ready(function(){
 </script>	
 	
 	
-<%@ include file="../include/footer.jsp" %>
+<%@ include file="../include/userFooter.jsp" %>
 
 </body>
 </html>

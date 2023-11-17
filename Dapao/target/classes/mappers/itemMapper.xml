@@ -150,7 +150,7 @@
   
   
   <select id="sellerItem" resultType="ItemVO">
-  select it_img, it_title, it_no
+  select * 
   from item 
   where us_id=#{us_id} and it_no != #{it_no} 
   order by rand() limit 5;

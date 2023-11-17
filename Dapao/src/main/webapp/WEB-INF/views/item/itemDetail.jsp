@@ -92,7 +92,14 @@ input:focus{
 	border: none; 
 	width : auto;
 	font-weight: bold;
+	margin-left: 10px;
 }
+
+#cate{
+	margin-left: 45px;
+	
+}
+
 
 #item_cate, #cate : hover{
 	
@@ -237,7 +244,7 @@ input:focus{
 	position: relative;
 	margin-left : 50px;
 	border: 1px solide;
-	width : 1300px;
+	width : 1000px;
 	height: 240px;
 
 }
@@ -248,7 +255,7 @@ input:focus{
 	left : 0px;
 	text-align:inherit;
 	border: 1px solide block;
-	width : 1300px;
+	width : 1000px;
 	height: 200px;
 	background-color: transparent;
 
@@ -463,7 +470,7 @@ input:focus{
 			
 			
 				<input type="hidden" value="${itemVO.it_no }" name="it_no" > <br>
-				<a id="cate">카테고리 ></a> <input type="text" value="${itemVO.it_cate }" name="it_cate" readonly id="item_cate">
+				<a id="cate">카테고리 ></a> <input type="text" value="${itemVO.it_cate }" name="it_cate" readonly id="item_cate" disabled="disabled">
 				
 				<br><hr><br>
 				
@@ -478,45 +485,45 @@ input:focus{
 		 			<!-- 글 상태 표시 -->
 					<c:choose>
 						<c:when test="${itemVO.it_state == 0 }">
-							<input type="text" value="판매중" readonly class="item_state" > <br>
+							<input type="text" value="판매중" readonly class="item_state" disabled="disabled"> <br>
 						</c:when>
 						<c:when test="${itemVO.it_state == 1 }">
-							<input type="text" value="예약중" readonly class="item_state" > <br>
+							<input type="text" value="예약중" readonly class="item_state" disabled="disabled"> <br>
 						</c:when>
 						<c:when test="${itemVO.it_state == 2 }">
-							<input type="text" value="판매완료" readonly class="item_state" > <br>
+							<input type="text" value="판매완료" readonly class="item_state" disabled="disabled"> <br>
 						</c:when>
 						<c:otherwise>
 							alert("삭제된 글입니다.");
 							<c:redirect url="../user/userLogin"/>				
 						</c:otherwise>
 					</c:choose>
-					<input type="text" value="${itemVO.it_title }" name="it_title" readonly id="item_title"> <br>
-	 				<input type="text" value="${itemVO.it_price }원" name="it_price" readonly id="item_price"> <br>
+					<input type="text" value="${itemVO.it_title }" name="it_title" readonly id="item_title" disabled="disabled"> <br>
+	 				<input type="text" value="${itemVO.it_price }원" name="it_price" readonly id="item_price" disabled="disabled"> <br>
 					<c:if test="${!empty us_id && itemVO.us_id != us_id}">
 						<input type="button" value="신고하기" onclick="location.href='../admin/acWriteForm?it_no=${itemVO.it_no}&us_id=${itemVO.us_id }';" id="it_ac"> <br>
 					</c:if>
 		 			<br>
 					
-					<input type="text" value="찜" id="it_love_text">
-					<input type="text" value="${itemVO.it_love }" name="it_love" readonly id="item_love"> |
+					<input type="text" value="찜" id="it_love_text" disabled="disabled">
+					<input type="text" value="${itemVO.it_love }" name="it_love" readonly id="item_love" disabled="disabled"> |
 					 
-					<input type="text" value="조회수" id="it_view_text">
-					<input type="text" value="${itemVO.it_view }" name="it_view" readonly id="item_view">  |
+					<input type="text" value="조회수" id="it_view_text" disabled="disabled">
+					<input type="text" value="${itemVO.it_view }" name="it_view" readonly id="item_view" disabled="disabled">  |
 									 
-					<input type="text" value="등록일" id="it_regdate_text">
-					<input type="text" value="${itemVO.it_regdate }" name="it_regdate" readonly id="item_regdate"> <br><br>
+					<input type="text" value="등록일" id="it_regdate_text" disabled="disabled">
+					<input type="text" value="${itemVO.it_regdate }" name="it_regdate" readonly id="item_regdate" disabled="disabled"> <br><br>
 					
 					
-					<input type="text" value="▷ 판매자  : " class="item_text" readonly> 
-					<input type="text" value="${sellerVO.us_nickname }" name="us_id" readonly id="item_us_id">
-					<a href="/item/yourPage?us_id=${itemVO.us_id }" ><input type="text" value="판매자 프로필 보기" id="your_pro"></a> <br><br>
+					<input type="text" value="▷ 판매자  : " class="item_text" readonly disabled="disabled"> 
+					<input type="text" value="${sellerVO.us_nickname }" name="us_id" readonly id="item_us_id" disabled="disabled">
+					<a href="/item/yourPage?us_id=${itemVO.us_id }" ><input type="text" value="판매자 프로필 보기" id="your_pro" ></a> <br><br>
 					
-					<input type="text" value="▷ 상품상태  : " class="item_text" readonly> 
-					<input type="text" value="${itemVO.it_con }" name="it_con" readonly id="item_con"> <br><br>
+					<input type="text" value="▷ 상품상태  : " class="item_text" readonly disabled="disabled"> 
+					<input type="text" value="${itemVO.it_con }" name="it_con" readonly id="item_con" disabled="disabled">  <br><br>
 					
-					<input type="text" value="▷ 거주지  : " class="item_text" readonly> 
-					<input type="text" value="${sellerVO.us_addr }" name="us_addr" readonly id="item_addr"> <br><br>
+					<input type="text" value="▷ 거주지  : " class="item_text" readonly disabled="disabled"> 
+					<input type="text" value="${sellerVO.us_addr }" name="us_addr" readonly id="item_addr" disabled="disabled"> <br><br>
 					
 					<input type="hidden" value="${itemVO.us_id }" name="us_id"> <br>
 					 
@@ -570,8 +577,8 @@ input:focus{
 		
 		<hr>
 		<div id="it_content_div">
-			<input type="text" value="상세 내용" id="it_content_title"> <br><br>
-			<textarea readonly id="it_content">${itemVO.it_content}</textarea>
+			<input type="text" value="상세 내용" id="it_content_title" disabled="disabled"> <br><br>
+			<textarea readonly id="it_content" disabled="disabled">${itemVO.it_content}</textarea>
 		</div>
 	
 		
@@ -581,14 +588,16 @@ input:focus{
 			<div>
 				<c:if test="${!empty sellerItemVO}">
 					<c:forEach var="si" items="${sellerItemVO}">
-						<form action="" class="sellerItemVOListDiv">
-							<input type="hidden" value="${si.it_no }" name="it_no"> <br>
-							<!-- <td  id ="uploadSeller"> -->
-							<a href="../item/itemDetail?it_no=${si.it_no }">
-								<img src="/imgfile/${si.it_img }" >
-								<input type="text" value="${si.it_title }" name="it_title" readonly>
-							</a>
-						</form>	
+						<c:if test="${si.it_state != 3 }">
+							<form action="" class="sellerItemVOListDiv">
+								<input type="hidden" value="${si.it_no }" name="it_no"> <br>
+								<!-- <td  id ="uploadSeller"> -->
+								<a href="../item/itemDetail?it_no=${si.it_no }">
+									<img src="/imgfile/${si.it_img }" >
+									<input type="text" value="${si.it_title }" name="it_title" readonly>
+								</a>
+							</form>	
+						</c:if>
 					</c:forEach>
 				</c:if>		
 			</div>
@@ -1178,6 +1187,43 @@ $(document).ready(function(){
 		}); // ajax 끝
 		
 	}); // img_next
+	
+	
+	
+	// 처음 이미지 입력
+	var img_fir_count = 1;
+	
+	$.ajax({
+		type : "post",
+		url : "/item/itemFile",
+		data : {"it_no" : it_no},
+		error: function(){
+			alert("파일 불러오기 실패");
+		},
+		success : function(result){
+			console.log("파일 불러오기 성공");
+			
+			$(result).each(function(idx,item){
+				console.log(idx);
+				console.log(item);
+				
+				
+				if(img_fir_count == 1){
+					$('#item_main_img').attr("src","/imgfile/"+item.uploadPath+"/"+item.uuid+"_"+item.fileName);
+					$('#item_main_img').attr("width","500px");
+					$('#item_main_img').attr("height","500px");
+				/* 	$('#img_next').removeAttr("disabled");  */
+					$('#img_next').css("display", "block");	
+					img_fir_count = 0;
+				}else{ 
+					
+				}
+			}); // each
+			
+		} // success 끝	
+	}); // ajax 끝
+	
+	
 	
 });
 
