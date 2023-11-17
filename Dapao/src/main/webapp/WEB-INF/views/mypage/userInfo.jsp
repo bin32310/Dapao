@@ -6,24 +6,40 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="/media/jquery-1.12.4.min.js"></script>
-</head>
-<body>
+<title>mypage/userInfo  내 정보 조회 페이지</title>
 
-   <h1>views/mypage/userInfo</h1>
-   <h1>마이페이지-정보조회</h1>
 
-   <c:if test="${empty us_id }">
+
+ <c:if test="${empty us_id }">
       <%@ include file="../include/userHeader.jsp"%>
    </c:if>
    <c:if test="${!empty us_id }">
       <%@ include file="../include/userLoginHeader.jsp"%>
    </c:if>
 
+<script src="/media/jquery-1.12.4.min.js"></script>
 
-   <!-- <button><a href="/mypage/userInfoUpdate">내프로필 수정 </a></button> -->
+
+<!-- userInfo css -->
+
+<script type="text/javascript">
+ 
+
+
+</script>
+
+<!-- userInfo css -->
+
+
+
+</head>
+<body>
+
+
+  <!-- //http://localhost:8088/mypage/userInfo -->
+
   
+   <!-- 수정 버튼 누르면 비밀번호 1회 체크 <input type="hidden" name="us_pw" value="${vo.us_pw}" id="us_pw"> -->
 
    <script type="text/javascript">
    var userTel ='${infoVO.us_pw}';
@@ -70,13 +86,95 @@
    <a href="/mypage/userLoveList">찜 목록 </a>
 
    <br>
-   <!-- 수정 버튼 누르면 비밀번호 1회 체크 <input type="hidden" name="us_pw" value="${vo.us_pw}" id="us_pw"> -->
 
-   닉네임 :
-   <input type="text" name="us_nickname" value="${infoVO.us_nickname }"
-      readonly>
-   <br> 아이디 :
-   <input type="text" name="us_id" value="${infoVO.us_id }" readonly>
+
+
+
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">회원정보 조회</h3>
+		</div>
+
+
+		<form class="form-horizontal">
+			<div class="box-body">
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">닉네임</label>
+					<div class="col-sm-10">
+						<input type="text" name="us_nickname" class="form-control" id="inputEmail3" value="${infoVO.us_nickname }" readonly>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword3" class="col-sm-2 control-label">아이디</label>
+					<div class="col-sm-10">
+						<input type="text" name="us_id" class="form-control" id="inputPassword3" value="${infoVO.us_id }" readonly>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+					</div>
+				</div>
+				
+			</div>
+
+			<div class="box-footer">
+				<button type="submit" class="btn btn1">회원정보 수정하기</button>
+				<input  class="btn2" type="button" value="회원탈퇴하기" onclick="location.href='/user/userFindId';">
+				<input  class="btn3" type="button" value="메인으로" onclick="location.href='/user/userFindId';">
+			</div>
+
+		</form>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%-- 
+	닉네임 :
+	<input type="text" name="us_nickname" value="${infoVO.us_nickname }"
+      readonly> --%>
+  <%--  <br> 아이디 :
+   <input type="text" name="us_id" value="${infoVO.us_id }" readonly> --%>
    <br> 이메일 :
    <input type="text" name="us_email" value="${infoVO.us_email }" readonly>
    <hr>
@@ -102,8 +200,10 @@
       <a href="/mypage/userDelete"> 회원 탈퇴하기 </a>
    </button>
    <button>
-      <a href="/user/userMain">확인 </a>
+      <a href="/user/userMain">메인으로가기</a>
    </button>
+   
+   
    <%@ include file="../include/userFooter.jsp"%>
 
 
