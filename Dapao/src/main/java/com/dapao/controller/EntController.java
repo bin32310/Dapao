@@ -63,13 +63,15 @@ public class EntController {
 		logger.debug("eService.listEnt(eVo): " + eService.listEnt(eVo));
 		List<ProdVO> plist = pService.listProd(eVo);
 		logger.debug(" plist : " + plist);
+		logger.debug(" plist.size() : " + plist.size());
+		model.addAttribute("listSize",plist.size());
 		String fileList[] = new String[plist.size()];
 		for (int i = 0; i < plist.size(); i++) {
 			fileList[i] = plist.get(i).getProd_img().substring(plist.get(i).getProd_img().lastIndexOf("\\") + 1);
 //			fileList[i]=plist.get(i).getProd_img();
 			logger.debug(" fileList[i] : " + fileList[i].toString());
 		}
-		logger.debug("fileList : " + fileList);
+		
 
 		List<ReviewVO> rlist = eService.entReviewList(own_id);
 		logger.debug(" rlist : " + rlist);
@@ -411,13 +413,14 @@ public class EntController {
 	}
 
 	@RequestMapping(value = "/refund", method = RequestMethod.GET)
-	public void refundGET(TradeVO vo) throws Exception {
+	public String refundGET(TradeVO vo) throws Exception {
 		logger.debug(" refundGET(TradeVO vo) 호출 ");
 		logger.debug(" vo : "+vo);
 //		eService.refund(vo); // 코인환불
 //		logger.debug(" 환불 성공 ");
 		eService.tradeRefund(vo); // 환불확정 상태로 업데이트
 		logger.debug(" 환불 확정 ");
+		return "redirect:/ent/entOrder";
 	}
 
 	@RequestMapping(value = "/download")
@@ -629,9 +632,18 @@ public class EntController {
 	@RequestMapping(value = "/entAd", method = RequestMethod.GET)
 	public void entAdGET(HttpSession session, Model model) {
 		logger.debug(" entOrderGET() ");
-//		String own_id = (String) session.getAttribute("own_id");
-//		String own_id = "6";
+		String own_id = (String) session.getAttribute("own_id");
 		String name = "광고문의/소개";
+		model.addAttribute("name", name);
+		logger.debug(" 연결된 뷰페이지(/views/entOrder.jsp)출력 ");
+	}
+	//광고페이지
+	@RequestMapping(value = "/entAd", method = RequestMethod.POST)
+	public void entAdPOST(HttpSession session, Model model) {
+		logger.debug(" entOrderPOST() ");
+		String own_id = (String) session.getAttribute("own_id");
+		String name = "광고문의/소개";
+		
 		model.addAttribute("name", name);
 		logger.debug(" 연결된 뷰페이지(/views/entOrder.jsp)출력 ");
 	}

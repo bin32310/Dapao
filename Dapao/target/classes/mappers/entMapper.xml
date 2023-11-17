@@ -101,8 +101,8 @@
 	<!-- 주문 환불 코인이동 -->
 	<!-- 주문 환불 확정 -->
 	<update id="tradeRefund">
-		update trade
-		set tr_sell_state = 2
+		update trade 
+		set tr_sell_state = 2 
 		where tr_no = #{tr_no}
 	</update>
 	<!-- 주문 환불 확정 -->
@@ -156,5 +156,7 @@
 		where tr_no = #{tr_no}
 	</update>
 	<!-- 판매완료 -->
+	<insert id="entAd">
+	</insert>
 	
 </mapper>

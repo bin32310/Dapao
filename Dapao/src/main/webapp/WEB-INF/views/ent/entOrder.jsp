@@ -170,6 +170,7 @@ html, body{
 					success : function () {
 						console.log('성공');
 						$('#modal-danger').modal('hide');
+						location.href="/ent/entOrder?search=${search }&search_cate=${search_cate }&cri.page=${pageVO.cri.page }";
 					}, 
 					error : function () {
 						console.log('실패');
