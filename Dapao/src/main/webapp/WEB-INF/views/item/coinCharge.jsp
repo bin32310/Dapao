@@ -285,7 +285,7 @@ color: black;
 	</div>
 </div>	
 	
-	<%@ include file="../include/footer.jsp" %>
+	<%@ include file="../include/userFooter.jsp" %>
 	
 <script type="text/javascript">
 
