@@ -267,7 +267,7 @@
   </update>
   
   <update id="itemResellState">
-  	update item set it_state = 0, tr_no = 0 
+  	update item set it_state = 0, tr_no = 1 
   	where it_no = #{it_no } 
   </update>
   

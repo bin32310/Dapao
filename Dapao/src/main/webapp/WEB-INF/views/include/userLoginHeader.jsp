@@ -220,9 +220,9 @@
           <ul class="sidebar-menu">
            <li class="header">메뉴</li>
             <li class="treeview">
-              <a href="../user/userLogin">
+              <a href="../item/itemWrite">
                 <i class="fa fa-edit"></i>
-                <span>판매글작성</span>
+                <span>상품등록</span>
               </a>
             </li>
             <li class="treeview">

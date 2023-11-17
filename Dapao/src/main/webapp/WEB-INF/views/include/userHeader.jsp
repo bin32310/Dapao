@@ -123,7 +123,7 @@
             <li class="treeview">
               <a href="../user/userLogin">
                 <i class="fa fa-edit"></i>
-                <span>판매글작성</span>
+                <span>상품등록</span>
               </a>
             </li>
             <li class="treeview">

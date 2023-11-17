@@ -17,7 +17,7 @@
 
 #container{
 
-	margin-left: 100px;
+	margin-left: 10%;
 
 }
 
@@ -550,10 +550,12 @@ input:focus{
 						<input type="button" value="구매확정" id="sellerPurchaseOK"> 
 						<input type="button" value="취소" id="sellerCancleOK"> 
 					</c:if>
-					<!-- 예약중인 글에 구매자나 판매가자 들어왔다면 -->
-					<c:if test="${tradeVO.tr_no != 0 }">
-						<input type="hidden" value="${tradeVO.tr_no }" name="tr_no">
-					</c:if>
+						
+					<!-- 예약중인 글에 구매자나 판매가자 들어왔다면 정상적인 값(아니라면  1 3 3 값이다) -->
+					<input type="hidden" value="${tradeVO.tr_no }" name="tr_no">
+					<input type="hidden" value="${tradeVO.tr_buy_state }" name="tr_buy_state">
+					<input type="hidden" value="${tradeVO.tr_sell_state }" name="tr_sell_state">
+					
 					<!-- 판매가 완료된 글이라면 -->
 					<c:if test="${itemVO.it_state == 2  }">
 						<input type="button" value="판매 완료" id="item_soldout"> 
@@ -577,16 +579,18 @@ input:focus{
 		<div class="itemSellsectionDiv">
 			<a class="item_detail_subtitle">판매자의 다른 상품 둘러보기</a><br>
 			<div>
-				<c:forEach var="si" items="${sellerItemVO}">
-					<form action="" class="sellerItemVOListDiv">
-						<input type="hidden" value="${si.it_no }" name="it_no"> <br>
-						<!-- <td  id ="uploadSeller"> -->
-						<a href="../item/itemDetail?it_no=${si.it_no }">
-							<img src="/imgfile/${si.it_img }" >
-							<input type="text" value="${si.it_title }" name="it_title" readonly>
-						</a>
-					</form>		
-				</c:forEach>
+				<c:if test="${!empty sellerItemVO}">
+					<c:forEach var="si" items="${sellerItemVO}">
+						<form action="" class="sellerItemVOListDiv">
+							<input type="hidden" value="${si.it_no }" name="it_no"> <br>
+							<!-- <td  id ="uploadSeller"> -->
+							<a href="../item/itemDetail?it_no=${si.it_no }">
+								<img src="/imgfile/${si.it_img }" >
+								<input type="text" value="${si.it_title }" name="it_title" readonly>
+							</a>
+						</form>	
+					</c:forEach>
+				</c:if>		
 			</div>
 		</div>
 		
@@ -595,16 +599,18 @@ input:focus{
 		<div class="itemSellsectionDiv">
 			<a class="item_detail_subtitle">같은 카테고리 상품 둘러보기</a><br>
 			<div>
-				<c:forEach var="sc" items="${sameCateVO}">
-					<form action="" class="cateItemVOListDiv">
-						<input type="hidden" value="${sc.it_no }" name="it_no"> <br>
-						<!-- <td id ="uploadCate"> -->
-						<a href="../item/itemDetail?it_no=${sc.it_no }">
-							<img src="/imgfile/${sc.it_img }">
-							<input type="text" value="${sc.it_title }" name="it_title" readonly>
-						</a>
-					</form>
-				</c:forEach> 	
+				<c:if test="${!empty sameCateVO}">
+					<c:forEach var="sc" items="${sameCateVO}">
+						<form action="" class="cateItemVOListDiv">
+							<input type="hidden" value="${sc.it_no }" name="it_no"> <br>
+							<!-- <td id ="uploadCate"> -->
+							<a href="../item/itemDetail?it_no=${sc.it_no }">
+								<img src="/imgfile/${sc.it_img }">
+								<input type="text" value="${sc.it_title }" name="it_title" readonly>
+							</a>
+						</form>
+					</c:forEach> 
+				</c:if>	
 			</div>
 		</div>
 		
@@ -745,7 +751,7 @@ $(document).ready(function(){
 		var buyer_state = ${tradeVO.tr_buy_state };
 		
 		if(buyer_state == 1){ // 구매확정을 이미 누름
-			$('#userPurchaseOK').attr("value","구매확정");
+			$('#userPurchaseOK').attr("value","확정완료");
 			$('#userPurchaseOK').attr("disabled","disabled");
 			$('#userCancleOK').attr("disabled","disabled");
 		}else if(buyer_state == 2){ // 취소버튼을 이미 누름
@@ -757,11 +763,11 @@ $(document).ready(function(){
 		// 판매자
 		var seller_state = ${tradeVO.tr_sell_state }
 		
-		if(buyer_state == 1){ // 구매확정을 이미 누름
-			$('#sellerPurchaseOK').attr("value","구매확정");
+		if(seller_state == 1){ // 구매확정을 이미 누름
+			$('#sellerPurchaseOK').attr("value","확정완료");
 			$('#sellerPurchaseOK').attr("disabled","disabled");
 			$('#sellerCancleOK').attr("disabled","disabled");
-		}else if(buyer_state == 2){ // 취소버튼을 이미 누름
+		}else if(seller_state == 2){ // 취소버튼을 이미 누름
 
 			$('#sellerCancleOK').attr("value","취소완료");
 			$('#sellerPurchaseOK').attr("disabled","disabled");
@@ -772,35 +778,39 @@ $(document).ready(function(){
 	
 	// 구매확정하기 or 취소하기 버튼 클릭시
 	
-	// 구매자가 구매확정 버튼클릭
+	// 구매자가 구매확정 버튼클릭(1)
 	$('#userPurchaseOK').click(function(){
 		$('#userPurchaseOKModal').modal("show");
 	});
 	
 	$('#userPurchaseOKModalYes').click(function(){
 		var it_no = ${itemVO.it_no };
-		var tr_no = $("input[name='tr_no']").val();
+		var tr_no = ${tradeVO.tr_no };
+		var tr_sell_state = ${tradeVO.tr_sell_state };
 		
-		$.ajax({
-			type : "post",
-			url : "/item/userPurchaseOk",
-			data : {"it_no" : it_no, "tr_no" : tr_no} ,
-			dataType : "JSON",
-			error: function(){
-				alert("구매확정하기 실패");
-			},
-			success : function(){
-					alert("구매확정하기 완료");
-					location.reload();
+		if(tr_sell_state == 2){
+			alert('판매자가 취소버튼을 눌러 구매확정이 불가능합니다.');
+		}else{
+			$.ajax({
+				type : "post",
+				url : "/item/userPurchaseOk",
+				data : {"it_no" : it_no }, 
+				dataType : "JSON",
+				error: function(){
+					alert("구매확정하기 실패");
+				},
+				success : function(){
+						alert("구매확정하기 완료");
+						location.reload();
+						
 					
-				
-			} // success 끝	
-		}); // ajax 끝
-		
+				} // success 끝	
+			}); // ajax 끝
+		}
 	});
 		
 	
-	// 구매자가 취소하기 버튼클릭
+	// 구매자가 취소하기 버튼클릭(2)
 	$('#userCancleOK').click(function(){
 		$('#userCancleOKModal').modal("show");
 	});
@@ -808,26 +818,32 @@ $(document).ready(function(){
 	$('#userCancleOKModalYes').click(function(){
 		
 		var it_no = ${itemVO.it_no };
-		var tr_no = $("input[name='tr_no']").val();
+		var tr_no = ${tradeVO.tr_no };
+		var tr_sell_state = ${tradeVO.tr_sell_state };
 		
-		$.ajax({
-			type : "post",
-			url : "/item/userPurchaseCancle",
-			data : {"it_no" : it_no, "tr_no" : tr_no} ,
-			dataType : "JSON",
-			error: function(){
-				alert("취소하기 실패");
-			},
-			success : function(){
-					alert("취소하기 완료");
-					location.reload();
-					
-			} // success 끝	
-		}); // ajax 끝
+		if(tr_sell_state ==1){
+			alert('판매자가 구매확정버튼을 눌러 취소가 불가능합니다.');
+		}else{
+			$.ajax({
+				type : "post",
+				url : "/item/userPurchaseCancle",
+				data : {"it_no" : it_no, "tr_no" : tr_no} ,
+				dataType : "JSON",
+				error: function(){
+					alert("취소실패");
+				},
+				success : function(){
+						alert("취소완료");
+						
+						location.reload();
+						
+				} // success 끝	
+			}); // ajax 끝
+		}
 	});
 
 
-	// 판매자가 구매확정 버튼클릭
+	// 판매자가 구매확정 버튼클릭(3)
 		$('#sellerPurchaseOK').click(function(){
 			$('#sellerPurchaseOKModal').modal("show");
 	});
@@ -836,27 +852,31 @@ $(document).ready(function(){
 	$('#sellerPurchaseOKModalYes').click(function(){
 		
 		var it_no = ${itemVO.it_no };
-		var tr_no = $("input[name='tr_no']").val();
+		var tr_no = ${tradeVO.tr_no };
+		var tr_buy_state = ${tradeVO.tr_buy_state };
 		
-		$.ajax({
-			type : "post",
-			url : "/item/sellerPurchaseOk",
-			data : {"it_no" : it_no, "tr_no" : tr_no} ,
-			dataType : "JSON",
-			error: function(){
-				alert("구매확정하기 실패");
-			},
-			success : function(){
-					alert("구매확정하기 완료");
-					location.reload();
+		if(tr_buy_state ==2){
+			alert('구매자가 취소버튼을 눌러 구매확정이 불가능합니다.');
+		}else{
+			$.ajax({
+				type : "post",
+				url : "/item/sellerPurchaseOk",
+				data : {"it_no" : it_no },
+				dataType : "JSON",
+				error: function(){
+					alert("구매확정하기 실패");
+				},
+				success : function(){
+						alert("구매확정하기 완료");
+						location.reload();
+						
 					
-				
-			} // success 끝	
-		}); // ajax 끝
-		
+				} // success 끝	
+			}); // ajax 끝
+		}
 	});
 	
-	// 판매자가 취소하기 버튼클릭
+	// 판매자가 취소하기 버튼클릭(4)
 	$('#sellerCancleOK').click(function(){
 		$('#sellerCancleOKModal').modal("show");
 	});
@@ -865,57 +885,34 @@ $(document).ready(function(){
 	$('#sellerCancleOKModalYes').click(function(){
 		
 		var it_no = ${itemVO.it_no };
-		var tr_no = $("input[name='tr_no']").val();
+		var tr_no = ${tradeVO.tr_no };
+		var tr_buy_state = ${tradeVO.tr_buy_state };
 		
-		$.ajax({
-			type : "post",
-			url : "/item/sellerPurchaseCancle",
-			data : {"it_no" : it_no, "tr_no" : tr_no} ,
-			dataType : "JSON",
-			error: function(){
-				alert("취소하기 실패");
-			},
-			success : function(){
-					alert("취소하기 완료");
-					location.reload();
+		if(tr_buy_state == 1){
+			alert('구매자가 구매확정 버튼을 눌러서 취소가 불가능합니다.');
+		}else{
+			$.ajax({
+				type : "post",
+				url : "/item/sellerPurchaseCancle",
+				data : {"it_no" : it_no, "tr_no" : tr_no} ,
+				dataType : "JSON",
+				error: function(){
+					alert("취소하기 실패");
+				},
+				success : function(){
+						alert("취소하기 완료");
+						location.reload();
+						
 					
-				
-			} // success 끝	
-		}); // ajax 끝
+				} // success 끝	
+			}); // ajax 끝
+		}
 	});
 	
 	// 파일 확인
 	
 	var it_no=$("input[name='it_no']").val();
-	//alert(it_no);
-	
-/* 	// 물건 상세 사진 확인 -콜백함수
-	$.getJSON("/item/itemFile",{it_no:it_no},function(data){ 
-	
-				//alert("실행");
-				console.log("function");
-				console.log(data);
-				
-				
-				$(data).each(function(i,file){
-					console.log("반복");
-					if(file.image){
-						console.log("if");
-						var filePath = encodeURIComponent(file.uploadPath + "/s_" + file.uuid+"_"+file.fileName);
-						console.log(filePath);
-						//src="/display?fileName='filePath'"
-						str += "<img src='/item/display?fileName="+filePath+"'>";		
-					}else{
-						console.log("else");
-						var filePath = encodeURIComponent(file.uploadPath+"/"+file.uuid+"_"+file.fileName);
-						//str+="<li><a href='/item/download?fileName="+filePath"'>"+file.fileName+"</a></li>";
-					}
-				}); // data.each
-				console.log("@@str : ");
-				console.log(str);
-				$("#uploadResult ul").html(str);
-	});// getJSON  */
-	
+
 
 	// 찜버튼 클릭 
 	$('#addLoveBtn').on("click", function(){

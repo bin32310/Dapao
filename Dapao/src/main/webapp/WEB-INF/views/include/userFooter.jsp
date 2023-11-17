@@ -235,6 +235,21 @@ background-color: green;
 	
 }
 
+.skin-blue-light .main-header .navbar{
+background-color: green;
+
+}
+
+.skin-blue-light{
+background-color: green;
+
+}
+
+.skin-blue-light .main-header .logo{
+background-color: green;
+
+}
+
 
 </style>
  
