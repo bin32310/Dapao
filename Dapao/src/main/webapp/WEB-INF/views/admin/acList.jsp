@@ -25,14 +25,14 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr role="row">
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">신고번호</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">신고자</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">피신고자</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">신고사유</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">상품번호</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">신고일</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">신고상태</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">처리결과</th>
+					<th>신고번호</th>
+					<th>신고자</th>
+					<th>피신고자</th>
+					<th>신고사유</th>
+					<th>상품번호</th>
+					<th>신고일</th>
+					<th>신고상태</th>
+					<th>처리결과</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -40,7 +40,14 @@
 					<tr role="row" class="odd">
 						<td><a class="ac_no">${vo.ac_no }</a></td>
 						<td>${vo.us_id }</td>
-						<td>${vo.ac_own_id+vo_ac_us_id }</td>
+						<td>
+							<c:if test="${!empty vo.ac_own_id}">
+	                     			${vo.ac_own_id}
+	                  		</c:if>
+	                  		<c:if test="${!empty vo.ac_us_id}">
+	                     			${vo.ac_us_id}
+	                 		 </c:if>							
+						</td>
 						<td>${vo.ac_cate }</td>
 						<td>${vo.ac_item }</td>
 						<td>${vo.ac_regdate}</td>

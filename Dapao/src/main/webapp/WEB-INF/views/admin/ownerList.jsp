@@ -71,7 +71,7 @@
 
 <!-- Modal -->
 <div id="myLargeModal" class="modal fade" role="dialog">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog">
 
 		<!-- Modal content-->
 		<div class="modal-content">
@@ -79,128 +79,68 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">사업자 정보</h4>
 			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<label class="col-sm-2 control-label">사업자 아이디</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="own_id" readonly><br>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="col-sm-2 control-label">사업자 비밀번호</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="own_pw" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">사업자 이름</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="own_name" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">사업자 전화번호</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="own_tel" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">사업자 이메일</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="own_email" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">사업자 상태</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="own_state" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">ent_name</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ent_name" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">ent_cate</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ent_cate" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">ent_addr</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ent_addr" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">ent_mo</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ent_mo" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">ent_file</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ent_file" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">ent_of</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ent_of" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">ent_notice</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ent_notice" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">ent_info</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ent_info" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">ent_img</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ent_img" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">ent_ot</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ent_ot" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">ent_ct</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ent_ct" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">own_stopdate</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="own_stopdate" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">ent_account</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ent_account" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">ent_stop</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ent_stop" readonly><br>
-					</div>
-				</div>
+			<div class="muserInfo">
+				아 이 디 <input class="form-control" type="text" name="own_id" readonly>
+			</div>
+			<div class="muserInfo">
+				비밀번호 <input class="form-control" type="text" name="own_pw" readonly>
+			</div>
+			<div class="muserInfo">
+				이 름 <input class="form-control" type="text" name="own_name" readonly>
+			</div>
+			<div class="muserInfo">
+				전화번호<input class="form-control" type="text" name="own_tel" readonly>
+			</div>
+			<div class="muserInfo">
+				이 메 일 <input class="form-control" type="text" name="own_email" readonly>
+			</div>
+			<div class="muserInfo">
+				상 태 <input class="form-control" type="text" name="own_state" readonly>
+			</div>
+			<div class="muserInfo">
+				상 호 명 <input class="form-control" type="text" name="ent_name" readonly>
+			</div>
+			<div class="muserInfo">
+				업 종 <input class="form-control" type="text" name="ent_cate" readonly>
+			</div>
+			<div class="muserInfo">
+				주 소 <input class="form-control" type="text" name="ent_addr" readonly>
+			</div>
+			<div class="muserInfo">
+				통신판매업 <input class="form-control" type="text" name="ent_mo" readonly>
+			</div>
+			<div class="muserInfo">
+				등록파일 <input class="form-control" type="text" name="ent_file" readonly>
+			</div>
+			<div class="muserInfo">
+				기타서류 <input class="form-control" type="text" name="ent_of" readonly>
+			</div>
+			<div class="muserInfo">
+				공지사항 <input class="form-control" type="text" name="ent_notice" readonly>
+			</div>
+			<div class="muserInfo">
+				가게소개 <input class="form-control" type="text" name="ent_info" readonly>
+			</div>
+			<div class="muserInfo">
+				이미지 <input class="form-control" type="text" name="ent_img" readonly>
+			</div>
+			<div class="muserInfo">
+				오픈시간 <input class="form-control" type="text" name="ent_ot" readonly>
+			</div>
+			<div class="muserInfo">
+				마감시간 <input class="form-control" type="text" name="ent_ct" readonly>
+			</div>
+			<div class="muserInfo">
+				정지기간 <input class="form-control" type="text" name="ent_stopdate" readonly>
+			</div>
+			<div class="muserInfo">
+				신고횟수 <input class="form-control" type="text" name="ent_account" readonly>
+			</div>
+			<div class="muserInfo">
+				정지횟수 <input class="form-control" type="text" name="ent_stop" readonly>
+			</div>
+			<div class="muserInfo">
+				코인 <input class="form-control" type="text" name="ent_coin" readonly>
 			</div>
 			<div class="modal-footer">
 				<select name="stop" class="btn btn-default" aria-label="Small select example">

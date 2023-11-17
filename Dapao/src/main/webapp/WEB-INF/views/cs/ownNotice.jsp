@@ -16,7 +16,7 @@
 	<div class="title">
 		<span id="title">${notice.cs_title }</span> <span id="view">조회수 : ${notice.cs_view }</span>
 	</div>
-	<div class="content">${notice.cs_content }</div>
+	<div class="content"><pre>${notice.cs_content }</pre></div>
 	<c:choose>
 		<c:when test="${not empty param.page }">
 			<button type="button" id="listBtn" onclick="location.href='/cs/ownNoticeList?page=${page}'">목록가기</button>
@@ -62,6 +62,10 @@
 
 .content {
 	padding-left: 5%;
+}
+pre{
+	border: none;
+	background-color: white;
 }
 </style>
 

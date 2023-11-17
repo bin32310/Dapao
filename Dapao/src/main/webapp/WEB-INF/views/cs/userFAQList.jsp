@@ -99,7 +99,7 @@
 				</div>
 			</div>
 			<div class="anw">
-				<span>${list.cs_content }</span>
+				<span><pre>${list.cs_content }</pre></span>
 			</div>
 			</c:forEach>
 		</div>

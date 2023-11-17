@@ -21,7 +21,7 @@
 			</div>
 			<div class="form-group">
 				<label>내 용</label>
-				<textarea class="form-control" name="cs_content" rows="3" placeholder="내용을 작성하시오"></textarea>
+				<textarea class="form-control" name="cs_content" rows="20" placeholder="내용을 작성하시오"></textarea>
 			</div>
 
 		</div>

@@ -87,6 +87,9 @@
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 	padding: 30px;
 }
+pre{
+	border: none;
+}
 </style>
 <body>
 	<div id="faq">
@@ -100,7 +103,7 @@
 				</div>
 			</div>
 			<div class="anw">
-				<span>${list.cs_content }</span>
+				<span><pre>${list.cs_content }</pre></span>
 			</div>
 			</c:forEach>
 		</div>

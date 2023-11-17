@@ -1,18 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="../include/header.jsp" %>
-<style>
-.csState{
-	border-radius: 0.3em;
-    background-color: aliceblue;
-    border: none;
-    color: green;
-}
-.csState:hover{
-	background-color: green;
-	color: white;
-}
-</style>
+<%@ include file="../include/header.jsp"%>
+
 <div class="boxList">
 	<div class="box-header with-board">
 		<p class="pContent">공지사항 관리</p>
@@ -115,13 +104,13 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">내용</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_content"><br>
+						<textarea class="form-control" name="cs_content" id="cs_content" rows="10"></textarea>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">등록형태</label>
+					<label class="col-sm-2 control-label cs_group">등록형태</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="cs_group" readonly><br>
+						<input type="text" class="form-control cs_group" name="cs_group" readonly><br>
 					</div>
 				</div>
 				<div class="form-group">
@@ -176,7 +165,7 @@
 									$('input[name=cs_no]').val(data.cs_no)
 									$('input[name=cs_title]')
 											.val(data.cs_title)
-									$('input[name=cs_content]').val(
+									$('#cs_content').val(
 											data.cs_content)
 									if (data.cs_group == 0) {
 										$('input[name=cs_group]').val("회원공지");

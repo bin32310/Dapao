@@ -206,7 +206,7 @@ public class AdminController {
 	}
 
 	// FAQ/공지관리 - FAQ 리스트
-	// http://localhost:8088/admin/FAQList
+	// http://localhost:8088/admin/FAQList?page=1
 	@RequestMapping("/FAQList")
 	public void FAQList(Criteria cri, Model model) throws Exception {
 		logger.debug("FAQList() 호출");
@@ -243,7 +243,7 @@ public class AdminController {
 	public String FAQWrite(CsVO vo) throws Exception {
 		logger.debug("FAQWrite() 호출");
 		aService.FAQWrite(vo);
-		return "redirect:/admin/FAQList";
+		return "redirect:/admin/FAQList?page=1";
 	}
 
 	// FAQ/공지관리 - 공지사항 리스트
@@ -283,7 +283,7 @@ public class AdminController {
 	public String noticeWrite(CsVO vo) throws Exception {
 		logger.debug("FAQWrite() 호출");
 		aService.noticeWrite(vo);
-		return "redirect:/admin/noticeList";
+		return "redirect:/admin/noticeList?page=1";
 	}
 
 	// 리뷰관리 - 리뷰 리스트

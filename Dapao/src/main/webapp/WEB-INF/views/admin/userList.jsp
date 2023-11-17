@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="../include/header.jsp"%>
+<%@ include file="../include/header.jsp" %>
 
 <div class="boxList">
 	<div class="box-header with-border">
@@ -64,67 +64,64 @@
 	</div>
 </div>
 
-
-
-
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">회원 정보</h4>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				아 이 디 <input class="form-control" type="text" id="us_id" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				비밀번호 <input class="form-control" type="text" id="us_pw" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				이 름 <input class="form-control" type="text" id="us_name" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				닉 네 임 <input class="form-control" type="text" id="us_nickname" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				이 미 지 <input class="form-control" type="text" id="us_img" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				전화번호 <input class="form-control" type="text" id="us_tel" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				이 메 일 <input class="form-control" type="text" id="us_email" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				주 소 <input class="form-control" type="text" id="us_addr" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				코 인 <input class="form-control" type="text" id="us_coin" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				블 로 그 <input class="form-control" type="text" id="us_blog" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				인 스 타 <input class="form-control" type="text" id="us_instar" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				가 입 일 <input class="form-control" type="text" id="us_regdate" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				탈 퇴 일 <input class="form-control" type="text" id="us_outdate" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				회원상태 <input class="form-control" type="text" id="us_state" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				정지기간 <input class="form-control" type="text" id="us_stopdate" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				신고횟수 <input class="form-control" type="text" id="us_account" readonly>
 			</div>
-			<div id="userInfo">
+			<div class="muserInfo">
 				정지횟수 <input class="form-control" type="text" id="us_stop" readonly>
 			</div>
 
@@ -137,24 +134,12 @@
 				</select>
 				<button type="button" class="btn btn-default" id="stop">정지</button>
 				<button type="button" class="btn btn-default" id="delete">탈퇴</button>
-
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-<style>
-#userInfo {
-	font-size: 15px;
-	display: inline-grid;
-	padding-left: 17px;
-	padding-bottom: 20px;
-}
-
-.form-control[readonly] {
-	background-color: #fff;
-}
-</style>
 <script type="text/javascript">
 	$(function() {
 		// 아이디 클릭시 개인유저정보 모달띄우기

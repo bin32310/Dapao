@@ -1,14 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../include/header.jsp"%>
+<style>
+.modal-content{
+	margin-top: 40%;
+}
+/* 여기서부터 공통css */
+.modal-content {
+	border-radius: 2em;
+	border: 5px solid green;
+	font-family: 'KCC-Ganpan';
+}
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+.modal-title {
+	font-family: 'KCC-Ganpan';
+	text-align: center;
+}
 
+.muserInfo {
+	font-size: 18px;
+	display: inline-grid;
+	padding-left: 60px;
+	padding-bottom: 20px;
+	text-align: center;
+}
+
+.form-control[readonly] {
+	text-align: center;
+	background-color: aliceblue;
+}
+
+.btn-default {
+	background-color: aliceblue;
+}
+</style>
 <div class="boxList">
 	<div class="box-header with-board">
-		<p class="pContent">리뷰 관리</p>
+		<p class="pContent"><lable id="adlable">리뷰 관리</label></p>
 		<form action="/admin/reviewList" id="search">
 			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
 			<button id="searchBtn">Search</button>
@@ -31,7 +59,14 @@
 				<c:forEach var="vo" items="${vo }">
 					<tr role="row" class="odd">
 						<td><a class="rv_no">${vo.rv_no }</a></td>
-						<td>${vo.rv_own_id+vo.rv_us_id}</td>
+						<td>
+							<c:if test="${!empty vo.rv_own_id}">
+	                     			${vo.rv_own_id}
+	                  		</c:if>
+	                  		<c:if test="${!empty vo.rv_us_id}">
+	                     			${vo.rv_us_id}
+	                 		 </c:if>
+	                  	</td>
 						<td>${vo.rv_buy_id}</td>
 						<td><c:forEach begin="1" end="${vo.rv_star}">
 								<label>⭐</label>
@@ -73,42 +108,27 @@
 </div>
 <!-- Modal -->
 <div id="myLargeModal" class="modal fade" role="dialog">
-	<div class="modal-dialog modal-lg">
-
+	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">리뷰관리</h4>
 			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<label class="col-sm-2 control-label">리뷰번호</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="rv_no" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">판매자</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="rv_id"><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">구매자</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="rv_buy_id"><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">내용</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="rv_content"><br>
-					</div>
-				</div>
+			<div class="muserInfo">
+				리뷰번호 <input class="form-control" type="text" name="rv_no" id="rv_no" readonly>
+			</div>
+			<div class="muserInfo">
+				판매자 <input class="form-control" type="text" name="rv_id" id="rv_id" readonly>
+			</div>
+			<div class="muserInfo">
+				구매자 <input class="form-control" type="text" name="rv_buy_id" id="rv_buy_id" readonly>
+			</div>
+			<div class="muserInfo">
+				내용 <input class="form-control" type="text" name="rv_content" id="rv_content" readonly>
 			</div>
 			<div class="modal-footer">
-				<button type="button" name="delete" class="delete">삭제</button>
+				<button type="button" name="delete" class="btn btn-default delete">삭제</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
@@ -142,7 +162,7 @@
 									}
 									$('input[name=rv_buy_id]').val(
 											data.rv_buy_id)
-									$('input[name=rv_content]').text(
+									$('#rv_content').val(
 											data.rv_content)
 
 								},
