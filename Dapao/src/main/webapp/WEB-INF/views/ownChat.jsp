@@ -39,7 +39,6 @@
     margin-left: 30%;
     margin-right: 30%;
 }
-
 </style>
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
@@ -63,7 +62,7 @@
 			var sessionId = null; //데이터를 보낸 사람
 			var message = null;
 			var arr = data.split(":");
-			var cur_session = '${us_id}';
+			var cur_session = '${ent_name}';
 			for (var i = 0; i < arr.length; i++) {
 				console.log('arr[' + i + ']: '+cur_session);
 			}
@@ -140,7 +139,7 @@
 					<input type="text" id="msg" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2" onkeyup="enterKey()">
 					<div class="input-group-append">
 						<button class="btn btn-outline-secondary" type="button" id="button-send" onclick="send()">전송</button>
-						<button class="btn btn-outline-secondary" type="button" onclick="location.href='/user/userMain';">나가기</button>
+						<button class="btn btn-outline-secondary" type="button" onclick="location.href='/ent/shopMain';">나가기</button>
 					</div>
 				</div>
 			</div>
