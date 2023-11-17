@@ -6,8 +6,107 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style type="text/css">
+/* 전체 구역 */
+#container{
+
+
+}
+
+
+/* 광고 구역  */
+#ad_section{
+	width : 1350px;
+	height : 300px;
+
+}
+
+.ad_img{
+
+	width : 150px;
+	height : 150px;
+	
+	 
+}
+
+/* 찜 구역 */
+#love_section{
+
+
+}
+
+
+/* 인기물건 구역  */
+#popular_section{
+
+
+}
+
+#item_section{
+
+ 	width : 220px;
+	height : 290px;
+	float: left; 
+	border: none;
+	border: 3px solide red;
+	padding-left : 10px;
+	background-color: white;
+	margin-bottom: 20px;
+	margin-left: 15px;
+}
+
+/* 공통 */
+
+.item_img{
+	border: 1px solide black;
+	width : 200px;
+	height : 200px;
+	padding-top: 20px;
+}
+
+.it_title{
+	border: none;
+	width : 200px;
+	height : 25px;
+	background-color: transparent;
+	color:black;
+	cursor: pointer;
+	text-align: center;
+	font-weight: bold;
+}
+
+.it_price{
+	border: none;
+	width : 126px;
+	background-color: transparent;
+	color:black;
+	cursor: pointer;
+	font-weight: bold;
+	
+}
+
+.it_state{
+	border: none; 
+	width : 70px;
+	text-align: right;
+	background-color: transparent;
+	color:black;
+	cursor: pointer;
+}
+
+#item_section{
+
+	width : 200px;
+	height: 300px;
+	background-color: #FFF;
+}
+
+</style>
 </head>
 <body>
+
+<div id="container">
 
 
 
@@ -31,99 +130,105 @@
 	
 	
 
-	
-	<h2> 인기 가게 둘러보기(광고) </h2>
-	<c:forEach var="ad" items="${adList}">
-		<fieldset>
-			<form>
-				<a href="../ent/shopMain?ent_id=${ad.own_id }">
-					<img src="/imgfile/${ad.ent_img }" name="ent_img" width="150px" height="150px"> <br>
-					<input type="text" value="${ad.ent_name }" name="ent_name">
-				</a>
-			</form>
-		</fieldset>
-	</c:forEach> 
-	
- 	<c:if test="${!empty us_id }">
-		<h2> 나의 찜 목록 </h2>
- 		<c:forEach var="love" items="${loveList}">
+	<div id="ad_section">
+		<h2> 인기 가게 둘러보기(광고) </h2>
+		<c:forEach var="ad" items="${adList}">
 			<fieldset>
-				<form action="">
-					<a href="../item/itemDetail?it_no=${love.it_no }">
-						<img src="/imgfile/${love.it_img }" name="it_img" width="150px" height="150px"> <br>
-						<input type="text" value="${love.it_title }" name="it_title"> <br>
-						<input type="text" value="${love.it_price }" name="it_price">
-						<input type="text" value="${love.it_state }" name="it_state">
+				<form>
+					<a href="../ent/shopMain?ent_id=${ad.own_id }">
+						<img src="/imgfile/${ad.ent_img }" name="ent_img" class="ad_img"> <br>
+						<input type="text" value="${ad.ent_name }" name="ent_name">
 					</a>
 				</form>
 			</fieldset>
 		</c:forEach> 
-	</c:if>
+	</div><!-- 2 ad_section -->
+	<div id="love_section">
+	 	<c:if test="${!empty us_id }">
+			<h2> 나의 찜 목록 </h2>
+	 		<c:forEach var="love" items="${loveList}">
+				<fieldset>
+					<form action="">
+						<a href="../item/itemDetail?it_no=${love.it_no }">
+							<img src="/imgfile/${love.it_img }" name="it_img" width="150px" height="150px"> <br>
+							<input type="text" value="${love.it_title }" name="it_title"> <br>
+							<input type="text" value="${love.it_price }" name="it_price">
+							<input type="text" value="${love.it_state }" name="it_state">
+						</a>
+					</form>
+				</fieldset>
+			</c:forEach> 
+		</c:if>
+	</div><!-- 3 love_section -->
 	
-	<h2> 인기 물건 둘러보기 </h2>
+	<div id="popular_section">
+		<h2> 인기 물건 둘러보기 </h2>
+		<!-- 로그인 하지 않았을 때 -->
+		<c:if test="${empty us_id }">
+		 	<c:forEach var="item" items="${itemList}">
+		 		<c:if test="${item.it_state != 2 && item.it_state != 3  }">
+		 			<div id="item_section">
+						<a href="../item/itemDetail?it_no=${item.it_no }">
+							<img src="/imgfile/${item.it_img }" name="it_img"  class="item_img"> <br>
+							<input type="text" value="${item.it_title }" name="it_title" class="it_title"> <br>
+							<input type="text" value="${item.it_price }원" name="it_price" class="it_price">
+							<input type="hidden" value="${item.it_state }" name="it_state">
+							<!-- 글 상태 표시 -->
+							<c:choose>
+								<c:when test="${item.it_state == 0 }">
+									<input type="text" value="판매중" class="it_state"> <br>
+								</c:when>
+								<c:when test="${item.it_state == 1 }">
+									<input type="text" value="예약중" class="it_state"> <br>
+								</c:when>
+								<c:when test="${item.it_state == 2 }">
+									<input type="text" value="판매완료" class="it_state"> <br>
+								</c:when>
+								<c:when test="${item.it_state == 3 }">
+									<input type="text" value="삭제됨" class="it_state"> <br>
+								</c:when>
+								<c:otherwise>
+									<input type="text" value="접근이상함" class="it_state"> <br>			
+								</c:otherwise>
+							</c:choose>
+						</a>
+					</div>
+				</c:if>
+			</c:forEach>
+		</c:if>	 
+		<!-- 로그인 했을 때 -->
+		<c:if test="${!empty us_id }">
+		 	<c:forEach var="item" items="${itemList}">
+		 		<c:if test="${item.it_state != 2 && item.it_state != 3 &&  us_id != item.us_id }">
+					<a href="../item/itemDetail?it_no=${item.it_no }">
+						<img src="/imgfile/${item.it_img }" name="it_img" width="150px" height="150px" > <br>
+						<input type="text" value="${item.it_title }" name="it_title"> <br>
+						<input type="text" value="${item.it_price }" name="it_price">
+						<input type="hidden" value="${item.it_state }" name="it_state">
+						<!-- 글 상태 표시 -->
+						<c:choose>
+							<c:when test="${item.it_state == 0 }">
+								<input type="text" value="판매중"> <br>
+							</c:when>
+							<c:when test="${item.it_state == 1 }">
+								<input type="text" value="예약중"> <br>
+							</c:when>
+							<c:when test="${item.it_state == 2 }">
+								<input type="text" value="판매완료"> <br>
+							</c:when>
+							<c:when test="${item.it_state == 3 }">
+								<input type="text" value="삭제됨"> <br>
+							</c:when>
+							<c:otherwise>
+								<input type="text" value="접근이상함"> <br>			
+							</c:otherwise>
+						</c:choose>
+					</a> 
+				</c:if>
+			</c:forEach> 
+		</c:if>	
+	</div>
 	
-	<!-- 로그인 하지 않았을 때 -->
-	<c:if test="${empty us_id }">
-	 	<c:forEach var="item" items="${itemList}">
-	 		<c:if test="${item.it_state != 2 && item.it_state != 3  }">
-				<a href="../item/itemDetail?it_no=${item.it_no }">
-					<img src="/imgfile/${item.it_img }" name="it_img" width="150px" height="150px" > <br>
-					<input type="text" value="${item.it_title }" name="it_title"> <br>
-					<input type="text" value="${item.it_price }" name="it_price">
-					<input type="hidden" value="${item.it_state }" name="it_state">
-					<!-- 글 상태 표시 -->
-					<c:choose>
-						<c:when test="${item.it_state == 0 }">
-							<input type="text" value="판매중"> <br>
-						</c:when>
-						<c:when test="${item.it_state == 1 }">
-							<input type="text" value="예약중"> <br>
-						</c:when>
-						<c:when test="${item.it_state == 2 }">
-							<input type="text" value="판매완료"> <br>
-						</c:when>
-						<c:when test="${item.it_state == 3 }">
-							<input type="text" value="삭제됨"> <br>
-						</c:when>
-						<c:otherwise>
-							<input type="text" value="접근이상함"> <br>			
-						</c:otherwise>
-					</c:choose>
-				</a> 
-			</c:if>
-		</c:forEach>
-	</c:if>	 
-	<!-- 로그인 했을 때 -->
-	<c:if test="${!empty us_id }">
-	 	<c:forEach var="item" items="${itemList}">
-	 		<c:if test="${item.it_state != 2 && item.it_state != 3 &&  us_id != item.us_id }">
-				<a href="../item/itemDetail?it_no=${item.it_no }">
-					<img src="/imgfile/${item.it_img }" name="it_img" width="150px" height="150px" > <br>
-					<input type="text" value="${item.it_title }" name="it_title"> <br>
-					<input type="text" value="${item.it_price }" name="it_price">
-					<input type="hidden" value="${item.it_state }" name="it_state">
-					<!-- 글 상태 표시 -->
-					<c:choose>
-						<c:when test="${item.it_state == 0 }">
-							<input type="text" value="판매중"> <br>
-						</c:when>
-						<c:when test="${item.it_state == 1 }">
-							<input type="text" value="예약중"> <br>
-						</c:when>
-						<c:when test="${item.it_state == 2 }">
-							<input type="text" value="판매완료"> <br>
-						</c:when>
-						<c:when test="${item.it_state == 3 }">
-							<input type="text" value="삭제됨"> <br>
-						</c:when>
-						<c:otherwise>
-							<input type="text" value="접근이상함"> <br>			
-						</c:otherwise>
-					</c:choose>
-				</a> 
-			</c:if>
-		</c:forEach> 
-	</c:if>	
 	<!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
@@ -226,6 +331,6 @@ $(function(){
 	
 	<%@ include file="../include/userFooter.jsp" %>
 	
-	
+</div><!-- 1 container -->	
 </body>
 </html>

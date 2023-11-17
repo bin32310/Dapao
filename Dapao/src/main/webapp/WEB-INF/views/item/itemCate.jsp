@@ -33,7 +33,7 @@ body{
 
 /* 물건 하나의 공간 */
 .item_container_text{
- 	width : 230px;
+ 	width : 220px;
 	height : 290px;
 	float: left; 
 	border: none;
@@ -139,44 +139,34 @@ body{
 	<a id="cate"> 카테고리 > ${it_cate_search}</a>
 	<hr>
 	<br>
-	<div id="container">
-		<!-- 1 -->
-		<div class="item_container">
-			<!-- 2 -->
+	<div id="container"><!-- 1 -->
+		<div class="item_container"><!-- 2 -->
 			<c:forEach var="it" items="${cateItemVO}">
 				<c:if test="${it.it_state != 3 }">
-					<div class="item_container_text">
-						<!-- 3 -->
-						<a href="../item/itemDetail?it_no=${it.it_no }"> <img
-							src="/imgfile/${it.it_img }" class="itemVODivIMG"> <br>
-							<input type="text" value="${it.it_title}" class="it_title">
-							<br> <input type="hidden" value="${it.it_state }"
-							name="it_state">
+					<div class="item_container_text"><!-- 3 -->
+						<a href="../item/itemDetail?it_no=${it.it_no }">
+						<img src="/imgfile/${it.it_img }" class="itemVODivIMG"> <br>
+							<input type="text" value="${it.it_title}" class="it_title"><br>
+							<input type="hidden" value="${it.it_state }" name="it_state">
 
-							<div id="price_state_text">
-								<!-- 4 -->
+							<div class="price_state_text"> <!-- 4 -->
 								<input type="text" value="${it.it_price}원" class="it_price">
 								<!-- 글 상태 표시 -->
 								<c:choose>
 									<c:when test="${it.it_state == 0 }">
-										<input type="text" value="판매중" class="it_state">
-										<br>
+										<input type="text" value="판매중" class="it_state"> <br>
 									</c:when>
 									<c:when test="${it.it_state == 1 }">
-										<input type="text" value="예약중" class="it_state">
-										<br>
+										<input type="text" value="예약중" class="it_state"> <br>
 									</c:when>
 									<c:when test="${it.it_state == 2 }">
-										<input type="text" value="판매완료" class="it_state">
-										<br>
+										<input type="text" value="판매완료" class="it_state"> <br>
 									</c:when>
 									<c:when test="${it.it_state == 3 }">
-										<input type="text" value="삭제됨" class="it_state">
-										<br>
+										<input type="text" value="삭제됨" class="it_state"> <br>
 									</c:when>
 									<c:otherwise>
-										<input type="text" value="접근이상함" class="it_state">
-										<br>
+										<input type="text" value="접근이상함" class="it_state"> <br>
 									</c:otherwise>
 								</c:choose>
 							</div> <!-- 4 -->
