@@ -42,6 +42,10 @@
 
 
 }
+.title_text{
+
+	margin-left: 10px;
+}
 
 #item_section{
 
@@ -131,7 +135,7 @@
 	
 
 	<div id="ad_section">
-		<h2> 인기 가게 둘러보기(광고) </h2>
+		<h2 class="title_text"> 인기 가게 둘러보기(광고) </h2>
 		<c:forEach var="ad" items="${adList}">
 			<fieldset>
 				<form>
@@ -145,7 +149,7 @@
 	</div><!-- 2 ad_section -->
 	<div id="love_section">
 	 	<c:if test="${!empty us_id }">
-			<h2> 나의 찜 목록 </h2>
+			<h2 class="title_text"> 나의 찜 목록 </h2>
 	 		<c:forEach var="love" items="${loveList}">
 				<fieldset>
 					<form action="">
@@ -162,7 +166,7 @@
 	</div><!-- 3 love_section -->
 	
 	<div id="popular_section">
-		<h2> 인기 물건 둘러보기 </h2>
+		<h2 class="title_text"> 인기 물건 둘러보기 </h2>
 		<!-- 로그인 하지 않았을 때 -->
 		<c:if test="${empty us_id }">
 		 	<c:forEach var="item" items="${itemList}">

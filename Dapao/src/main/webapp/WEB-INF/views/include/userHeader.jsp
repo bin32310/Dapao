@@ -36,7 +36,7 @@
         <!-- Logo -->
         <a href="../user/userMain" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>DPO</b></span>
+          <span class="logo-mini"><img src="/resources/logo/logo.png" width="50" height="50"></span>
           <!-- logo for regular state and mobile devices -->
           <span class="logo-lg"><img src="/resources/logo/logo.png" width="50" height="50">Dapao</span>
         </a>
@@ -60,13 +60,13 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="/user/userLogin" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="${pageContext.request.contextPath }/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+                  <img src="${pageContext.request.contextPath }/resources/itemIMG/pro.png" class="user-image" alt="User Image"/>
                   <span class="hidden-xs">Guest</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="${pageContext.request.contextPath }/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+                    <img src="${pageContext.request.contextPath }/resources/itemIMG/pro.png" class="img-circle" alt="User Image" />
                     <p>
                       Guest
                       <small>환영합니다!</small>
@@ -96,7 +96,7 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="${pageContext.request.contextPath }/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+              <img src="${pageContext.request.contextPath }/resources/itemIMG/pro.png" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
               <p>Guest</p>
@@ -108,8 +108,8 @@
           <!-- search form -->
           <form action="../item/itemSearch" method="get" class="sidebar-form">
             <div class="input-group">
-              <input type="text" name="it_title" class="form-control" placeholder="Search..."/>
-<!--               <input type="text" name="q" class="form-control" placeholder="Search..."/> -->
+              <input type="text" name="it_title" class="form-control" placeholder="Search"/>
+<!--               <input type="text" name="q" class="form-control" placeholder="Search"/> -->
               <span class="input-group-btn">
                 <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
