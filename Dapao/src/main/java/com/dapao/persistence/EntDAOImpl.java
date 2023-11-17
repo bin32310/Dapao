@@ -51,7 +51,7 @@ public class EntDAOImpl{
 	// 환불 확정
 	public void tradeRefund(TradeVO vo) throws Exception{
 		logger.debug(" DAO refund(TradeVO vo) 호출 ");
-		sqlSession.delete(NAMESPACE+".refund", vo);
+		sqlSession.delete(NAMESPACE+".tradeRefund", vo);
 	}
 	public void entJoin(EntVO vo) throws Exception {
 		logger.debug("DAOImpl entJoin() 실행 ");

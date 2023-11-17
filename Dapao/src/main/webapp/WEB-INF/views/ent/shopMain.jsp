@@ -39,7 +39,7 @@
 	<div class="ent_container">
 		<div class="img_container">
 			<div class="box-body">
-				<c:if test="${own_id != null}">
+				<c:if test="${listSize != 0}">
 				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 					<ol class="carousel-indicators">
 						<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -98,7 +98,7 @@
 
 		</div>
 		<div class="chat">
-			<button>판다톡</button>
+			<button>판타톡</button>
 		</div>
 		<div class="box box-success">
 			<div class="box-header with-border">
@@ -245,9 +245,9 @@
 		$('.prodPick').hover(function () {
 			$(this).css("cursor", "pointer");
 		});
-	    $('.chat').click(function () { //판다톡
-	        location.href="/websocket/chat";
-	     });
+		$('.chat').click(function () { //판다톡
+			location.href="/websocket/chat/${ent_name}";
+		});
 		$('#modal-success').on("show.bs.modal",function(e) { //모달켜지면
 			
 			console.log(e);
