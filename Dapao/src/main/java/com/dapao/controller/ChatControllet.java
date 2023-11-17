@@ -25,11 +25,17 @@ public class ChatControllet {
 //		logger.debug("dffdfdd");
 //		logger.debug("dfssdfsdfy3535"+(String)session.getAttribute("us_id"));
 		String us_id = (String)session.getAttribute("us_id");
+		String ent_name = (String)session.getAttribute("ent_name");
 		logger.debug("session"+us_id);
 		if(us_id != null){
 			logger.debug("us_id : "+us_id);
            return "redirect:/websocket/chat/"+us_id;
         }  
+		
+		if(ent_name != null){
+			logger.debug("own_id : "+ent_name);
+			return "redirect:/websocket/chat/"+ent_name;
+		}  
 		
 		return "로그인이 필요합니다";
 		
@@ -37,8 +43,9 @@ public class ChatControllet {
 	
 	// http://localhost:8088/websocket/chat
 	// http://localhost:8088/chat
-	@RequestMapping("/chat/{us_id}")
-	 public String chattingRoom(@PathVariable("us_id") String us_id,
+	@RequestMapping("/chat/{id}")
+	 public String userChattingRoom(@PathVariable("id") String us_id,
+			 						@PathVariable("id") String ent_name,
 								 HttpSession session,
 								 Model model) throws Exception{
 		
@@ -47,6 +54,13 @@ public class ChatControllet {
 	        }else{
 	            return "로그인이 필요합니다";
 	        }
+	        
+	        if(ent_name != null){
+	        	model.addAttribute("ent_name", ent_name);
+	        }else{
+	        	return "로그인이 필요합니다";
+	        }
+	        
 	        return "chat";
 	    }
 
