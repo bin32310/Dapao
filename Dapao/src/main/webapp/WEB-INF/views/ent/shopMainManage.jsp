@@ -99,11 +99,12 @@ box-body{
 			$(this).closest('div').remove();
 		});
 		$('.btn-success').click(function() {
-			if(${own_id == null}){
+			var own_id = '${own_id}';
+			if(own_id == null){
 				alert('로그인 이후 사용해주세요');
 				return false;
 			}
 		});
-	})
+	});
 </script>
 <%@ include file="../include/entFooter.jsp"%>

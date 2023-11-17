@@ -70,7 +70,11 @@
 										</c:otherwise>
 										</c:choose></td>
 									<td>
-										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default" data-prod_no="${list.prod_no }" data-prod_name="${list.prod_name }" data-prod_con="${list.prod_con }" data-prod_price="${list.prod_price }" data-prod_content="${list.prod_content }" data-prod_cate="${list.prod_cate }" data-prod_img="${list.prod_img }" data-own_id="${list.own_id }" data-modal_cate=1>수정</button>
+										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default" 
+										data-prod_no="${list.prod_no }" data-prod_name="${list.prod_name }" data-prod_con="${list.prod_con }" 
+										data-prod_price="${list.prod_price }" data-prod_content="${list.prod_content }" 
+										data-prod_cate="${list.prod_cate }" data-prod_img="${list.prod_img }" 
+										data-own_id="${list.own_id }" data-modal_cate=1>수정</button>
 									</td>
 								</tr>
 							</c:forEach>
@@ -82,7 +86,7 @@
 					<div class="box-footer clearfix">
 						<ul class="pagination pagination-sm no-margin pull-center">
 							<c:if test="${pageVO.prev }">
-								<li><a href="/ent/listPage?page=${pageVO.startPage-1 }">«</a></li>
+								<li><a href="/ent/productManage?page=${pageVO.startPage-1 }">«</a></li>
 							</c:if>
 
 							<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
@@ -90,7 +94,7 @@
 							</c:forEach>
 
 							<c:if test="${pageVO.next }">
-								<li><a href="/ent/listPage?page=${pageVO.endPage+1 }">»</a></li>
+								<li><a href="/ent/productManage?page=${pageVO.endPage+1 }">»</a></li>
 							</c:if>
 						</ul>
 					</div>
@@ -210,7 +214,7 @@
 				$('.box-header').append('<h3 class="box-title">상품 등록하기</h3>');
 			}
 
-		});
+		});//modal on
 		$('.pagination li a').hover(function() {
 			$(this).css('color', 'red');
 			$(this).css("cursor", "pointer");
@@ -219,12 +223,12 @@
 		});
 
 		$('.btn-success').click(function() {
-			if(${own_id == null}){
+			var own_id = '${own_id}';
+			if(own_id == null){
 				alert('로그인 이후 사용해주세요');
 				return false;
 			}
 		});
-		console.log('123');
 	});
 </script>
 <%@ include file="../include/footer.jsp"%>

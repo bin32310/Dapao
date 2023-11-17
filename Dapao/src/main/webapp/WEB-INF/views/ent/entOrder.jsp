@@ -5,11 +5,29 @@
 .cate {
 	padding-top: 15px;
 }
-</style>
+#content{
+	font-size: 25px;
+}
+html, body{
+	height: 100%;
+}
 
+.box-success{
+	width : 100%;
+	height: 100vh;
+}
+.thead{
+	border-bottom-color: green;
+}
+/* .table-responsive{ */
+/* 	margin-right: 10px; */
+/* } */
+
+</style>
+<!-- <div class="container"> -->
 <div class="box box-success">
 	<div class="box-header with-border"></div>
-	<form action="" method="post">
+	<form action="/ent/entOrder" method="post">
 		<%-- 		<input type="hidden" name="own_id" value="${own_id }" > --%>
 		<table>
 
@@ -33,7 +51,14 @@
 		</table>
 	</form>
 	<div class="box-header with-border">
-		<h3 class="box-title">주문관리</h3>
+		<h3 class="box-title">
+		<c:if test="${search_cate eq 'prod_name'}">
+			상품명 조회
+		</c:if>
+		<c:if test="${search_cate eq 'tr_no'}">
+			주문번호 조회	
+		</c:if>
+		</h3>
 		<div class="box-tools pull-right">
 			<button type="button" class="btn btn-box-tool" data-widget="collapse">
 				<i class="fa fa-minus"></i>
@@ -43,10 +68,10 @@
 
 	<div class="box-body">
 		<div class="table-responsive">
-			<table class="table no-margin">
-				<thead>
+			<table class="table no-margin" id="content">
+				<thead class="thead">
 					<tr>
-						<th>상품번호</th>
+						<th>주문번호</th>
 						<th>상품명</th>
 						<th>구매자</th>
 						<th>가격</th>
@@ -56,22 +81,52 @@
 				<tbody>
 					<c:forEach items="${tlist }" var="tlist">
 						<tr>
-							<td><a href="">${tlist.tr_no }</a></td>
+							<td>${tlist.tr_no }</td>
 							<td>${tlist.prodVO.prod_name }</td>
-							<td><span class="label label-success">${tlist.tr_buy }</span></td>
+							<td>${tlist.us_id }</td>
 							<td>${tlist.prodVO.prod_price }</td>
 							<td>
-								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-danger" data-tr_no=${tlist.tr_no }>환불</button>
+								<c:choose>
+								<c:when test="${tlist.tr_sell_state == 1 }">
+								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-danger" 
+								data-tr_no=${tlist.tr_no } data-tr_price=${tlist.tr_price }
+								 data-us_id=${tlist.us_id } data-tr_sell_ent=${tlist.tr_sell_ent }>판매완료</button>
+								</c:when>
+								<c:when test="${tlist.tr_sell_state == 0 }">
+									<button type="button" class="btn btn-warning">구매확정 대기중</button>
+								</c:when>
+								<c:otherwise>
+									<button type="button" class="btn btn-">거래취소</button>
+								</c:otherwise>
+								</c:choose>
 							</td>
 						</tr>
 					</c:forEach>
 
 				</tbody>
 			</table>
+			<c:if test="${tlist != null }">
+					<div class="box-footer clearfix">
+						<ul class="pagination pagination-sm no-margin pull-center">
+							<c:if test="${pageVO.prev }">
+								<li><a href="/ent/entOrder?search=${search }&search_cate=${search_cate }&cri.page=${pageVO.startPage-1 }">«</a></li>
+							</c:if>
+
+							<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+								<li ${pageVO.cri.page == i? 'class="active"':'' }><a href="/ent/entOrder?search=${search }&search_cate=${search_cate }&cri.page=${i }">${i }</a></li>
+							</c:forEach>
+
+							<c:if test="${pageVO.next }">
+								<li><a href="/ent/entOrder?search=${search }&search_cate=${search_cate }&cri.page=${pageVO.endPage+1 }">»</a></li>
+							</c:if>
+						</ul>
+					</div>
+			</c:if>
 		</div>
 
 	</div>
 </div>
+<!-- </div> -->
 
 
 
@@ -102,19 +157,38 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#modal-danger').on("show.bs.modal", function(e) {
+		var own_id = "${own_id}";
+		$('#modal-danger').on("show.bs.modal", function(e) { // 모달 켜지면
 			console.log(e);
 			var tr_no = $(e.relatedTarget).data('tr_no') * 1;
 			console.log(tr_no);
 			$('#refund').click(function() {
-				location.href = '/ent/refund?tr_no=' + tr_no;
+				$.ajax({
+					url: '/ent/refund',
+					type : "get",
+					data : {tr_no : tr_no},
+					success : function () {
+						console.log('성공');
+						$('#modal-danger').modal('hide');
+					}, 
+					error : function () {
+						console.log('실패');
+						$('#modal-danger').modal('hide');
+					}
+				})
 			});
 		});
 		$('.btn-success').click(function() {
-			if(${own_id == null}){
+			if(own_id == null){
 				alert('로그인 이후 사용해주세요');
 				return false;
 			}
+		});
+		$('.pagination li a').hover(function() {
+			$(this).css('color', 'red');
+			$(this).css("cursor", "pointer");
+		},function() {
+			$(this).css('color', 'white');
 		});
 
 	});

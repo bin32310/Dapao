@@ -10,15 +10,18 @@
 	display: flex;
 	justify-content: center;
 }
-.item{
+
+.item {
 	width: 400px;
 	height: 400px;
 }
-.carousel-inner>.item>img{
+
+.carousel-inner>.item>img {
 	width: 400px;
 	height: 400px;
 }
-.users-list>li img{
+
+.users-list>li img {
 	width: 400px;
 	height: 300px;
 }
@@ -28,15 +31,15 @@
 		$('.review').slimScroll({
 			height : '250px'
 		});
-		
+
 	});
-	
 </script>
 <div class="box box-success">
 	<div class="box-header with-border"></div>
 	<div class="ent_container">
 		<div class="img_container">
 			<div class="box-body">
+				<c:if test="${own_id != null}">
 				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 					<ol class="carousel-indicators">
 						<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -66,6 +69,7 @@
 					</a> <a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> <span class="fa fa-angle-right"></span>
 					</a>
 				</div>
+				</c:if>
 			</div>
 
 			<div class="small-box bg-yellow">
@@ -92,6 +96,9 @@
 				<div class="tab-pane" id="tab_3">${ent.ent_ot}-${ent.ent_ct }</div>
 			</div>
 
+		</div>
+		<div class="chat">
+			<button>판타톡</button>
 		</div>
 		<div class="box box-success">
 			<div class="box-header with-border">
@@ -154,7 +161,10 @@
 			<div class="box-body no-padding">
 				<ul class="users-list clearfix">
 					<c:forEach items="${plist }" var="prod">
-						<li><img src="${pageContext.request.contextPath }/ent/download?imageFileName=${prod.prod_img }" width="300px" height="300px">
+						<li class="prodPick" data-toggle="modal" data-target="#modal-success"
+						data-prod_no="${prod.prod_no }" data-prod_price="${prod.prod_price }">
+						<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${prod.prod_img }" 
+						width="300px" height="300px">
 							<p>${prod.prod_name }</p> <span class="users-list-date">${prod.prod_price }원</span></li>
 					</c:forEach>
 				</ul>
@@ -163,6 +173,30 @@
 		</div>
 	</div>
 </div>
+
+<!-- modal -->
+<div class="modal modal-success fade" id="modal-success" style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title">결제확인창</h4>
+			</div>
+			<div class="modal-body">
+				<p>결제하시겠습니까?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-outline purchase">확인</button>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a41c6623d85b187520b3d92f4b708850&libraries=services"></script>
 ​
 <script type="text/javascript">
@@ -182,9 +216,6 @@
 			.addressSearch(
 					'${ent.ent_addr}',
 					function(result, status) {
-						// 	geocoder.addressSearch(
-						// 					'부산시 영도구 영선대로 34',
-						// 					function(result, status) {
 
 						// 정상적으로 검색이 완료됐으면 
 						if (status === kakao.maps.services.Status.OK) {
@@ -202,7 +233,6 @@
 							var infowindow = new kakao.maps.InfoWindow(
 									{
 										content : '<div style="width:150px;text-align:center;padding:6px 0;">${ent.ent_name}</div>'
-									// 										content : '<div style="width:150px;text-align:center;padding:6px 0;">검색한 위치</div>'
 									});
 							infowindow.open(map, marker);
 
@@ -210,6 +240,40 @@
 							map.setCenter(coords);
 						}
 					});
+						
+	$(function () {
+		$('.prodPick').hover(function () {
+			$(this).css("cursor", "pointer");
+		});
+		$('.chat').click(function () { //판다톡
+			location.href="/websocket/chat"+${own_id};
+		});
+		$('#modal-success').on("show.bs.modal",function(e) { //모달켜지면
+			
+			console.log(e);
+			var prod_no = $(e.relatedTarget).data('prod_no') * 1;
+			var prod_price = $(e.relatedTarget).data('prod_price') * 1;
+			console.log(prod_no);
+			console.log(prod_price);
+			
+			$('.purchase').click(function () {
+				$.ajax({
+					url : "/ent/purchase",
+					type : "get",
+					data : {prod_no: prod_no, prod_price:prod_price},
+					success : function () {
+						console.log('성공');
+						$('#modal-success').modal('hide');
+					}, 
+					error : function () {
+						console.log('실패');
+						$('#modal-success').modal('hide');
+					}
+				});
+				
+			});
+		});
+	});
 </script>
 
 <%@ include file="../include/entFooter.jsp"%>
