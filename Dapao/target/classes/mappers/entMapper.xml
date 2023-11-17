@@ -157,6 +157,8 @@
 	</update>
 	<!-- 판매완료 -->
 	<insert id="entAd">
+		insert into ad(own_id, ad_board,ad_upload) 
+		values(#{own_id},0, #{ad_upload})
 	</insert>
 	
 </mapper>

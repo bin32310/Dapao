@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dapao.domain.AdVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.PageVO;
@@ -51,11 +56,13 @@ public class EntController {
 
 	// http://localhost:8088/ent/shopMain
 	@RequestMapping(value = "/shopMain", method = RequestMethod.GET)
-	public void shopMainGET(HttpSession session, ReviewVO rVo, Model model, String Ent_id) throws Exception {
+	public void shopMainGET(HttpSession session, ReviewVO rVo, Model model, String ent_id) throws Exception {
 		logger.debug(" shopMainGET(EntVO eVO, ProdVO pVO, ReviewVO rVO, Model model) 호출 ");
-		String own_id = Ent_id;
-		if (Ent_id == null) {
+		String own_id = ent_id;
+		if (ent_id == null) {
 			own_id = (String) session.getAttribute("own_id");
+		}else {
+			session.setAttribute("ent_id", own_id);
 		}
 //		String us_id = (String) session.getAttribute("us_id");
 		EntVO eVo = new EntVO();
@@ -630,20 +637,39 @@ public class EntController {
 	}
 	//광고페이지
 	@RequestMapping(value = "/entAd", method = RequestMethod.GET)
-	public void entAdGET(HttpSession session, Model model) {
+	public void entAdGET(HttpSession session, Model model)throws Exception {
 		logger.debug(" entOrderGET() ");
-		String own_id = (String) session.getAttribute("own_id");
+//		String own_id = (String) session.getAttribute("own_id");
 		String name = "광고문의/소개";
 		model.addAttribute("name", name);
 		logger.debug(" 연결된 뷰페이지(/views/entOrder.jsp)출력 ");
 	}
 	//광고페이지
 	@RequestMapping(value = "/entAd", method = RequestMethod.POST)
-	public void entAdPOST(HttpSession session, Model model) {
+	public void entAdPOST(HttpSession session, int ad_upload, Model model) throws Exception {
 		logger.debug(" entOrderPOST() ");
 		String own_id = (String) session.getAttribute("own_id");
 		String name = "광고문의/소개";
-		
+		logger.debug(" ad_upload : "+ad_upload);
+		AdVO vo = new AdVO();
+		vo.setOwn_id(own_id);
+	      // 현재 날짜 구하기
+        Date currentDate = new Date(System.currentTimeMillis());
+
+        // 30일 더하기
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        cal.add(Calendar.DATE, ad_upload);
+        logger.debug(" cal : "+cal);
+        Date addedDate = new Date(cal.getTimeInMillis());
+
+        // 패턴 변환
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = sdf.format(addedDate);
+        Date date =sdf.parse(formattedDate);
+        vo.setAd_upload(date);
+		logger.debug("vo : "+vo);
+		eService.entAd(vo);
 		model.addAttribute("name", name);
 		logger.debug(" 연결된 뷰페이지(/views/entOrder.jsp)출력 ");
 	}
