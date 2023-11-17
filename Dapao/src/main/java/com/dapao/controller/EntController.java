@@ -582,6 +582,7 @@ public class EntController {
 			} else {
 				// 로그인 성공 아이디 세션에 저장
 				session.setAttribute("own_id", resultVO.getOwn_id());
+				session.setAttribute("ent_name", resultVO.getEnt_name());
 			}
 
 		}
