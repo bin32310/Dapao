@@ -41,6 +41,7 @@
 				<tr>
 						<th>번호</th>
 						<th>제목</th>
+						<th>판매상태</th>
 						<th>작성일</th>
 				</tr>
 				
@@ -48,11 +49,30 @@
 				<tbody>
 		
 	<c:forEach items="${userSellList}" var="userSellList">
+		<c:if test="${userSellList.it_state != 3}">
 				<tr>
 					<th>${userSellList.it_no }</th>
-					<th>${userSellList.it_title }</th>
+					<th><a href="../item/itemDetail?it_no=${userSellList.it_no }">${userSellList.it_title }</a> </th>
+					<th>
+						<c:choose>
+							<c:when test="${userSellList.it_state == 0 }">
+								판매중
+							</c:when>
+							<c:when test="${userSellList.it_state == 1 }">
+								예약중
+							</c:when>
+							<c:when test="${userSellList.it_state == 2 }">
+								판매완료
+							</c:when>
+							<c:otherwise>
+								???			
+							</c:otherwise>
+						</c:choose>
+					
+					</th>
 					<th>${userSellList.it_regdate }</th>
 				</tr>
+		</c:if>
 			</c:forEach> 
 		</tbody>
 		</table>

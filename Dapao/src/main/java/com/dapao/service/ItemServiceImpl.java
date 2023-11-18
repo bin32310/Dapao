@@ -366,6 +366,12 @@ public class ItemServiceImpl {
 		
 	}
 	
+	// 글 삭제
+	public int itemDelete(Integer it_no) {
+		logger.debug("Service : itemDelete(Integer it_no) 호출");
+		return idao.itemDelete(it_no);
+		
+	}
 
 	
 }

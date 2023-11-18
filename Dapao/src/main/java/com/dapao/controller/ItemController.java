@@ -965,17 +965,17 @@ public class ItemController {
 	// 유저가 체험단 신청시 버튼 클릭시
 	@ResponseBody
 	@RequestMapping(value = "/userExpApply", method = RequestMethod.POST)
-	public int userExpApply(HttpSession session, String own_id) throws Exception {
+	public int userExpApply(HttpSession session, String ent_id) throws Exception {
 		logger.debug("/item/userExpApply() 호출");
 		
 		// 아이디(체험단 신청하는 유저 아이디)
 		String us_id = (String)session.getAttribute("us_id");
 		logger.debug("us_id : " + us_id);
 		// 체험단 받는 기업
-		logger.debug("own_id : " + own_id);
+		logger.debug("own_id : " + ent_id);
 		
 		// 체험단 모집 정보 조회
-		ExpVO expVO = iService.getExpInfo(own_id);
+		ExpVO expVO = iService.getExpInfo(ent_id);
 		
 		
 		
@@ -983,7 +983,7 @@ public class ItemController {
 		ExpusVO expusVO = new ExpusVO();
 		expusVO.setExp_no(expVO.getExp_no());
 		expusVO.setUs_id(us_id);
-		expusVO.setOwn_id(own_id);
+		expusVO.setOwn_id(ent_id);
 		int expApplyResult = iService.expApply(expusVO);
 		logger.debug("expApplyResult : " + expApplyResult);
 		
@@ -1033,6 +1033,18 @@ public class ItemController {
 		int us_coin_re = (Integer)session.getAttribute("us_coin");
 		us_coin_re = us_coin_re - us_coin;
 		session.setAttribute("us_coin", us_coin_re);
+		
+		return result;
+	}
+	
+	// 글 삭제하기
+	@ResponseBody
+	@RequestMapping(value = "/itemDelete", method = RequestMethod.POST)
+	public int itemDelete(Integer it_no) throws Exception {
+		logger.debug("/item/itemDelete() 호출");
+		
+		int result = iService.itemDelete(it_no);
+		logger.debug("삭제 결과 : " + result);
 		
 		return result;
 	}

@@ -141,7 +141,7 @@
 
    <!-- 마이페이지 내 판매글 불러오기 -->
       <select id="userSellList" resultType="ItemVO">
-      select it_no, it_title, it_regdate 
+      select * 
       from item 
       where us_id=#{us_id}
          
