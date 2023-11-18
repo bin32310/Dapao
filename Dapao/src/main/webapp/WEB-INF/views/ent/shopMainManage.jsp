@@ -7,12 +7,17 @@
 .bootstrap-timepicker{
 	width: 200px;
 }
+
 label{
 	font-size: 30px;
 	color: green;
 }
-box-body{
+.box-body{
 	fon-size : 20px;
+	padding-left: 100px;
+}
+.box-footer{
+	padding-left: 100px;
 }
 textarea {
     height: 7em;
@@ -62,14 +67,15 @@ textarea.form-control{
 						<input type="text" class="form-control timepicker" name="ent_ot" value="${ent.ent_ot }">
 					</div>
 				</div>
-			</div>
-			<div class="bootstrap-timepicker">
-				<div class="form-group">
-					<div class="input-group time">
-						<div class="input-group-addon">
-							<i class="fa fa-clock-o"></i>
+				<div class="bootstrap-timepicker">
+					<div class="form-group">
+						<div class="input-group time">
+							<div class="input-group-addon">
+								<i class="fa fa-clock-o"></i>
+							</div>
+							<input type="text" class="form-control timepicker" name="ent_ct"
+								value="${ent.ent_ct }">
 						</div>
-						<input type="text" class="form-control timepicker" name="ent_ct" value="${ent.ent_ct }">
 					</div>
 				</div>
 			</div>
@@ -119,13 +125,7 @@ textarea.form-control{
 		$('.file_area').on('click', '.btn_delete',function() {
 			$(this).closest('div').remove();
 		});
-		$('.btn-success').click(function() {
-			var own_id = '${own_id}';
-			if(own_id == null){
-				alert('로그인 이후 사용해주세요');
-				return false;
-			}
-		});
+		
 	});
 </script>
 <%@ include file="../include/entFooter.jsp"%>

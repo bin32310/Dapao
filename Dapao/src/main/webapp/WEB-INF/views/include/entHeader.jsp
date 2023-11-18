@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title>AdminLTE 2 | Dashboard</title>
 <meta
@@ -175,7 +176,7 @@
 							<span>상점메뉴</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href="/ent/shopMain"><i class="fa fa-home"></i>
+							<li class="shop"><a href="/ent/shopMain"><i class="fa fa-home"></i>
 									상점 메인페이지 </a></li>
 							<li><a href="/ent/shopMainManage"><i class="fa fa-gavel"></i>
 									상점 메인페이지 수정 </a></li>
@@ -193,8 +194,8 @@
 					<li class="treeview"><a href="/ent/entAd"> <i
 							class="fa fa-newspaper-o"></i> <span>광고 문의</span>
 					</a></li>
-					<li class="treeview"><a href="/ent/coinCharge" id="coin"> <i
-							class="fa fa-newspaper-o"></i> <span>대나무 페이 충전</span>
+					<li class="treeview" id="coin"><a href="/ent/coinCharge"> <i
+							class="fa fa-money"></i> <span>대나무 페이 충전</span>
 					</a></li>
 					<li class="treeview"><a href="#"> <i class="fa fa-paw"></i>
 							<span>고객지원</span> <i class="fa fa-angle-left pull-right"></i>
@@ -223,24 +224,3 @@
 				</ol>
 			</section>
 
-
-
-
-			<script type="text/javascript">
-				var own_id = '${own_id}';
-				console.log(own_id);
-				$('a').hover(function() {
-					$(this).css("cursor", "pointer");
-				});
-				$('.info > a').hover(function() {
-					$(this).css("color", "#2BBD26");
-				}, function() {
-					$(this).css('color', 'black');
-				});
-				$('#coin').click(function() {
-					if (own_id == null) {
-						alert('로그인이후 이용해주세요');
-						location.href = "/ent/entLogin";
-					}
-				});
-			</script>

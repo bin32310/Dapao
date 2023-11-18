@@ -9,6 +9,20 @@
 	<%@ include file="../include/entHeader.jsp"%>
 </c:if>
 
+<c:choose>
+	<c:when test="${empty own_id }">
+		<c:if test="${empty us_id }">
+			<%@ include file="../include/userHeader.jsp"%>
+		</c:if>
+		<c:if test="${!empty us_id }">
+			<%@ include file="../include/userLoginHeader.jsp"%>
+		</c:if>
+	</c:when>
+	<c:otherwise>
+		<%@ include file="../include/entHeader.jsp"%>
+	</c:otherwise>
+</c:choose>
+
 <script src="/resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <style>
 .box-body {
