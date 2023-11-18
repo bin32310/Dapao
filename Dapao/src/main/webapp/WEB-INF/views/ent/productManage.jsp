@@ -6,6 +6,16 @@
 tr {
 	border-bottom: 1px solid green;
 }
+.box-success {
+    width: 100%;
+    height: 100vh;
+}
+td{
+	font-size: 1.3em;
+}
+th{
+	font-size: 1.3em;
+}
 </style>
 <div class="box box-success">
 	<div class="box-header with-border"></div>
@@ -227,14 +237,6 @@ tr {
 			$(this).css('color', 'white');
 		});
 		
-		if (own_id == null || typeof own_id == "undefined" || own_id == "") {
-			var own_id = '${own_id}';
-			if(own_id == null){
-				alert('로그인 이후 사용해주세요');
-				location.href = "/ent/entLogin";
-				return false;
-			}
-		});
 	});
 </script>
-<%@ include file="../include/footer.jsp"%>
+<%@ include file="../include/entFooter.jsp"%>

@@ -63,9 +63,8 @@ public class EntController {
 		String own_id = ent_id;
 		if (own_id == null) {
 			own_id = (String) session.getAttribute("own_id");
-		}else {
-			session.setAttribute("ent_id", own_id);
 		}
+		
 //		String us_id = (String) session.getAttribute("us_id");
 		EntVO eVo = new EntVO();
 		eVo.setOwn_id(own_id);
@@ -115,7 +114,7 @@ public class EntController {
 		model.addAttribute("name", name);
 		
 		session.setAttribute("own_id", own_id);
-
+		session.setAttribute("ent_id", own_id);
 		logger.debug(" 연결된 뷰페이지(/views/ent/shopMain.jsp) 출력 ");
 	}
 
@@ -684,8 +683,8 @@ public class EntController {
 		logger.debug(" vo : "+vo);
 		Map<String,Object>map = new HashMap<String,Object>();
 		
-//		String us_id = (String) session.getAttribute("us_id");
-		String us_id = "test1";
+		String us_id = (String) session.getAttribute("us_id");
+//		String us_id = "test1";
 		logger.debug("us_id : "+us_id);
 		String own_id = (String) session.getAttribute("own_id");
 		logger.debug("own_id : "+own_id);
@@ -714,7 +713,7 @@ public class EntController {
 			vo.setOwn_id(own_id);
 			// 상점 검색
 			vo = eService.listEnt(vo);
-			String name = "광고문의/소개";
+			String name = "대나무페이";
 			
 			model.addAttribute("ent", vo);
 			model.addAttribute("name", name);

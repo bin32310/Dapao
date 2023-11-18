@@ -241,7 +241,7 @@ color: black;
 			</form>
 			
 			<input type="hidden" value="${ent.own_name }" name="own_name" id="own_name">
-			<input type="hidden" value="${ent.ent_email }" name="ent_email" id="ent_email">
+			<input type="hidden" value="${ent.own_email }" name="own_email" id="own_email">
 			<input type="hidden" value="${ent.own_tel }" name="own_tel" id="own_tel">
 		</div>
 	</div>
@@ -327,7 +327,7 @@ color: black;
 	
 		
 //	});
-	console.log($('#ent_email').val());
+	console.log($('#own_email').val());
 	var data;
 	// 결제하기 버튼 클릭
 	// 카드
@@ -379,7 +379,7 @@ color: black;
 	        var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 	        
 	     	// 필요한 정보들
-	        var ent_email = $("#ent_email").val(); //회원이메일
+	        var own_email = $("#own_email").val(); //회원이메일
 	        var own_name = $("#own_name").val(); //회원이름
 	        var own_tel = $("#own_tel").val(); //회원전화번호
 	        
@@ -390,7 +390,7 @@ color: black;
 				merchant_uid : "IMP" + makeMerchantUid, // 가맹점 주문번호
 				name : "대나무페이", // 결제창에 노출될 상품명
 				amount : pv, // 결제금액
-				buyer_email : ent_email,
+				buyer_email : own_email,
 				buyer_name : own_name,
 				buyer_tel : own_tel
 			
@@ -405,7 +405,7 @@ color: black;
                          "pay_uid" : rsp.merchant_uid, // 주문번호
                          "pay_kind" : rsp.name,    // 결제창에 노출 될 상품명(대나무페이)
                          "pay_price" : rsp.paid_amount,    // 결제금액
-                         "ent_email" : rsp.buyer_email,	
+                         "own_email" : rsp.buyer_email,	
                          "own_name" : rsp.buyer_name, //유저 이름
                          "own_tel" : rsp.buyer_tel , // 유저 전화번호
                          "card_num" : rsp.card_number, //카드승인번호(card_num)
