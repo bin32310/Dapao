@@ -2,6 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/entHeader.jsp"%>
 
+<style>
+tr {
+	border-bottom: 1px solid green;
+}
+</style>
 <div class="box box-success">
 	<div class="box-header with-border"></div>
 	<div class="container">

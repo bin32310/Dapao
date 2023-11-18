@@ -36,9 +36,11 @@ import com.dapao.domain.AdVO;
 import com.dapao.domain.Criteria;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.PageVO;
+import com.dapao.domain.PayVO;
 import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TradeVO;
+import com.dapao.domain.UserVO;
 import com.dapao.service.EntServiceImpl;
 import com.dapao.service.ProdServiceImpl;
 
@@ -474,13 +476,13 @@ public class EntController {
 		File file = new File(downFile);
 		// 업로드 했던(다운로드할) 파일의 확장자 확인
 		// "itwill.jpg"
-		int lastIdx = fileName.lastIndexOf(".");
-		// 파일의 확장자를 제외한 이름을 저장
-
-		String thumbName = fileName.substring(0, lastIdx);
-		// 파일명이 한글일때 인코딩문제 해결
-		thumbName = URLEncoder.encode(fileName, "UTF-8");
-		File thumbNail = new File(path + "\\thumbnail\\" + thumbName + ".png");
+//		int lastIdx = fileName.lastIndexOf(".");
+//		// 파일의 확장자를 제외한 이름을 저장
+//
+//		String thumbName = fileName.substring(0, lastIdx);
+//		// 파일명이 한글일때 인코딩문제 해결
+//		thumbName = URLEncoder.encode(fileName, "UTF-8");
+//		File thumbNail = new File(path + "\\thumbnail\\" + thumbName + ".png");
 		// 출력객체
 		OutputStream out = response.getOutputStream();
 
@@ -593,6 +595,7 @@ public class EntController {
 				// 로그인 성공 아이디 세션에 저장
 				session.setAttribute("own_id", resultVO.getOwn_id());
 				session.setAttribute("ent_name", resultVO.getEnt_name());
+				session.setAttribute("ent_coin", resultVO.getEnt_coin());
 			}
 
 		}
@@ -698,6 +701,59 @@ public class EntController {
 		logger.debug(" 결제 완료 ");
 //		eService.tradePurchase(tr_no);
 	}
+	
+	// http://localhost:8088/ent/coinCharge
+		// 대나무페이 충전 GET - 충전페이지로 이동 
+		@RequestMapping(value = "/coinCharge", method = RequestMethod.GET)
+		public void coinChargeGET(HttpSession session, Model model) throws Exception {
+			logger.debug("coinChargeGET() 호출");
+			
+			// 세션 아이디
+			String own_id = (String)session.getAttribute("own_id");
+			EntVO vo = new EntVO();
+			vo.setOwn_id(own_id);
+			// 상점 검색
+			vo = eService.listEnt(vo);
+			String name = "광고문의/소개";
+			
+			model.addAttribute("ent", vo);
+			model.addAttribute("name", name);
+		}
+	// 대나무페이 충전 POST - 충전금액 입력
+		@ResponseBody
+		@RequestMapping(value = "/coinCharge", method = RequestMethod.POST)
+		public void coinChargePOST(HttpSession session, Model model, PayVO payVO) throws Exception {
+			logger.debug("coinChargePOST() 호출");
+			
+			// 세션 아이디, 코인 금액, url
+			String own_id = (String)session.getAttribute("own_id");
+			Integer ent_coin = (Integer)session.getAttribute("ent_coin");
+			//String url = (String)session.getAttribute("URL");
+			logger.debug("회원 아이디 확인 : " + own_id);
+//			logger.debug("충전전 코인금액 확인 : " + ent_coin);
+			
+			logger.debug("@@payVO : " + payVO );
+			payVO.setOwn_id(own_id);
+			payVO.setPay_kind("대나무페이");
+			payVO.setPay_con("결제완료");
+			logger.debug("@@@@@payVO : " + payVO );
+			
+			// 코인충전
+			int ent_result = eService.coinCharge(payVO);
+			logger.debug(" ent_result(성공시 1) : " +ent_result);
+			
+			
+			// 코인값 저장
+			ent_coin = eService.entCoin(own_id);
+			session.setAttribute("ent_coin", ent_coin);
+			logger.debug("충전후 코인금액 확인 : " + ent_coin);
+			// 결제 정보 입력
+			int pay_result = eService.coinChargePay(payVO);
+			logger.debug(" ent_result : " + pay_result);
+			logger.debug("결제 리스트나 이전 uri로 이동");
+		
+		
+		}
 	
 
 }

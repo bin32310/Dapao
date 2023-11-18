@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@ include file="../include/header.jsp"%>
+<%@ include file="../include/entHeader.jsp"%>
 <style>
 #expForm {
    position: relative;
@@ -59,13 +59,21 @@ textarea[name=exp_notice]{
     font-size: 20px;
     height: 40px;
 }
+label{
+	color : green;
+}
+textarea {
+   height: 7em;
+    border: none;
+    resize: none;
+}
 </style>
 
 <!-- 사업자아이디(세션제어)/체험단 제목/내용/모집인원/유의사항 -->
 <form action="ownExpPOST" method="post" name="expSubit" id="expSubmit">
 	<div id="expForm">
 		<div class="form-group">
-			<label>사업자 아이디 &nbsp;&nbsp; : &nbsp;&nbsp; ${id }</label>
+			<label>사업자 아이디 &nbsp;&nbsp; : &nbsp;&nbsp; ${own_id }</label>
 		</div>
 		<div class="form-group">
 			<label>모집인원</label>
@@ -77,7 +85,7 @@ textarea[name=exp_notice]{
 				<option>20</option>
 			</select> 
 			<label id="b">가격</label>
-			<input type="text" readonly id="exp_price" value="100">
+			<input type="text" readonly id="exp_price" value="30000">
 			<div class="form-group">
 				<label>신청 제목</label> <input type="text" class="form-control" name="exp_title" id="exp_title" placeholder="광고에 게시될 제목을 기입해주세요">
 			</div>
@@ -110,7 +118,7 @@ textarea[name=exp_notice]{
 				<div class="form-group">
 					<label class="col-sm-2 control-label">사업자 아이디</label>
 					<div class="col-sm-10">
-						<input type="text" value="${id }" class="form-control" readonly><br>
+						<input type="text" value="${own_id }" class="form-control" readonly><br>
 					</div>
 				</div>
 				<div class="form-group">
@@ -174,7 +182,7 @@ textarea[name=exp_notice]{
 	// 결제연동
 	IMP.init('imp73450751');
 	function requestPay() {
-		var id = "${sessionScope.id}";
+		var id = "${sessionScope.own_id}";
 		// 		var id = "1";
 		console.log(id);
 
@@ -201,7 +209,7 @@ textarea[name=exp_notice]{
 						pay_pg : "카카오",
 						pay_method : rsp.pay_method,
 						pay_card : rsp.card_name,
-						own_id : ${id}
+						own_id : ${own_id}
 					},
 					dataType : "json",
 					success : function(data) {
@@ -222,4 +230,4 @@ textarea[name=exp_notice]{
 </script>
 
 
-<%@ include file="../include/footer.jsp"%>
+<%@ include file="../include/entFooter.jsp"%>

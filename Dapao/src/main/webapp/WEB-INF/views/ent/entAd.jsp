@@ -20,6 +20,13 @@
 .box-success {
 	height: 100vh;
 }
+.box{
+	margin:0px;
+}
+.box-solid{
+	border: 1px solid green;
+	height: 350px;
+}
 </style>
 <div class="box box-success">
 	<div class="box-header with-border"></div>
@@ -76,7 +83,7 @@
 					<blockquote>
 						<p class="text-black">
 							 소상공인을 위한 합리적인 가격 모두의 체험단 <br><br>
-								<br><br><br><br><br><br><br><br><br><br><br>
+								<br><br><br><br><br>
 						
 						
 						</p>
@@ -136,7 +143,7 @@
 			}
 		});
 		$('.small-box-footer').hover(function() {
-			$(this).css('color', '#2BBD26');
+			$(this).css('color', 'cadetblue');
 			$(this).css("cursor", "pointer");
 		}, function() {
 			$(this).css('color', 'white');

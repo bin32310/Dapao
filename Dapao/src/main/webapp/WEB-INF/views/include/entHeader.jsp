@@ -39,6 +39,16 @@
     border-top: 1px solid #d2d6de;
     margin-left: auto;
 }
+
+.content-header>h1{
+	font-size: 30px;
+	font-weight: bold;
+    color: cadetblue;
+}
+
+.main-sidebar{
+	box-shadow: 8px 0px 5px -2px #14571f94;
+}
 </style>
 <!-- jQuery 2.1.4 -->
 <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
@@ -125,7 +135,7 @@
 						</c:if>
 						<c:if test="${!empty sessionScope.own_id }">
 							<p>${sessionScope.own_id}</p>
-							<a href="/ent/entMain">내 정보</a>
+							<p>충전된 대나무페이 : ${ent_coin }</p>
 						</c:if>
 					</div>
 				</div>
@@ -146,6 +156,8 @@
 							<li><a href="/ent/entOrder"><i class="fa fa-line-chart"></i> 주문관리</a></li>
 						</ul></li>
 					<li class="treeview"><a href="/ent/entAd"> <i class="fa fa-newspaper-o"></i> <span>광고 문의</span>
+					</a></li>
+					<li class="treeview"><a href="/ent/coinCharge"> <i class="fa fa-newspaper-o"></i> <span>대나무 페이 충전</span>
 					</a></li>
 					<li class="treeview"><a href="#"> <i class="fa fa-paw"></i> <span>고객지원</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
