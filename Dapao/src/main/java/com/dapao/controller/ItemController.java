@@ -972,23 +972,23 @@ public class ItemController {
 		String us_id = (String)session.getAttribute("us_id");
 		logger.debug("us_id : " + us_id);
 		// 체험단 받는 기업
-		logger.debug("own_id : " + ent_id);
+		logger.debug("ent_id : " + ent_id);
 		
 		// 체험단 모집 정보 조회
-		ExpVO expVO = iService.getExpInfo(ent_id);
-		
+		int exp_no = iService.getExpInfo(ent_id);
+		logger.debug("exp_no : " + exp_no);
 		
 		
 		// expus 테이블에 목록 추가
 		ExpusVO expusVO = new ExpusVO();
-		expusVO.setExp_no(expVO.getExp_no());
+		expusVO.setExp_no(exp_no);
 		expusVO.setUs_id(us_id);
 		expusVO.setOwn_id(ent_id);
 		int expApplyResult = iService.expApply(expusVO);
 		logger.debug("expApplyResult : " + expApplyResult);
 		
 		// exp 테이블에 신청인원 +1
-		int expCountUpResult = iService.expCountUp(expVO.getExp_no());
+		int expCountUpResult = iService.expCountUp(exp_no);
 		logger.debug("expCountUpResult : " + expCountUpResult);
 		
 		

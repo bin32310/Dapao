@@ -37,6 +37,7 @@
   	<result property="it_no" column="it_no"/>
   	<result property="prod_no" column="prod_no"/>
   </resultMap>
+ 
 
   
   <resultMap type="com.dapao.domain.UserVO" id="userMap">
@@ -282,9 +283,9 @@
   	where t.tr_no = #{tr_no }
   </select>
   
-  <select id="getExpInfo">
-  	select * from exp 
-  	where own_id = #{own_id } and exp_no = (select max(exp_no) from exp where own_id = #{own_id} )
+  <select id="getExpInfo" resultType="Integer">
+  	select max(exp_no) from exp 
+  	where own_id = #{own_id }
   </select>
   
   
