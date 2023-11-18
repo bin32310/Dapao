@@ -296,7 +296,7 @@ $(function(){
 	 			} // success 끝	
 	 		}); // ajax 끝
 
-      }
+      
 
    	
      if(navigator.geolocation){
@@ -309,26 +309,27 @@ $(function(){
 
      } 
      
-	$('#myModal').modal("show");
-	$.ajax({
-		url : "${contextPath}/ad/modalShow",
-		dataType : "json",
-		success : function(data){
-			console.log(data);
-			$.each(data,function(index,exp){
-				$.each(exp.entList,function(idx,ent){
-					$('.ent_name').append(ent.ent_name);
-				})
-				$('.exp_content').append(exp.exp_content);
-				$('.exp_notice').append(exp.exp_notice);
-				$('.exp_psn_ch').append(exp.exp_psn_ch);
-				$('.exp_psn').append("/"+exp.exp_psn);
-			});
-			
-		},
-		error : function(){
-			alert("@@@@@@@@@@@");
-		}
+     $.ajax({
+ 		url : "${contextPath}/ad/modalShow",
+ 		dataType : "json",
+ 		success : function(data){
+ 			console.log(data);
+ 			if(data != null){
+ 				$('#myModal').modal("show");
+ 				$.each(data,function(index,exp){
+ 					$.each(exp.entList,function(idx,ent){
+ 						$('.ent_name').append(ent.ent_name);
+ 					})
+ 					$('.exp_content').append(exp.exp_content);
+ 					$('.exp_notice').append(exp.exp_notice);
+ 					$('.exp_psn_ch').append(exp.exp_psn_ch);
+ 					$('.exp_psn').append("/"+exp.exp_psn);
+ 				}
+ 			});
+ 		},
+ 		error : function(){
+ 			alert("@@@@@@@@@@@");
+ 		}
 	});//ajax
  });//ready
 </script>

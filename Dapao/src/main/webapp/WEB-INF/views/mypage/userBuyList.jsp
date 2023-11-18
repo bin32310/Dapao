@@ -5,29 +5,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-
-<h1>views/mypage/userBuyList</h1>
-<h1>거래목록</h1>
-
-
+<title>views/mypage/userBuyList</title>
 <c:if test="${empty us_id }">
 		<%@ include file="../include/userHeader.jsp" %>
 	</c:if>
 	<c:if test="${!empty us_id }">
 		<%@ include file="../include/userLoginHeader.jsp" %>
 	</c:if>
-	
- 	<!-- <script type="text/javascript">
-	function back(){
-	      history.back();  // 뒤로가기
-	   }
-	
-	</script>
-	 -->
+
+
+<style type="text/css">
+
+
+
+</style>
+
+
+
+</head>
+<body>
+
+
 	 <a href="/mypage/userInfo">마이페이지</a>
 	 <a href="/mypage/userSellList">판매 목록 </a>
    <a href="/mypage/userBuyList">구매목록</a>
@@ -35,10 +33,45 @@
    <a href="/mypage/userReview">내가 쓴 리뷰 </a>
    <a href="/mypage/userCs">고객센터</a>
    <a href="/mypage/userLoveList">찜 목록 </a>
-	
-	
-	
-	<table border="1">
+
+
+
+<!-- 히히 -->
+
+
+	<div class="box-body table-responsive no-padding">
+		<table class="table table-hover">
+			<tbody>
+				<tr>
+					<td>거래번호</td>
+					<td>판매자(사업자)</td>
+					<td>판매자(회원)</td>
+					<td>거래금액</td>
+					<td>거래일시</td>
+				</tr>
+				
+			</tbody>
+			
+			<tbody>
+		
+	<c:forEach items="${userBuyList }" var="userBuyList">
+				<tr>
+					<th>${userBuyList.tr_no }</th>
+					<th>${userBuyList.tr_sell_ent }</th>
+					<th>${userBuyList.tr_sell_us }</th>
+					<th>${userBuyList.tr_price }</th>
+					<th>${userBuyList.tr_date }</th>
+				</tr>
+			</c:forEach> 
+		</tbody>
+		</table>
+	</div>
+
+
+
+
+
+<%-- 	<table border="1">
    <thead>
 	<tr>
 		<td>거래번호</td>
@@ -64,13 +97,13 @@
 	
 	
 </table>
-	
+	 --%>
 	
 	
 	
 	
 	 
-	<!--  <button onclick="back()">뒤로가기</button> -->
+	
 <%@ include file="../include/userFooter.jsp" %> 
 </body>
 </html>

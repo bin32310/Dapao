@@ -157,6 +157,17 @@
 	</update>
 	<!-- 판매완료 -->
 	<insert id="entAd">
+		insert into ad(own_id, ad_board,ad_upload) 
+		values(#{own_id},0, #{ad_upload})
 	</insert>
-	
+	 <!-- 코인 충전 -->
+  <update id="coinCharge">
+  	update ent set ent_coin = ent_coin + #{pay_price} 
+  	where own_id = #{own_id } 
+  </update>
+    <insert id="coinChargePay">
+  	insert into pay(imp_uid ,pay_uid ,pay_kind ,pay_price ,own_id ,pay_con ,pay_pg, pay_card, pay_method) 
+  	values(#{imp_uid },#{pay_uid },#{pay_kind },#{pay_price },#{own_id },#{pay_con },#{pay_pg},#{pay_card},#{pay_method})
+  </insert>
+  
 </mapper>

@@ -5,11 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<h1>내 프로필 수정</h1>
-<h2>views/mypage/userInfoUpdate</h2>
+<title>iews/mypage/userInfoUpdate</title>
 
       <c:if test="${empty us_id }">
       <%@ include file="../include/userHeader.jsp" %>
@@ -17,6 +13,11 @@
    <c:if test="${!empty us_id }">
       <%@ include file="../include/userLoginHeader.jsp" %>
    </c:if>
+</head>
+
+
+<body>
+
    
   <!--  
       <a href="/mypage/userSellList">판매 목록 </a>
@@ -27,14 +28,7 @@
        -->
       <!-- 여기서부터 다시 해야함 -->
       
-   <script type="text/javascript">
-   function back(){
-         history.back();  // 뒤로가기
-      }
-   
-   
-   </script>
-   
+ 
  
       
       
@@ -54,7 +48,8 @@
       새 비밀번호확인<input type="password" name="us_pw1" placeholder="새 비밀번호를 확인하세요" ><br>
       
       <input type="submit" class="btn" value="회원정보 수정">
-       <button onclick="back()">뒤로가기</button>
+     
+      
    </form>
 </fieldset>
 </body>

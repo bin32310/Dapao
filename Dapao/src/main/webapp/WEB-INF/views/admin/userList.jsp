@@ -4,10 +4,10 @@
 
 <div class="boxList">
 	<div class="box-header with-border">
-		<p class="pContent">회원 관리</p>
+		<p class="pContent"><i class="fa fa-user-plus"></i>회원 관리</p>
 		<form action="/admin/userList" id="search">
 			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2" placeholder="ID입력">
-			<button id="searchBtn">Search</button>
+			<button id="searchBtn"><i class="fa fa-fw fa-search"></i></button>
 		</form>
 	</div>
 	<div class="box-body">

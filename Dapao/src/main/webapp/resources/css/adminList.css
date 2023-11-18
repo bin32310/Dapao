@@ -1,5 +1,13 @@
 @charset "UTF-8";
 
+.fa {
+	margin-right: 10px;
+}
+
+.table {
+	font-weight: 600;
+}
+
 .box-body {
 	padding-bottom: 7%;
 }
@@ -58,6 +66,7 @@
 	border-radius: 0.5em;
 	border-color: #14571f;
 	background-color: white;
+	font-weight: 600;
 }
 
 th, tr, td {
@@ -121,7 +130,8 @@ a:hover {
 .modal-content {
 	border-radius: 2em;
 	border: 5px solid green;
-	font-family: 'KCC-Ganpan';
+	font-weight: 600;
+	color: black;
 }
 
 .modal-title {
@@ -132,7 +142,7 @@ a:hover {
 .muserInfo {
 	font-size: 18px;
 	display: inline-grid;
-	padding-left: 60px;
+	padding-left: 30px;
 	padding-bottom: 20px;
 	text-align: center;
 }
@@ -140,6 +150,7 @@ a:hover {
 .form-control[readonly] {
 	text-align: center;
 	background-color: aliceblue;
+	color: black;
 }
 
 .btn-default {
@@ -158,8 +169,21 @@ a:hover {
 	color: white;
 }
 
+.acState {
+	border-radius: 0.3em;
+	background-color: aliceblue;
+	border: none;
+	color: green;
+}
+
+.acState:hover {
+	background-color: green;
+	color: white;
+}
+
 .form-control {
 	font-size: 18px;
+	color: black;
 }
 
 label {

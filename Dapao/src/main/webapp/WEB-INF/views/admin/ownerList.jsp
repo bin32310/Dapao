@@ -4,10 +4,10 @@
 
 <div class="boxList">
 	<div class="box-header with-board">
-		<p class="pContent">사업자 관리</p>
+		<p class="pContent"><i class="fa fa-user-plus"></i>사업자 관리</p>
 		<form action="/admin/ownerList" id="search">
-			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
-			<button id="searchBtn">Search</button>
+			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2" placeholder="이름 입력">
+			<button id="searchBtn"><i class="fa fa-fw fa-search"></i></button>
 		</form>
 	</div>
 	<div class="box-body">

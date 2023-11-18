@@ -18,8 +18,30 @@
 <!-- Login css -->
 
 <style type="text/css">
-	
+	.form-group{
+	 	margin-right: 50px;
+	}
 
+    .box-title{
+     font-size: 50px;
+    
+    }
+
+
+#joinBtn{
+   background-color: green;
+   color: white;
+}
+
+
+.form-control {
+   width: 1000px;
+
+}
+
+.btn1{
+  margin-left: 1300px;
+}
 
 </style>
 
@@ -31,10 +53,10 @@
 
 <body>
 
-	<div class="box box-info">
-		<div class="box-header with-border">
+	<div class="box">
+		<!-- <div class="box-header with-border"> -->
 			<h3 class="box-title">회원가입</h3>
-		</div>
+		<!-- </div> -->
 
 
 		<form class="form-horizontal" action="" method="post" onsubmit="retrun check()">
@@ -99,8 +121,9 @@
 			</div>
 
 			<div class="box-footer">
-				<input class="btn btn-info pull-right" type="submit" value="회원가입하기" onclick="check()">
-				 <button onclick="back()">메인으로</button>
+			<input type="button" class="btn" value="돌아가기" onclick="location.href='/user/userLogin';">
+				<input id="joinBtn" class="btn btn1" type="submit" value="회원가입하기" onclick="check()">
+				
 			</div>
 
 		</form>
@@ -189,12 +212,7 @@
 	</script>
 
 
-<script type="text/javascript">
-	function back(){
-	      history.back();  // 뒤로가기
-	   }
-	
-	</script>
+
 	<!-- <h1>회원가입</h1> -->
 
 

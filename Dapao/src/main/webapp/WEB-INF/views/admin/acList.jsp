@@ -2,23 +2,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../include/header.jsp"%>
 <style>
-.acState{
-	border-radius: 0.3em;
-    background-color: aliceblue;
-    border: none;
-    color: green;
-}
-.acState:hover{
-	background-color: green;
-	color: white;
+.modal-content{
+	margin-top: 30%;
 }
 </style>
 <div class="boxList">
 	<div class="box-header with-board">
-		<p class="pContent">신고 관리</p>
+		<p class="pContent"><i class="fa  fa-exclamation-circle"></i>신고 관리</p>
 		<form action="/admin/acList" id="search">
 			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
-			<button id="searchBtn">Search</button>
+			<button id="searchBtn"><i class="fa fa-fw fa-search"></i></button>
 		</form>
 	</div>
 	<div class="box-body">
@@ -87,51 +80,27 @@
 
 <!-- Modal -->
 <div id="myLargeModal" class="modal fade" role="dialog">
-	<div class="modal-dialog modal-lg">
-
+	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">신고</h4>
 			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<label class="col-sm-2 control-label">신고번호</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ac_no" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">신고자</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="us_id"><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">피신고자</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="id"><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">상품번호</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ac_item"><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">신고사유</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ac_cate"><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">신고내용</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="ac_content"><br>
-					</div>
-				</div>
+			<div class="muserInfo">
+				신고자 <input class="form-control" type="text" name="us_id" id="us_id" readonly>
+			</div>
+			<div class="muserInfo">
+				피신고자 <input class="form-control" type="text" name="id" id="id" readonly>
+			</div>
+			<div class="muserInfo">
+				상품번호 <input class="form-control" type="text" name="ac_item" id="ac_item" readonly>
+			</div>
+			<div class="muserInfo">
+				신고사유 <input class="form-control" type="text" name="ac_cate" id="ac_cate" readonly>
+			</div>
+			<div class="muserInfo">
+				신고내용<textarea class="form-control" name="ac_content" id="ac_content" rows="5" cols="54" readonly></textarea>
 			</div>
 			<div class="modal-footer">
 				<select name="acStop" class="btn btn-default" aria-label="Small select example">
