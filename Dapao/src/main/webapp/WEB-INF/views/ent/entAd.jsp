@@ -17,7 +17,7 @@
 	width: 40%;
 }
 
-.box-success {
+.box-container {
 	height: 100vh;
 }
 .box{
@@ -28,7 +28,7 @@
 	height: 350px;
 }
 </style>
-<div class="box box-success">
+<div class="box box-success box-container">
 	<div class="box-header with-border"></div>
 	<div class="ad_container">
 		<div class="small-box bg-aqua">
@@ -41,7 +41,7 @@
 			<div class="small-box-footer icon-ad" data-toggle="modal" data-target="#modal-default">
 				신청하기 <i class="fa fa-arrow-circle-right"></i>
 			</div>
-			<div class="box box-solid">
+			<div class="box box-solid ">
 				<div class="box-header with-border">
 					<i class="fa fa-info-circle"></i>
 					<h3 class="box-title">홈페이지 광고 소개</h3>
@@ -132,23 +132,6 @@
 </div>
 
 
-<script type="text/javascript">
-	$(function() {
-		var own_id = '${own_id}';
-		console.log(own_id);
-		$('.small-box-footer').click(function() {
-			if (own_id == null) {
-				alert('로그인 이후 사용해주세요');
-				return false;
-			}
-		});
-		$('.small-box-footer').hover(function() {
-			$(this).css('color', 'cadetblue');
-			$(this).css("cursor", "pointer");
-		}, function() {
-			$(this).css('color', 'white');
-		});
-	});
-</script>
 
 <%@ include file="../include/entFooter.jsp"%>
+
