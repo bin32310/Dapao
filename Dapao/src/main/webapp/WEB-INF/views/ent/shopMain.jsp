@@ -102,7 +102,7 @@
 					<div class="icon">
 						<i class="ion ion-person-add"></i>
 					</div>
-					<a href="#" class="small-box-footer">신청하기 <i class="fa fa-arrow-circle-right"></i></a>
+					<a class="small-box-footer" id="user_exp_apply">신청하기 <i class="fa fa-arrow-circle-right"></i></a>
 				</div>
 				<div class="small-box bg-green" id="chat">
 						<div class="inner">
@@ -115,13 +115,14 @@
 				</div>
 
 				<a href="#" class="small-box-footer" id="user_exp_apply">신청하기 <i class="fa fa-arrow-circle-right"></i></a>
-				<input type="text" value="${ent_id }" name="ent_id">
 				
 				<c:if test="${!empty us_id }">
+					<input type="hidden" value="${ent_id }" name="ent_id">
 					<input type="hidden" value="${us_id }" name="us_id">
 				</c:if>
 				<c:if test="${empty us_id }">
 					<input type="hidden" value="0" name="us_id">
+					<input type="hidden" value="0" name="ent_id">
 				</c:if>
 				
 			</div>
@@ -350,30 +351,33 @@
 			
 		
 			var us_id_ch = $("input[name='us_id']").val();
-			var ent_id = ${ent_id };
+			var ent_id = $("input[name='ent_id']").val();
 			
 			if(us_id_ch == 0){ // 로그인 안했으면
-				alert('로그인 해주세요.');
+				alert('로그인이 필요합니다.');
 				location.href="../user/userLogin"; 
 				
 			}else{ // 로그인 했으면
-				
-				$.ajax({
-					type : "POST",
-					url : "/item/userExpApply",
-					data : {"ent_id": ent_id},
-					success : function (data) {
-						if(data == 0){
-							console.log('성공');
+				console.log(ent_id);
+				if(ent_id != 0 ){
+					
+					$.ajax({
+						type : "POST",
+						url : "/item/userExpApply",
+						data : {"ent_id": ent_id},
+						success : function (data) {
+							if(data == 0){
+								alert('체험단 신청 완료');
+							}
+							
+						}, 
+						error : function () {
+								alert('체험단 신청 실패');
+							
 						}
-						
-					}, 
-					error : function () {
-						console.log('실패');
-						
-					}
-				}); // ajax 끝 
+					}); // ajax 끝 
 				
+				}
 			}
 			
 			
@@ -383,7 +387,7 @@
 </script>
 
 <c:choose>
-	<c:when test="${!empty own_id }">
+	<c:when test="${empty own_id }">
 		<%@include file="../include/userFooter.jsp"%>
 	</c:when>
 	<c:otherwise>

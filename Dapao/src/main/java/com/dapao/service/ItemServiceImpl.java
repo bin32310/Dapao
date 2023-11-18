@@ -332,7 +332,7 @@ public class ItemServiceImpl {
 	}
 	
 	// 체험단 정보 조회
-	public ExpVO getExpInfo(String own_id) {
+	public int getExpInfo(String own_id) {
 		logger.debug("Service : getExpInfo(String own_id) 호출");
 		return idao.getExpInfo(own_id);
 		
