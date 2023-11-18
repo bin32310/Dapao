@@ -58,10 +58,13 @@ public class EntController {
 
 	// http://localhost:8088/ent/shopMain
 	@RequestMapping(value = "/shopMain", method = RequestMethod.GET)
-	public void shopMainGET(HttpSession session, ReviewVO rVo, Model model, String own_id) throws Exception {
+	public void shopMainGET(HttpSession session, ReviewVO rVo, Model model, String ent_id) throws Exception {
 		logger.debug(" shopMainGET(EntVO eVO, ProdVO pVO, ReviewVO rVO, Model model) 호출 ");
+		String own_id = ent_id;
 		if (own_id == null) {
 			own_id = (String) session.getAttribute("own_id");
+		}else {
+			session.setAttribute("ent_id", own_id);
 		}
 //		String us_id = (String) session.getAttribute("us_id");
 		EntVO eVo = new EntVO();

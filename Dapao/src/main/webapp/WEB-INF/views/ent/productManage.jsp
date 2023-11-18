@@ -11,7 +11,7 @@ tr {
 	<div class="box-header with-border"></div>
 	<div class="container">
 		<div class="search_container">
-			<input type="button" value="상품등록" class="btn btn-success" data-toggle="modal" data-target="#modal-default" data-own_id="${own_id }" data-modal_cate=0>
+			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default" data-modal_cate=0>상품등록</button>
 			<form action="" method="post">
 				<table class="table table-hover">
 					<tr>
@@ -40,7 +40,7 @@ tr {
 					</tr>
 
 				</table>
-				<input type="hidden" name="own_id" value="${own_id }"> <input type="submit" value="조회하기" class="btn btn-success">
+				<button type="submit" class="btn btn-success">조회하기</button>
 			</form>
 		</div>
 
@@ -226,11 +226,12 @@ tr {
 		},function() {
 			$(this).css('color', 'white');
 		});
-
-		$('.btn-success').click(function() {
+		
+		if (own_id == null || typeof own_id == "undefined" || own_id == "") {
 			var own_id = '${own_id}';
 			if(own_id == null){
 				alert('로그인 이후 사용해주세요');
+				location.href = "/ent/entLogin";
 				return false;
 			}
 		});
