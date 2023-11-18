@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.dapao.domain.AdVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.PageVO;
 import com.dapao.domain.ProdVO;
@@ -113,6 +114,12 @@ public class EntDAOImpl{
 		logger.debug(" tradePurchase(String tr_no) 호출 ");
 		sqlSession.update(NAMESPACE+".tradePurchase", tr_no);
 		
+	}
+	
+	// 홈페이지 광고 신청
+	public void entAd(AdVO vo) throws Exception{
+		logger.debug(" entAd(AdVO vo) 호출 ");
+		sqlSession.insert(NAMESPACE+".entAd", vo);
 	}
 	
 	

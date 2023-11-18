@@ -1,7 +1,9 @@
 package com.dapao.domain;
 
-import java.sql.Date;
-import java.util.List;
+
+
+
+import java.util.Date;
 
 import lombok.Data;
 

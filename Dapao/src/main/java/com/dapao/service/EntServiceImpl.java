@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dapao.domain.AdVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.PageVO;
 import com.dapao.domain.ProdVO;
@@ -95,6 +96,11 @@ public class EntServiceImpl{
 	public void tradePurchase(String tr_no) throws Exception{
 		logger.debug("service tradePurchase(String tr_no) 호출 ");
 		edao.tradePurchase(tr_no);
+	}
+	// 홈페이지 광고 신청
+	public void entAd(AdVO vo) throws Exception{
+		logger.debug(" service  entAd(AdVO vo)");
+		edao.entAd(vo);
 	}
 
 }

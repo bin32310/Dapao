@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../include/entHeader.jsp"%>
 
@@ -15,10 +16,13 @@
 .bg-yellow {
 	width: 40%;
 }
+
+.box-success {
+	height: 100vh;
+}
 </style>
 <div class="box box-success">
-	<div class="box-header with-border">
-	</div>
+	<div class="box-header with-border"></div>
 	<div class="ad_container">
 		<div class="small-box bg-aqua">
 			<div class="inner">
@@ -38,7 +42,13 @@
 
 				<div class="box-body">
 					<blockquote>
-						<p class="text-black">광고 소개 문구</p>
+						<p class="text-black">매출 성장부터 단골 확보까지 광고로 더 빠르게 시작하세요 <br><br>
+						
+						월 평균 600만명 이상의 방문자에게 내 비즈니스를 효과적으로 홍보해보세요. <br><br>
+						
+						간단한 광고 세팅 방식을 통해 판매자가 주도적으로 광고 이용을 할 수 있습니다. <br><br>
+						 
+						구매전환율이 높은 키워드 검색 광고 등을 통해 고객을 만나보세요.</p>
 					</blockquote>
 				</div>
 
@@ -64,7 +74,12 @@
 
 				<div class="box-body">
 					<blockquote>
-						<p class="text-black">광고 소개 문구</p>
+						<p class="text-black">
+							 소상공인을 위한 합리적인 가격 모두의 체험단 <br><br>
+								<br><br><br><br><br><br><br><br><br><br><br>
+						
+						
+						</p>
 					</blockquote>
 				</div>
 
@@ -88,20 +103,22 @@
 				<h4 class="modal-title">상품 광고 등록</h4>
 			</div>
 			<div class="modal-body">
-				<div class="box box-success">
-					<div class="box-header with-border"></div>
-					<div class="form-group">
-						<label>업로드 기한</label> <select class="form-control" name="ad_upload">
-							<option value="30">30일</option>
-							<option value="60">60일</option>
-							<option value="90">90일</option>
-						</select>
+				<form action="" method="post">
+					<div class="box box-success">
+						<div class="box-header with-border"></div>
+						<div class="form-group">
+							<label>업로드 기한</label> <select class="form-control" name="ad_upload">
+								<option value="30">30일</option>
+								<option value="60">60일</option>
+								<option value="90">90일</option>
+							</select>
+						</div>
 					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary pull-left">Save</button>
-					<button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
-				</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success pull-left">신청</button>
+						<button type="button" class="btn btn-default pull-right" data-dismiss="modal">취소</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -113,7 +130,7 @@
 		var own_id = '${own_id}';
 		console.log(own_id);
 		$('.small-box-footer').click(function() {
-			if(own_id == null){
+			if (own_id == null) {
 				alert('로그인 이후 사용해주세요');
 				return false;
 			}
@@ -124,7 +141,6 @@
 		}, function() {
 			$(this).css('color', 'white');
 		});
-		console.log('');
 	});
 </script>
 

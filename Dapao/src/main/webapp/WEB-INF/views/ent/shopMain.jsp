@@ -25,6 +25,17 @@
 	width: 400px;
 	height: 300px;
 }
+
+.small-box {
+	width: 40%;
+}
+
+.smallbox-group {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	
+}
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -40,46 +51,56 @@
 		<div class="img_container">
 			<div class="box-body">
 				<c:if test="${listSize != 0}">
-				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-					<ol class="carousel-indicators">
-						<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-						<c:if test="${imgList[1] != null }">
-							<li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
-						</c:if>
-						<c:if test="${imgList[2] != null }">
-							<li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
-						</c:if>
-					</ol>
-					<div class="carousel-inner">
-						<div class="item active">
-							<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${imgList[0]}" alt="First slide" width="400px" height="400px">
+					<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+						<ol class="carousel-indicators">
+							<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+							<c:if test="${imgList[1] != null }">
+								<li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
+							</c:if>
+							<c:if test="${imgList[2] != null }">
+								<li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
+							</c:if>
+						</ol>
+						<div class="carousel-inner">
+							<div class="item active">
+								<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${imgList[0]}" alt="First slide" width="400px" height="400px">
+							</div>
+							<c:if test="${imgList[1] != null }">
+								<div class="item">
+									<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${imgList[1]}" alt="Second slide" width="400px" height="400px">
+								</div>
+							</c:if>
+							<c:if test="${imgList[2] != null }">
+								<div class="item">
+									<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${imgList[2]}" alt="Third slide" width="400px" height="400px">
+								</div>
+							</c:if>
 						</div>
-						<c:if test="${imgList[1] != null }">
-							<div class="item">
-								<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${imgList[1]}" alt="Second slide" width="400px" height="400px">
-							</div>
-						</c:if>
-						<c:if test="${imgList[2] != null }">
-							<div class="item">
-								<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${imgList[2]}" alt="Third slide" width="400px" height="400px">
-							</div>
-						</c:if>
+						<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev"> <span class="fa fa-angle-left"></span>
+						</a> <a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> <span class="fa fa-angle-right"></span>
+						</a>
 					</div>
-					<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev"> <span class="fa fa-angle-left"></span>
-					</a> <a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> <span class="fa fa-angle-right"></span>
-					</a>
-				</div>
 				</c:if>
 			</div>
-
-			<div class="small-box bg-yellow">
-				<div class="inner">
-					<h3>체험단 신청</h3>
+			<div class="smallbox-group">
+				<div class="small-box bg-yellow">
+					<div class="inner">
+						<h3>체험단 신청</h3>
+					</div>
+					<div class="icon">
+						<i class="ion ion-person-add"></i>
+					</div>
+					<a href="#" class="small-box-footer">신청하기 <i class="fa fa-arrow-circle-right"></i></a>
 				</div>
-				<div class="icon">
-					<i class="ion ion-person-add"></i>
+				<div class="small-box bg-green" id="chat">
+						<div class="inner">
+							<h3>판다톡</h3>
+						</div>
+						<div class="icon">
+							<i class="fa fa-comments-o"></i>
+						</div>
+						<a href="#" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
 				</div>
-				<a href="#" class="small-box-footer">신청하기 <i class="fa fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
 		<div class="nav-tabs-custom">
@@ -97,9 +118,7 @@
 			</div>
 
 		</div>
-		<div class="chat">
-			<button>판타톡</button>
-		</div>
+
 		<div class="box box-success">
 			<div class="box-header with-border">
 				<i class="fa fa-map-marker"></i>
@@ -161,10 +180,7 @@
 			<div class="box-body no-padding">
 				<ul class="users-list clearfix">
 					<c:forEach items="${plist }" var="prod">
-						<li class="prodPick" data-toggle="modal" data-target="#modal-success"
-						data-prod_no="${prod.prod_no }" data-prod_price="${prod.prod_price }">
-						<img src="${pageContext.request.contextPath }/ent/download?imageFileName=${prod.prod_img }" 
-						width="300px" height="300px">
+						<li class="prodPick" data-toggle="modal" data-target="#modal-success" data-prod_no="${prod.prod_no }" data-prod_price="${prod.prod_price }"><img src="${pageContext.request.contextPath }/ent/download?imageFileName=${prod.prod_img }" width="300px" height="300px">
 							<p>${prod.prod_name }</p> <span class="users-list-date">${prod.prod_price }원</span></li>
 					</c:forEach>
 				</ul>
@@ -240,37 +256,43 @@
 							map.setCenter(coords);
 						}
 					});
-						
-	$(function () {
-		$('.prodPick').hover(function () {
+
+	$(function() {
+		$('.prodPick').hover(function() {
 			$(this).css("cursor", "pointer");
 		});
-		$('.chat').click(function () { //판다톡
-			location.href="/websocket/chat/${ent_name}";
+		$('#chat').click(function() { //판다톡
+			location.href = "/websocket/chat/${ent_name}";
 		});
-		$('#modal-success').on("show.bs.modal",function(e) { //모달켜지면
-			
+		$('#chat').hover(function() { 
+			$(this).css("cursor", "pointer");
+		});
+		$('#modal-success').on("show.bs.modal", function(e) { //모달켜지면
+
 			console.log(e);
 			var prod_no = $(e.relatedTarget).data('prod_no') * 1;
 			var prod_price = $(e.relatedTarget).data('prod_price') * 1;
 			console.log(prod_no);
 			console.log(prod_price);
-			
-			$('.purchase').click(function () {
+
+			$('.purchase').click(function() {
 				$.ajax({
 					url : "/ent/purchase",
 					type : "get",
-					data : {prod_no: prod_no, prod_price:prod_price},
-					success : function () {
+					data : {
+						prod_no : prod_no,
+						prod_price : prod_price
+					},
+					success : function() {
 						console.log('성공');
 						$('#modal-success').modal('hide');
-					}, 
-					error : function () {
+					},
+					error : function() {
 						console.log('실패');
 						$('#modal-success').modal('hide');
 					}
 				});
-				
+
 			});
 		});
 	});
