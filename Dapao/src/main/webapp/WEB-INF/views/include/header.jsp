@@ -75,7 +75,7 @@
 }
 
 </style>
-  <body class="skin-purple-light sidebar-mini">
+  <body class="skin-green-light sidebar-mini">
 
     <div class="wrapper">
     
