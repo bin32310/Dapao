@@ -8,6 +8,9 @@
 	<%@ include file="../include/userLoginHeader.jsp"%>
 </c:if>
 <style>
+.content-wrapper{
+	background-color: white;
+}
 * {
 	box-sizing: border-box;
 }

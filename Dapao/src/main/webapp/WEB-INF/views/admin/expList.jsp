@@ -4,24 +4,24 @@
 
 <div class="boxList">
 	<div class="box-header with-board">
-		<p class="pContent">체험단 관리</p>
+		<p class="pContent"><i class="fa fa-twitch"></i>체험단 관리</p>
 		<form action="/admin/expList" id="search">
 			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2"> 
-			<button id="searchBtn">Search</button>
+			<button id="searchBtn"><i class="fa fa-fw fa-search"></i></button>
 		</form>
 	</div>
 	<div class="box-body">
 		<table class="table table-bordered">
 			<thead>
 				<tr role="row">
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">체험단 번호</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">사업자 아이디</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">체험단 제목</th>
-					<th class="sorting_desc" tabindex="0" rowspan="1" colspan="1">체험단 내용</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">체험단 인원</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">체험단 유의사항</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">체험단 신청일자</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">체험단 상태</th>
+					<th>체험단 번호</th>
+					<th>사업자 아이디</th>
+					<th>체험단 제목</th>
+					<th>체험단 내용</th>
+					<th>체험단 인원</th>
+					<th>체험단 유의사항</th>
+					<th>체험단 신청일자</th>
+					<th>체험단 상태</th>
 				</tr>
 			</thead>
 			<tbody>
