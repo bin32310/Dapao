@@ -2,7 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<%@ include file="../include/entHeader.jsp"%>
+<c:if test="${!empty us_id && !empty ent_id && empty own_id }">
+	<%@ include file="../include/userHeader.jsp"%>
+</c:if>
+<c:if test="${!empty own_id && empty us_id && empty ent_id }">
+	<%@ include file="../include/entHeader.jsp"%>
+</c:if>
 
 <script src="/resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <style>
@@ -288,7 +293,7 @@
 						}
 					});
 
-	$(function() {
+	$(function(){
 		$('.prodPick').hover(function() {
 			$(this).css("cursor", "pointer");
 		});
@@ -328,28 +333,27 @@
 		});
 		
 		
-		${'#user_exp_apply'}.on("click",function(){
+		$('#user_exp_apply').on("click",function(){
 			$('#expApply').modal("show");
 		});
 		
 		
-		${'#expApplyOKModalYes'}.on("click",function(){
+		$('#expApplyOKModalYes').on("click",function(){
 			
 		
 			var us_id_ch = $("input[name='us_id']").val();
-			var own_id = ${own_id };
+			var ent_id = ${ent_id };
 			
 			if(us_id_ch == 0){ // 로그인 안했으면
 				alert('로그인 해주세요.');
 				/* location.href="../user/userLogin"; */
-				
 				
 			}else{ // 로그인 했으면
 				
 				$.ajax({
 					type : "POST",
 					url : "/item/userExpApply",
-					data : {"own_id": own_id},
+					data : {"ent_id": ent_id},
 					success : function (data) {
 						if(data == 0){
 							console.log('성공');
@@ -360,13 +364,19 @@
 						console.log('실패');
 						
 					}
-				});
+				}); // ajax 끝 
+				
 			}
 			
 			
-		}));
+		}); // expApplyOKModalYes 끝
 		
-	});
+	}); // document.ready 끝
 </script>
 
-<%@ include file="../include/entFooter.jsp"%>
+<c:if test="${!empty us_id && !empty ent_id && empty own_id }">
+	<%@ include file="../include/userFooter.jsp"%>
+</c:if>
+<c:if test="${!empty own_id && empty us_id && empty ent_id }">
+	<%@ include file="../include/entFooter.jsp"%>
+</c:if>
