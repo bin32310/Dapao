@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.dapao.domain.AlarmVO;
+import com.dapao.domain.EntVO;
+import com.dapao.domain.ExpVO;
 import com.dapao.domain.ExpusVO;
 import com.dapao.domain.FileVO;
 import com.dapao.domain.ItemVO;
@@ -329,6 +331,13 @@ public class ItemServiceImpl {
 		
 	}
 	
+	// 체험단 정보 조회
+	public ExpVO getExpInfo(String own_id) {
+		logger.debug("Service : getExpInfo(String own_id) 호출");
+		return idao.getExpInfo(own_id);
+		
+	}
+
 	// 체험단리스트에 목록 추가
 	public int expApply(ExpusVO expusVO) {
 		logger.debug("Service : expApply(ExpusVO expusVO) 호출");

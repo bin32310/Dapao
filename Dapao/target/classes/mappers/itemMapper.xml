@@ -282,6 +282,12 @@
   	where t.tr_no = #{tr_no }
   </select>
   
+  <select id="getExpInfo">
+  	select * from exp 
+  	where own_id = #{own_id } and exp_no = (select max(exp_no) from exp where own_id = #{own_id} )
+  </select>
+  
+  
   <insert id="expApply">
   insert into expus(exp_no, own_id, us_id ) 
   values(#{exp_no}, #{own_id}, #{us_id} )
