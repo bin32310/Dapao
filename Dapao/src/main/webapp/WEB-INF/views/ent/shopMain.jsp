@@ -346,7 +346,7 @@
 			
 			if(us_id_ch == 0){ // 로그인 안했으면
 				alert('로그인 해주세요.');
-				/* location.href="../user/userLogin"; */
+				location.href="../user/userLogin"; 
 				
 			}else{ // 로그인 했으면
 				

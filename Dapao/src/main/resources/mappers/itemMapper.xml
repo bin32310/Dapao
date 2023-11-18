@@ -289,8 +289,8 @@
   
   
   <insert id="expApply">
-  insert into expus(exp_no, own_id, us_id ) 
-  values(#{exp_no}, #{own_id}, #{us_id} )
+  	insert into expus(exp_no, own_id, us_id ) 
+  	values(#{exp_no}, #{own_id}, #{us_id} )
   </insert>
   
   <update id="expCountUp">
@@ -304,10 +304,15 @@
   </update>
   
   <select id="yourReview" resultType="ToTalVO">
-  select * from review r join us u 
-  on r.rv_buy_id = u.us_id 
-  where r.rv_us_id = #{us_id }
+	  select * from review r join us u 
+	  on r.rv_buy_id = u.us_id 
+	  where r.rv_us_id = #{us_id }
   </select>
+  
+  <update id="itemDelete" >
+	  update item set it_state = 3  
+	  where it_no = #{it_no }
+  </update>
   
   
   

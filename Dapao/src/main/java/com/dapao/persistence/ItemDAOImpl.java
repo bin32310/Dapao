@@ -361,6 +361,13 @@ public class ItemDAOImpl{
 		
 	}
 	
+	// 글 삭제
+	public int itemDelete(Integer it_no) {
+		logger.debug("DAOImpl : itemDelete(Integer it_no) 호출");
+		return sqlSession.update(NAMESPACE + ".itemDelete", it_no);
+		
+	}
+	
 	
 	
 	

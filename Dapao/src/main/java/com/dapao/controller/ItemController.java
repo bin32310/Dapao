@@ -1037,6 +1037,18 @@ public class ItemController {
 		return result;
 	}
 	
+	// 글 삭제하기
+	@ResponseBody
+	@RequestMapping(value = "/itemDelete", method = RequestMethod.POST)
+	public int itemDelete(Integer it_no) throws Exception {
+		logger.debug("/item/itemDelete() 호출");
+		
+		int result = iService.itemDelete(it_no);
+		logger.debug("삭제 결과 : " + result);
+		
+		return result;
+	}
+	
 	
 	
 }
