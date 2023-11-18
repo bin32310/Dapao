@@ -1,5 +1,6 @@
 package com.dapao.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,6 +30,8 @@ public class AdRESTController {
 	public List<ExpVO> modalShow() throws Exception{
 		logger.debug("modalShow() 호출");
 		logger.debug(""+adService.modalShow());
+		List<ExpVO> exp = new ArrayList<ExpVO>();
+		logger.debug("exp : "+exp);
 		return adService.modalShow();
 	}
 	

@@ -64,6 +64,14 @@
 .main-sidebar {
 	box-shadow: 8px 0px 5px -2px #14571f94;
 }
+.skin-purple-light .main-header .navbar {
+	background-color: green;
+}
+
+.skin-purple-light .main-header .logo{
+	background-color: green;
+}
+
 </style>
 <!-- jQuery 2.1.4 -->
 <script
