@@ -28,5 +28,6 @@ public class EntVO {
 	private Integer ent_account; // 신고 누적 횟수
 	private Integer ent_stop; // 정지 횟수
 	private Date own_stopdate; //사업자 정지기간
+	private Integer ent_coin; //대나무페이
 
 }
