@@ -272,7 +272,13 @@ background-color: green;
 .skin-blue-light .main-header .navbar .sidebar-toggle:hover {
     background-color: #005500;
 }
+.skin-purple-light .main-header .navbar {
+	background-color: green;
+}
 
+.skin-purple-light .main-header .logo{
+	background-color: green;
+}
 </style>
  
  

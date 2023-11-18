@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:if test="${empty us_id }">
@@ -8,31 +9,33 @@
 	<%@ include file="../include/userLoginHeader.jsp"%>
 </c:if>
 <style>
-.content-wrapper{
+.content-wrapper {
 	background-color: white;
 }
+
 * {
 	box-sizing: border-box;
 }
 
 .que:first-child {
-	border-top: 1px solid black;
+	border-top: 3px solid green;
 }
 
 .que {
 	position: relative;
-	padding: 17px 0;
+	padding: 40px 0;
 	cursor: pointer;
-	font-size: 14px;
+	font-size: 22px;
+	font-weight: 600;
 	border-bottom: 1px solid #dddddd;
 }
 
 .que::before {
 	display: inline-block;
-	content: 'Q';
-	font-size: 14px;
-	color: #006633;
-	margin: 0 5px;
+    content: 'Q';
+    font-size: 25px;
+    color: #006633;
+    margin: 0 10px;
 }
 
 .que.on>span {
@@ -44,8 +47,8 @@
 	display: none;
 	overflow: hidden;
 	font-size: 14px;
-	background-color: #f4f4f2;
-	padding: 40px 0;
+	background-color: #f4f4f4;
+	padding: 30px 0;
 }
 
 .anw::before {
@@ -90,24 +93,28 @@
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 	padding: 30px;
 }
-pre{
+
+pre {
 	border: none;
+	background-color: #f4f4f4;
+	font-weight: 600;
+	font-size: medium;
 }
 </style>
 <body>
 	<div id="faq">
 		<h1>FAQ</h1>
 		<div id="Accordion_wrap">
-		<c:forEach var="list" items="${FAQList }">
-			<div class="que">
-				<span>${list.cs_title }</span>
-				<div class="arrow-wrap">
-					<span class="arrow-top">↑</span> <span class="arrow-bottom">↓</span>
+			<c:forEach var="list" items="${FAQList }">
+				<div class="que">
+					<span>${list.cs_title }</span>
+					<div class="arrow-wrap">
+						<span class="arrow-top">↑</span> <span class="arrow-bottom">↓</span>
+					</div>
 				</div>
-			</div>
-			<div class="anw">
-				<span><pre>${list.cs_content }</pre></span>
-			</div>
+				<div class="anw">
+					<span><pre>${list.cs_content }</pre></span>
+				</div>
 			</c:forEach>
 		</div>
 	</div>

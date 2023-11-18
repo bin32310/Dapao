@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-   
+ <c:if test="${!us_id.equals('admin') }">
+	<c:redirect url="../user/userMain"/>
+</c:if>
 <!DOCTYPE html>
 <html>
   <head>
@@ -129,7 +131,7 @@
                   </c:if>
                   <c:if test="${empty us_id }">
                   	<div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">로그인</a>
+                      <a href="../user/userLogin" class="btn btn-default btn-flat">로그인</a>
                     </div>
                    </c:if> 
                   </li>

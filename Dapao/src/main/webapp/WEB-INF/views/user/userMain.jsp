@@ -106,6 +106,67 @@
 	background-color: #FFF;
 }
 
+.modal-content {
+    width: 450px;
+}
+
+.modal-dialog {
+    float: left;
+}
+
+.modal-title{
+	font-size: 24px;
+	color: white;
+	padding-top: 2%;
+}
+
+.modal-header2{
+	border-bottom-color: #10571ce0;
+    background-color: #14571f;
+    box-shadow: -1px 6px 10px 0px #10571ce0;
+    height: 60px;
+    padding-top: 3px;
+    padding-left: 4%;
+}
+
+.modal-title2{
+	font-size: 20px;
+    margin-top: 20px;
+    text-align: center;
+    width: 420px;
+    border-style: none;
+    font-weight: bold;
+    color: green;
+}
+
+.modalBox{
+	margin-left: 30px;
+	border:2px solid green;
+}
+
+.modalText {
+    margin-top: 1%;
+    margin-bottom: 2%;
+    width: 420px;
+    font-size: 20px;
+    border-style: none;
+    text-align: center;
+}
+
+.ent_name, .exp_psn_ch{
+    height: 40px;
+}
+
+.writeBtn{
+   border-radius: 0.5em;
+   background-color: #14571f;
+   color: white;
+   border-color: #14571f;
+   height: 40px;
+   width: 80px;
+}
+
+
 </style>
 </head>
 <body>
@@ -238,24 +299,24 @@
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
+		<div class="modal-content modalBox">
+			<div class="modal-header2">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">체험단을 모집합니다</h4>
+				<h4 class="modal-title">체험단을 모집합니다<img src="/resources/logo/logo.png" width="40px" height="40px"></h4>
 			</div>
 			<div class="modal-body">
-				가게상호명 <br>
-				<h3 class="ent_name"></h3>
-				체험단 내용<br>
-				<h3 class="exp_content"></h3>
-				체험단 유의 사항<br>
-				<h3 class="exp_notice"></h3>
-				신청인원/체험단모집인원<br>
-				<h3 class="exp_psn_ch exp_psn"></h3>
+				<input type="text" class="modal-title2" value="가게상호명"><br>
+				<input type="text" class="ent_name modalText" readonly><br>
+				<input type="text" class="modal-title2" value="체험단 내용"><br>
+				<textarea class="exp_content modalText" readonly style="resize: none;"></textarea><br>
+				<input type="text" class="modal-title2" value="체험단 유의 사항"><br>
+				<textarea class="exp_notice modalText" readonly style="resize: none;"></textarea><br>
+				<input type="text" class="modal-title2" value="신청인원/체험단모집인원"><br>
+				<input type="text" class="exp_psn_ch exp_psn modalText" readonly><br>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.href='';">신청하기</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="writeBtn" data-dismiss="modal" onclick="location.href='../ent/shopMain';">신청하기</button>
+				<button type="button" class="writeBtn" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
@@ -295,7 +356,7 @@ $(function(){
 	 				
 	 			} // success 끝	
 	 		}); // ajax 끝
-
+       }
       
 
    	
@@ -310,23 +371,25 @@ $(function(){
      } 
      
      $.ajax({
- 		url : "${contextPath}/ad/modalShow",
+    	url : "/ad/modalShow",
  		dataType : "json",
  		success : function(data){
  			console.log(data);
  			if(data != null){
- 				$('#myModal').modal("show");
- 				$.each(data,function(index,exp){
- 					$.each(exp.entList,function(idx,ent){
- 						$('.ent_name').append(ent.ent_name);
- 					})
- 					$('.exp_content').append(exp.exp_content);
- 					$('.exp_notice').append(exp.exp_notice);
- 					$('.exp_psn_ch').append(exp.exp_psn_ch);
- 					$('.exp_psn').append("/"+exp.exp_psn);
- 				}
- 			});
- 		},
+	 			$.each(data,function(index,exp){
+	 				if(exp.exp_psn_ch != exp.exp_psn){
+		 				$('#myModal').modal("show");
+		 				
+	 					$.each(exp.entList,function(idx,ent){
+	 						$('.ent_name').val(ent.ent_name);
+	 					});
+	 					$('.exp_content').append(exp.exp_content);
+	 					$('.exp_notice').append(exp.exp_notice);
+	 					$('.exp_psn_ch').val(exp.exp_psn_ch+"/"+exp.exp_psn);
+	 				}
+ 				}); 
+	 		}// if data
+ 		},// success
  		error : function(){
  			alert("@@@@@@@@@@@");
  		}

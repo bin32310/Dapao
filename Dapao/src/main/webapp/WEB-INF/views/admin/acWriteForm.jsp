@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="../include/header.jsp"%>
+
+<c:if test="${empty us_id }">
+	<%@ include file="../include/userHeader.jsp" %>
+</c:if>
+<c:if test="${!empty us_id }">
+	<%@ include file="../include/userLoginHeader.jsp" %>
+	<input type="hidden" value="${us_id }" name="login"> 
+</c:if>
+<c:if test="${us_id == 'admin'}">
+	<%@include file="../include/header.jsp"%>
+</c:if>
 
 <style>
 .boxList {
@@ -131,4 +141,14 @@ textarea.form-control {
 
 	});//ready
 </script>
-<%@include file="../include/footer.jsp"%>
+
+<c:if test="${empty us_id }">
+	<%@ include file="../include/userFooter.jsp" %>
+</c:if>
+<c:if test="${!empty us_id }">
+	<%@ include file="../include/userFooter.jsp" %>
+	<input type="hidden" value="${us_id }" name="login"> 
+</c:if>
+<c:if test="${us_id == 'admin'}">
+	<%@include file="../include/footer.jsp"%>
+</c:if>

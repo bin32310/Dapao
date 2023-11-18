@@ -30,15 +30,15 @@ public class ExpController {
 	public void ownExp(HttpSession session) throws Exception{
 		logger.debug("사업자 - 체험단 신청 페이지");
 		
-//		session.setAttribute("id", "1");
 	}
 	
 	// 사업자 - 체험단 신청 체험단테이블 데이터처리
 	@RequestMapping(value="ownExpPOST", method = RequestMethod.POST)
-	public String ownExpPOST(@ModelAttribute ExpVO vo,HttpSession session) throws Exception{
+	public String ownExpPOST(@ModelAttribute ExpVO vo,HttpSession session) throws Exception{		
 		
 		logger.debug("vo : "+vo);
-		String own_id =  (String) session.getAttribute("own_id");
+		
+		String own_id = (String)session.getAttribute("own_id");
 		vo.setOwn_id(own_id);
 		// exp테이블 데이터삽입
 		int result = eService.ownExp(vo);
@@ -52,7 +52,6 @@ public class ExpController {
 	@ResponseBody
 	public int ownExpPaySuccess(PayVO vo) throws Exception{
 		logger.debug("vo : "+vo);
-		logger.debug("vo : "+vo.getImp_uid());
 			
 		return eService.ownExpPay(vo);
 	}
