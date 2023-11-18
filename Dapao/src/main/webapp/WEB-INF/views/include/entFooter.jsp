@@ -59,6 +59,12 @@
 				return false;
 			}
 		});
+		// 사이드바 최소화 버튼 클릭시
+		$('.sidebar-toggle').click(function() {
+			console.log("click");
+			$('.sidebar-menu>li').css("margin",0);
+		});
+		
 	});
 	</script>
     <!-- Bootstrap 3.3.2 JS -->
