@@ -5,54 +5,26 @@
 .modal-content{
 	margin-top: 40%;
 }
-/* 여기서부터 공통css */
-.modal-content {
-	border-radius: 2em;
-	border: 5px solid green;
-	font-family: 'KCC-Ganpan';
-}
-
-.modal-title {
-	font-family: 'KCC-Ganpan';
-	text-align: center;
-}
-
-.muserInfo {
-	font-size: 18px;
-	display: inline-grid;
-	padding-left: 60px;
-	padding-bottom: 20px;
-	text-align: center;
-}
-
-.form-control[readonly] {
-	text-align: center;
-	background-color: aliceblue;
-}
-
-.btn-default {
-	background-color: aliceblue;
-}
 </style>
 <div class="boxList">
 	<div class="box-header with-board">
-		<p class="pContent"><lable id="adlable">리뷰 관리</label></p>
+		<p class="pContent"><i class="fa fa-heart"></i>리뷰 관리</p>
 		<form action="/admin/reviewList" id="search">
 			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
-			<button id="searchBtn">Search</button>
+			<button id="searchBtn"><i class="fa fa-fw fa-search"></i></button>
 		</form>
 	</div>
 	<div class="box-body">
 		<table class="table table-bordered">
 			<thead>
 				<tr role="row">
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">리뷰 번호</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">판매자</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">구매자</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">별점</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">등록날짜</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">삭제날짜</th>
-					<th class="sorting" tabindex="0" rowspan="1" colspan="1">리뷰상태</th>
+					<th>리뷰 번호</th>
+					<th>판매자</th>
+					<th>구매자</th>
+					<th>별점</th>
+					<th>등록날짜</th>
+					<th>삭제날짜</th>
+					<th>리뷰상태</th>
 				</tr>
 			</thead>
 			<tbody>
