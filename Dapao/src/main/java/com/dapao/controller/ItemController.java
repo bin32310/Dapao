@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dapao.domain.AlarmVO;
+import com.dapao.domain.ExpVO;
 import com.dapao.domain.ExpusVO;
 import com.dapao.domain.FileVO;
 import com.dapao.domain.ItemVO;
@@ -964,24 +965,31 @@ public class ItemController {
 	// 유저가 체험단 신청시 버튼 클릭시
 	@ResponseBody
 	@RequestMapping(value = "/userExpApply", method = RequestMethod.POST)
-	public int userExpApply(HttpSession session, Integer exp_no, String own_id) throws Exception {
+	public int userExpApply(HttpSession session, String own_id) throws Exception {
 		logger.debug("/item/userExpApply() 호출");
 		
-		// 세션 아이디(체험단 신청하는 유저 아이디)
+		// 아이디(체험단 신청하는 유저 아이디)
 		String us_id = (String)session.getAttribute("us_id");
+		logger.debug("us_id : " + us_id);
+		// 체험단 받는 기업
+		logger.debug("own_id : " + own_id);
+		
+		// 체험단 모집 정보 조회
+		ExpVO expVO = iService.getExpInfo(own_id);
+		
+		
 		
 		// expus 테이블에 목록 추가
 		ExpusVO expusVO = new ExpusVO();
+		expusVO.setExp_no(expVO.getExp_no());
 		expusVO.setUs_id(us_id);
-		expusVO.setExp_no(exp_no);
 		expusVO.setOwn_id(own_id);
 		int expApplyResult = iService.expApply(expusVO);
 		logger.debug("expApplyResult : " + expApplyResult);
 		
 		// exp 테이블에 신청인원 +1
-		int expCountUpResult = iService.expCountUp(exp_no);
+		int expCountUpResult = iService.expCountUp(expVO.getExp_no());
 		logger.debug("expCountUpResult : " + expCountUpResult);
-		
 		
 		
 		return 0;

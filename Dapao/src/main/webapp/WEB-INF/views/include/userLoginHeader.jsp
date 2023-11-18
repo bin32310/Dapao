@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
    
 <!DOCTYPE html>
 <html>
@@ -145,6 +146,14 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
            <li class="header">메뉴</li>
+           <c:if test="${us_id.equals('admin') }">
+	            <li class="treeview">
+	              <a href="../admin/userList">
+	                <i class="fa fa-edit"></i>
+	                <span>관리자페이지</span>
+	              </a>
+	            </li>
+           </c:if>
             <li class="treeview">
               <a href="../item/itemWrite">
                 <i class="fa fa-edit"></i>

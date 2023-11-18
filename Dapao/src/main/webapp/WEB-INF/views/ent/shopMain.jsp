@@ -101,6 +101,17 @@
 						</div>
 						<a href="#" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
 				</div>
+
+				<a href="#" class="small-box-footer" id="user_exp_apply">신청하기 <i class="fa fa-arrow-circle-right"></i></a>
+				<input type="text" value="${ent_id }" name="ent_id">
+				
+				<c:if test="${!empty us_id }">
+					<input type="hidden" value="${us_id }" name="us_id">
+				</c:if>
+				<c:if test="${empty us_id }">
+					<input type="hidden" value="0" name="us_id">
+				</c:if>
+				
 			</div>
 		</div>
 		<div class="nav-tabs-custom">
@@ -185,6 +196,26 @@
 					</c:forEach>
 				</ul>
 
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 체험단 신청하기 버튼 클릭시 -->
+<div id="expApply" class="modal fade" role="dialog">
+	<!-- <div class="modal-dialog modal-lg"> -->
+	<div class="modal-dialog ">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">체험단을 신청하시겠습니까?</h4>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="expApplyOKModalYes">네</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
 			</div>
 		</div>
 	</div>
@@ -295,6 +326,46 @@
 
 			});
 		});
+		
+		
+		${'#user_exp_apply'}.on("click",function(){
+			$('#expApply').modal("show");
+		});
+		
+		
+		${'#expApplyOKModalYes'}.on("click",function(){
+			
+		
+			var us_id_ch = $("input[name='us_id']").val();
+			var own_id = ${own_id };
+			
+			if(us_id_ch == 0){ // 로그인 안했으면
+				alert('로그인 해주세요.');
+				/* location.href="../user/userLogin"; */
+				
+				
+			}else{ // 로그인 했으면
+				
+				$.ajax({
+					type : "POST",
+					url : "/item/userExpApply",
+					data : {"own_id": own_id},
+					success : function (data) {
+						if(data == 0){
+							console.log('성공');
+						}
+						
+					}, 
+					error : function () {
+						console.log('실패');
+						
+					}
+				});
+			}
+			
+			
+		}));
+		
 	});
 </script>
 
