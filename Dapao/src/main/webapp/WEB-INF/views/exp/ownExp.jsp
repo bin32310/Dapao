@@ -3,14 +3,16 @@
 <%@ include file="../include/header.jsp"%>
 <style>
 #expForm {
-	position: relative;
-	border-radius: 3px;
-	background: #ffffff;
-	font-size: 20px; border-top : 3px solid #d2d6de;
-	margin: 30px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-	padding: 5%;
-	border-top: 3px solid #d2d6de;
+   position: relative;
+   border-radius: 3px;
+   background: #ffffff;
+   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+   margin: 30px;
+   font-size: 20px;
+   padding: 3%;
+   border: 1px solid #00000047;
+   padding-top: 5%;
+   height: 830px;
 }
 
 #exp_psn {
@@ -18,19 +20,44 @@
 	display: inline;
 	margin-left: 15px;
 	margin-bottom: 30px;
+	font-size: 20px;
+	height: 40px
 }
 
 #exp_content {
 	margin-bottom: 30px;
+	font-size: 20px;
+	height: 190px;
+}
+
+textarea[name=exp_notice]{
+	font-size: 20px;
+	height: 190px;
 }
 
 #exp_title {
 	margin-bottom: 30px;
+	font-size: 20px;
+	height: 40px;
 }
 
 #b {
 	padding-left: 30px;
 	padding-rigth: 15px;
+}
+
+#btnExp{
+   border-radius: 0.5em;
+   background-color: #14571f;
+   color: white;
+   border-color: #14571f;
+}
+
+#exp_price[readonly]{
+	border: 1px solid;
+    border-color: #d2d6de;
+    font-size: 20px;
+    height: 40px;
 }
 </style>
 
@@ -38,7 +65,7 @@
 <form action="ownExpPOST" method="post" name="expSubit" id="expSubmit">
 	<div id="expForm">
 		<div class="form-group">
-			<label>사업자 아이디 : ${id }</label>
+			<label>사업자 아이디 &nbsp;&nbsp; : &nbsp;&nbsp; ${id }</label>
 		</div>
 		<div class="form-group">
 			<label>모집인원</label>
