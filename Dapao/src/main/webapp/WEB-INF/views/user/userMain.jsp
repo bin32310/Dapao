@@ -164,6 +164,7 @@
    border-color: #14571f;
    height: 40px;
    width: 80px;
+   border: 0px;
 }
 
 
