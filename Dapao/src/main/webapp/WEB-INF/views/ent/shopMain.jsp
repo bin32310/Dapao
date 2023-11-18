@@ -2,13 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<c:if test="${!empty us_id && !empty ent_id && empty own_id }">
-	<%@ include file="../include/userHeader.jsp"%>
-</c:if>
-<c:if test="${!empty own_id && empty us_id && empty ent_id }">
-	<%@ include file="../include/entHeader.jsp"%>
-</c:if>
-
 <c:choose>
 	<c:when test="${empty own_id }">
 		<c:if test="${empty us_id }">
@@ -308,6 +301,7 @@
 					});
 
 	$(function(){
+		
 		$('.prodPick').hover(function() {
 			$(this).css("cursor", "pointer");
 		});
@@ -388,9 +382,11 @@
 	}); // document.ready 끝
 </script>
 
-<c:if test="${!empty us_id && !empty ent_id && empty own_id }">
-	<%@ include file="../include/userFooter.jsp"%>
-</c:if>
-<c:if test="${!empty own_id && empty us_id && empty ent_id }">
-	<%@ include file="../include/entFooter.jsp"%>
-</c:if>
+<c:choose>
+	<c:when test="${!empty own_id }">
+		<%@include file="../include/userFooter.jsp"%>
+	</c:when>
+	<c:otherwise>
+		<%@ include file="../include/entFooter.jsp"%>
+	</c:otherwise>
+</c:choose>

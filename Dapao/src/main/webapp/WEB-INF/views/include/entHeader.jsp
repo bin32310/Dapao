@@ -61,6 +61,11 @@
 	color: cadetblue;
 }
 
+.sidebar-menu>li{
+	margin: 10px;
+	font-size: 1.1em;
+}
+
 .main-sidebar {
 	box-shadow: 8px 0px 5px -2px #14571f94;
 }

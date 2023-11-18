@@ -62,7 +62,11 @@ public class EntController {
 		logger.debug(" shopMainGET(EntVO eVO, ProdVO pVO, ReviewVO rVO, Model model) 호출 ");
 		String own_id = ent_id;
 		if (own_id == null) {
+			logger.debug(" @@@@@@@@@@사업자 ");
 			own_id = (String) session.getAttribute("own_id");
+		}else {
+			logger.debug(" @@@@@@@@@@@@@회원 ");
+			session.setAttribute("ent_id", own_id);			
 		}
 		
 //		String us_id = (String) session.getAttribute("us_id");
@@ -113,8 +117,7 @@ public class EntController {
 		model.addAttribute("plist", plist);
 		model.addAttribute("name", name);
 		
-		session.setAttribute("own_id", own_id);
-		session.setAttribute("ent_id", own_id);
+		
 		logger.debug(" 연결된 뷰페이지(/views/ent/shopMain.jsp) 출력 ");
 	}
 
