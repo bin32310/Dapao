@@ -201,7 +201,7 @@
 		<c:forEach var="ad" items="${adList}">
 			<fieldset>
 				<form>
-					<a href="../ent/shopMain?own_id=${ad.own_id }">
+					<a href="../ent/shopMain?ent_id=${ad.own_id }">
 						<img src="/imgfile/${ad.ent_img }" name="ent_img" class="ad_img"> <br>
 						<input type="text" value="${ad.ent_name }" name="ent_name">
 					</a>
