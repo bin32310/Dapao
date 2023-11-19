@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Animated Login Form</title>
-
 <link
 	href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap"
 	rel="stylesheet">
@@ -26,18 +26,21 @@ body {
 .wave {
 	position: fixed;
 	bottom: 0;
-	left: 0;
+	right: 0;
 	height: 100%;
 	z-index: -1;
+	transform: rotate(180deg);
 }
 
 .container {
 	width: 100vw;
 	height: 100vh;
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	grid-gap: 7rem;
-	padding: 0 2rem;
+	display: flex;
+	grid-gap: 0rem;
+	padding: 0 13rem;
+	flex-wrap: wrap;
+	flex-direction: row-reverse;
+	justify-content: space-evenly;
 }
 
 .img {
@@ -48,8 +51,9 @@ body {
 
 .login-content {
 	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	align-items: baseline;
 	text-align: center;
 }
 
@@ -76,8 +80,8 @@ form {
 	position: relative;
 	display: grid;
 	grid-template-columns: 7% 93%;
-	margin: 25px 0;
-	padding: 5px 0;
+/* 	margin: 25px 0; */
+/* 	padding: 5px 0; */
 	border-bottom: 2px solid #d9d9d9;
 }
 
@@ -110,6 +114,7 @@ form {
 	font-size: 18px;
 	transition: .3s;
 }
+
 
 .input-div:before, .input-div:after {
 	content: '';
@@ -192,6 +197,24 @@ a:hover {
 	transition: .5s;
 }
 
+.div input[type="file"]::file-selector-button{
+	display: block;
+	width: 45%;
+	height: 30px;
+	border-radius: 25px;
+	outline: none;
+	border: none;
+	background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
+	background-size: 200%;
+	font-size: 1rem;
+	color: #fff;
+	font-family: 'Poppins', sans-serif;
+	text-transform: uppercase;
+	margin: 5px;
+	cursor: pointer;
+	transition: .5s;
+}
+
 .btn:hover {
 	background-position: right;
 }
@@ -233,113 +256,95 @@ a:hover {
 </head>
 <body>
 
-	<c:choose>
-		<c:when test="${param.result=='fail' }">
-			<script>
-						window.onload = function() {
-							alert("아이디나 비밀번호가 틀렸습니다. 다시 로그인 하세요!")
-						};
-					</script>
-		</c:when>
-		<c:when test="${param.result=='1' }">
-			<script>
-						window.onload = function() {
-							alert("정지된 아이디입니다. 고객센터에 문의하세요!")
-						};
-					</script>
-		</c:when>
-		<c:when test="${param.result=='2' }">
-			<script>
-						window.onload = function() {			
-							alert("탈퇴하신 아이디입니다!")
-						};
-					</script>
-		</c:when>
-		<c:when test="${param.result=='3' }">
-			<script>
-						window.onload = function() {
-							alert("승인대기중인 아이디 입니다. 고객센터에 문의하세요!")
-						};
-					</script>
-		</c:when>
-		<c:when test="${param.result=='ok' }">
-			<script>
-						window.onload = function() {
-							alert("비밀번호를 정상적으로 변경하였습니다!")
-						};
-					</script>
-		</c:when>
-	</c:choose>
-
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-
 	<img class="wave"
 		src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/wave.png">
 	<div class="container">
 		<div class="img">
-			<img
-				src="${pageContext.request.contextPath }/resources/logo/logo.png">
+			<img src="${pageContext.request.contextPath }/resources/logo/join.png">
 		</div>
-		<div class="login-content">
-
-
-			<form action="" method="post">
-				<h2 class="title">Dapao</h2>
-				<div class="input-div one">
-					<div class="i">
-						<i class="fas fa-user"></i>
-					</div>
-					<div class="div">
-						<input type="text" name="own_id" class="input"
-							placeholder="UserID" maxlength="12">
-					</div>
-				</div>
+	<div class="login-content">
+		
+		<form action="" method="post"> <br>
+			<h2 class="title">Dapao</h2>
+				
+				<input type="hidden" value="${param.own_id }">
+				<input type="hidden" value="${param.own_email }">
+	
 				<div class="input-div pass">
 					<div class="i">
 						<i class="fas fa-lock"></i>
 					</div>
-					<div class="div">
-						<input type="password" name="own_pw" class="input"
-							placeholder="Password">
+					<div class="div">							
+						<input type="password" name="own_pw" required="required" id="own_pw" min="8" maxlength="16" placeholder="비밀번호">
 					</div>
 				</div>
-				<a href="/ent/mailAuth">Forgot Password?</a> 
-				<input type="submit" class="btn" value="sign in"> 
-				<input type="button" class="btn" value="sign up" onclick="location.href='/ent/entJoin';">
-			</form>
-		</div>
+						<span id="pwc1"></span>
+				
+				<div class="input-div pass">
+					<div class="i">
+						<i class="fas fa-lock"></i>
+					</div>
+					<div class="div">							
+						<input type="password" name="own_pwC" required="required" id="own_pwC" min="8" maxlength="16" placeholder="비밀번호확인">
+					</div>
+				</div>
+						<span id="pwc2"></span>
+				
+			
+			<input type="submit" class="btn" value="change password" id="cp" disabled="disabled" > 
+			
+		</form>
 	</div>
+	</div>
+	
+	
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>	
+	
+<script	type="text/javascript">
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function(){
-
-		const inputs = document.querySelectorAll(".input");
-
-
-		function addcl(){
-		  let parent = this.parentNode.parentNode;
-		  parent.classList.add("focus");
+	
+	$("#own_pw").blur(function() {
+	 	let pwdCheck= /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+	 	
+	 	if ($("#own_pw").val() == "") {
+	         $("#pwc1").css("color", "red");
+	         $("#pwc1").text("비밀번호를 입력하세요!");
+	         password = false;
+	      }	
+	      else if (!pwdCheck.test($("#own_pw").val())) {
+		  	 $("#pwc1").css("color", "red");
+		     $("#pwc1").text("비밀번호는 영문+숫자+특수문자 조합하여 8~16자리를 사용해야 합니다");
+		     password = false;
+	      }else {
+	    	  $("#pwc1").css("color", "green");
+			  $("#pwc1").text("안전한 비밀번호 입니다.");
+			  password = true;
+	      }	 	
+	 
+	 });
+	
+	/////비밀번호 확인//////
+	$("#own_pwC").blur(function() {
+		if($("#own_pwC").val() == "") {
+			$("#pwc2").css("color", "red");
+	        $("#pwc2").text("비밀번호 확인해주세요!");
+	        password_check = false;
 		}
-
-		function remcl(){
-		  let parent = this.parentNode.parentNode;
-		  if(this.value == ""){
-		    parent.classList.remove("focus");
-		  }
+		else if(password == true && $("#own_pw").val() == $("#own_pwC").val()) {
+			$("#pwc2").css("color", "green");
+			$("#pwc2").text("비밀번호가 일치합니다!");
+			$("#cp").attr("disabled", false);
+			password_check = true;
+		}else {
+			$("#pwc2").css("color", "red");
+			$("#pwc2").text("비밀번호를 다시 확인해주세요");
+			password_check = false;
 		}
+	}); // pw
 
-
-		inputs.forEach(input => {
-		  input.addEventListener("focus", addcl);
-		  input.addEventListener("blur", remcl);
-		});
-
-		//Source :- https://github.com/sefyudem/Responsive-Login-Form/blob/master/img/avatar.svg
-						
-	});
+	
 </script>
-
+	
+	
 </body>
 </html>

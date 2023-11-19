@@ -159,4 +159,11 @@
 	<insert id="entAd">
 	</insert>
 	
+	<!-- 비밀번호 변경 -->
+	<update id="changePw">
+		update ent
+		set own_pw=#{own_pw}
+		where own_id=#{own_id} and own_email=#{own_email}
+	</update>
+	
 </mapper>

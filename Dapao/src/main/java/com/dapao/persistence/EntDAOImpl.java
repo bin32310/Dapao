@@ -115,5 +115,11 @@ public class EntDAOImpl{
 		
 	}
 	
+	// 비밀번호 변경
+	public Integer changePw(EntVO vo) throws Exception {		
+		logger.debug(" changePw(EntVO vo) 호출 ");
+		return sqlSession.update(NAMESPACE+".changePw", vo);
+	}
+	
 	
 }
