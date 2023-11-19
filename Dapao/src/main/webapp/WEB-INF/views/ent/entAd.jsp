@@ -28,7 +28,6 @@
 
 .box-solid {
 	border: 1px solid green;
-	height: 400px;
 	background-color: #f4f4f2;
 }
 
@@ -99,6 +98,7 @@
 							제품을 직접 사용해본 후 체험후기를 블로그나 카페, SNS에 포스팅해 유포하는
 							체험마케팅은 소비자가 가장 원하는 생생한 제품 정보에 대한 컨텐츠를 또 다른 소비자를 통해서 생산하게 함으로써 가장
 							높은 신뢰도를 구축할 수 있는 마케팅 방법입니다.
+							<br><br>
 						</p>
 					</blockquote>
 				</div>

@@ -94,7 +94,7 @@
 			<!-- Header Navbar: style can be found in header.less -->
 			<nav class="navbar navbar-static-top" role="navigation">
 				<!-- Sidebar toggle button-->
-				<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
+				<a href="#" class="sidebar-toggle" id="mini" data-toggle="offcanvas"
 					role="button"> <span class="sr-only">Toggle navigation</span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
@@ -210,7 +210,10 @@
 					<li class="treeview" id="coin"><a href="/ent/coinCharge"> <i
 							class="fa fa-money"></i> <span>대나무 페이 충전</span>
 					</a></li>
-					<li class="treeview"><a href="#"> <i class="fa fa-paw"></i>
+					<li class="treeview" id="talk"><a href="/websocket/chat/${ent_name}"> <i
+							class="fa fa-paw"></i> <span>판다톡</span>
+					</a></li>
+					<li class="treeview"><a href="#"> <i class="fa fa-question-circle"></i>
 							<span>고객지원</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 						<ul class="treeview-menu">

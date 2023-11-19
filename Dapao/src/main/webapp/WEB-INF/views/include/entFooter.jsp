@@ -10,7 +10,6 @@
     </div><!-- ./wrapper -->
 	
 
-</script>
 	<script type="text/javascript">
 	$(function() {
 		var own_id = '${own_id}';
@@ -38,18 +37,25 @@
 				return false;
 			}
 		});
-		$('#coin').off("click").click(function(e) {
+		$('#coin').off("click").click(function() {
 			if (own_id == null || typeof own_id == "undefined" || own_id == "") {
 				alert('로그인이후 이용해주세요');
-				e.preventDefault();
 				location.href = "/ent/entLogin";
+				return false;
 			}
 		});
-		$('.shop').off("click").click(function(e) {
+		$('#talk').off("click").click(function() {
 			if (own_id == null || typeof own_id == "undefined" || own_id == "") {
 				alert('로그인이후 이용해주세요');
-				e.preventDefault();
 				location.href = "/ent/entLogin";
+				return false;
+			}
+		});
+		$('.shop').off("click").click(function() {
+			if (own_id == null || typeof own_id == "undefined" || own_id == "") {
+				alert('로그인이후 이용해주세요');
+				location.href = "/ent/entLogin";
+				return false;
 			}
 		});
 		$('button[type=submit]').off("click").click(function() {
@@ -60,7 +66,7 @@
 			}
 		});
 		// 사이드바 최소화 버튼 클릭시
-		$('.sidebar-toggle').click(function() {
+		$('#mini').on("click", function() {
 			console.log("click");
 			$('.sidebar-menu>li').css("margin",0);
 		});
