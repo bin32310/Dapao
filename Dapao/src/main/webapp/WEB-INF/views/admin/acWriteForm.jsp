@@ -4,7 +4,7 @@
 <c:if test="${empty us_id }">
 	<%@ include file="../include/userHeader.jsp" %>
 </c:if>
-<c:if test="${!empty us_id }">
+<c:if test="${!empty us_id && us_id != 'admin'}">
 	<%@ include file="../include/userLoginHeader.jsp" %>
 	<input type="hidden" value="${us_id }" name="login"> 
 </c:if>
