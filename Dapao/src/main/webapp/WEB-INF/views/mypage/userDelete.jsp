@@ -19,7 +19,7 @@
 <body>
 <!--  -->
 
-<div class="box box-info">
+<div class="box">
 	<!-- 	<div class="box-header with-border"> -->
 			<h3 class="box-title">회원 탈퇴</h3>
 	<!-- 	</div> -->
@@ -28,9 +28,10 @@
 		<form class="form-horizontal" action="" method="post">
 			<div class="box-body">
 				<div class="form-group">
-				<span>정말로 탈퇴하시겠습니까?</span>
+				
 					<div class="col-sm-10">
-						<input type="button" name="us_pw" class="form-control" id="inputEmail3" placeholder="비밀번호를 입력하세요">
+						<input type="text" name="us_pw" class="form-control" id="inputEmail3" placeholder="비밀번호를 입력하세요">
+					<h4>정말로 탈퇴하시겠습니까?</h4>	
 					</div>
 				</div>
 				
