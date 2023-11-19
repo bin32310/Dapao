@@ -135,8 +135,6 @@
           </ul>
           <ul class="sidebar-menu">
             <li class="header"><span>카테고리</span></li>
-            <i class="fa fa-angle-left pull-right"></i>
-            
             <li class="treeview">
               <a href="../item/itemCate?it_cate=패션의류">
                 <i class="fa fa-star"></i>
