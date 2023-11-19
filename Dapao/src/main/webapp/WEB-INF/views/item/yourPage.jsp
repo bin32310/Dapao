@@ -49,11 +49,8 @@
 
 img[name=it_img] {
 	margin-bottom: 20px;
-}
-
-img {
-	width: 200px;
-	height: 200px;
+	width: 150px;
+	height: 150px;
 }
 
 .price {
@@ -105,10 +102,6 @@ width : 300px;
 
 }
 
-img[name=it_img]{
-	width: 150px;
-	height: 150px;
-}
 
 </style>
 <body>

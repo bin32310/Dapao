@@ -127,7 +127,7 @@
               </a>
             </li>
             <li class="treeview">
-              <a href="../mypage/userInfo">
+              <a href="../user/userLogin">
                 <i class="fa fa-user"></i>
                 <span>마이페이지</span>
               </a>
