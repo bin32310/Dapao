@@ -78,11 +78,11 @@
                  password: enteredPassword
               },
               success: function(result) {
-                  alert('ok');
+                 
                   window.location.href = "/mypage/userInfoUpdate";
               },
               error: function(result) {
-                  alert('error');
+                  alert('다시 입력해 주세요');
               }
        });
       }
