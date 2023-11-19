@@ -228,7 +228,7 @@
 			<div class="item_ad_section">
 				<a href="../ent/shopMain?ent_id=${ad.own_id }">
 					<img src="/imgfile/${ad.ent_img }" name="ent_img" class="item_img"> <br><br>
-					<input type="text" value="${ad.ent_name }" name="ent_name" class="it_title">
+					<input type="text" value="${ad.ent_name }" name="ent_name" class="it_title" disabled="disabled">
 				</a>
 			</div>
 		</c:forEach> 
@@ -241,30 +241,30 @@
 				<div class="item_section"> <!-- 4 -->
 					<a href="../item/itemDetail?it_no=${love.it_no }">
 						<img src="/imgfile/${love.it_img }" name="it_img" class="item_img"> <br>
-						<input type="text" value="${love.it_title }" name="it_title" class="it_title"> <br>
-						<input type="text" value="${love.it_price }" name="it_price" class="it_price">
-						<input type="hidden" value="${love.it_state }" name="it_state">
+						<input type="text" value="${love.it_title }" name="it_title" class="it_title" disabled="disabled"> <br>
+						<input type="text" value="${love.it_price }" name="it_price" class="it_price" disabled="disabled">
+						<input type="hidden" value="${love.it_state }" name="it_state" >
 						<!-- 글 상태 표시 -->
 						<c:choose>
 							<c:when test="${love.it_state == 0 }">
-								<input type="text" value="판매중" class="it_state"> <br>
+								<input type="text" value="판매중" class="it_state" disabled="disabled"> <br>
 							</c:when>
 							<c:when test="${love.it_state == 1 }">
-								<input type="text" value="예약중" class="it_state"> <br>
+								<input type="text" value="예약중" class="it_state" disabled="disabled"> <br>
 							</c:when>
 							<c:when test="${love.it_state == 2 }">
-								<input type="text" value="판매완료" class="it_state"> <br>
+								<input type="text" value="판매완료" class="it_state" disabled="disabled"> <br>
 							</c:when>
 							<c:when test="${love.it_state == 3 }">
-								<input type="text" value="삭제됨" class="it_state"> <br>
+								<input type="text" value="삭제됨" class="it_state" disabled="disabled"> <br>
 							</c:when>
 							<c:otherwise>
-								<input type="text" value="접근이상함" class="it_state"> <br>			
+								<input type="text" value="접근이상함" class="it_state" disabled="disabled"> <br>			
 							</c:otherwise>
 						</c:choose>
 						<div>
-							<input type="text" value="등록날짜  " class="it_regdate_text">
-							<input type="text" value="${love.it_regdate}" class="it_regdate">
+							<input type="text" value="등록날짜  " class="it_regdate_text" disabled="disabled">
+							<input type="text" value="${love.it_regdate}" class="it_regdate" disabled="disabled">
 						</div>
 					</a>
 				</div> <!-- 4 -->
@@ -282,30 +282,30 @@
 		 			<div class="item_section"> <!-- 6 -->
 						<a href="../item/itemDetail?it_no=${item.it_no }">
 							<img src="/imgfile/${item.it_img }" name="it_img"  class="item_img"> <br>
-							<input type="text" value="${item.it_title }" name="it_title" class="it_title"> <br>
-							<input type="text" value="${item.it_price }원" name="it_price" class="it_price">
+							<input type="text" value="${item.it_title }" name="it_title" class="it_title" disabled="disabled"> <br>
+							<input type="text" value="${item.it_price }원" name="it_price" class="it_price" disabled="disabled">
 							<input type="hidden" value="${item.it_state }" name="it_state">
 							<!-- 글 상태 표시 -->
 							<c:choose>
 								<c:when test="${item.it_state == 0 }">
-									<input type="text" value="판매중" class="it_state"> <br>
+									<input type="text" value="판매중" class="it_state" disabled="disabled"> <br>
 								</c:when>
 								<c:when test="${item.it_state == 1 }">
-									<input type="text" value="예약중" class="it_state"> <br>
+									<input type="text" value="예약중" class="it_state" disabled="disabled"> <br>
 								</c:when>
 								<c:when test="${item.it_state == 2 }">
-									<input type="text" value="판매완료" class="it_state"> <br>
+									<input type="text" value="판매완료" class="it_state" disabled="disabled"> <br>
 								</c:when>
 								<c:when test="${item.it_state == 3 }">
-									<input type="text" value="삭제됨" class="it_state"> <br>
+									<input type="text" value="삭제됨" class="it_state" disabled="disabled"> <br>
 								</c:when>
 								<c:otherwise>
-									<input type="text" value="접근이상함" class="it_state"> <br>			
+									<input type="text" value="접근이상함" class="it_state" disabled="disabled"> <br>			
 								</c:otherwise>
 							</c:choose>
 							<div>
-								<input type="text" value="등록날짜  " class="it_regdate_text">
-								<input type="text" value="${item.it_regdate}" class="it_regdate">
+								<input type="text" value="등록날짜  " class="it_regdate_text" disabled="disabled">
+								<input type="text" value="${item.it_regdate}" class="it_regdate" disabled="disabled">
 							</div>
 						</a>
 					</div>
@@ -319,30 +319,30 @@
 		 			<div class="item_section"> <!-- 4 -->
 						<a href="../item/itemDetail?it_no=${item.it_no }">
 							<img src="/imgfile/${item.it_img }" name="it_img" class="item_img" > <br>
-							<input type="text" value="${item.it_title }" name="it_title" class="it_title"> <br>
-							<input type="text" value="${item.it_price }" name="it_price" class="it_price">
+							<input type="text" value="${item.it_title }" name="it_title" class="it_title" disabled="disabled"> <br>
+							<input type="text" value="${item.it_price }" name="it_price" class="it_price" disabled="disabled">
 							<input type="hidden" value="${item.it_state }" name="it_state">
 							<!-- 글 상태 표시 -->
 							<c:choose>
 								<c:when test="${item.it_state == 0 }">
-									<input type="text" value="판매중" class="it_state"> <br>
+									<input type="text" value="판매중" class="it_state" disabled="disabled"> <br>
 								</c:when>
 								<c:when test="${item.it_state == 1 }">
-									<input type="text" value="예약중" class="it_state"> <br>
+									<input type="text" value="예약중" class="it_state" disabled="disabled"> <br>
 								</c:when>
 								<c:when test="${item.it_state == 2 }">
-									<input type="text" value="판매완료" class="it_state"> <br>
+									<input type="text" value="판매완료" class="it_state" disabled="disabled"> <br>
 								</c:when>
 								<c:when test="${item.it_state == 3 }">
-									<input type="text" value="삭제됨" class="it_state"> <br>
+									<input type="text" value="삭제됨" class="it_state" disabled="disabled"> <br>
 								</c:when>
 								<c:otherwise>
-									<input type="text" value="접근이상함" class="it_state"> <br>			
+									<input type="text" value="접근이상함" class="it_state" disabled="disabled"> <br>			
 								</c:otherwise>
 							</c:choose>
 							<div>
-								<input type="text" value="등록날짜  " class="it_regdate_text">
-								<input type="text" value="${item.it_regdate}" class="it_regdate">
+								<input type="text" value="등록날짜  " class="it_regdate_text" disabled="disabled">
+								<input type="text" value="${item.it_regdate}" class="it_regdate" disabled="disabled">
 							</div>
 						</a>
 					</div>	 
