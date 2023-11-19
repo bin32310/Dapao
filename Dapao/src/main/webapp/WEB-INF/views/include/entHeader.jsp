@@ -76,7 +76,9 @@
 .skin-purple-light .main-header .logo{
 	background-color: green;
 }
-
+.pagination>.active>a{
+	background-color: green;
+}
 </style>
 <!-- jQuery 2.1.4 -->
 <script

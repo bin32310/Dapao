@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-      <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-          <b>Version</b> 2.0
-        </div>
-        <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
-      </footer>
+    
    
     </div><!-- ./wrapper -->
 	
@@ -13,6 +8,8 @@
 	<script type="text/javascript">
 	$(function() {
 		var own_id = '${own_id}';
+		var ent_name = '${ent_name}';
+		console.log(ent_name);
 		/* 마우스이벤트  */
 		$('.small-box-footer').hover(function() {
 			$(this).css('color', 'cadetblue');
@@ -50,6 +47,7 @@
 				location.href = "/ent/entLogin";
 				return false;
 			}
+			
 		});
 		$('.shop').off("click").click(function() {
 			if (own_id == null || typeof own_id == "undefined" || own_id == "") {
