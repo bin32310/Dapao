@@ -187,7 +187,7 @@ input:focus{
 }
 
 #your_pro{
-	
+	cursor: pointer;
 	border-radius: 10px;
 }
 
@@ -517,9 +517,9 @@ input:focus{
 					
 					<input type="text" value="▷ 판매자  : " class="item_text" readonly disabled="disabled"> 
 					<input type="text" value="${sellerVO.us_nickname }" name="us_id" readonly id="item_us_id" disabled="disabled">
-					<a href="/item/yourPage?us_id=${itemVO.us_id }" ><input type="text" value="판매자 프로필 보기" id="your_pro" ></a> <br><br>
+					<a href="/item/yourPage?us_id=${itemVO.us_id }" ><input type="text" value="판매자 프로필 보기" id="your_pro" readonly ></a> <br><br>
 					
-					<input type="text" value="▷ 상품상태  : " class="item_text" readonly disabled="disabled"> 
+					&nbsp;&nbsp;&nbsp;<input type="text" value="▷ 상품상태  : " class="item_text" readonly disabled="disabled"> 
 					<input type="text" value="${itemVO.it_con }" name="it_con" readonly id="item_con" disabled="disabled">  <br><br>
 					
 					<input type="text" value="▷ 거주지  : " class="item_text" readonly disabled="disabled"> 
