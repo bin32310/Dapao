@@ -134,7 +134,7 @@
  
       
       
-      
+      <!--  -->
  <!--      <fieldset>
 <legend>회원정보수정</legend>
    <form action="" method="post" name="fr"> -->
