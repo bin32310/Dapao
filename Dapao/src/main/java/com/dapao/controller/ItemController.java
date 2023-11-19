@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dapao.domain.AlarmVO;
+import com.dapao.domain.ExpVO;
 import com.dapao.domain.ExpusVO;
 import com.dapao.domain.FileVO;
 import com.dapao.domain.ItemVO;
@@ -964,24 +965,31 @@ public class ItemController {
 	// 유저가 체험단 신청시 버튼 클릭시
 	@ResponseBody
 	@RequestMapping(value = "/userExpApply", method = RequestMethod.POST)
-	public int userExpApply(HttpSession session, Integer exp_no, String own_id) throws Exception {
+	public int userExpApply(HttpSession session, String ent_id) throws Exception {
 		logger.debug("/item/userExpApply() 호출");
 		
-		// 세션 아이디(체험단 신청하는 유저 아이디)
+		// 아이디(체험단 신청하는 유저 아이디)
 		String us_id = (String)session.getAttribute("us_id");
+		logger.debug("us_id : " + us_id);
+		// 체험단 받는 기업
+		logger.debug("ent_id : " + ent_id);
+		
+		// 체험단 모집 정보 조회
+		int exp_no = iService.getExpInfo(ent_id);
+		logger.debug("exp_no : " + exp_no);
+		
 		
 		// expus 테이블에 목록 추가
 		ExpusVO expusVO = new ExpusVO();
-		expusVO.setUs_id(us_id);
 		expusVO.setExp_no(exp_no);
-		expusVO.setOwn_id(own_id);
+		expusVO.setUs_id(us_id);
+		expusVO.setOwn_id(ent_id);
 		int expApplyResult = iService.expApply(expusVO);
 		logger.debug("expApplyResult : " + expApplyResult);
 		
 		// exp 테이블에 신청인원 +1
 		int expCountUpResult = iService.expCountUp(exp_no);
 		logger.debug("expCountUpResult : " + expCountUpResult);
-		
 		
 		
 		return 0;
@@ -1025,6 +1033,18 @@ public class ItemController {
 		int us_coin_re = (Integer)session.getAttribute("us_coin");
 		us_coin_re = us_coin_re - us_coin;
 		session.setAttribute("us_coin", us_coin_re);
+		
+		return result;
+	}
+	
+	// 글 삭제하기
+	@ResponseBody
+	@RequestMapping(value = "/itemDelete", method = RequestMethod.POST)
+	public int itemDelete(Integer it_no) throws Exception {
+		logger.debug("/item/itemDelete() 호출");
+		
+		int result = iService.itemDelete(it_no);
+		logger.debug("삭제 결과 : " + result);
 		
 		return result;
 	}

@@ -4,10 +4,10 @@
 
 <div class="boxList">
 	<div class="box-header with-board">
-		<p class="pContent">공지사항 관리</p>
+		<p class="pContent"><i class="fa fa-file-text-o"></i>공지사항 관리</p>
 		<form action="/admin/noticeList" id="search">
 			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
-			<button id="searchBtn">Search</button>
+			<button id="searchBtn"><i class="fa fa-fw fa-search"></i></button>
 		</form>
 	</div>
 	<div class="box-body">
@@ -139,8 +139,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" name="update" class="update">수정</button>
-				<button type="button" name="delete" class="delete">삭제</button>
+				<button type="button" name="update" class="update btn btn-default">수정</button>
+				<button type="button" name="delete" class="delete btn btn-default">삭제</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>

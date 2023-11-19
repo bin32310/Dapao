@@ -8,21 +8,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dapao.domain.AdVO;
 import com.dapao.domain.EntVO;
 import com.dapao.domain.PageVO;
+import com.dapao.domain.PayVO;
 import com.dapao.domain.ProdVO;
 import com.dapao.domain.ReviewVO;
 import com.dapao.domain.TradeVO;
 import com.dapao.persistence.EntDAOImpl;
 
 @Service(value = "entService")
-public class EntServiceImpl{
+public class EntServiceImpl {
 
 	private static final Logger logger = LoggerFactory.getLogger(EntServiceImpl.class);
 	@Autowired
 	private EntDAOImpl edao;
 
-	public void entUpdate(EntVO vo) throws Exception  {
+	public void entUpdate(EntVO vo) throws Exception {
 		logger.debug(" service -> entUpdate(EntVO vo) 호출 ");
 		edao.entUpdate(vo);
 
@@ -47,7 +49,7 @@ public class EntServiceImpl{
 		logger.debug(" service refund(TradeVO vo) 호출 ");
 		edao.refund(vo);
 	}
-	
+
 	public void tradeRefund(TradeVO vo) throws Exception {
 		logger.debug(" service tradeRefund(TradeVO vo) 호출 ");
 		edao.tradeRefund(vo);
@@ -82,17 +84,18 @@ public class EntServiceImpl{
 		logger.debug("컨트롤러 -> ownInfo()서비스 호출");
 		return edao.ownInfo(own_id);
 	}
-	
+
 	public List<ReviewVO> entReviewList(String own_id) throws Exception {
 		logger.debug(" service -> entReviewList(String own_id) 호출 ");
 		return edao.entReviewList(own_id);
 	}
-	
-	public void purchase(Map map) throws Exception{
+
+	public void purchase(Map map) throws Exception {
 		logger.debug("service purchase(ProdVO vo) 호출 ");
 		edao.purchase(map);
 	}
-	public void tradePurchase(String tr_no) throws Exception{
+
+	public void tradePurchase(String tr_no) throws Exception {
 		logger.debug("service tradePurchase(String tr_no) 호출 ");
 		edao.tradePurchase(tr_no);
 	}
@@ -103,4 +106,34 @@ public class EntServiceImpl{
 		return edao.changePw(vo);
 	}
 
+	// 홈페이지 광고 신청
+	public void entAd(AdVO vo) throws Exception {
+		logger.debug(" service  entAd(AdVO vo)");
+		edao.entAd(vo);
+	}
+
+	// 코인충전
+	public int coinCharge(PayVO payVO) {
+		logger.debug("Service : coinCharge(PayVO payVO) 호출");
+		return edao.coinCharge(payVO);
+
+	}
+
+	// 코인충전 결제
+	public int coinChargePay(PayVO payVO) {
+		logger.debug("Service : coinChargePay(PayVO payVO) 호출");
+		return edao.coinChargePay(payVO);
+
+	}
+
+	// 코인충전 결제 내역
+	public int entCoin(String own_id) {
+		logger.debug("Service : entCoin(String us_id) 호출");
+		return edao.entCoin(own_id);
+	}	
+	// 체험단 광고 유무
+	public int entExpAd(String own_id) {
+		logger.debug("service : entExpAd(String own_id) 호출 ");
+		return edao.entExpAd(own_id);
+	}
 }

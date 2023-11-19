@@ -63,7 +63,7 @@ public class UserDAOImpl  {
    // 메인
    // 인기가게(광고) 목록
    
-   public List<TotalVO> adList() {
+   public List<EntVO> adList() {
       logger.debug("adList() 호출");
       
       return sqlSession.selectList(NAMESPACE + ".adList");

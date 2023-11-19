@@ -187,7 +187,7 @@ input:focus{
 }
 
 #your_pro{
-	
+	cursor: pointer;
 	border-radius: 10px;
 }
 
@@ -469,7 +469,7 @@ input:focus{
 
 			
 			
-				<input type="hidden" value="${itemVO.it_no }" name="it_no" > <br>
+				<input type="hidden" value="${itemVO.it_no }" name="it_no" id="item_it_no"> <br>
 				<a id="cate">카테고리 ></a> <input type="text" value="${itemVO.it_cate }" name="it_cate" readonly id="item_cate" disabled="disabled">
 				
 				<br><hr><br>
@@ -517,9 +517,9 @@ input:focus{
 					
 					<input type="text" value="▷ 판매자  : " class="item_text" readonly disabled="disabled"> 
 					<input type="text" value="${sellerVO.us_nickname }" name="us_id" readonly id="item_us_id" disabled="disabled">
-					<a href="/item/yourPage?us_id=${itemVO.us_id }" ><input type="text" value="판매자 프로필 보기" id="your_pro" ></a> <br><br>
+					<a href="/item/yourPage?us_id=${itemVO.us_id }" ><input type="text" value="판매자 프로필 보기" id="your_pro" readonly ></a> <br><br>
 					
-					<input type="text" value="▷ 상품상태  : " class="item_text" readonly disabled="disabled"> 
+					&nbsp;&nbsp;&nbsp;<input type="text" value="▷ 상품상태  : " class="item_text" readonly disabled="disabled"> 
 					<input type="text" value="${itemVO.it_con }" name="it_con" readonly id="item_con" disabled="disabled">  <br><br>
 					
 					<input type="text" value="▷ 거주지  : " class="item_text" readonly disabled="disabled"> 
@@ -719,6 +719,25 @@ input:focus{
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal" id="sellerCancleOKModalYes">네</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 글 삭제하기 버튼 클릭시 Modal -->
+<div id="itemDeleteModal" class="modal fade" role="dialog">
+	<!-- <div class="modal-dialog modal-lg"> -->
+	<div class="modal-dialog ">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">글을 삭제 하시겠습니까?</h4>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="itemDeleteModalYes">네</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
 			</div>
 		</div>
@@ -1030,6 +1049,36 @@ $(document).ready(function(){
 		}	
 		
 	});
+	
+	// 삭제하기 버튼클릭
+	$('#item_delete').click(function(){
+		$('#itemDeleteModal').modal("show");
+	});
+	
+	$('#itemDeleteModalYes').click(function(){
+		
+		var it_no = $('#item_it_no').val();
+		
+		$.ajax({
+			type : "post",
+			url : "/item/itemDelete",
+			data : {"it_no" : it_no},
+			error: function(){
+				alert("글삭제 실패");
+			},
+			success : function(result){
+				console.log("success");
+				if(result == 0){
+					alert("삭제성공");
+					location.href="../user/userMain";
+					
+				}else{
+						alert("글삭제 실패");
+				} //else
+			} // success 끝	
+		}); // ajax 끝
+	}); // modalYes
+	
 	
 	$('#modalYes').click(function(){
 		

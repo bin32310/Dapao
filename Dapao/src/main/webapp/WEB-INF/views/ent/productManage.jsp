@@ -2,11 +2,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/entHeader.jsp"%>
 
+<style>
+tr {
+	border-bottom: 1px solid green;
+}
+.box-success {
+    width: 100%;
+    height: 100vh;
+}
+td{
+	font-size: 1.3em;
+}
+th{
+	font-size: 1.3em;
+}
+</style>
 <div class="box box-success">
 	<div class="box-header with-border"></div>
 	<div class="container">
 		<div class="search_container">
-			<input type="button" value="상품등록" class="btn btn-success" data-toggle="modal" data-target="#modal-default" data-own_id="${own_id }" data-modal_cate=0>
+			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default" data-modal_cate=0>상품등록</button>
 			<form action="" method="post">
 				<table class="table table-hover">
 					<tr>
@@ -35,7 +50,7 @@
 					</tr>
 
 				</table>
-				<input type="hidden" name="own_id" value="${own_id }"> <input type="submit" value="조회하기" class="btn btn-success">
+				<button type="submit" class="btn btn-success">조회하기</button>
 			</form>
 		</div>
 
@@ -159,13 +174,13 @@
 
 						<div class="box-footer">
 							<button type="submit" class="btn btn-success">Submit</button>
+							<button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
 						</div>
+						
 					</form>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
-			</div>
+				
 		</div>
 
 	</div>
@@ -221,14 +236,7 @@
 		},function() {
 			$(this).css('color', 'white');
 		});
-
-		$('.btn-success').click(function() {
-			var own_id = '${own_id}';
-			if(own_id == null){
-				alert('로그인 이후 사용해주세요');
-				return false;
-			}
-		});
+		
 	});
 </script>
-<%@ include file="../include/footer.jsp"%>
+<%@ include file="../include/entFooter.jsp"%>

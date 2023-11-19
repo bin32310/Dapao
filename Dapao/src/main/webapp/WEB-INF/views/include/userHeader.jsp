@@ -29,7 +29,7 @@
   </head>
       <!-- jQuery 2.1.4 -->
     <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-  <body class="skin-blue-light sidebar-mini">
+  <body class="skin-green-light sidebar-mini">
     <div class="wrapper">
       
       <header class="main-header">
@@ -127,7 +127,7 @@
               </a>
             </li>
             <li class="treeview">
-              <a href="../mypage/userInfo">
+              <a href="../user/userLogin">
                 <i class="fa fa-user"></i>
                 <span>마이페이지</span>
               </a>
@@ -135,8 +135,6 @@
           </ul>
           <ul class="sidebar-menu">
             <li class="header"><span>카테고리</span></li>
-            <i class="fa fa-angle-left pull-right"></i>
-            
             <li class="treeview">
               <a href="../item/itemCate?it_cate=패션의류">
                 <i class="fa fa-star"></i>

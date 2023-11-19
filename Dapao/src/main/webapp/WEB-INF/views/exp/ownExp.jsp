@@ -1,16 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@ include file="../include/header.jsp"%>
+<%@ include file="../include/entHeader.jsp"%>
 <style>
 #expForm {
-	position: relative;
-	border-radius: 3px;
-	background: #ffffff;
-	font-size: 20px; border-top : 3px solid #d2d6de;
-	margin: 30px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-	padding: 5%;
-	border-top: 3px solid #d2d6de;
+   position: relative;
+   border-radius: 3px;
+   background: #ffffff;
+   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+   margin: 30px;
+   font-size: 20px;
+   padding: 3%;
+   border: 1px solid #00000047;
+   padding-top: 5%;
+   height: 830px;
 }
 
 #exp_psn {
@@ -18,19 +20,70 @@
 	display: inline;
 	margin-left: 15px;
 	margin-bottom: 30px;
+	font-size: 20px;
+	height: 40px
 }
 
 #exp_content {
 	margin-bottom: 30px;
+	font-size: 20px;
+	height: 190px;
+}
+
+textarea[name=exp_notice]{
+	font-size: 20px;
+	height: 190px;
 }
 
 #exp_title {
 	margin-bottom: 30px;
+	font-size: 20px;
+	height: 40px;
 }
 
 #b {
 	padding-left: 30px;
 	padding-rigth: 15px;
+}
+
+#btnExp{
+   border-radius: 0.5em;
+   background-color: #14571f;
+   color: white;
+   border-color: #14571f;
+}
+
+#exp_price[readonly]{
+	border: 1px solid;
+    border-color: #d2d6de;
+    font-size: 20px;
+    height: 40px;
+}
+label{
+	color : green;
+}
+textarea {
+   height: 7em;
+    border: none;
+    resize: none;
+}
+.modal-content{
+	border-radius: 1em;
+    padding-left: 8%;
+    margin-top: 30%;
+    border: 3px solid green;
+    font-weight: 700;
+}
+.expInfo{
+	font-size: 18px;
+	display: inline-grid;
+	padding-left: 30px;
+	padding-bottom: 20px;
+	text-align: center;
+}
+.modal-title{
+	margin-left: 37%;
+    font-size: larger;
 }
 </style>
 
@@ -38,7 +91,7 @@
 <form action="ownExpPOST" method="post" name="expSubit" id="expSubmit">
 	<div id="expForm">
 		<div class="form-group">
-			<label>사업자 아이디 : ${id }</label>
+			<label>사업자 아이디 &nbsp;&nbsp; : &nbsp;&nbsp; ${own_id }</label>			
 		</div>
 		<div class="form-group">
 			<label>모집인원</label>
@@ -50,7 +103,7 @@
 				<option>20</option>
 			</select> 
 			<label id="b">가격</label>
-			<input type="text" readonly id="exp_price" value="100">
+			<input type="text" readonly id="exp_price" value="30000">
 			<div class="form-group">
 				<label>신청 제목</label> <input type="text" class="form-control" name="exp_title" id="exp_title" placeholder="광고에 게시될 제목을 기입해주세요">
 			</div>
@@ -63,47 +116,30 @@
 			<label>유의사항</label>
 			<textarea class="form-control" rows="7" name="exp_notice" placeholder="광고에 게시될 유의사항을 기입해주세요"></textarea>
 		</div>
-		<input type="hidden" name="own_id" value="1">
-		<%-- 	<input type="hidden" name="own_id" value="${id }"> --%>
 		<input type="button" id="btnExp" value="신청하기">
 	</div>
 </form>
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
-	<div class="modal-dialog modal-sm3">
-
+	<div class="modal-dialog sm-3">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">체험단 결제</h4>
+				<p class="modal-title">체험단 결제</p>
 			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<label class="col-sm-2 control-label">사업자 아이디</label>
-					<div class="col-sm-10">
-						<input type="text" value="${id }" class="form-control" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">신청 제목</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="exp_content2" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">모집 인원</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="exp_psn2" readonly><br>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">결제 가격</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="exp_price2" readonly><br>
-					</div>
-				</div>
+			<div class="expInfo">
+				사업자 아이디 <input class="form-control" type="text" value="${own_id }" readonly>
+			</div>
+			<div class="expInfo">
+				신청 제목 <input class="form-control" type="text" id="exp_title2" readonly>
+			</div>
+			<div class="expInfo">
+				모집 인원 <input class="form-control" type="text" id="exp_psn2" readonly>
+			</div>
+			<div class="expInfo">
+				결제 가격 <input class="form-control" type="text"  id="exp_price2" readonly>
 			</div>
 			<div class="modal-footer">
 				<input type="button" class="expSubmit" value="결제하기" onclick="requestPay()">
@@ -139,7 +175,7 @@
 			return false;
 		}
 		$('#myModal').modal('show');
-		$('#exp_content2').val($('#exp_content').val());
+		$('#exp_title2').val($('#exp_title').val());
 		$('#exp_psn2').val($('#exp_psn').val());
 		$('#exp_price2').val($('#exp_price').val());
 	});
@@ -147,8 +183,7 @@
 	// 결제연동
 	IMP.init('imp73450751');
 	function requestPay() {
-		var id = "${sessionScope.id}";
-		// 		var id = "1";
+		var id = "${own_id}";
 		console.log(id);
 
 		// 결제 api 실행
@@ -156,15 +191,15 @@
 			pg : "html5_inicis.INIpayTest",
 			pay_method : "card",
 			merchant_uid : "IMP" + makeMerchantUid,
-			name : $('#exp_content').val(),
-			amount : $('#exp_price').val(), //  $('#price').val()
+			name : $('#exp_title').val(),
+			amount : $('#exp_price').val()
 // 			buyer_tel : "01011111111", // 사업자 전화번호
 		}, function(rsp) { // callback
 			//rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
 			if (rsp.success) {
 				// 결제하기 눌렀을때 -> 결제창 + submit동작 + 결제테이블 처리
 				$.ajax({
-					url : "ownExpSuccess",
+					url : "/exp/ownExpSuccess",
 					data : {
 						imp_uid : rsp.imp_uid,
 						pay_uid : rsp.merchant_uid,
@@ -174,7 +209,7 @@
 						pay_pg : "카카오",
 						pay_method : rsp.pay_method,
 						pay_card : rsp.card_name,
-						own_id : ${id}
+						own_id : id
 					},
 					dataType : "json",
 					success : function(data) {
@@ -195,4 +230,4 @@
 </script>
 
 
-<%@ include file="../include/footer.jsp"%>
+<%@ include file="../include/entFooter.jsp"%>

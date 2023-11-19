@@ -272,7 +272,24 @@ background-color: green;
 .skin-blue-light .main-header .navbar .sidebar-toggle:hover {
     background-color: #005500;
 }
+.skin-purple-light .main-header .navbar {
+	background-color: green;
+}
 
+.skin-purple-light .main-header .logo{
+	background-color: green;
+}
+.content-wrapper, .wrapper{
+ background-color:#FFF;
+}
+.content-wrapper, .right-side {
+    min-height: 100%;
+    background-color: #f9fafc;
+    /* z-index: 800; */
+}
+.main-sidebar{
+    box-shadow: 8px 0px 5px -2px #14571f94;
+}
 </style>
  
  

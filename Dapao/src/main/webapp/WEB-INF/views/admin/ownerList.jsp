@@ -4,10 +4,10 @@
 
 <div class="boxList">
 	<div class="box-header with-board">
-		<p class="pContent">사업자 관리</p>
+		<p class="pContent"><i class="fa fa-user-plus"></i>사업자 관리</p>
 		<form action="/admin/ownerList" id="search">
-			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
-			<button id="searchBtn">Search</button>
+			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2" placeholder="이름 입력">
+			<button id="searchBtn"><i class="fa fa-fw fa-search"></i></button>
 		</form>
 	</div>
 	<div class="box-body">
@@ -131,7 +131,7 @@
 				마감시간 <input class="form-control" type="text" name="ent_ct" readonly>
 			</div>
 			<div class="muserInfo">
-				정지기간 <input class="form-control" type="text" name="ent_stopdate" readonly>
+				정지기간 <input class="form-control" type="text" name="own_stopdate" readonly>
 			</div>
 			<div class="muserInfo">
 				신고횟수 <input class="form-control" type="text" name="ent_account" readonly>
@@ -175,69 +175,49 @@
 								success : function(data) {
 									console.log(data)
 									$('input[name=own_id]').val(data.own_id)
-									$('input[name=own_name]')
-											.val(data.own_name)
+									$('input[name=own_name]').val(data.own_name)
 									$('input[name=own_pw]').val(data.own_pw)
 									$('input[name=own_tel]').val(data.own_tel)
-									$('input[name=own_email]').val(
-											data.own_email)
-									$('input[name=own_state]').val(
-											data.own_state)
-									$('input[name=ent_name]')
-											.val(data.ent_name)
-									$('input[name=ent_cate]')
-											.val(data.ent_cate)
-									$('input[name=ent_addr]')
-											.val(data.ent_addr)
+									$('input[name=own_email]').val(data.own_email)
+									$('input[name=own_state]').val(data.own_state)
+									$('input[name=ent_name]').val(data.ent_name)
+									$('input[name=ent_cate]').val(data.ent_cate)
+									$('input[name=ent_addr]').val(data.ent_addr)
 									$('input[name=ent_mo]').val(data.ent_mo)
-									$('input[name=ent_file]')
-											.val(data.ent_file)
+									$('input[name=ent_file]').val(data.ent_file)
 									$('input[name=ent_of]').val(data.ent_of)
-									$('input[name=ent_notice]').val(
-											data.ent_notice)
-									$('input[name=ent_info]')
-											.val(data.ent_info)
+									$('input[name=ent_notice]').val(data.ent_notice)
+									$('input[name=ent_info]').val(data.ent_info)
 									$('input[name=ent_img]').val(data.ent_img)
 									$('input[name=ent_ot]').val(data.ent_ot)
 									$('input[name=ent_ct]').val(data.ent_ct)
-									$('input[name=ent_account]').val(
-											data.ent_account)
-									$('input[name=ent_stop]')
-											.val(data.ent_stop)
-
+									$('input[name=ent_account]').val(data.ent_account)
+									$('input[name=ent_stop]').val(data.ent_stop)
+									$('input[name=own_stopdate]').val(data.own_stopdate)
 								},
 								error : function() {
 									console.log("오류");
 								}
 							});// ownInfo click ajax
-							$('#stop')
-									.click(
+							$('#stop').click(
 											function() {
-												var own_stopdate = $(
-														'select[name=stop]')
-														.val();
-												$
-														.ajax({
+												var own_stopdate = $('select[name=stop]').val();
+												console.log(own_stopdate);
+												$.ajax({
 															url : "/admin/ownerStop",
 															data : {
-																"own_id" : $(
-																		'input[name=own_id]')
-																		.val(),
+																"own_id" : $('input[name=own_id]').val(),
 																"own_stopdate" : own_stopdate
 															},
 															dataType : "json",
-															success : function(
-																	data) {
+															success : function(data) {
 																if (data == 1) {
 																	alert("정상적으로 정지가 부여되었습니다.");
-																	location
-																			.replace("/admin/ownerList?page=${param.page}");
+																	location.replace("/admin/ownerList?page=${param.page}");
 																}
 															},
-															error : function(
-																	data) {
-																console
-																		.log("에러");
+															error : function(data) {
+																console.log("에러");
 															}
 														});
 											});

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.dapao.domain.AlarmVO;
+import com.dapao.domain.ExpVO;
 import com.dapao.domain.ExpusVO;
 import com.dapao.domain.FileVO;
 import com.dapao.domain.ItemVO;
@@ -324,6 +325,14 @@ public class ItemDAOImpl{
 		
 	}
 	
+	// 체험단 정보 조회
+	public int getExpInfo(String own_id) {
+		logger.debug("DAOImpl : getExpInfo(String own_id) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".getExpInfo", own_id);
+		
+	}
+	
+	
 	// 체험단리스트에 목록 추가
 	public int expApply(ExpusVO expusVO) {
 		logger.debug("DAOImpl : expApply(ExpusVO expusVO) 호출");
@@ -349,6 +358,13 @@ public class ItemDAOImpl{
 	public List<TotalVO> yourReview(String us_id) {
 		logger.debug("DAOImpl : yourReview(String us_id) 호출");
 		return sqlSession.selectList(NAMESPACE + ".yourReview", us_id);
+		
+	}
+	
+	// 글 삭제
+	public int itemDelete(Integer it_no) {
+		logger.debug("DAOImpl : itemDelete(Integer it_no) 호출");
+		return sqlSession.update(NAMESPACE + ".itemDelete", it_no);
 		
 	}
 	
