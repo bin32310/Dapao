@@ -131,15 +131,17 @@ width : 300px;
 			<div class="box"><!-- 3 -->
 				<c:forEach var="yi" items="${yourItemVO }">
 					<c:if test="${yi.it_state != 2 && yi.it_state != 3 }">
-						<div class="item2"><!-- 4 -->
-							<img src="/imgfile/${yi.it_img }" name="it_img" >
-							<div class="product"><!-- 5 -->
-								<input type="text" name="it_title" value="${yi.it_title }" class="inputcolor" readonly>
-							</div><!-- 5 -->
-							<div class="price"><!-- 6 -->
-								<input type="text" name="it_price" value="${yi.it_price }원" class="inputcolor" readonly>
-							</div><!-- 6 -->
-						</div><!-- 4 -->
+						<a href="../item/itemDetail?it_no=${yi.it_no }">
+							<div class="item2"><!-- 4 -->
+								<img src="/imgfile/${yi.it_img }" name="it_img" >
+								<div class="product"><!-- 5 -->
+									<input type="text" name="it_title" value="${yi.it_title }" class="inputcolor" readonly>
+								</div><!-- 5 -->
+								<div class="price"><!-- 6 -->
+									<input type="text" name="it_price" value="${yi.it_price }원" class="inputcolor" readonly>
+								</div><!-- 6 -->
+							</div><!-- 4 -->
+						</a>
 					</c:if>
 				</c:forEach>
 			</div><!-- 3 -->
