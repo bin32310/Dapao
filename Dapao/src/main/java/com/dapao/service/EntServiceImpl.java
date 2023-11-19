@@ -99,6 +99,12 @@ public class EntServiceImpl {
 		logger.debug("service tradePurchase(String tr_no) 호출 ");
 		edao.tradePurchase(tr_no);
 	}
+	
+	// 비밀번호 변경
+	public Integer changePw(EntVO vo) throws Exception {		
+		logger.debug(" changePw(EntVO vo) 호출 ");
+		return edao.changePw(vo);
+	}
 
 	// 홈페이지 광고 신청
 	public void entAd(AdVO vo) throws Exception {

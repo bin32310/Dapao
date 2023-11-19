@@ -155,6 +155,15 @@ public class EntDAOImpl {
 		return sqlSession.selectOne(NAMESPACE + ".entCoin", own_id);
 		
 	}
+
+	
+	// 비밀번호 변경
+	public Integer changePw(EntVO vo) throws Exception {		
+		logger.debug(" changePw(EntVO vo) 호출 ");
+		return sqlSession.update(NAMESPACE+".changePw", vo);
+	}
+	
+	
 	// 체험단 광고 유무
 	public int entExpAd(String own_id) {
 		logger.debug("DAOImpl : entExpAd(String own_id)");
