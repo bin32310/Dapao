@@ -257,12 +257,6 @@ public class AdminDAOImpl{
 		return sqlSession.selectOne(NAMESPACE+".acResultSelectUserId", vo);
 	}
 	
-	// 신고관리 - 신고 처리상태 업뎃(owner 조회)
-	public String acResultSelectOwnerId(AcVO vo) throws Exception {
-		logger.debug("DAO : acResultSelectOwnerId(AcVO vo) 호출");
-		return sqlSession.selectOne(NAMESPACE+".acResultSelectOwnerId", vo);
-	}
-	
 	// 신고관리 - 신고 처리상태 업뎃(user)
 	public int acResultUserUpdate(AcVO acVo,String stop) throws Exception {
 		logger.debug("DAO : acResultOwnerUpdate(AcVO acVo,String stop) 호출");
@@ -270,16 +264,6 @@ public class AdminDAOImpl{
 		vo.put("acVo", acVo);
 		vo.put("stop", stop);
 		return sqlSession.update(NAMESPACE+".acResultUserUpdate", vo);
-	}
-	
-	// 신고관리 - 신고 처리상태 업뎃(owner)
-	public int acResultOwnerUpdate(AcVO acVo,String stop) throws Exception {
-		logger.debug("DAO : acResultOwnerUpdate(AcVO acVo,String stop) 호출");
-		Map<String, Object> vo = new HashMap<String, Object>();
-		vo.put("acVo", acVo);
-		vo.put("stop", stop);
-		logger.debug("allvo"+vo);
-		return sqlSession.update(NAMESPACE+".acResultOwnerUpdate", vo);
 	}
 	
 	//신고관리 - 신고 user 글 쓰기
@@ -339,5 +323,10 @@ public class AdminDAOImpl{
 		logger.debug("DAO :  expReturn(ExpVO vo) 호출");
 		return sqlSession.update(NAMESPACE+".expReturn", vo);
 	}
-
+	
+	// 신고관리 - 신고취소
+	public int acCancel(Integer ac_no) throws Exception{
+		logger.debug("acCancel(Integer ac_no) 호출");
+		return sqlSession.update(NAMESPACE+".acCancel", ac_no);
+	}
 }

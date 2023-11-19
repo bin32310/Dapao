@@ -207,11 +207,6 @@
 		<h1> 유저 메인페이지</h1>
 -->
 
-	<c:if test="${!empty us_id  && us_id.equals('admin') }">
-		<c:redirect url="../admin/userList"/>
-	</c:if>
-
-
 	<c:if test="${empty us_id }">
 		<%@ include file="../include/userHeader.jsp" %>
 	</c:if>

@@ -139,8 +139,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" name="update" class="update">수정</button>
-				<button type="button" name="delete" class="delete">삭제</button>
+				<button type="button" name="update" class="update btn btn-default">수정</button>
+				<button type="button" name="delete" class="delete btn btn-default">삭제</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
