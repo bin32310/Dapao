@@ -4,10 +4,14 @@
 
 <div class="boxList">
 	<div class="box-header with-board">
-		<p class="pContent"><i class="fa fa-twitch"></i>체험단 관리</p>
+		<p class="pContent">
+			<i class="fa fa-twitch"></i>체험단 관리
+		</p>
 		<form action="/admin/expList" id="search">
-			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2"> 
-			<button id="searchBtn"><i class="fa fa-fw fa-search"></i></button>
+			<input type="text" name="keyword" value="${pageVO.cri.keyword }" id="search2">
+			<button id="searchBtn">
+				<i class="fa fa-fw fa-search"></i>
+			</button>
 		</form>
 	</div>
 	<div class="box-body">
@@ -18,8 +22,7 @@
 					<th>사업자 아이디</th>
 					<th>체험단 제목</th>
 					<th>체험단 내용</th>
-					<th>체험단 인원</th>
-					<th>체험단 유의사항</th>
+					<th>모집 인원</th>
 					<th>체험단 신청일자</th>
 					<th>체험단 상태</th>
 				</tr>
@@ -31,8 +34,7 @@
 						<td>${vo.own_id }</td>
 						<td>${vo.exp_title }</td>
 						<td>${vo.exp_content }</td>
-						<td>${vo.exp_psn_ch }</td>
-						<td>${vo.exp_notice }</td>
+						<td>${vo.exp_psn }</td>
 						<td>${vo.exp_regdate }</td>
 						<c:choose>
 							<c:when test="${vo.exp_state == 0 }">
@@ -94,57 +96,49 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">체험단 제목</label>
+					<label class="col-sm-2 control-label">제목</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" name="exp_title" readonly><br>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">체험단 내용</label>
+					<label class="col-sm-2 control-label cs_group">내용</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="exp_content" readonly><br>
+						<textarea class="form-control" name="exp_content" id="exp_content" rows="5" readonly></textarea>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">체험단 인원</label>
+					<label class="col-sm-2 control-label">모집 인원</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" name="exp_psn" readonly><br>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">체험단 신청인원</label>
+					<label class="col-sm-2 control-label">신청 인원</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" name="exp_psn_ch" readonly><br>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">체험단 유의사항</label>
+					<label class="col-sm-2 control-label">유의사항</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="exp_notice" readonly><br>
+						<textarea class="form-control" name="exp_notice" id="exp_notice" rows="5" readonly></textarea>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">체험단 상태</label>
+					<label class="col-sm-2 control-label">상태</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" name="exp_state" readonly><br>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">체험단 신청일자</label>
+					<label class="col-sm-2 control-label">신청일자</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" name="exp_regdate" readonly><br>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<select name="update" class="btn btn-default" aria-label="Small select example">
-					<option selected>광고 기간</option>
-					<option value="5">5일</option>
-					<option value="7">7일</option>
-					<option value="10">10일</option>
-					<option value="15">15일</option>
-					<option value="20">20일</option>
-				</select>
 				<button type="button" name="update" class="btn btn-default update">승인</button>
 				<button type="button" name="delete" class="btn btn-default delete">반려</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -169,10 +163,10 @@
 					$('input[name=exp_no]').val(data.exp_no)
 					$('input[name=own_id]').val(data.own_id)
 					$('input[name=exp_title]').val(data.exp_title)
-					$('input[name=exp_content]').val(data.exp_content)
+					$('#exp_content').val(data.exp_content)
 					$('input[name=exp_psn]').val(data.exp_psn)
 					$('input[name=exp_psn_ch]').val(data.exp_psn_ch)
-					$('input[name=exp_notice]').val(data.exp_notice)
+					$('#exp_notice').val(data.exp_notice)
 					$('input[name=exp_state]').val(data.exp_state)
 					$('input[name=exp_regdate]').val(data.exp_regdate)
 				},

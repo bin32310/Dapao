@@ -423,12 +423,19 @@ public class AdminController {
 	@RequestMapping("/acResultUpdate")
 	public int acResultUserUpdate(AcVO acVo, String id,String stop) throws Exception {
 		logger.debug("acResultUpdate() 호출");
-		String ac_own_id = aService.acResultSelectOwnerId(acVo);
-		String ac_us_id = aService.acResultSelectUserId(acVo);
-		if (ac_own_id != null || ac_own_id == id) {
-			return aService.acResultOwnerUpdate(acVo,stop);
-		}
-			return aService.acResultUserUpdate(acVo,stop);
+		logger.debug("acVO : "+acVo);
+		logger.debug("id : "+id);
+		logger.debug("stop : "+stop);
+		
+		acVo.setUs_id(id);
+		
+		if(stop == null) {
+			// 신고접수취소
+			return aService.acCancel(acVo.getAc_no());
+		}else {
+			// 정지
+			return aService.acResultUserUpdate(acVo, stop);
+		}		
 	}
 	
 	// 신고관리 - 신고서 작성 폼

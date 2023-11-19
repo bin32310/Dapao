@@ -2,13 +2,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../include/header.jsp"%>
 <style>
-.itState{
+.prodState{
 	border-radius: 0.3em;
     background-color: aliceblue;
     border: none;
     color: green;
 }
-.itState:hover{
+.prodState:hover{
 	background-color: green;
 	color: white;
 }
@@ -30,16 +30,16 @@
 					<th>상품 카테고리</th>
 					<th>가격</th>
 					<th>상품 상태</th>
-					<th width="7%">판매 상태</th>
-					<th width="7%">날짜 정보</th>
-					<th width="7%"></th>
+					<th>판매 상태</th>
+					<th>날짜 정보</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="list" items="${prodList }">
 					<tr role="row" class="odd">
-						<td><a class="prod_no">${list.prod_no }</a></td>
-						<td>${list.own_id }</td>
+						<td>${list.prod_no }</td>
+						<td><a href="/ent/shopMain?ent_id=${list.own_id }" class="prod_no">${list.own_id }</a></td>
 						<td>${list.prod_cate }</td>
 						<td>${list.prod_price }</td>
 						<td>${list.prod_con }</td>
@@ -66,7 +66,7 @@
 							</c:when>
 						</c:choose>
 						<c:if test="${list.prod_state eq '0' }">
-							<td><button type="button" class="itState" value="${list.prod_no }">삭제</button></td>
+							<td><button type="button" class="prodState" value="${list.prod_no }">삭제</button></td>
 						</c:if>
 					</tr>
 				</c:forEach>
@@ -103,6 +103,7 @@
 		console.log(param.get("page"));
 		// 삭제버튼 클릭시
 		$('.prodState').click(function() {
+			alert("Ddd");
 			console.log($(this).val());
 			$.ajax({
 				url : "/admin/prodDelete",

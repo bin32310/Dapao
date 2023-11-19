@@ -1,6 +1,19 @@
-<%@ page language="java" 
-    pageEncoding="UTF-8"%>
-<%@include file="./include/header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+ 
+<c:if test="${empty us_id }">
+	<%@ include file="./include/userHeader.jsp" %>
+</c:if>
+<c:if test="${!empty us_id && us_id != 'admin' && empty own_id}">
+	<%@ include file="./include/userLoginHeader.jsp" %>
+	<input type="hidden" value="${us_id }" name="login"> 
+</c:if>
+<c:if test="${!empty ent_name && ent_name != 'admin' && empty us_id}">
+	<%@ include file="./include/entHeader.jsp" %>
+</c:if>
+<c:if test="${us_id == 'admin'}">
+	<%@include file="./include/header.jsp"%>
+</c:if>
 
 <title>채팅</title>
 
@@ -189,8 +202,20 @@
 					<input type="text" id="msg" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2" onkeyup="enterKey()">
 					<div class="input-group-append">
 						<button class="btn btn-outline-secondary" type="button" id="button-send" onclick="send()">전송</button>
-						<button class="btn btn-outline-secondary" type="button" onclick="location.href='/user/userMain';">나가기</button>
+						<button class="btn btn-outline-secondary" type="button" onclick="location.href='${pageContext.request.contextPath }/user/userMain';">나가기</button>
 					</div>
 				</div>
 			</div>
-<%@include file="./include/footer.jsp"%>
+<c:if test="${empty us_id }">
+	<%@ include file="./include/userFooter.jsp" %>
+</c:if>
+<c:if test="${!empty us_id && us_id != 'admin' && empty own_id}}">
+	<%@ include file="./include/userFooter.jsp" %>
+	<input type="hidden" value="${us_id }" name="login"> 
+</c:if>
+<c:if test="${!empty ent_name && ent_name != 'admin' && empty us_id}}">
+	<%@ include file="./include/entFooter.jsp" %>
+</c:if>
+<c:if test="${us_id == 'admin'}">
+	<%@include file="./include/footer.jsp"%>
+</c:if>

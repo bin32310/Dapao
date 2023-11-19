@@ -192,7 +192,7 @@ textarea {
 			pay_method : "card",
 			merchant_uid : "IMP" + makeMerchantUid,
 			name : $('#exp_title').val(),
-			amount : 100 //  $('#exp_price').val()
+			amount : $('#exp_price').val()
 // 			buyer_tel : "01011111111", // 사업자 전화번호
 		}, function(rsp) { // callback
 			//rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
