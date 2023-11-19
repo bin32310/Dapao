@@ -61,7 +61,7 @@
 <script type="text/javascript">
 	var sock;
 	document.addEventListener("DOMContentLoaded", function() {
-		sock = new SockJS("http://localhost:8088/chat");
+		sock = new SockJS("http://c6d2305t1.itwillbs.com/chat");
 
 		sock.onopen = function(event) {
 

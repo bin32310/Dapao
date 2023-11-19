@@ -20,6 +20,6 @@ public class WebSoketConfig implements WebSocketConfigurer{
 				.setAllowedOrigins("*")
 				.withSockJS()
 				.setClientLibraryUrl("http://localhost:8088/chat")
-				.setClientLibraryUrl("http://c6d2305t1.itwillbs.com/websocket/chat/*");
+				.setClientLibraryUrl("http://c6d2305t1.itwillbs.com/chat");
 	}
 }
