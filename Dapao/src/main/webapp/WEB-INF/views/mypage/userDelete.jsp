@@ -5,11 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<h1>회원 탈퇴 </h1>
-<h2>/mypage/userDelete.jsp</h2>
+<title>mypage/userDelete</title>
+
 
 		<c:if test="${empty us_id }">
 		<%@ include file="../include/userHeader.jsp" %>
@@ -18,6 +15,9 @@
 		<%@ include file="../include/userLoginHeader.jsp" %>
 	</c:if>
 	
+</head>
+<body>
+
 	
 		<script type="text/javascript">
 	function back(){
