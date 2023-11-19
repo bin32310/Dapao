@@ -1,4 +1,3 @@
-<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../include/entHeader.jsp"%>
@@ -130,11 +129,15 @@
 						<div class="box-header with-border"></div>
 						<div class="form-group">
 							<label>업로드 기한</label> <select class="form-control"
-								name="ad_upload">
+								name="ad_upload" id="period" onchange="chageSelect()">
 								<option value="30">30일</option>
 								<option value="60">60일</option>
 								<option value="90">90일</option>
 							</select>
+						</div>
+						<div class="from-group">
+							<label>가격</label>
+							<p class="ad_price">300,000원</p>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -151,4 +154,20 @@
 
 
 <%@ include file="../include/entFooter.jsp"%>
+<script type="text/javascript">
+	var ent_coin = '${ent_coin}';
+	function chageSelect() { //가격
+		$('.ad_price').text($('#period').val()+"0,000원");
+	}
+	$(function () {
+		$('button[type=submit]').click(function () {
+			var price = $('#period').val()*1000;
+			if(ent_coin < price){
+				alert(" 금액이 부족합니다 ");
+				location.href="/ent/coinCharge";
+				return false;
+			}
+		});//submit
+	});//jquery
 
+</script>
