@@ -231,7 +231,7 @@ public class EntController {
 
 	// http://localhost:8088/ent/productManage
 	@RequestMapping(value = "/productManage", method = RequestMethod.POST)
-	public void productManagePOST(ProdVO vo, Model model, Criteria cri, HttpSession session) throws Exception {
+	public String productManagePOST(ProdVO vo, Model model, Criteria cri, HttpSession session) throws Exception {
 		logger.debug(" productManagerPOST() ");
 		String name = "상품 조회/수정/등록";
 		String own_id = (String) session.getAttribute("own_id");
@@ -254,6 +254,8 @@ public class EntController {
 		model.addAttribute("pageVO", pVo);
 		model.addAttribute("name", name);
 		logger.debug(" 연결된 뷰페이지(/views/ent/productManage.jsp)출력 ");
+		
+		return "redirect:/ent/productManage";
 	}
 
 	// http://localhost:8088/ent/entOrder

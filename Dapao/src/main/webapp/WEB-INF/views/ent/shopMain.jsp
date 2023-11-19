@@ -25,7 +25,6 @@
 
 .item {
 	width: 400px;
-	height: 400px;
 }
 
 .carousel-inner>.item>img {
@@ -114,7 +113,6 @@
 						<a href="#" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
 				</div>
 
-				<a href="#" class="small-box-footer" id="user_exp_apply">신청하기 <i class="fa fa-arrow-circle-right"></i></a>
 				
 				<c:if test="${!empty us_id }">
 					<input type="hidden" value="${ent_id }" name="ent_id">
@@ -302,12 +300,23 @@
 					});
 
 	$(function(){
-		
+		var us_id = '${us_id}';
 		$('.prodPick').hover(function() {
 			$(this).css("cursor", "pointer");
 		});
+		$('.prodPick').click(function() {
+			if(us_id == null || typeof us_id == "undefined" || us_id == ""){
+				return false;
+			}
+		});
 		$('#chat').click(function() { //판다톡
-			location.href = "/websocket/chat/${ent_name}";
+			if(us_id == null || typeof us_id == "undefined" || us_id == ""){
+				console.log("사업자");
+				location.href = "/websocket/chat/${ent_name}";
+			}else{
+				console.log("회원");
+				location.href = "/websocket/chat/${us_id}";
+			}
 		});
 		$('#chat').hover(function() { 
 			$(this).css("cursor", "pointer");
