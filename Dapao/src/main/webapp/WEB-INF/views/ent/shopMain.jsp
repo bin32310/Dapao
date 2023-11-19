@@ -45,8 +45,17 @@
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	
 }
+.nav-tabs-custom{
+	width: 50%;
+}
+.tab-content>.tab-pane{
+	font-size: 17px;
+}
+.nav-tabs-custom>.nav-tabs>li.active{
+	border-top-color: green;
+}
+
 </style>
 <script type="text/javascript">
 	$(function() {

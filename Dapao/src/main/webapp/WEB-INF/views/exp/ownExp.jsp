@@ -133,7 +133,7 @@ textarea {
 				사업자 아이디 <input class="form-control" type="text" value="${own_id }" readonly>
 			</div>
 			<div class="expInfo">
-				신청 제목 <input class="form-control" type="text" id="exp_content2" readonly>
+				신청 제목 <input class="form-control" type="text" id="exp_title2" readonly>
 			</div>
 			<div class="expInfo">
 				모집 인원 <input class="form-control" type="text" id="exp_psn2" readonly>
@@ -175,7 +175,7 @@ textarea {
 			return false;
 		}
 		$('#myModal').modal('show');
-		$('#exp_content2').val($('#exp_content').val());
+		$('#exp_title2').val($('#exp_title').val());
 		$('#exp_psn2').val($('#exp_psn').val());
 		$('#exp_price2').val($('#exp_price').val());
 	});
@@ -191,8 +191,8 @@ textarea {
 			pg : "html5_inicis.INIpayTest",
 			pay_method : "card",
 			merchant_uid : "IMP" + makeMerchantUid,
-			name : $('#exp_content').val(),
-			amount : 100, //  $('#exp_price').val()
+			name : $('#exp_title').val(),
+			amount : 100 //  $('#exp_price').val()
 // 			buyer_tel : "01011111111", // 사업자 전화번호
 		}, function(rsp) { // callback
 			//rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
@@ -209,7 +209,7 @@ textarea {
 						pay_pg : "카카오",
 						pay_method : rsp.pay_method,
 						pay_card : rsp.card_name,
-						own_id : "${own_id}"
+						own_id : id
 					},
 					dataType : "json",
 					success : function(data) {
