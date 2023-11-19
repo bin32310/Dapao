@@ -179,7 +179,7 @@
 						</c:if>
 						<c:if test="${!empty sessionScope.own_id }">
 							<p>${sessionScope.own_id}</p>
-							<p>충전된 대나무페이 : ${ent_coin }</p>
+							<p>대나무페이 : ${ent_coin }</p>
 						</c:if>
 					</div>
 				</div>

@@ -17,10 +17,15 @@
 	margin: 0;
 	box-sizing: border-box;
 }
+html{
+	height: 100%;
+	
+}
 
 body {
 	font-family: 'Poppins', sans-serif;
-	overflow: hidden;
+	overflow: visible;
+	overflow: scroll;
 }
 
 .wave {
@@ -400,7 +405,7 @@ a:hover {
 						<i class="fas fa-file"></i>
 					</div>
 					<div class="div">
-						<input type="file" name="ent_file" required="required" id="ent_file" placeholder="사업자등록증첨부">							
+						<input type="text" name="ent_file" required="required" id="ent_file" placeholder="사업자등록증첨부">							
 					</div>
 				</div>
 			
