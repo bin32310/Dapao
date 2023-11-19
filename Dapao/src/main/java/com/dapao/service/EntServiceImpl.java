@@ -122,7 +122,12 @@ public class EntServiceImpl {
 
 	// 코인충전 결제 내역
 	public int entCoin(String own_id) {
-		logger.debug("Service : userCoin(String us_id) 호출");
+		logger.debug("Service : entCoin(String us_id) 호출");
 		return edao.entCoin(own_id);
+	}	
+	// 체험단 광고 유무
+	public int entExpAd(String own_id) {
+		logger.debug("service : entExpAd(String own_id) 호출 ");
+		return edao.entExpAd(own_id);
 	}
 }

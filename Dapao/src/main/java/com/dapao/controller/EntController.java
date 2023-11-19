@@ -91,11 +91,14 @@ public class EntController {
 		logger.debug("entList : " + entList);
 		String name="";
 		if(entList != null) {
+			if(entList.getEnt_name() == null || entList.getEnt_name().equals("")) {
+				name = "없음";
+			}
 			name = entList.getEnt_name();
 		}
 		int idx = 1;
 		if (entList != null) {
-			if (entList.getEnt_img() != null || !entList.getEnt_img().equals("")) {
+			if (entList.getEnt_img() != null && !entList.getEnt_img().equals("")) {
 				idx = entList.getEnt_img().indexOf(",") + 1;
 			}
 		}
@@ -104,18 +107,24 @@ public class EntController {
 			imgList[i] = "null";
 		}
 		if (entList != null) {
-			if (!entList.getEnt_img().equals(null) || !entList.getEnt_img().equals("")) {
+			if (entList.getEnt_img() != null && !entList.getEnt_img().equals("")) {
 				String img = entList.getEnt_img();
 				imgList = img.split(","); // 합쳐진 이미지 ,로 나눠서 저장
 				logger.debug(" imgList : " + imgList);
 			}
 		}
-		model.addAttribute("imgList", imgList);
-		model.addAttribute("rlist", rlist);
-		model.addAttribute("fileList", fileList);
-		model.addAttribute("ent", entList);
-		model.addAttribute("plist", plist);
-		model.addAttribute("name", name);
+		
+		// 체험단 광고 신청했는지
+		Integer adResult = eService.entExpAd(own_id);
+		logger.debug("adResult : "+adResult);
+		
+		
+		model.addAttribute("adResult", adResult); // 광고유무
+		model.addAttribute("imgList", imgList); // 이미지리스트
+		model.addAttribute("rlist", rlist); // 리뷰리스트
+		model.addAttribute("ent", entList); // 상점
+		model.addAttribute("plist", plist); // 물품
+		model.addAttribute("name", name); // 화면이름
 		
 		
 		logger.debug(" 연결된 뷰페이지(/views/ent/shopMain.jsp) 출력 ");

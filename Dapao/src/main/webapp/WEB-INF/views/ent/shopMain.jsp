@@ -310,6 +310,8 @@
 
 	$(function(){
 		var us_id = '${us_id}';
+		var adResult = '${adResult}';
+		console.log(adResult);
 		$('.prodPick').hover(function() {
 			$(this).css("cursor", "pointer");
 		});
@@ -361,7 +363,12 @@
 		
 		
 		$('#user_exp_apply').on("click",function(){
-			$('#expApply').modal("show");
+			console.log("click");
+			if(adResult == 1){
+				$('#expApply').modal("show");
+			}else{
+				alert("현재 체험단 신청중이 아닙니다.");
+			}
 		});
 		
 		
@@ -400,6 +407,7 @@
 			
 			
 		}); // expApplyOKModalYes 끝
+		
 		
 	}); // document.ready 끝
 </script>

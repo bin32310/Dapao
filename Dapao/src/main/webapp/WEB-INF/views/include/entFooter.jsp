@@ -8,8 +8,6 @@
 	<script type="text/javascript">
 	$(function() {
 		var own_id = '${own_id}';
-		var ent_name = '${ent_name}';
-		console.log(ent_name);
 		/* 마우스이벤트  */
 		$('.small-box-footer').hover(function() {
 			$(this).css('color', 'cadetblue');
@@ -34,7 +32,7 @@
 				return false;
 			}
 		});
-		$('#coin').off("click").click(function() {
+		$('#coin').off("click").click(function() { 
 			if (own_id == null || typeof own_id == "undefined" || own_id == "") {
 				alert('로그인이후 이용해주세요');
 				location.href = "/ent/entLogin";

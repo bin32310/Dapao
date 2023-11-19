@@ -170,4 +170,15 @@
   	values(#{imp_uid },#{pay_uid },#{pay_kind },#{pay_price },#{own_id },#{pay_con },#{pay_pg},#{pay_card},#{pay_method})
   </insert>
   
+  <select id="entCoin" resultType="Integer">
+  	select ent_coin from ent 
+  	where own_id=#{own_id}
+  </select>
+  <select id="entExpAd" resultType="Integer">
+  	select count(*) 
+  	from ad 
+  	where own_id=#{own_id} 
+  	and ad_board=1
+  </select>
+  
 </mapper>

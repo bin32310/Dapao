@@ -151,9 +151,14 @@ public class EntDAOImpl {
 	}
 	// 코인 가격 검색
 	public int entCoin(String own_id) {
-		logger.debug("DAOImpl : entCoin(String us_id) 호출");
+		logger.debug("DAOImpl : entCoin(String own_id) 호출");
 		return sqlSession.selectOne(NAMESPACE + ".entCoin", own_id);
 		
+	}
+	// 체험단 광고 유무
+	public int entExpAd(String own_id) {
+		logger.debug("DAOImpl : entExpAd(String own_id)");
+		return sqlSession.selectOne(NAMESPACE + ".entExpAd", own_id);
 	}
 
 }
