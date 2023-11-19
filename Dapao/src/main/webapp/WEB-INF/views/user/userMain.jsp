@@ -325,24 +325,24 @@
 							<!-- 글 상태 표시 -->
 							<c:choose>
 								<c:when test="${item.it_state == 0 }">
-									<input type="text" value="판매중" class="it_state" disabled="disabled"> <br>
+									<input type="text" value="판매중" class="it_state" > <br>
 								</c:when>
 								<c:when test="${item.it_state == 1 }">
-									<input type="text" value="예약중" class="it_state" disabled="disabled"> <br>
+									<input type="text" value="예약중" class="it_state" > <br>
 								</c:when>
 								<c:when test="${item.it_state == 2 }">
-									<input type="text" value="판매완료" class="it_state" disabled="disabled"> <br>
+									<input type="text" value="판매완료" class="it_state" > <br>
 								</c:when>
 								<c:when test="${item.it_state == 3 }">
-									<input type="text" value="삭제됨" class="it_state" disabled="disabled"> <br>
+									<input type="text" value="삭제됨" class="it_state" > <br>
 								</c:when>
 								<c:otherwise>
-									<input type="text" value="접근이상함" class="it_state" disabled="disabled"> <br>			
+									<input type="text" value="접근이상함" class="it_state" > <br>			
 								</c:otherwise>
 							</c:choose>
 							<div>
-								<input type="text" value="등록날짜  " class="it_regdate_text" disabled="disabled">
-								<input type="text" value="${item.it_regdate}" class="it_regdate" disabled="disabled">
+								<input type="text" value="등록날짜  " class="it_regdate_text" >
+								<input type="text" value="${item.it_regdate}" class="it_regdate" >
 							</div>
 						</a>
 					</div>	 
