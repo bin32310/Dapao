@@ -148,7 +148,7 @@
            <li class="header">메뉴</li>
            <c:if test="${us_id.equals('admin') }">
 	            <li class="treeview">
-	              <a href="../admin/userList">
+	              <a href="../admin/userList?page=1">
 	                <i class="fa fa-edit"></i>
 	                <span>관리자페이지</span>
 	              </a>
