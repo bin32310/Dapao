@@ -548,14 +548,36 @@ public class EntController {
 	}
 
 	@RequestMapping(value = "/entJoin", method = RequestMethod.POST)
-	public String entJoinPOST(/* @ModelAttribute */ EntVO vo) throws Exception {
+	public String entJoinPOST(EntVO vo, MultipartHttpServletRequest mhsr) throws Exception {
 		logger.debug("entJoinPOST() 호출");
 		// 전달정보 저장(회원가입 정보)
 		logger.debug("vo : " + vo);
-		String own_pw = BCrypt.hashpw(vo.getOwn_pw(), BCrypt.gensalt());
+		List<MultipartFile> fileList = mhsr.getFiles("file");
+		ArrayList<String> imgList = new ArrayList<String>();
+		
+		String path = "C:\\upload"; // 경로
+		File dir = new File(path);
+		if (!dir.isDirectory()) {
+			dir.mkdirs();
+		}
+		logger.debug(" path : " + path);
+		for (MultipartFile mf : fileList) {
+			String genId = UUID.randomUUID().toString(); // 중복 처리
+			String originFileName = mf.getOriginalFilename(); // 원본 파일 명
 
-		vo.setOwn_pw(own_pw);
-
+			String saveFile = path + "\\" + genId + "_" + originFileName; // 저장할 경로
+			String saveFileName = genId + "_" + originFileName; // 저장할 파일명
+			logger.debug(" saveFile : " + saveFile);
+			imgList.add(saveFileName);
+			logger.debug("imgList : " + imgList);
+			mf.transferTo(new File(saveFile));
+			logger.debug("이미지 생성됨");
+		}
+		logger.debug("@@@@@@@@@@@String.join(\",\", imgList) :" + String.join(",", imgList));
+		vo.setEnt_file(String.join(",", imgList));
+		logger.debug("vo : " + vo);
+		
+		
 		// DAOImpl -> DB에 정보 저장
 		// mdao.insertMember(vo);
 		eService.entJoin(vo);
