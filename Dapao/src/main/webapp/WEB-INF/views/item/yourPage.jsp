@@ -133,7 +133,7 @@ width : 300px;
 					<c:if test="${yi.it_state != 2 && yi.it_state != 3 }">
 						<a href="../item/itemDetail?it_no=${yi.it_no }">
 							<div class="item2"><!-- 4 -->
-								<img src="/imgfile/${yi.it_img }" name="it_img" >
+								<img src="/resources/upload/${yi.it_img }" name="it_img" >
 								<div class="product"><!-- 5 -->
 									<input type="text" name="it_title" value="${yi.it_title }" class="inputcolor" readonly>
 								</div><!-- 5 -->

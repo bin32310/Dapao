@@ -227,7 +227,8 @@
 		<c:forEach var="ad" items="${adList}">
 			<div class="item_ad_section">
 				<a href="../ent/shopMain?ent_id=${ad.own_id }">
-					<img src="/imgfile/${ad.ent_img }" name="ent_img" class="item_img"> <br><br>
+					<%-- <img src="/resources/upload/${ad.ent_img }" name="ent_img" class="item_img"> <br><br> --%>
+					<img src="/resources/upload/${ad.own_id }.JPG" name="ent_img" class="item_img"> <br><br>
 					<input type="text" value="${ad.ent_name }" name="ent_name" class="it_title" disabled="disabled">
 				</a>
 			</div>
@@ -240,7 +241,7 @@
 	 		<c:forEach var="love" items="${loveList}">
 				<div class="item_section"> <!-- 4 -->
 					<a href="../item/itemDetail?it_no=${love.it_no }">
-						<img src="/imgfile/${love.it_img }" name="it_img" class="item_img"> <br>
+						<img src="/resources/upload/${love.it_img }" name="it_img" class="item_img"> <br>
 						<input type="text" value="${love.it_title }" name="it_title" class="it_title" disabled="disabled"> <br>
 						<input type="text" value="${love.it_price }" name="it_price" class="it_price" disabled="disabled">
 						<input type="hidden" value="${love.it_state }" name="it_state" >
@@ -281,7 +282,7 @@
 		 		<c:if test="${item.it_state != 2 && item.it_state != 3  }">
 		 			<div class="item_section"> <!-- 6 -->
 						<a href="../item/itemDetail?it_no=${item.it_no }">
-							<img src="/imgfile/${item.it_img }" name="it_img"  class="item_img"> <br>
+							<img src="/resources/upload/${item.it_img }" name="it_img"  class="item_img"> <br>
 							<input type="text" value="${item.it_title }" name="it_title" class="it_title" disabled="disabled"> <br>
 							<input type="text" value="${item.it_price }원" name="it_price" class="it_price" disabled="disabled">
 							<input type="hidden" value="${item.it_state }" name="it_state">
@@ -318,7 +319,7 @@
 		 		<c:if test="${item.it_state != 2 && item.it_state != 3 &&  us_id != item.us_id }">
 		 			<div class="item_section"> <!-- 4 -->
 						<a href="../item/itemDetail?it_no=${item.it_no }">
-							<img src="/imgfile/${item.it_img }" name="it_img" class="item_img" > <br>
+							<img src="/resources/upload/${item.it_img }" name="it_img" class="item_img" > <br>
 							<input type="text" value="${item.it_title }" name="it_title" class="it_title" disabled="disabled"> <br>
 							<input type="text" value="${item.it_price }" name="it_price" class="it_price" disabled="disabled">
 							<input type="hidden" value="${item.it_state }" name="it_state">
@@ -415,8 +416,8 @@ $(function(){
 	 				
 	 			} // success 끝	
 	 		}); // ajax 끝
-       }
-      
+       } // function showPosition(pos)
+     
 
    	
      if(navigator.geolocation){

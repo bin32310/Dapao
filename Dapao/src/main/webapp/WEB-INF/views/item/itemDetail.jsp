@@ -477,7 +477,7 @@ input:focus{
 				
 				<div id="item_detail_main_img">
 					<img src="/resources/itemIMG/back.png" id="img_back">
-		 			<img  src="/imgfile/${itemVO.it_img }" id="item_main_img">
+		 			<img src="/resources/upload/${itemVO.it_img }" id="item_main_img">
 	 				<img src="/resources/itemIMG/forward.png" id="img_next">
  				</div>
 			
@@ -593,7 +593,7 @@ input:focus{
 								<input type="hidden" value="${si.it_no }" name="it_no"> <br>
 								<!-- <td  id ="uploadSeller"> -->
 								<a href="../item/itemDetail?it_no=${si.it_no }">
-									<img src="/imgfile/${si.it_img }" >
+									<img src="/resources/upload/${si.it_img }" >
 									<input type="text" value="${si.it_title }" name="it_title" readonly>
 								</a>
 							</form>	
@@ -614,7 +614,7 @@ input:focus{
 							<input type="hidden" value="${sc.it_no }" name="it_no"> <br>
 							<!-- <td id ="uploadCate"> -->
 							<a href="../item/itemDetail?it_no=${sc.it_no }">
-								<img src="/imgfile/${sc.it_img }">
+								<img src="/resources/upload/${sc.it_img }">
 								<input type="text" value="${sc.it_title }" name="it_title" readonly>
 							</a>
 						</form>
@@ -1157,7 +1157,7 @@ $(document).ready(function(){
 					
 					if(img_num < img_max_num){
 						if(idx == (img_num+1)){
-							$('#item_main_img').attr("src","/imgfile/"+item.uploadPath+"/"+item.uuid+"_"+item.fileName);
+							$('#item_main_img').attr("src","/resources/upload/"+item.uploadPath+"/"+item.uuid+"_"+item.fileName);
 							$('#item_main_img').attr("width","500px");
 							$('#item_main_img').attr("height","500px");
  							/* $('#img_back').removeAttr("disabled"); */ 
@@ -1207,7 +1207,7 @@ $(document).ready(function(){
 					
 					if(img_num > img_min_num){
 						if(idx == (img_num-1)){
-							$('#item_main_img').attr("src","/imgfile/"+item.uploadPath+"/"+item.uuid+"_"+item.fileName);
+							$('#item_main_img').attr("src","/resources/upload/"+item.uploadPath+"/"+item.uuid+"_"+item.fileName);
 							$('#item_main_img').attr("width","500px");
 							$('#item_main_img').attr("height","500px");
 						/* 	$('#img_next').removeAttr("disabled");  */
@@ -1258,7 +1258,7 @@ $(document).ready(function(){
 				
 				
 				if(img_fir_count == 1){
-					$('#item_main_img').attr("src","/imgfile/"+item.uploadPath+"/"+item.uuid+"_"+item.fileName);
+					$('#item_main_img').attr("src","/resources/upload/"+item.uploadPath+"/"+item.uuid+"_"+item.fileName);
 					$('#item_main_img').attr("width","500px");
 					$('#item_main_img').attr("height","500px");
 				/* 	$('#img_next').removeAttr("disabled");  */
