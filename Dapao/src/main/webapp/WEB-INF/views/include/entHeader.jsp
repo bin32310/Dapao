@@ -76,7 +76,9 @@
 .skin-purple-light .main-header .logo{
 	background-color: green;
 }
-
+.pagination>.active>a{
+	background-color: green;
+}
 </style>
 <!-- jQuery 2.1.4 -->
 <script
@@ -177,7 +179,7 @@
 						</c:if>
 						<c:if test="${!empty sessionScope.own_id }">
 							<p>${sessionScope.own_id}</p>
-							<p>충전된 대나무페이 : ${ent_coin }</p>
+							<p>대나무페이 : ${ent_coin }</p>
 						</c:if>
 					</div>
 				</div>

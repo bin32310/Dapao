@@ -45,8 +45,17 @@
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	
 }
+.nav-tabs-custom{
+	width: 50%;
+}
+.tab-content>.tab-pane{
+	font-size: 17px;
+}
+.nav-tabs-custom>.nav-tabs>li.active{
+	border-top-color: green;
+}
+
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -301,6 +310,8 @@
 
 	$(function(){
 		var us_id = '${us_id}';
+		var adResult = '${adResult}';
+		console.log(adResult);
 		$('.prodPick').hover(function() {
 			$(this).css("cursor", "pointer");
 		});
@@ -352,7 +363,12 @@
 		
 		
 		$('#user_exp_apply').on("click",function(){
-			$('#expApply').modal("show");
+			console.log("click");
+			if(adResult == 1){
+				$('#expApply').modal("show");
+			}else{
+				alert("현재 체험단 신청중이 아닙니다.");
+			}
 		});
 		
 		
@@ -391,6 +407,7 @@
 			
 			
 		}); // expApplyOKModalYes 끝
+		
 		
 	}); // document.ready 끝
 </script>

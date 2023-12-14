@@ -12,8 +12,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,6 +24,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,6 +59,8 @@ public class EntController {
 	private ProdServiceImpl pService;
 	@Autowired
 	private EntServiceImpl eService;
+	@Autowired
+	private JavaMailSender mailSender;
 
 	// http://localhost:8088/ent/shopMain
 	@RequestMapping(value = "/shopMain", method = RequestMethod.GET)
@@ -91,11 +97,14 @@ public class EntController {
 		logger.debug("entList : " + entList);
 		String name="";
 		if(entList != null) {
+			if(entList.getEnt_name() == null || entList.getEnt_name().equals("")) {
+				name = "없음";
+			}
 			name = entList.getEnt_name();
 		}
 		int idx = 1;
 		if (entList != null) {
-			if (entList.getEnt_img() != null || !entList.getEnt_img().equals("")) {
+			if (entList.getEnt_img() != null && !entList.getEnt_img().equals("")) {
 				idx = entList.getEnt_img().indexOf(",") + 1;
 			}
 		}
@@ -104,18 +113,24 @@ public class EntController {
 			imgList[i] = "null";
 		}
 		if (entList != null) {
-			if (!entList.getEnt_img().equals(null) || !entList.getEnt_img().equals("")) {
+			if (entList.getEnt_img() != null && !entList.getEnt_img().equals("")) {
 				String img = entList.getEnt_img();
 				imgList = img.split(","); // 합쳐진 이미지 ,로 나눠서 저장
 				logger.debug(" imgList : " + imgList);
 			}
 		}
-		model.addAttribute("imgList", imgList);
-		model.addAttribute("rlist", rlist);
-		model.addAttribute("fileList", fileList);
-		model.addAttribute("ent", entList);
-		model.addAttribute("plist", plist);
-		model.addAttribute("name", name);
+		
+		// 체험단 광고 신청했는지
+		Integer adResult = eService.entExpAd(own_id);
+		logger.debug("adResult : "+adResult);
+		
+		
+		model.addAttribute("adResult", adResult); // 광고유무
+		model.addAttribute("imgList", imgList); // 이미지리스트
+		model.addAttribute("rlist", rlist); // 리뷰리스트
+		model.addAttribute("ent", entList); // 상점
+		model.addAttribute("plist", plist); // 물품
+		model.addAttribute("name", name); // 화면이름
 		
 		
 		logger.debug(" 연결된 뷰페이지(/views/ent/shopMain.jsp) 출력 ");
@@ -533,14 +548,36 @@ public class EntController {
 	}
 
 	@RequestMapping(value = "/entJoin", method = RequestMethod.POST)
-	public String entJoinPOST(/* @ModelAttribute */ EntVO vo) throws Exception {
+	public String entJoinPOST(EntVO vo, MultipartHttpServletRequest mhsr) throws Exception {
 		logger.debug("entJoinPOST() 호출");
 		// 전달정보 저장(회원가입 정보)
 		logger.debug("vo : " + vo);
-		String own_pw = BCrypt.hashpw(vo.getOwn_pw(), BCrypt.gensalt());
+		List<MultipartFile> fileList = mhsr.getFiles("file");
+		ArrayList<String> imgList = new ArrayList<String>();
+		
+		String path = "C:\\upload"; // 경로
+		File dir = new File(path);
+		if (!dir.isDirectory()) {
+			dir.mkdirs();
+		}
+		logger.debug(" path : " + path);
+		for (MultipartFile mf : fileList) {
+			String genId = UUID.randomUUID().toString(); // 중복 처리
+			String originFileName = mf.getOriginalFilename(); // 원본 파일 명
 
-		vo.setOwn_pw(own_pw);
-
+			String saveFile = path + "\\" + genId + "_" + originFileName; // 저장할 경로
+			String saveFileName = genId + "_" + originFileName; // 저장할 파일명
+			logger.debug(" saveFile : " + saveFile);
+			imgList.add(saveFileName);
+			logger.debug("imgList : " + imgList);
+			mf.transferTo(new File(saveFile));
+			logger.debug("이미지 생성됨");
+		}
+		logger.debug("@@@@@@@@@@@String.join(\",\", imgList) :" + String.join(",", imgList));
+		vo.setEnt_file(String.join(",", imgList));
+		logger.debug("vo : " + vo);
+		
+		
 		// DAOImpl -> DB에 정보 저장
 		// mdao.insertMember(vo);
 		eService.entJoin(vo);
@@ -604,7 +641,7 @@ public class EntController {
 
 		}
 
-		return "redirect:/ent/entMain";
+		return "redirect:/ent/shopMain";
 	}
 
 	// http://localhost:8088/ent/entMain
@@ -706,6 +743,79 @@ public class EntController {
 //		eService.tradePurchase(tr_no);
 	}
 	
+	
+	@RequestMapping(value = "/mailAuth", method = RequestMethod.GET)
+	public void mailAuth() throws Exception {
+		
+	}
+	// http://localhost:8088/ent/entMain
+	// 이메일인증
+	@RequestMapping(value = "/mailAuth", method = RequestMethod.POST)
+	@ResponseBody
+	public int mailAuth(String email) throws Exception {
+		
+		logger.debug("전달 받은 이메일 주소 : " + email);
+		
+		//난수의 범위 111111 ~ 999999 (6자리 난수)
+		Random random = new Random();
+		int checkNum = random.nextInt(888888)+111111;
+		
+		//이메일 보낼 양식
+		//String setFrom = "(ID@naver.com)"; //2단계 인증 x, 메일 설정에서 POP/IMAP 사용 설정에서 POP/SMTP 사용함으로 설정o
+		String toMail = email;
+		String title = "본인인증 이메일 입니다.";
+		String content = "인증 코드는 " + checkNum + " 입니다." +
+						 "<br>" +
+						 "해당 인증 코드를 인증 코드 확인란에 기입하여 주세요.";
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				try {
+					MimeMessage message = mailSender.createMimeMessage(); //Spring에서 제공하는 mail API
+					MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+					//helper.setFrom(setFrom);
+					helper.setTo(toMail);
+					helper.setSubject(title);
+					helper.setText(content, true);
+					mailSender.send(message);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}).start();
+		
+		
+		logger.debug("랜덤숫자 : " + checkNum);
+		return checkNum;
+	}
+	
+	// 비밀번호 변경
+	@RequestMapping(value = "/changePw", method = RequestMethod.GET)
+	public void changePw() throws Exception {
+		
+	}
+	
+	@RequestMapping(value = "/changePw", method = RequestMethod.POST )
+	public String changePwPOST(EntVO vo, RedirectAttributes ra) throws Exception {
+		
+		logger.debug("vo : " + vo);
+		String own_pw = BCrypt.hashpw(vo.getOwn_pw(), BCrypt.gensalt());
+
+		vo.setOwn_pw(own_pw);
+		
+		int result = eService.changePw(vo);
+		
+		if(result == 1) {
+			ra.addAttribute("result", "ok");
+		}
+	
+		return "redirect:/ent/entLogin";
+	}
+  
 	// http://localhost:8088/ent/coinCharge
 		// 대나무페이 충전 GET - 충전페이지로 이동 
 		@RequestMapping(value = "/coinCharge", method = RequestMethod.GET)

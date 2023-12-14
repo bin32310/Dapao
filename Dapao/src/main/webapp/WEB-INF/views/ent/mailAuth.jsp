@@ -233,43 +233,6 @@ a:hover {
 </head>
 <body>
 
-	<c:choose>
-		<c:when test="${param.result=='fail' }">
-			<script>
-						window.onload = function() {
-							alert("아이디나 비밀번호가 틀렸습니다. 다시 로그인 하세요!")
-						};
-					</script>
-		</c:when>
-		<c:when test="${param.result=='1' }">
-			<script>
-						window.onload = function() {
-							alert("정지된 아이디입니다. 고객센터에 문의하세요!")
-						};
-					</script>
-		</c:when>
-		<c:when test="${param.result=='2' }">
-			<script>
-						window.onload = function() {			
-							alert("탈퇴하신 아이디입니다!")
-						};
-					</script>
-		</c:when>
-		<c:when test="${param.result=='3' }">
-			<script>
-						window.onload = function() {
-							alert("승인대기중인 아이디 입니다. 고객센터에 문의하세요!")
-						};
-					</script>
-		</c:when>
-		<c:when test="${param.result=='ok' }">
-			<script>
-						window.onload = function() {
-							alert("비밀번호를 정상적으로 변경하였습니다!")
-						};
-					</script>
-		</c:when>
-	</c:choose>
 
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
@@ -283,7 +246,7 @@ a:hover {
 		<div class="login-content">
 
 
-			<form action="" method="post">
+			<form action="/ent/changePw" method="GET">
 				<h2 class="title">Dapao</h2>
 				<div class="input-div one">
 					<div class="i">
@@ -296,16 +259,24 @@ a:hover {
 				</div>
 				<div class="input-div pass">
 					<div class="i">
-						<i class="fas fa-lock"></i>
+						<i class="fas fa-envelope"></i>
 					</div>
 					<div class="div">
-						<input type="password" name="own_pw" class="input"
-							placeholder="Password">
+						<input type="email" name="own_email" class="input"
+							placeholder="email" id="email">
 					</div>
 				</div>
-				<a href="/ent/mailAuth">Forgot Password?</a> 
-				<input type="submit" class="btn" value="sign in"> 
-				<input type="button" class="btn" value="sign up" onclick="location.href='/ent/entJoin';">
+				<div class="input-div pass">
+					<div class="i">
+						<i class="fas fa-key"></i>
+					</div>
+					<div class="div">
+						 <input class="form-control" placeholder="인증 코드 6자리를 입력해주세요." maxlength="6" disabled="disabled" name="authCode" id="authCode" type="text" autofocus>
+					</div>
+				</div>
+				<span id="emailAuthWarn"></span>
+				<input type="button" class="btn" value="send mail" id="emailAuth"> 
+				<input type="submit" class="btn" value="change password" id="cp" disabled="disabled" > 
 			</form>
 		</div>
 	</div>
@@ -314,29 +285,47 @@ a:hover {
 		src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-
-		const inputs = document.querySelectorAll(".input");
-
-
-		function addcl(){
-		  let parent = this.parentNode.parentNode;
-		  parent.classList.add("focus");
-		}
-
-		function remcl(){
-		  let parent = this.parentNode.parentNode;
-		  if(this.value == ""){
-		    parent.classList.remove("focus");
-		  }
-		}
-
-
-		inputs.forEach(input => {
-		  input.addEventListener("focus", addcl);
-		  input.addEventListener("blur", remcl);
-		});
-
-		//Source :- https://github.com/sefyudem/Responsive-Login-Form/blob/master/img/avatar.svg
+		$("#emailAuth").click(function() {
+	    	const email = $("#email").val(); //사용자가 입력한 이메일 값 얻어오기
+	    		
+	    	//Ajax로 전송
+	        $.ajax({
+	        	url : './mailAuth',
+	        	data : {
+	        		email : email
+	        	},
+	        	type : 'POST',
+	        	dataType : 'json',
+	        	success : function(result) {
+	        		console.log("result : " + result);
+	        		$("#authCode").attr("disabled", false);
+	        		code = result;
+	        		alert("인증 코드가 입력하신 이메일로 전송 되었습니다.");
+	       		}
+	        }); //End Ajax	        	        
+	    });
+		
+		
+		//인증 코드 비교
+	    $("#authCode").on("focusout", function() {
+	    	const inputCode = $("#authCode").val(); //인증번호 입력 칸에 작성한 내용 가져오기
+	    	
+	    	console.log("입력코드 : " + inputCode);
+	    	console.log("인증코드 : " + code);
+	    		
+	    	if(Number(inputCode) === code){
+	        	$("#emailAuthWarn").html('인증번호가 일치합니다.');
+	        	$("#emailAuthWarn").css('color', 'green');
+	    		$('#emailAuth').attr('disabled', true);
+	    		$('#email').attr('readonly', true);
+	    		$("#cp").attr("disabled", false);
+	    	}else{
+	        	$("#emailAuthWarn").html('인증번호가 불일치 합니다. 다시 확인해주세요!');
+	        	$("#emailAuthWarn").css('color', 'red');
+	        	$("#cp").attr("disabled", true);
+	    	}
+	    });
+		
 						
 	});
 </script>

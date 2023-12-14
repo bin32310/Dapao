@@ -64,13 +64,13 @@ public class DataSourceTest {
 		}
 	}
 	
-	@Test
-	public void test() throws Exception{
-		adao.acResultSelectOwnerId(null);
-		adao.acResultSelectUserId(null);
-		adao.acResultUserUpdate(null,  "");
-		adao.acResultOwnerUpdate(null, "");
-	}
+//	@Test
+//	public void test() throws Exception{
+//		adao.acResultSelectOwnerId(null);
+//		adao.acResultSelectUserId(null);
+//		adao.acResultUserUpdate(null,  "");
+//		adao.acResultOwnerUpdate(null, "");
+//	}
 	
 	
 

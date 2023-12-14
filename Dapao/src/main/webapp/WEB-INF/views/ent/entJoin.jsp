@@ -17,10 +17,15 @@
 	margin: 0;
 	box-sizing: border-box;
 }
+html{
+	height: 100%;
+	
+}
 
 body {
 	font-family: 'Poppins', sans-serif;
-	overflow: hidden;
+	overflow: visible;
+	overflow: scroll;
 }
 
 .wave {
@@ -262,6 +267,7 @@ a:hover {
 			<img src="${pageContext.request.contextPath }/resources/logo/join.png">
 		</div>
 	<div class="login-content">
+		
 		<form action="" method="post" enctype="multipart/form-data"> <br>
 			<h2 class="title">Dapao</h2>
 			
@@ -330,7 +336,7 @@ a:hover {
 						<button id="phoneChk2" class="doubleChk btn btn-default" type="button">
 								<i class="fa fa-user">인증</i>
 						</button>
-				
+				<span id="successPhoneChk"></span>
 				
 				<div class="input-div one">
 					<div class="i">
@@ -400,7 +406,7 @@ a:hover {
 						<i class="fas fa-file"></i>
 					</div>
 					<div class="div">
-						<input type="file" name="ent_file" required="required" id="ent_file" placeholder="사업자등록증첨부">							
+						<input type="file" name="file" required="required" id="ent_file" placeholder="사업자등록증첨부">							
 					</div>
 				</div>
 			

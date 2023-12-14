@@ -247,22 +247,10 @@ public class AdminServiceImpl{
 		return adao.acResultSelectUserId(vo);
 	}
 	
-	// 신고관리 - 신고 처리상태 업뎃(owner 조회)
-	public String acResultSelectOwnerId(AcVO vo) throws Exception {
-		logger.debug("service : acResultSelectOwnerId(AcVO vo) 호출");
-		return adao.acResultSelectOwnerId(vo);
-	}
-	
 	// 신고관리 - 신고 처리상태 업뎃(user)
 	public int acResultUserUpdate(AcVO acVo,String stop) throws Exception {
 		logger.debug("service : acResultUserUpdate(AcVO acVo,String stop) 호출");
 		return adao.acResultUserUpdate(acVo, stop);
-	}
-	
-	// 신고관리 - 신고 처리상태 업뎃(owner)
-	public int acResultOwnerUpdate(AcVO acVo,String stop) throws Exception {
-		logger.debug("service : acResultUserUpdate(AcVO acVo,String stop) 호출");
-		return adao.acResultOwnerUpdate(acVo, stop);
 	}
 	
 	//신고관리 - 신고 user 글 쓰기
@@ -317,5 +305,11 @@ public class AdminServiceImpl{
 	public int expReturn(ExpVO vo) throws Exception {
 		logger.debug("service : expReturn(Integer exp_no) 호출");
 		return adao.expReturn(vo);
+	}
+	
+	// 신고관리 - 신고취소
+	public int acCancel(Integer ac_no) throws Exception{
+		logger.debug("acCancel(Integer ac_no) 호출");
+		return adao.acCancel(ac_no);
 	}
 }

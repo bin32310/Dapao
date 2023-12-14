@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-      <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-          <b>Version</b> 2.0
-        </div>
-        <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
-      </footer>
+    
    
     </div><!-- ./wrapper -->
 	
@@ -37,7 +32,7 @@
 				return false;
 			}
 		});
-		$('#coin').off("click").click(function() {
+		$('#coin').off("click").click(function() { 
 			if (own_id == null || typeof own_id == "undefined" || own_id == "") {
 				alert('로그인이후 이용해주세요');
 				location.href = "/ent/entLogin";
@@ -50,6 +45,7 @@
 				location.href = "/ent/entLogin";
 				return false;
 			}
+			
 		});
 		$('.shop').off("click").click(function() {
 			if (own_id == null || typeof own_id == "undefined" || own_id == "") {

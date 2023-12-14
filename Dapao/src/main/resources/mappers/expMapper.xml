@@ -9,7 +9,7 @@
 	<insert id="ownExp">
 		insert into exp
 		(exp_title,exp_content,exp_psn,exp_notice,own_id)
-		values (#{exp_title},#{exp_content},#{exp_psn},#{exp_notice},${own_id});
+		values (#{exp_title},#{exp_content},#{exp_psn},#{exp_notice},#{own_id});
 	</insert>
 
 	<!-- 사업자 - 체험단 신청 - 결제테이블 insert -->

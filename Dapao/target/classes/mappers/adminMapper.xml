@@ -17,9 +17,9 @@
 		#{us_stopdate} day) where us_id=#{us_id};
 	</update>
 
-	<!-- 회원관리 - 회원정지(회원상태변경) -->
+	<!-- 회원관리 - 회원정지(회원상태변경) + 정지횟수+1 -->
 	<update id="userStateUpdate">
-		update us set us_state=1 where us_id=#{us_id}
+		update us set us_state=1,us_account=us_account+1 where us_id=#{us_id}
 	</update>
 
 	<!-- 회원관리 - 회원탈퇴(회원상태변경) -->
@@ -75,7 +75,7 @@
 
 	<!-- 사업자 관리 - 사업자정지 -->
 	<update id="ownerStop">
-		update ent set own_stopdate=date_add(now(), interval #{own_stopdate} day), own_state=1 
+		update ent set own_stopdate=date_add(now(), interval #{own_stopdate} day), own_state=1, ent_account=ent_account+1 
 		where own_id=#{own_id}
 	</update>
 	
@@ -291,26 +291,12 @@
 		select ac_us_id 
 		from ac 
 		where ac_no=#{ac_no}
-	</select>
-	
-	<!-- 신고관리 - 신고 처리상태 업뎃(owner 조회) -->
-	<select id="acResultSelectOwnerId" resultType="String">
-		select ac_own_id 
-		from ac 
-		where ac_no=#{ac_no}
-	</select>
+	</select>	
 	
 	<!-- 신고관리 - 신고 user 처리상태 업뎃 -->
 	<update id="acResultUserUpdate">
 		update us join ac on us.us_id = ac.ac_us_id 
-		set us.us_stopdate=date_add(now(), interval #{stop} day),ac.ac_result=#{acVo.ac_result},us.us_state=1, ac.ac_state=1 
-		where ac.ac_no=#{acVo.ac_no}
-	</update>
-	
-	<!-- 신고관리 - 신고 user 처리상태 업뎃 -->
-	<update id="acResultOwnerUpdate">
-		update ent join ac on ent.own_id = ac.ac_own_id 
-		set ent.own_stopdate=date_add(now(), interval #{stop} day),ac.ac_result=#{acVo.ac_result},ent.own_state=1, ac.ac_state=1 
+		set us.us_stopdate=date_add(now(), interval #{stop} day), us.us_account=us_account+1, ac.ac_result=#{acVo.ac_result},us.us_state=1, ac.ac_state=1 
 		where ac.ac_no=#{acVo.ac_no}
 	</update>
 	
@@ -319,13 +305,7 @@
 		insert into ac(us_id,ac_us_id,ac_cate,ac_content,ac_item) 
 		values(#{us_id},#{ac_us_id},#{ac_cate},#{ac_content},#{ac_item})
 	</insert>
-	
-	<!-- 신고관리 - 신고 owner 글 쓰기 -->
-	<insert id="acOwnerWrite">
-		insert into ac(us_id,ac_own_id,ac_cate,ac_content,ac_item) 
-		values(#{us_id},#{ac_own_id},#{ac_cate},#{ac_content},#{ac_item})
-	</insert>
-	
+		
 	<!-- 신고관리 - us_id -> us_nikname 조회 -->
 	<select id="getNickname" resultType="String">
 		select us_nickname from us where us_id=#{us_id}
@@ -376,4 +356,8 @@
 		where exp_no=#{exp_no} and exp_state=0
 	</update>
 	
+	<!-- 신고취소 ac_state = 1 -->
+	<update id="acCancel">
+		update ac set ac_state=1,ac_result='접수취소' where ac_no=#{ac_no}
+	</update>
 </mapper>	

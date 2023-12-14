@@ -174,13 +174,13 @@ th{
 
 						<div class="box-footer">
 							<button type="submit" class="btn btn-success">Submit</button>
+							<button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
 						</div>
+						
 					</form>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
-			</div>
+				
 		</div>
 
 	</div>

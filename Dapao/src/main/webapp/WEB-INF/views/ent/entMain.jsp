@@ -10,38 +10,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-.btn {
+
+.btns {
 	display: block;
-	width: 100%;
+	width: 30%;
 	height: 50px;
 	border-radius: 25px;
 	outline: none;
 	border: none;
 	background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
 	background-size: 200%;
-	font-size: 1.2rem;
+	font-size: 2rem ;
 	color: #fff;
 	font-family: 'Poppins', sans-serif;
 	text-transform: uppercase;
-	margin: 1rem 0;
+	margin: 3rem 45rem;
 	cursor: pointer;
 	transition: .5s;
 }
 </style>	
 	
 	<c:if test="${empty sessionScope.own_id }">
-		<input type="button" value="로그인" onclick="location.href='/ent/entLogin';" class="btn">		
-		<input type="button" value="회원가입" onclick="location.href='/ent/entJoin';" class="btn">
+		<input type="button" value="로그인" onclick="location.href='/ent/entLogin';" class="btns">		
+		<input type="button" value="회원가입" onclick="location.href='/ent/entJoin';" class="btns">
 	</c:if>
 
 	<c:if test="${!empty sessionScope.own_id }">
 		<h2>${sessionScope.own_id }님 환영합니다.</h2>
 		
 		<hr>
-		<input type="button" value="로그아웃" onclick="location.href='/ent/entLogout';">
+		<input type="button" value="로그아웃" onclick="location.href='/ent/entLogout';" class="btns">
+		<input type="button" value="정보조회" onclick="location.href='/ent/ownInfo';" class="btns">
 		
-		<hr>
-		<h3><a href="/ent/ownInfo">회원정보 조회</a></h3>
+		
 		
 	</c:if>
 
