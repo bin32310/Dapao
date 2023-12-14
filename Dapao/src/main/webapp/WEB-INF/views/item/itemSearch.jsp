@@ -132,7 +132,7 @@
 		<c:forEach var="it" items="${searchItemVO}">
 			<div class="item_section"> <!-- 2 item_section -->
 				<a href="../item/itemDetail?it_no=${it.it_no }">
-					<img src="/imgfile/${it.it_img }" class="it_img"> <br>
+					<img src="/resources/upload/${it.it_img }" class="it_img"> <br>
 					<input type="text" value="${it.it_title}" class="it_title"> <br>
 					<input type="hidden" value="${it.it_state}" name="it_state"> <br>
 
